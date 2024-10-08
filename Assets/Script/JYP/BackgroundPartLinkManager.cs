@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class BackgroundPartLinkManager : MonoBehaviour
 {
-    public List<BackgroundPart> BackgroundParts = new List<BackgroundPart>();
+    public List<LinkedBackgroundPart> BackgroundParts = new List<LinkedBackgroundPart>();
     public float yAlignment = 0.5f;
     private bool _isLinking = false;
     private ILinkable _currentLinkable;
-    
+
 
     private void Update()
     {
@@ -38,8 +38,8 @@ public class BackgroundPartLinkManager : MonoBehaviour
                     {
                         linkable.Link(_currentLinkable);
                         _currentLinkable.Link(linkable);
-                        
-                        var currentObject = (_currentLinkable as BackgroundPart)?.gameObject;
+
+                        var currentObject = (_currentLinkable as LinkedBackgroundPart)?.gameObject;
                         if (currentObject != null)
                         {
                             CreateLine(currentObject, hit.collider.gameObject);
@@ -48,7 +48,6 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 }
 
 
-                
                 _currentLinkable = null;
                 _isLinking = false;
             }
@@ -90,16 +89,15 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 .material.color = Color.green;
         go.transform.position = new Vector3(0, yAlignment, 0);
         go.name = backgroundName;
-        var part = go.AddComponent<BackgroundPart>();
+        var part = go.AddComponent<LinkedBackgroundPart>();
         part.Init(
             name: backgroundName,
             type: type
         );
-        
-        part.LinkedParts = new List<BackgroundPart>();
+
+        part.LinkedParts = new List<LinkedBackgroundPart>();
 
         BackgroundParts.Add(part);
-        
     }
 
     public void UpdatePart(string originalName, string backgroundName, EBackgroundParkType type)
@@ -123,14 +121,14 @@ public class BackgroundPartLinkManager : MonoBehaviour
         BackgroundParts.Remove(BackgroundParts.Find(x => x.Name == backgroundName));
     }
 
-    public void Link(BackgroundPart current, BackgroundPart next)
+    public void Link(LinkedBackgroundPart current, LinkedBackgroundPart next)
     {
         if (current.LinkedParts.Contains(next)) return;
         current.LinkedParts.Add(next);
         next.LinkedParts.Add(current);
     }
 
-    public void Unlink(BackgroundPart current, BackgroundPart next)
+    public void Unlink(LinkedBackgroundPart current, LinkedBackgroundPart next)
     {
         if (!current.LinkedParts.Contains(next)) return;
         current.LinkedParts.Remove(next);
