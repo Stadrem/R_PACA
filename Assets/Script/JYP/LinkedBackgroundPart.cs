@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class LinkedBackgroundPart : MonoBehaviour, ILinkable
+public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
 {
     public enum EViewType
     {
@@ -15,6 +14,7 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable
     public string backgroundPartName;
     public EBackgroundPartType backgroundPartType;
     public List<LinkedBackgroundPart> linkedParts;
+    public List<Transform> linkablePoints;
     public GameObject detail;
     public GameObject linkable;
     public CinemachineVirtualCamera detailViewCamera;
@@ -70,6 +70,31 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable
             default:
                 throw new ArgumentOutOfRangeException(nameof(newViewType), newViewType, null);
         }
+    }
+
+    public bool IsDraggable
+    {
+        get
+        {
+            return viewType == EViewType.LinkableView;   
+        }
+    }
+
+    public void StartDrag()
+    {
+        //do nothing
+        return;
+    }
+
+    public void Dragging(Vector3 position)
+    {
+        this.transform.position = position;
+    }
+
+    public void StopDrag()
+    {
+        //do nothing
+        return;
     }
 }
 
