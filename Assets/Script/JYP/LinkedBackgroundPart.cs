@@ -14,7 +14,7 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     public string backgroundPartName;
     public EBackgroundPartType backgroundPartType;
     public List<LinkedBackgroundPart> linkedParts;
-    public List<Transform> linkablePoints;
+    public List<Vector3> portalLocalPoints;
     public GameObject detail;
     public GameObject linkable;
     public CinemachineVirtualCamera detailViewCamera;
@@ -52,6 +52,20 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
         if (linkedParts.Contains(backgroundPart)) return;
 
         linkedParts.Add(backgroundPart);
+        portalLocalPoints.Add(Vector3.zero);
+    }
+
+    public void UnLink(ILinkable linkable)
+    {
+        var backgroundPart = linkable as LinkedBackgroundPart;
+        if (backgroundPart == null) return;
+
+        if (!linkedParts.Contains(backgroundPart)) return;
+
+        var idx = linkedParts.IndexOf(backgroundPart);
+        if (idx == -1) return;
+        linkedParts.RemoveAt(idx);
+        portalLocalPoints.RemoveAt(idx);
     }
 
     public void ChangeViewType(EViewType newViewType)

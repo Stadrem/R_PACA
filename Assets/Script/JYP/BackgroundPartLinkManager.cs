@@ -13,7 +13,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
     private ILinkable currentLinkable;
 
     private bool isDetailView = false;
-
+    private List<LinkedLine> lines = new List<LinkedLine>();
     private Camera camera;
 
     private void Start()
@@ -100,15 +100,28 @@ public class BackgroundPartLinkManager : MonoBehaviour
             currentPart.detailViewCamera.Priority = 0;
             linkViewCamera.Priority = 20;
         }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                var part = hit.collider.GetComponent<LinkedBackgroundPart>();
+                if (part != null)
+                {
+                    Delete(part.backgroundPartName);
+                    Destroy(part.gameObject);
+                }
+            }
+        }
     }
 
     private void CreateLine(GameObject obj1, GameObject obj2)
     {
         var line = new GameObject("Line");
-        var lineRenderer = line.AddComponent<LineRenderer>();
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, obj1.transform.position);
-        lineRenderer.SetPosition(1, obj2.transform.position);
+        line.layer = LayerMask.NameToLayer("Line");
+        var linkedLine = line.AddComponent<LinkedLine>();
+        linkedLine.Init(obj1.GetComponent<LinkedBackgroundPart>(), obj2.GetComponent<LinkedBackgroundPart>());
+        lines.Add(linkedLine);
     }
 
     #region public methods
@@ -143,7 +156,12 @@ public class BackgroundPartLinkManager : MonoBehaviour
             part.linkedParts.Remove(backgroundPart);
         }
 
-        backgroundParts.Remove(backgroundParts.Find(x => x.backgroundPartName == backgroundName));
+        foreach (var line in lines.FindAll(x => x.start == backgroundPart || x.end == backgroundPart))
+        {
+            line.DeleteLine();
+        }
+
+        backgroundParts.Remove(backgroundPart);
     }
 
     public void Link(LinkedBackgroundPart current, LinkedBackgroundPart next)
@@ -163,6 +181,12 @@ public class BackgroundPartLinkManager : MonoBehaviour
     #endregion
 
     #region private methods
+
+    private void DeleteLine(LinkedLine line)
+    {
+        lines.Remove(line);
+        line.DeleteLine();
+    }
 
     #endregion
 }

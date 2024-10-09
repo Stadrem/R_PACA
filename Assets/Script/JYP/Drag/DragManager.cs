@@ -6,7 +6,7 @@ public class DragManager : MonoBehaviour
     private IDraggable currentDraggable;
     private bool isDragging = false;
     private Camera camera;
-    public LayerMask dragPointLayer = 1 << LayerMask.NameToLayer("Ground");
+    public LayerMask dragPointLayer;
     private void Start()
     {
         camera = Camera.main;
