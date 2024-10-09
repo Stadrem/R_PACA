@@ -1,16 +1,19 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AvatarPanelParentUi : MonoBehaviour
 {
+    //Panel들 열고 닫는 스크립트
+
     public static AvatarPanelParentUi instance;
 
     private void Awake()
     {
         instance = this;
     }
+
     RectTransform[] childrenPanel;
 
     int originHeight;

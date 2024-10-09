@@ -64,7 +64,7 @@ public class HttpManager : MonoBehaviour
             instance = this;
 
             // 씬 전환 시 객체 파괴 방지
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -144,6 +144,44 @@ public class HttpManager : MonoBehaviour
         }
     }
 
+    public IEnumerator SendAvatarInfo(HttpInfo info)
+    {
+        // GET 요청 생성
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
+            // 요청 전송 및 응답 대기
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                ParseAvatarInfo(webRequest.downloadHandler);
+            }
+            else
+            {
+                Debug.Log("failed: " + webRequest.error);
+            }
+        }
+    }
+
+    //GET : 서버에게 데이터를 조회 요청
+    public IEnumerator GetAvatarInfo(HttpInfo info)
+    {
+        // GET 요청 생성
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
+        {
+            // 요청 전송 및 응답 대기
+            yield return webRequest.SendWebRequest();
+
+            // 요청 완료 시 처리
+            ParseAvatarInfo(webRequest.downloadHandler);
+        }
+    }
+
     // 로그인시 반환 받은 토큰 및 계정 정보를 받아내는 함수
     void ParseUserInfo(DownloadHandler downloadHandler)
     {
@@ -152,6 +190,18 @@ public class HttpManager : MonoBehaviour
         AccountSet accountSet = JsonUtility.FromJson<AccountSet>(json);
 
         InAccount(accountSet.response.userId, accountSet.response.userName);
+    }
+
+    // 아바타 정보 반환
+    void ParseAvatarInfo(DownloadHandler downloadHandler)
+    {
+        string json = downloadHandler.text;
+
+        MyAvatar accountSet = JsonUtility.FromJson<MyAvatar>(json);
+
+        AvatarHTTPManager.instance.myAvatar = accountSet;
+
+        AvatarHTTPManager.instance.AvatarRefresh();
     }
 
     //GET : 서버에게 데이터를 조회 요청
@@ -179,6 +229,15 @@ public class HttpManager : MonoBehaviour
 
             //서버에게 응답이 왔다.
             DoneRequest(webRequest, info);
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("successful: " + webRequest.downloadHandler.text);
+
+            }
+            else
+            {
+            }
         }
     }
 

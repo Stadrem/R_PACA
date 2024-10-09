@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,15 +6,18 @@ using UnityEngine.UI;
 
 public class AvatarPanelUi : MonoBehaviour
 {
+    //SetPanelì— ë“¤ì–´ê°ˆ í´ë¦­ ë™ì‘ ìŠ¤í¬ë¦½íŠ¸
+
     RectTransform rectTransform;
     RectTransform childRectTransform;
-    public VerticalLayoutGroup parentLayoutGroup;  // Mid ¿ÀºêÁ§Æ®¿¡ ÀÖ´Â Vertical Layout GroupÀ» ÂüÁ¶
+    public VerticalLayoutGroup parentLayoutGroup;  // Mid ì˜¤ë¸Œì íŠ¸ì— ìˆëŠ” Vertical Layout Groupì„ ì°¸ì¡°
 
     int originHeight;
     int originWidth;
     int subPanelHeight;
     int sumHeight;
 
+    //ë²„íŠ¼ ìŠ¤í¬ë¦½íŠ¸
     public void OnClickAvatarPanel()
     {
         if (!childRectTransform.gameObject.activeSelf)
@@ -38,13 +41,13 @@ public class AvatarPanelUi : MonoBehaviour
 
     private void Start()
     {
-        //ºÎ¸ğÀÇ rectTransform Ã£±â
+        //ë¶€ëª¨ì˜ rectTransform ì°¾ê¸°
         rectTransform = transform.parent.GetComponentInParent<RectTransform>();
 
         originHeight = Convert.ToInt32(rectTransform.sizeDelta.y);
         originWidth = Convert.ToInt32(rectTransform.sizeDelta.x);
 
-        //ÀÚ½ÄÀÇ subPanel Ã£±â
+        //ìì‹ì˜ subPanel ì°¾ê¸°
         childRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
 
         subPanelHeight = Convert.ToInt32(childRectTransform.sizeDelta.y);
@@ -52,7 +55,7 @@ public class AvatarPanelUi : MonoBehaviour
 
     void LayoutRefresh()
     {
-        // ·¹ÀÌ¾Æ¿ô °»½ÅÀ» °­Á¦ÇÏ¿© ³ôÀÌ¸¦ Àç°è»ê
+        // ë ˆì´ì•„ì›ƒ ê°±ì‹ ì„ ê°•ì œí•˜ì—¬ ë†’ì´ë¥¼ ì¬ê³„ì‚°
         LayoutRebuilder.ForceRebuildLayoutImmediate(parentLayoutGroup.GetComponent<RectTransform>());
     }
 }
