@@ -7,6 +7,8 @@ public class LinkedLine : MonoBehaviour
 
     private GameObject startObj;
     private GameObject endObj;
+    private Vector3 startPortalPos;
+    private Vector3 endPortalPos;
     private LineRenderer line;
 
     public void Init(LinkedBackgroundPart startPart, LinkedBackgroundPart endPart)

@@ -120,7 +120,9 @@ public class BackgroundPartLinkManager : MonoBehaviour
         var line = new GameObject("Line");
         line.layer = LayerMask.NameToLayer("Line");
         var linkedLine = line.AddComponent<LinkedLine>();
-        linkedLine.Init(obj1.GetComponent<LinkedBackgroundPart>(), obj2.GetComponent<LinkedBackgroundPart>());
+        var part1 = obj1.GetComponent<LinkedBackgroundPart>();
+        var part2 = obj2.GetComponent<LinkedBackgroundPart>();
+        linkedLine.Init(part1, part2);
         lines.Add(linkedLine);
     }
 
