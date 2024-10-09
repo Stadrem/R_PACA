@@ -203,11 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745a62b0556a45249be4a3fd2c58ccad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Type: 0
-  LinkedParts: []
-  detail: {fileID: 689481718231065704}
-  linkable: {fileID: 8713219764215728621}
+  backgroundPartName: 
+  backgroundPartType: 0
+  linkedParts: []
+  detail: {fileID: 8713219764215728621}
+  linkable: {fileID: 689481718231065704}
   detailViewCamera: {fileID: 2625771652403773368}
 --- !u!65 &6553985932979457144
 BoxCollider:

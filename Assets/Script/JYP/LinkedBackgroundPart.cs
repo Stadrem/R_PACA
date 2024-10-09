@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LinkedBackgroundPart : MonoBehaviour, ILinkable
 {
@@ -11,9 +12,9 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable
         DetailView,
     }
 
-    public string Name;
-    public EBackgroundPartType Type;
-    public List<LinkedBackgroundPart> LinkedParts;
+    public string backgroundPartName;
+    public EBackgroundPartType backgroundPartType;
+    public List<LinkedBackgroundPart> linkedParts;
     public GameObject detail;
     public GameObject linkable;
     public CinemachineVirtualCamera detailViewCamera;
@@ -21,9 +22,26 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable
 
     public void Init(string name, EBackgroundPartType type)
     {
-        Name = name;
-        Type = type;
-        LinkedParts = new List<LinkedBackgroundPart>();
+        backgroundPartName = name;
+        backgroundPartType = type;
+        linkedParts = new List<LinkedBackgroundPart>();
+        switch (type)
+        {
+            case EBackgroundPartType.None:
+                break;
+            case EBackgroundPartType.Town:
+                var townPreset = Resources.Load<GameObject>("BackgroundPart/TownDetailPreset");
+                var go = Instantiate(townPreset, detail.transform);
+                go.transform.localPosition = Vector3.zero;
+                break;
+            case EBackgroundPartType.Dungeon:
+                var dungeonPreset = Resources.Load<GameObject>("BackgroundPart/DungeonDetailPreset");
+                var dungeon = Instantiate(dungeonPreset, detail.transform);
+                dungeon.transform.localPosition = Vector3.zero;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
     }
 
     public void Link(ILinkable linkable)
@@ -31,9 +49,9 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable
         var backgroundPart = linkable as LinkedBackgroundPart;
         if (backgroundPart == null) return;
 
-        if (LinkedParts.Contains(backgroundPart)) return;
+        if (linkedParts.Contains(backgroundPart)) return;
 
-        LinkedParts.Add(backgroundPart);
+        linkedParts.Add(backgroundPart);
     }
 
     public void ChangeViewType(EViewType newViewType)
@@ -42,12 +60,12 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable
         switch (newViewType)
         {
             case EViewType.LinkableView:
-                detail.SetActive(true);
-                linkable.SetActive(false);
-                break;
-            case EViewType.DetailView:
                 detail.SetActive(false);
                 linkable.SetActive(true);
+                break;
+            case EViewType.DetailView:
+                detail.SetActive(true);
+                linkable.SetActive(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newViewType), newViewType, null);

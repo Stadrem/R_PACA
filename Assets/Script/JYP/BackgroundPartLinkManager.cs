@@ -115,7 +115,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     public void Create(string backgroundName, EBackgroundPartType type)
     {
-        if (backgroundParts.Exists(x => x.Name == backgroundName)) return;
+        if (backgroundParts.Exists(x => x.backgroundPartName == backgroundName)) return;
 
         var go = Resources.Load<GameObject>("BackgroundPart/LinkableBackgroundPart");
         go = Instantiate(go, new Vector3(0, yAlignment, 0), Quaternion.identity);
@@ -127,37 +127,37 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     public void UpdatePart(string originalName, string backgroundName, EBackgroundPartType type)
     {
-        var backgroundPart = backgroundParts.Find(x => x.Name == originalName);
+        var backgroundPart = backgroundParts.Find(x => x.backgroundPartName == originalName);
         if (backgroundPart == null) return;
 
-        backgroundPart.Name = backgroundName;
-        backgroundPart.Type = type;
+        backgroundPart.backgroundPartName = backgroundName;
+        backgroundPart.backgroundPartType = type;
     }
 
     public void Delete(string backgroundName)
     {
-        var backgroundPart = backgroundParts.Find(x => x.Name == backgroundName);
+        var backgroundPart = backgroundParts.Find(x => x.backgroundPartName == backgroundName);
 
-        foreach (var part in backgroundPart.LinkedParts)
+        foreach (var part in backgroundPart.linkedParts)
         {
-            part.LinkedParts.Remove(backgroundPart);
+            part.linkedParts.Remove(backgroundPart);
         }
 
-        backgroundParts.Remove(backgroundParts.Find(x => x.Name == backgroundName));
+        backgroundParts.Remove(backgroundParts.Find(x => x.backgroundPartName == backgroundName));
     }
 
     public void Link(LinkedBackgroundPart current, LinkedBackgroundPart next)
     {
-        if (current.LinkedParts.Contains(next)) return;
-        current.LinkedParts.Add(next);
-        next.LinkedParts.Add(current);
+        if (current.linkedParts.Contains(next)) return;
+        current.linkedParts.Add(next);
+        next.linkedParts.Add(current);
     }
 
     public void Unlink(LinkedBackgroundPart current, LinkedBackgroundPart next)
     {
-        if (!current.LinkedParts.Contains(next)) return;
-        current.LinkedParts.Remove(next);
-        next.LinkedParts.Remove(current);
+        if (!current.linkedParts.Contains(next)) return;
+        current.linkedParts.Remove(next);
+        next.linkedParts.Remove(current);
     }
 
     #endregion
