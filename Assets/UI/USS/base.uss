@@ -1,0 +1,12 @@
+.unity-text-element {
+    -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
+    -unity-text-align: middle-center;
+    align-items: stretch;
+    justify-content: flex-start;
+    align-self: center;
+    font-size: 28px;
+}
+
+.unity-base-text-field {
+    -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
+}
