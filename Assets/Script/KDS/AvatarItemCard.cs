@@ -17,8 +17,8 @@ public class AvatarItemCard : MonoBehaviour
 
     public Sprite sprite;
 
-    private void Start()
+    public void OnClickGender()
     {
-
+        AvatarCanvasManager.instance.PushAvatarCode(part, itemNum);
     }
 }

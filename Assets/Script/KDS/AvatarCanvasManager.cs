@@ -36,6 +36,14 @@ public class AvatarCanvasManager : MonoBehaviour
         int genderTemp = genderNum;
         for (int j = 0; j <contents.Length; j++)
         {
+            // 기존 자식 게임 오브젝트 삭제
+            foreach (Transform child in contents[j].content.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+            contents[j].children.Clear();
+
             //Panel A,B,C,D 자식 배열 초기화
             contents[j].children = new List<GameObject>();
 
@@ -46,12 +54,12 @@ public class AvatarCanvasManager : MonoBehaviour
 
                 instance.transform.SetParent(contents[j].content.transform, false);
 
-                contents[j].children.Add(contents[j].content.transform.GetChild(i).gameObject);
+                contents[j].children.Add(instance);
 
                 //자식 오브젝트안에 값 할당
                 AvatarItemCard itemCard = contents[j].children[i].GetComponent<AvatarItemCard>();
 
-                itemCard.part = j;
+                itemCard.part = j + 1;
 
                 itemCard.itemNum = i;
 

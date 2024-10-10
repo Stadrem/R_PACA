@@ -2470,7 +2470,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2142220982244922953}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5471949398834554127}
+        m_TargetAssemblyTypeName: AvatarItemCard, Assembly-CSharp
+        m_MethodName: OnClickGender
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5471949398834554127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2485,7 +2497,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   part: 0
   itemNum: 0
+  itemName: 
   mesh: {fileID: 0}
+  material: {fileID: 0}
   sprite: {fileID: 0}
 --- !u!1 &3437603887778844677
 GameObject:
@@ -2734,7 +2748,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9060442702774096069}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 881550020499084050}
+        m_TargetAssemblyTypeName: AvatarItemCard, Assembly-CSharp
+        m_MethodName: OnClickGender
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &881550020499084050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2748,8 +2774,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 0
-  itemNum: 0
+  itemNum: 1
+  itemName: 
   mesh: {fileID: 0}
+  material: {fileID: 0}
   sprite: {fileID: 0}
 --- !u!1 &3640324160915891131
 GameObject:
