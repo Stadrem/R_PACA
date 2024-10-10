@@ -63,29 +63,29 @@ MonoBehaviour:
       material: {fileID: 0}
       icon: {fileID: 0}
   - avatarItems:
-    - name: 
+    - name: BrownHair
       mesh: {fileID: 0}
       material: {fileID: 0}
       icon: {fileID: 0}
-    - name: 
-      mesh: {fileID: 0}
-      material: {fileID: 0}
-      icon: {fileID: 0}
-  - avatarItems:
-    - name: 
-      mesh: {fileID: 0}
-      material: {fileID: 0}
-      icon: {fileID: 0}
-    - name: 
+    - name: Iron Helmet
       mesh: {fileID: 0}
       material: {fileID: 0}
       icon: {fileID: 0}
   - avatarItems:
-    - name: 
+    - name: Adventure Clothe
       mesh: {fileID: 0}
       material: {fileID: 0}
       icon: {fileID: 0}
-    - name: 
+    - name: Plate Armor
+      mesh: {fileID: 0}
+      material: {fileID: 0}
+      icon: {fileID: 0}
+  - avatarItems:
+    - name: Blink
+      mesh: {fileID: 0}
+      material: {fileID: 0}
+      icon: {fileID: 0}
+    - name: Sword
       mesh: {fileID: 0}
       material: {fileID: 0}
       icon: {fileID: 0}

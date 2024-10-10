@@ -2216,36 +2216,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AvatarPresetSettings
       objectReference: {fileID: 0}
-    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-        type: 3}
-      propertyPath: avatarParts.Array.data[1].avatarItems.Array.data[0].name
-      value: BrownHair
-      objectReference: {fileID: 0}
-    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-        type: 3}
-      propertyPath: avatarParts.Array.data[1].avatarItems.Array.data[1].name
-      value: Iron Helmet
-      objectReference: {fileID: 0}
-    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-        type: 3}
-      propertyPath: avatarParts.Array.data[2].avatarItems.Array.data[0].name
-      value: Adventure Clothe
-      objectReference: {fileID: 0}
-    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-        type: 3}
-      propertyPath: avatarParts.Array.data[2].avatarItems.Array.data[1].name
-      value: Plate Armor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-        type: 3}
-      propertyPath: avatarParts.Array.data[3].avatarItems.Array.data[0].name
-      value: Blink
-      objectReference: {fileID: 0}
-    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-        type: 3}
-      propertyPath: avatarParts.Array.data[3].avatarItems.Array.data[1].name
-      value: Sword
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
