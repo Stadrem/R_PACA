@@ -28,71 +28,36 @@ public class AvatarHTTPManager : MonoBehaviour
 
     private void Start()
     {
-        // HttpInfo 객체 생성
-        HttpInfo info = new HttpInfo();
-
-        // 요청할 URL 설정
-        info.url = "";
-
-        // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        info.body = "";
-
-        // 콘텐츠 타입 설정
-        info.contentType = "application/json";
-
-        //델리게이트에 그냥 넣기 - 람다식 방식  - 지금 여기선 연산 단계 없음
-        info.onComplete = (DownloadHandler downloadHandler) =>
-        {
-            // 서버로부터 받은 응답 출력
-            print(downloadHandler.text);
-        };
-
-        HttpManager.GetInstance().GetAvatarInfo(info);
+        
     }
 
     public MyAvatar myAvatar = new MyAvatar();
-
-    public void GetAvatarCode(int parts, int code)
-    {
-        switch(parts)
-        {
-            case 0:
-                myAvatar.userAvatarGender = code;
-                break;
-            case 1:
-                myAvatar.userAvatarSkin = code; 
-                break;
-            case 2:
-                myAvatar.userAvatarHair = code;
-                break;
-            case 3:
-                myAvatar.userAvatarBody = code;
-                break;
-            case 4:
-                myAvatar.userAvatarHand = code;
-                break;
-        }
-        
-        print("부위" + parts + " 아이템 넘버 " + code);
-
-        AvatarRefresh();
-    }
 
     public void AvatarRefresh()
     {
 
     }
 
-    public void OnClickAvatarFinish()
+    public void StartPostAvatarInfo()
+    {
+        StartCoroutine(PostAvatarInfo(SetHttpInfo("", myAvatar)));
+    }
+
+    public void StartGetAvatarInfo()
+    {
+        StartCoroutine(GetAvatarInfo(SetHttpInfo("", myAvatar)));
+    }
+
+    HttpInfo SetHttpInfo(string url, MyAvatar avatar)
     {
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = "";
+        info.url = url;
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        info.body = JsonUtility.ToJson(myAvatar);
+        info.body = JsonUtility.ToJson(avatar); ;
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";
@@ -100,14 +65,66 @@ public class AvatarHTTPManager : MonoBehaviour
         //델리게이트에 그냥 넣기 - 람다식 방식  - 지금 여기선 연산 단계 없음
         info.onComplete = (DownloadHandler downloadHandler) =>
         {
-            // 서버로부터 받은 응답 출력
-            print(downloadHandler.text);
+            //아바타 정보를 스크립트에 반환
+            string json = downloadHandler.text;
+
+            MyAvatar accountSet = JsonUtility.FromJson<MyAvatar>(json);
+
+            myAvatar = accountSet;
+
+            AvatarRefresh();
         };
 
-        // POST 요청을 위한 코루틴 실행
-        StartCoroutine(HttpManager.GetInstance().SendAvatarInfo(info));
+        return info;
+    }
+
+    //아바타 정보 서버에 저장
+    public IEnumerator PostAvatarInfo(HttpInfo info)
+    {
+        // GET 요청 생성
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
+            // 요청 전송 및 응답 대기
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                info.onComplete(webRequest.downloadHandler);
+            }
+            else
+            {
+                Debug.Log("failed: " + webRequest.error);
+            }
+        }
+    }
+
+    //아바타 정보 가져오기
+    public IEnumerator GetAvatarInfo(HttpInfo info)
+    {
+        // GET 요청 생성
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
+        {
+            // 요청 전송 및 응답 대기
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                // 요청 완료 시 처리
+                info.onComplete(webRequest.downloadHandler);
+            }
+            else
+            {
+                Debug.Log("failed: " + webRequest.error);
+            }
+        }
     }
 }
+
 
 [System.Serializable]
 public struct MyAvatar

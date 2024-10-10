@@ -13,6 +13,7 @@ public class AvatarPanelChildCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         childrenPanel = new GameObject[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
@@ -25,13 +26,8 @@ public class AvatarPanelChildCards : MonoBehaviour
 
             Button button = childrenPanel[i].GetComponent<Button>();
 
-            button.onClick.AddListener(() => AvatarHTTPManager.instance.GetAvatarCode(parts, num.itemNum));
+            button.onClick.AddListener(() => AvatarCanvasManager.instance.PushAvatarCode(parts, num.itemNum));
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        */
     }
 }

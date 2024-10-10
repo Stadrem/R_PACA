@@ -144,7 +144,8 @@ public class HttpManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SendAvatarInfo(HttpInfo info)
+    //아바타 정보 서버에 저장
+    public IEnumerator PostAvatarInfo(HttpInfo info)
     {
         // GET 요청 생성
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
@@ -168,7 +169,7 @@ public class HttpManager : MonoBehaviour
         }
     }
 
-    //GET : 서버에게 데이터를 조회 요청
+    //아바타 정보 가져오기
     public IEnumerator GetAvatarInfo(HttpInfo info)
     {
         // GET 요청 생성
@@ -177,8 +178,15 @@ public class HttpManager : MonoBehaviour
             // 요청 전송 및 응답 대기
             yield return webRequest.SendWebRequest();
 
-            // 요청 완료 시 처리
-            ParseAvatarInfo(webRequest.downloadHandler);
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                // 요청 완료 시 처리
+                ParseAvatarInfo(webRequest.downloadHandler);
+            }
+            else
+            {
+                Debug.Log("failed: " + webRequest.error);
+            }
         }
     }
 
