@@ -8,6 +8,10 @@ public class AvatarHTTPManager : MonoBehaviour
 {
     public static AvatarHTTPManager instance;
 
+    public GameObject player;
+
+    PlayerAvatarSetting pas;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +39,8 @@ public class AvatarHTTPManager : MonoBehaviour
 
     public void AvatarRefresh()
     {
+        pas = player.GetComponent<PlayerAvatarSetting>();
+
 
     }
 

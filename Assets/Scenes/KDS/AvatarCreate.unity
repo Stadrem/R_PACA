@@ -521,18 +521,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 536852610}
   m_LocalEulerAnglesHint: {x: 0, y: -23.806, z: 0}
---- !u!114 &524324679 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
-    type: 3}
-  m_PrefabInstance: {fileID: 5642416067624441819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 145ccd45d199496488ec55061e639e97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &536852609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,8 +1600,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1575097357}
+  - component: {fileID: 1575097358}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerAvatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1633,11 +1622,23 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 779295730}
-  - {fileID: 1809254449}
   - {fileID: 280205752}
+  - {fileID: 1809254449}
   - {fileID: 1470146641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1575097358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575097356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1601993924979074ea7d8a9d175a685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1598644828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,9 +2031,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8307633813187719746, guid: 76932f8acda1cf24c96d2702da34cfab,
         type: 3}
-      propertyPath: aps
-      value: 
-      objectReference: {fileID: 524324679}
+      propertyPath: contents.Array.data[0].children.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8869992811797925139, guid: 76932f8acda1cf24c96d2702da34cfab,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2279,6 +2280,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4265858019477550808, guid: 70e8ab7d70046bc4bb56b6891287bea6,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1575097356}
     - target: {fileID: 8662868281343928976, guid: 70e8ab7d70046bc4bb56b6891287bea6,
         type: 3}
       propertyPath: m_Name

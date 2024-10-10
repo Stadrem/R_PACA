@@ -7,7 +7,7 @@ public class AvatarCanvasManager : MonoBehaviour
 {
     public static AvatarCanvasManager instance;
 
-    public AvatarPresetSettings aps;
+    public GameObject itemsPrefab;
 
     private void Awake()
     {
@@ -18,33 +18,59 @@ public class AvatarCanvasManager : MonoBehaviour
         }
     }
 
-    public Contents[] contents; // 여러 Content 구조체 배열
+    //배열 구조체 생성
+    public Contents[] contents;
 
     public void Start()
     {
+        //시작 시 아바타 정보 받아오기
         AvatarHTTPManager.instance.StartGetAvatarInfo();
-        ContentsChildSet();
+
+        //ui 아이콘 생성
+        ContentsChildSet(0);
     }
 
-    void ContentsChildSet()
+    //AvatarPresetSettings에 설정한 모든 내용을 기반으로 UI 아이콘 자동 생성
+    void ContentsChildSet(int genderNum)
     {
-        for(int j = 0; j <contents.Length; j++)
+        int genderTemp = genderNum;
+        for (int j = 0; j <contents.Length; j++)
         {
+            //Panel A,B,C,D 자식 배열 초기화
             contents[j].children = new List<GameObject>();
 
-            for (int i = 0; i < contents[j].content.transform.childCount; i++)
+            //생성되어있는 요소들 만큼 자식 오브젝트 생성
+            for (int i = 0; i < AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems.Length; i++)
             {
+                GameObject instance = Instantiate(itemsPrefab);
+
+                instance.transform.SetParent(contents[j].content.transform, false);
+
                 contents[j].children.Add(contents[j].content.transform.GetChild(i).gameObject);
 
-                AvatarItemCard num = contents[j].children[i].GetComponent<AvatarItemCard>();
+                //자식 오브젝트안에 값 할당
+                AvatarItemCard itemCard = contents[j].children[i].GetComponent<AvatarItemCard>();
 
-                num.part = j;
+                itemCard.part = j;
 
-                num.itemNum = i;
+                itemCard.itemNum = i;
 
+                itemCard.itemName = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].name;
+                itemCard.mesh = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].mesh;
+                itemCard.material = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].material;
+                itemCard.sprite = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].sprite;
+
+                //스프라이트 교체
+                GameObject temp = itemCard.transform.GetChild(0).gameObject;
+
+                Image originSprite = temp.gameObject.GetComponent<Image>();
+
+                originSprite.sprite = itemCard.sprite;
+
+                //버튼에 액션 할당
                 Button button = contents[j].children[i].GetComponent<Button>();
 
-                button.onClick.AddListener(() => PushAvatarCode(num.part, num.itemNum));
+                button.onClick.AddListener(() => PushAvatarCode(itemCard.part, itemCard.itemNum));
             }
         }
     }
@@ -61,6 +87,7 @@ public class AvatarCanvasManager : MonoBehaviour
         {
             case 0:
                 AvatarHTTPManager.instance.myAvatar.userAvatarGender = code;
+                ContentsChildSet(code);
                 break;
             case 1:
                 AvatarHTTPManager.instance.myAvatar.userAvatarSkin = code;
@@ -76,12 +103,13 @@ public class AvatarCanvasManager : MonoBehaviour
                 break;
         }
 
-        print("부위" + parts + "/ 아이템 넘버 " + code);
+        print("성별 " + AvatarHTTPManager.instance.myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
 
         AvatarHTTPManager.instance.AvatarRefresh();
     }
 }
 
+//PanelA/B/C/D 안에 content 값 할당하는 배열 구조체
 [System.Serializable]
 public struct Contents
 {
