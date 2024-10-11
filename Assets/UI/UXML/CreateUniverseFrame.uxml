@@ -9,16 +9,28 @@
         <ui:VisualElement name="Body" style="flex-grow: 1; height: 80%;">
             <ui:VisualElement name="Container_ContentInput" style="flex-grow: 1; flex-direction: row;">
                 <ui:VisualElement name="Container_ContentLeft" style="flex-grow: 1; width: auto;">
-                    <ui:VisualElement style="flex-grow: 0; height: 150px;" />
-                    <ui:VisualElement style="flex-grow: 1; height: 410px;" />
-                    <ui:VisualElement style="flex-grow: 0; height: 110px; flex-direction: row; align-items: stretch; justify-content: space-around;">
+                    <ui:VisualElement style="flex-grow: 0; height: 150px; flex-direction: row;">
                         <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px;">
-                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                            <ui:Label tabindex="-1" text="제목" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 80px;" />
+                            <ui:Label tabindex="-1" text=";djaskflsd;" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 0; flex-grow: 1; text-overflow: ellipsis; -unity-text-align: middle-left;" />
                         </ui:VisualElement>
                         <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px;">
-                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                            <ui:Label tabindex="-1" text="장르" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 80px;" />
+                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-grow: 1; text-overflow: ellipsis; -unity-text-align: middle-left;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; height: 410px; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row;">
+                        <ui:Label tabindex="-1" text="세계관\n내용" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_universeContent" style="width: 200px; height: 120px; -unity-text-align: middle-center; align-self: flex-start;" />
+                        <ui:Label tabindex="-1" text="테스트 텍스트 테스트 텍스트 테스트 텍스트  긴글자 긴 글자 긴글자 긴 글자 긴 글자 긴글자 긴 글자 긴글자 긴긴글자&#10;\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: flex-start; width: 1200px; flex-grow: 1; height: 100%; flex-wrap: wrap; -unity-text-align: upper-left; white-space: normal; text-overflow: ellipsis;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 0; height: 110px; flex-direction: row; align-items: stretch; justify-content: space-around;">
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px;">
+                            <ui:Label tabindex="-1" text="등장인물" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 40px;" />
+                            <ui:Label tabindex="-1" text=";djaskflsd;" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 0; flex-grow: 1; text-overflow: ellipsis; -unity-text-align: middle-left;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px;">
+                            <ui:Label tabindex="-1" text="배경" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 40px;" />
+                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-grow: 1;" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement style="flex-grow: 0; height: 100px; flex-direction: row;">
@@ -26,7 +38,10 @@
                         <ui:TextField picking-mode="Ignore" value="hihihihihihihi" name="input_tag" style="align-items: stretch; justify-content: flex-start; align-self: center; width: 1000px; height: 60px;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="Container_ContentRight" style="flex-grow: 0; width: 350px;" />
+                <ui:VisualElement name="Container_ContentRight" style="flex-grow: 0; width: 350px;">
+                    <ui:Label tabindex="-1" text="목표" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-color: rgb(108, 108, 108); width: 100%; color: rgb(255, 255, 255);" />
+                    <ui:ListView style="flex-grow: 1; background-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
