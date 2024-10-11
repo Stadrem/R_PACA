@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AvatarPanelParentUi : MonoBehaviour
 {
-    //Panel들 열고 닫는 스크립트
+    //Panel들 열고 닫는 스크립트. Mid에 부착
 
     public static AvatarPanelParentUi instance;
 
@@ -14,6 +14,7 @@ public class AvatarPanelParentUi : MonoBehaviour
         instance = this;
     }
 
+    //Panel ABCD 들어갈 자리
     RectTransform[] childrenPanel;
 
     int originHeight;
@@ -22,6 +23,7 @@ public class AvatarPanelParentUi : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //자식으로 있는 Panel ABCD를 받아옴
         childrenPanel = new RectTransform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
         {

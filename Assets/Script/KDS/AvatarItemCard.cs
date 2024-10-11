@@ -9,11 +9,13 @@ public class AvatarItemCard : MonoBehaviour
 
     public int itemNum = 0;
 
+    /*
     public string itemName = "";
 
     public SkinnedMeshRenderer mesh = null;
 
     public Material material = null;
+    */
 
     public Sprite sprite;
 

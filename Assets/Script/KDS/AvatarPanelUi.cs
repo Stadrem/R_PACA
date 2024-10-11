@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class AvatarPanelUi : MonoBehaviour
 {
-    //SetPanel에 들어갈 클릭 동작 스크립트
+    //각 SetPanel에 들어갈 클릭 동작 스크립트
 
     RectTransform rectTransform;
     RectTransform childRectTransform;
-    public VerticalLayoutGroup parentLayoutGroup;  // Mid 오브젝트에 있는 Vertical Layout Group을 참조
+    VerticalLayoutGroup parentLayoutGroup;  // 상위 상위에 있는 Mid 오브젝트에 있는 Vertical Layout Group을 참조
 
     int originHeight;
     int originWidth;
@@ -51,6 +51,8 @@ public class AvatarPanelUi : MonoBehaviour
         childRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
 
         subPanelHeight = Convert.ToInt32(childRectTransform.sizeDelta.y);
+
+        parentLayoutGroup = transform.parent.transform.parent.GetComponent<VerticalLayoutGroup>();
     }
 
     void LayoutRefresh()

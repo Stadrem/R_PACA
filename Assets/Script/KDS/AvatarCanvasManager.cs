@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static PlayerAvatarSetting;
 
 public class AvatarCanvasManager : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class AvatarCanvasManager : MonoBehaviour
     public void Start()
     {
         //시작 시 아바타 정보 받아오기
-        AvatarHTTPManager.instance.StartGetAvatarInfo();
+        AvatarHTTPManager.instance.StartGetAvatarInfo("아이디");
 
         //ui 아이콘 생성
         ContentsChildSet(0);
@@ -63,9 +64,12 @@ public class AvatarCanvasManager : MonoBehaviour
 
                 itemCard.itemNum = i;
 
+                /*
                 itemCard.itemName = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].name;
                 itemCard.mesh = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].mesh;
                 itemCard.material = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].material;
+                */
+
                 itemCard.sprite = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].sprite;
 
                 //스프라이트 교체
@@ -89,31 +93,33 @@ public class AvatarCanvasManager : MonoBehaviour
         AvatarHTTPManager.instance.StartPostAvatarInfo();
     }
 
+    public MyAvatar myAvatar;
+
     public void PushAvatarCode(int parts, int code)
     {
         switch (parts)
         {
             case 0:
-                AvatarHTTPManager.instance.myAvatar.userAvatarGender = code;
+                myAvatar.userAvatarGender = code;
                 ContentsChildSet(code);
                 break;
             case 1:
-                AvatarHTTPManager.instance.myAvatar.userAvatarSkin = code;
+                myAvatar.userAvatarSkin = code;
                 break;
             case 2:
-                AvatarHTTPManager.instance.myAvatar.userAvatarHair = code;
+                myAvatar.userAvatarHair = code;
                 break;
             case 3:
-                AvatarHTTPManager.instance.myAvatar.userAvatarBody = code;
+                myAvatar.userAvatarBody = code;
                 break;
             case 4:
-                AvatarHTTPManager.instance.myAvatar.userAvatarHand = code;
+                myAvatar.userAvatarHand = code;
                 break;
         }
 
-        print("성별 " + AvatarHTTPManager.instance.myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
+        print("성별 " + myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
 
-        AvatarHTTPManager.instance.AvatarRefresh();
+        AvatarHTTPManager.instance.AvatarRefresh(myAvatar);
     }
 }
 

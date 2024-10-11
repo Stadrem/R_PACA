@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static HttpManager;
 using UnityEngine.Networking;
+using static PlayerAvatarSetting;
 
 public class AvatarHTTPManager : MonoBehaviour
 {
@@ -35,35 +36,63 @@ public class AvatarHTTPManager : MonoBehaviour
         
     }
 
-    public MyAvatar myAvatar = new MyAvatar();
-
-    public void AvatarRefresh()
+    public void AvatarRefresh(MyAvatar post)
     {
         pas = player.GetComponent<PlayerAvatarSetting>();
 
+        pas.myAvatar = post;
 
+        pas.ChangeAvatar();
+    }
+    
+    MyAvatar GetMyAvatarInfo()
+    {
+        pas = player.GetComponent<PlayerAvatarSetting>();
+
+        MyAvatar postMyAvatar = pas.myAvatar;
+
+        return postMyAvatar;
     }
 
+    //서버에 아바타 정보 업로드
     public void StartPostAvatarInfo()
-    {
-        StartCoroutine(PostAvatarInfo(SetHttpInfo("", myAvatar)));
-    }
-
-    public void StartGetAvatarInfo()
-    {
-        StartCoroutine(GetAvatarInfo(SetHttpInfo("", myAvatar)));
-    }
-
-    HttpInfo SetHttpInfo(string url, MyAvatar avatar)
     {
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = url;
+        info.url = "";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        info.body = JsonUtility.ToJson(avatar); ;
+        info.body = JsonUtility.ToJson(GetMyAvatarInfo()); ;
+
+        // 콘텐츠 타입 설정
+        info.contentType = "application/json";
+
+        //델리게이트에 그냥 넣기 - 람다식 방식  - 지금 여기선 연산 단계 없음
+        info.onComplete = (DownloadHandler downloadHandler) =>
+        {
+            print(downloadHandler.text + "아바타 데이터 업로드 성공");
+        };
+
+        StartCoroutine(PostAvatarInfo(info));
+    }
+
+    //서버에서 아바타 정보 받아오기
+    public void StartGetAvatarInfo(string id)
+    {
+        GetMyAvatar getMyAvatar = new GetMyAvatar();
+
+        getMyAvatar.userID = id;
+
+        // HttpInfo 객체 생성
+        HttpInfo info = new HttpInfo();
+
+        // 요청할 URL 설정
+        info.url = "";
+
+        // 전송할 데이터를 JSON 형식으로 변환하여 설정
+        info.body = JsonUtility.ToJson(getMyAvatar); ;
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";
@@ -74,14 +103,12 @@ public class AvatarHTTPManager : MonoBehaviour
             //아바타 정보를 스크립트에 반환
             string json = downloadHandler.text;
 
-            MyAvatar accountSet = JsonUtility.FromJson<MyAvatar>(json);
+            MyAvatar post = JsonUtility.FromJson<MyAvatar>(json);
 
-            myAvatar = accountSet;
-
-            AvatarRefresh();
+            AvatarRefresh(post);
         };
 
-        return info;
+        StartCoroutine(GetAvatarInfo(info));
     }
 
     //아바타 정보 서버에 저장
@@ -131,15 +158,8 @@ public class AvatarHTTPManager : MonoBehaviour
     }
 }
 
-
 [System.Serializable]
-public struct MyAvatar
+public struct GetMyAvatar
 {
-    public string userName;
     public string userID;
-    public int userAvatarGender; //0이면 남자, 1이면 여자.
-    public int userAvatarSkin;
-    public int userAvatarHair;
-    public int userAvatarBody;
-    public int userAvatarHand;
 }
