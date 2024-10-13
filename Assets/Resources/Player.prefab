@@ -1308,9 +1308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0822acf21af2b9641a8d5ff401219939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 7269622975650453198}
-  clickEffect: {fileID: 1069708509897275592, guid: 8e2a4f81faec4ee4c8c9389f6fff60cc,
-    type: 3}
+  cam: {fileID: 7269622975650453198}
   clickableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3016,7 +3014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cd35e1f2ce62442af81e9d666bfbb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 1412146142291017960}
   smoothSpeed: 8
   offset: {x: 0, y: 5, z: -5}
 --- !u!1 &7339870637949297329
