@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96afeabb5dc33747b01590e60fc756e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnConnect: {fileID: 0}
+  btnConnect: {fileID: 1944016936}
 --- !u!4 &135535811
 Transform:
   m_ObjectHideFlags: 0

@@ -11,18 +11,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        // 플레이어를 생성 (현재 로비룸에 함께 접속해 있는 유저들에게도 보이게 동기화)
+        PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
+        // 리소스 폴더내에서 / 경로 설정하고 폴더 파도 됨
+
         // RPC 보내는 빈도 설정
         PhotonNetwork.SendRate = 60;
         // OnPhotonSerializeView 보내고 받고 하는 빈도 설정
         PhotonNetwork.SerializationRate = 60;
 
-        // 인스턴스 오류 뜸 순서안맞아서 그런듯 집가서 해결해라
-
-        // 플레이어를 생성 (현재 Room 에 접속 되어있는 친구들도 보이게)
-        PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
     }
-
-    // Update is called once per frame
     void Update()
     {
         

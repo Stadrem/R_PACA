@@ -9,7 +9,7 @@ using Photon.Pun;
 public class PlayerMove : MonoBehaviourPun
 {
     // 카메라 
-    public GameObject camera;
+    public GameObject cam;
 
 
     const string IDLE = "Idle";
@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviourPun
     Animator animator;
 
     [Header("Movement")]
-    [SerializeField] ParticleSystem clickEffect;
+    //[SerializeField] ParticleSystem clickEffect;
     [SerializeField] LayerMask clickableLayers;
 
     float lookRotationSpeed = 8.0f;
@@ -36,6 +36,7 @@ public class PlayerMove : MonoBehaviourPun
     Quaternion receiveRot;
     // 보정 속력
     public float lerpSpeed = 50.0f;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -47,8 +48,8 @@ public class PlayerMove : MonoBehaviourPun
     }
     private void Start()
     {
-        // 내 플레이어라면 카메라를 활성화자
-        camera.SetActive(photonView.IsMine);
+        // 내 플레이어라면 카메라를 활성화하자
+        cam.SetActive(photonView.IsMine);
     }
 
     void AssignInputs()
@@ -74,12 +75,11 @@ public class PlayerMove : MonoBehaviourPun
         {
             // 목적지를 hit포인트로 설정
             agent.destination = hit.point;
-            if (clickEffect != null)
-            {
+            
                 // 이동클릭 이펙트 생성(포톤생성으로 교체)
                 // 시간지나면 사라지게
-                Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
-            }
+                PhotonNetwork.Instantiate("ClickEffect", hit.point += new Vector3(0, 0.1f, 0), Quaternion.identity);
+            
         }
 
     }
