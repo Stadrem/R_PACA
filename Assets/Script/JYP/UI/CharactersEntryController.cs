@@ -38,7 +38,7 @@ public class CharactersEntryController
             root.Clear();
             var characterItem = characterItemTemplate.CloneTree();
             characterItem.Q<Label>("lbl_name").text = character.name;
-            characterItem.Q<Label>("lbl_description").text = character.description;
+            characterItem.Q<TextField>("input_description").SetValueWithoutNotify(character.description);
             root.RegisterCallback<ClickEvent>(e => { });
             root.Add(characterItem);
         }
@@ -46,7 +46,7 @@ public class CharactersEntryController
         {
             root.Clear();
             var addItem = addItemTemplate.CloneTree();
-            root.RegisterCallback<ClickEvent>(e => { onAddCharacterClicked(); });
+            addItem.Q<Button>("btn_addCharacter").clicked += onAddCharacterClicked;
             root.Add(addItem);
         }
     }

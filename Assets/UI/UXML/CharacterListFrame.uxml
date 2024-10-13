@@ -7,7 +7,7 @@
             <ui:Label tabindex="-1" text="생성일자 2024 / 10  / 05" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_createdDate" style="align-self: flex-start; padding-top: 20px; font-size: 38px; padding-bottom: 20px; padding-right: 48px; padding-left: 48px; background-color: rgb(255, 255, 255);" />
         </ui:VisualElement>
         <ui:VisualElement name="Body" style="flex-grow: 1; height: 80%;">
-            <ui:ListView name="list_characters" style="flex-direction: row; flex-grow: 1;" />
+            <ui:ScrollView name="scroll_characters" mode="Horizontal" horizontal-scroller-visibility="AlwaysVisible" vertical-scroller-visibility="Hidden" style="flex-grow: 1; flex-direction: row;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

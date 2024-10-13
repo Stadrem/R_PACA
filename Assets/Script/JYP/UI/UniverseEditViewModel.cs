@@ -49,7 +49,12 @@ public class UniverseEditViewModel : INotifyPropertyChanged
         get => characters;
         set => SetField(ref characters, value);
     }
-
+    public void AddCharacter(CharactersEntryController.CharacterEntry character)
+    {
+        characters.Add(character);
+        OnPropertyChanged(nameof(Characters));
+    }
+    
     public DateTime CreatedDate
     {
         get => createdDate;
