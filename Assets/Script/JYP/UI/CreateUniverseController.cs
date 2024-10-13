@@ -15,11 +15,7 @@ public class CreateUniverseController : MonoBehaviour
     private TextField tagsInput;
     private ListView objectivesListView;
     private ObjectiveListViewController objectivesListController;
-    
-    private List<string> objectives = new List<string>();
-    private List<string> characters = new List<string>();
-    private List<string> backgrounds = new List<string>();
-
+    private CharactersListViewController charactersListController;
 
     private void OnEnable()
     {
