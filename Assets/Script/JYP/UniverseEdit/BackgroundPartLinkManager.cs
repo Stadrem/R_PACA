@@ -8,7 +8,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
     public float yAlignment = 0.5f;
     public CinemachineVirtualCamera linkViewCamera;
     private bool isLinking = false;
-
+    
     private LinkedBackgroundPart currentPart;
     private ILinkable currentLinkable;
 
@@ -16,6 +16,9 @@ public class BackgroundPartLinkManager : MonoBehaviour
     private List<LinkedLine> lines = new List<LinkedLine>();
     private Camera camera;
 
+    [SerializeField]
+    private BackgroundPartNPCManager npcManager;
+    
     private void Start()
     {
         camera = Camera.main;
@@ -112,6 +115,14 @@ public class BackgroundPartLinkManager : MonoBehaviour
                     Destroy(part.gameObject);
                 }
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (currentPart == null) return;
+            
+            //spawn NPC
+            npcManager.SpawnNPC(currentPart.detail.transform, 0);
+            
         }
     }
 

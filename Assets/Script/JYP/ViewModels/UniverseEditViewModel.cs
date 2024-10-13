@@ -11,6 +11,11 @@ public class UniverseEditViewModel : INotifyPropertyChanged
     private List<string> tags = new List<string>();
     private List<ObjectiveListViewController.ObjectiveListEntry> objectives = new();
     private List<CharactersEntryController.CharacterEntry> characters = new();
+
+    private List<BackgroundPartData> backgroundParts = new();
+    private Dictionary<BackgroundPartData, List<BackgroundPartData>> adjacentList = new();
+    private int nextBackgroundKey = 0;
+
     private DateTime createdDate;
     // private List<string> backgrounds = new List<string>();
 
@@ -49,16 +54,58 @@ public class UniverseEditViewModel : INotifyPropertyChanged
         get => characters;
         set => SetField(ref characters, value);
     }
+
     public void AddCharacter(CharactersEntryController.CharacterEntry character)
     {
         characters.Add(character);
         OnPropertyChanged(nameof(Characters));
     }
-    
+
     public DateTime CreatedDate
     {
         get => createdDate;
         set => SetField(ref createdDate, value);
+    }
+
+    public List<BackgroundPartData> BackgroundParts
+    {
+        get => backgroundParts;
+        set => SetField(ref backgroundParts, value);
+    }
+
+    public Dictionary<BackgroundPartData, List<BackgroundPartData>> AdjacentList
+    {
+        get => adjacentList;
+        set => SetField(ref adjacentList, value);
+    }
+
+    public void LinkBackgroundPart(BackgroundPartData from, BackgroundPartData to)
+    {
+        if (adjacentList[from].Contains(to)) return;
+        adjacentList[from].Add(to);
+        adjacentList[to].Add(from);
+        
+        
+    }
+
+    public void AddBackgroundPart(string name, EBackgroundPartType type)
+    {
+        var newPart = new BackgroundPartData()
+        {
+            Id = nextBackgroundKey,
+            Name = name,
+            Type = type
+        };
+
+        BackgroundParts.Add(newPart);
+        AdjacentList[newPart] = new List<BackgroundPartData>();
+
+        OnPropertyChanged(nameof(BackgroundParts));
+    }
+
+    public void Init()
+    {
+        //load all data's in here
     }
 
 
