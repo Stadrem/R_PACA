@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviourPun
         {
             input.Main.ClickMove.performed += ctx => ClickToMove();
         }
-        // 나의 Player 아니라면
+        // 나의 Player가 아니라면
         else
         {
             // 위치 보정
@@ -75,17 +75,22 @@ public class PlayerMove : MonoBehaviourPun
         {
             // 목적지를 hit포인트로 설정
             agent.destination = hit.point;
-            
-                // 이동클릭 이펙트 생성(포톤생성으로 교체)
-                // 시간지나면 사라지게
-                PhotonNetwork.Instantiate("ClickEffect", hit.point += new Vector3(0, 0.1f, 0), Quaternion.identity);
-            
+
+            // 이동클릭 이펙트 생성
+            // 시간지나면 사라지게
+            GameObject clickEffect = PhotonNetwork.Instantiate("ClickEffect", hit.point += new Vector3(0, 0.1f, 0), Quaternion.identity);
+            // 일정 시간이 지나면 이펙트를 삭제
+            StartCoroutine(DestroyAfterTime(clickEffect, 2.0f)); // 2초 후 삭제됨
         }
 
     }
+    IEnumerator DestroyAfterTime(GameObject go, float delay)
+    {
+        yield return new WaitForSeconds(delay);  // delay 초 대기
+        PhotonNetwork.Destroy(go); // go를 삭제함
+    }
     void OnEnable()
     {
-        // !!! 인풋시스템도 포톤으로 써야하는지 테스트해야함 !!!
         input.Enable();
     }
 
@@ -103,12 +108,20 @@ public class PlayerMove : MonoBehaviourPun
     // 플레이어가 바라볼 방향 구하기
     void FaceTarget()
     {
-        Vector3 direction = (agent.destination - transform.position).normalized;
-        // !!! lookPos.rotation 이거 회전값 맞는지 점검해야함 !!!
-        lookPos.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookPos.rotation, Time.deltaTime * lookRotationSpeed);
+        // 캐릭터가 이동 중일 때만 회전하도록 설정
+        if (agent.velocity.magnitude > 0.1f)
+        {
+            Vector3 direction = (agent.destination - transform.position).normalized;
+
+            // 목적지와의 거리 체크
+            if (Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
+            {
+                lookPos.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookPos.rotation, Time.deltaTime * lookRotationSpeed);
+            }
+        }
     }
-    
+
     // 애니메이션 재생 (테스트용으로 걷기만) 
     void SetAnimaions()
     {
