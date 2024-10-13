@@ -540,25 +540,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 109616076145737709, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 2828993714638107575, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
         type: 3}
       propertyPath: m_Name
       value: DiceRollManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 5338524982484009773, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6773932085718543458, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 7532922088017045870, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
         type: 3}
@@ -609,11 +594,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8625403240530441511, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

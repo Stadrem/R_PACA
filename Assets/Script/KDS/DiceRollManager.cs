@@ -19,10 +19,26 @@ public class DiceRollManager : MonoBehaviour
         }
     }
 
+    //주사위 프리팹
     public GameObject dicePrefab;
-    public GameObject[] diceObjects;
+
+    //오브젝트풀 생성
+    GameObject[] diceObjects;
+
+    //등장할 주사위 갯수
     public int diceCount = 4;
-    public List<int> diceResults = new List<int>(); // 주사위 결과 저장 리스트
+
+    // 주사위 결과 저장 리스트
+    List<int> diceResults = new List<int>(); 
+
+    //결과값 합산
+    int diceResult;
+
+    //사운드
+    AudioSource diceSound;
+
+    //적정값 입력
+    float rollDuration = 0.8f; // 주사위가 굴러가는 시간
 
     // Start is called before the first frame update
     void Start()
@@ -34,50 +50,106 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i] = Instantiate(dicePrefab, transform);
             diceObjects[i].transform.parent = transform;
             diceObjects[i].SetActive(false);
-            diceObjects[i].GetComponent<DiceNumCall>().checkOut = false;
         }
+
+        diceSound = GetComponent<AudioSource>();
     }
 
-    public void DiceRoll(int callDiceCount)
-    {
-        diceResults.Clear(); // 결과 초기화
+    //int 값으로 반환
+    public int DiceRoll(int callDiceCount) 
+    { 
+        //저장된 값 초기화
+        diceResults.Clear();
+        diceResult = 0;
 
+        //주사위 오브젝트풀 활성화
         for (int i = 0; i < callDiceCount; i++)
         {
             diceObjects[i].SetActive(true);
-            diceObjects[i].transform.localPosition = new Vector3(i * 0.05f, 5, 0);
-            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(30 * Random.Range(1.0f, 2.0f), 20 * Random.Range(1.0f, 2.0f)));
-            diceObjects[i].GetComponent<DiceNumCall>().checkOut = false;
-            diceObjects[i].GetComponent<DiceNumCall>().onDiceResult = OnDiceResult; // 콜백 연결
+
+            //등장 위치 무작위
+            diceObjects[i].transform.localPosition = new Vector3(i * 1.5f, 5, Random.Range(-1.1f, 1.1f));
+
+            //회전 값 무작위
+            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.0f, 2.0f), 30 * Random.Range(1.0f, 2.0f)));
+
+            //주사위 1개당 주사위 값 생성
+            diceResults.Add(Random.Range(1,7));
         }
 
-        StartCoroutine(CheckDiceResults(callDiceCount));
+        diceSound.Play();
+
+        //나온 값 합산
+        diceResult = diceResults.Sum();
+
+        print(diceResults.Count + "D" +diceResult);
+
+        // 주사위가 굴러가는 동안 회전 값 설정
+        StartCoroutine(SetDiceResultsAfterRoll(callDiceCount));
+
+        //int 값 반환
+        return diceResult;
     }
 
-    // 주사위 굴림 결과를 체크하는 코루틴
-    IEnumerator CheckDiceResults(int callDiceCount)
+    // 코루틴으로 주사위 회전값 설정 (일정 시간 후)
+    private IEnumerator SetDiceResultsAfterRoll(int callDiceCount)
     {
-        while (diceResults.Count < callDiceCount)
+        // 주사위가 굴러가는 시간을 기다림
+        yield return new WaitForSeconds(rollDuration);
+
+        // 주사위의 결과에 맞게 회전 설정
+        for (int i = 0; i < callDiceCount; i++)
         {
-            yield return null; // 모든 주사위가 멈출 때까지 대기
+            //주사위 나온 값에 맞춰서 최종 회전값 설정
+            Rigidbody rb = diceObjects[i].GetComponent<Rigidbody>();
+            SetDiceResult(diceResults[i], rb);
         }
-
-        int tempDiceResult = diceResults.Sum();
-
-        Debug.Log(callDiceCount + "D" + tempDiceResult); // 결과 출력
     }
 
-    // 각 주사위 결과를 콜백으로 받음
-    private void OnDiceResult(int result)
+    //주사위 회전 함수
+    public void SetDiceResult(int result, Rigidbody rb)
     {
-        diceResults.Add(result);
+        Quaternion finalRotation;
+
+        switch (result)
+        {
+            //주사위의 눈에 맞는 회전값
+            case 1:
+                finalRotation = Quaternion.Euler(-90, 0, 0);  
+                break;
+            case 2:
+                finalRotation = Quaternion.Euler(0, 0, 0); 
+                break;
+            case 3:
+                finalRotation = Quaternion.Euler(0, 0, -90); 
+                break;
+            case 4:
+                finalRotation = Quaternion.Euler(0, 0, 90); 
+                break;
+            case 5:
+                finalRotation = Quaternion.Euler(0, 0, -180); 
+                break;
+            case 6:
+                finalRotation = Quaternion.Euler(90, 0, 0);
+                break;
+            default:
+                finalRotation = Quaternion.Euler(-90, 0, 0);
+                break;
+        }
+
+        //물리 회전 멈추기
+        rb.angularVelocity = Vector3.zero;
+
+        // 주사위의 최종 위치와 회전 설정
+        rb.MoveRotation(finalRotation);
     }
 
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            DiceRoll(2);
+            int result = DiceRoll(4);
+            Debug.Log("반환된 주사위 결과: " + result);
         }
     }
 }
