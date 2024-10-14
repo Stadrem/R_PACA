@@ -28,7 +28,7 @@ public class UniverseCharactersListController : MonoBehaviour
         viewModel = ViewModelManager.Instance.UniverseEditViewModel;
         backButton = root.Q<Button>("btn_back");
         createdDate = root.Q<Label>("label_createdDate");
-        charactersListController.SetItem(viewModel.Characters);
+        charactersListController.SetItem(viewModel.CharacterEntries);
         backButton.clicked += () => { };
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -46,9 +46,9 @@ public class UniverseCharactersListController : MonoBehaviour
         {
             createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
         }
-        else if (e.PropertyName == nameof(viewModel.Characters))
+        else if (e.PropertyName == nameof(viewModel.CharacterEntries))
         {
-            charactersListController.SetItem(viewModel.Characters);
+            charactersListController.SetItem(viewModel.CharacterEntries);
         }
     }
 

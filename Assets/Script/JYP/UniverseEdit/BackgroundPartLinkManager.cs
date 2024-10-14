@@ -8,7 +8,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
     public float yAlignment = 0.5f;
     public CinemachineVirtualCamera linkViewCamera;
     private bool isLinking = false;
-    
+
     private LinkedBackgroundPart currentPart;
     private ILinkable currentLinkable;
 
@@ -16,9 +16,11 @@ public class BackgroundPartLinkManager : MonoBehaviour
     private List<LinkedLine> lines = new List<LinkedLine>();
     private Camera camera;
 
-    [SerializeField]
-    private BackgroundPartNPCManager npcManager;
-    
+    [SerializeField] private BackgroundPartNPCManager npcManager;
+    [SerializeField] private EditorNPCEntry editorNpcEntry;
+
+    [SerializeField] private NPCSpawner npcSpawner;
+
     private void Start()
     {
         camera = Camera.main;
@@ -41,12 +43,14 @@ public class BackgroundPartLinkManager : MonoBehaviour
                         isDetailView = true;
                         currentPart = part;
                         part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
+                        npcSpawner.TurnOnSpawnable(part.detail.transform, part.backgroundPartId);
                         part.detailViewCamera.Priority = 10;
                         linkViewCamera.Priority = 0;
                     }
                 }
             }
         }
+
         else if (Input.GetMouseButtonDown(1))
         {
             if (!isLinking)
@@ -99,6 +103,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
         {
             if (!isDetailView) return;
             isDetailView = false;
+            npcSpawner.TurnOffSpawnable();
             currentPart.ChangeViewType(LinkedBackgroundPart.EViewType.LinkableView);
             currentPart.detailViewCamera.Priority = 0;
             linkViewCamera.Priority = 20;
@@ -115,14 +120,6 @@ public class BackgroundPartLinkManager : MonoBehaviour
                     Destroy(part.gameObject);
                 }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (currentPart == null) return;
-            
-            //spawn NPC
-            npcManager.SpawnNPC(currentPart.detail.transform, 0);
-            
         }
     }
 

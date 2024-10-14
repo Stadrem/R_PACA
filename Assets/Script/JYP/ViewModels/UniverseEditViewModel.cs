@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 public class UniverseEditViewModel : INotifyPropertyChanged
@@ -10,8 +11,7 @@ public class UniverseEditViewModel : INotifyPropertyChanged
     private string content;
     private List<string> tags = new List<string>();
     private List<ObjectiveListViewController.ObjectiveListEntry> objectives = new();
-    private List<CharactersEntryController.CharacterEntry> characters = new();
-
+    private List<ICharacterData> characters = new();
     private List<BackgroundPartData> backgroundParts = new();
     private Dictionary<BackgroundPartData, List<BackgroundPartData>> adjacentList = new();
     private int nextBackgroundKey = 0;
@@ -49,7 +49,31 @@ public class UniverseEditViewModel : INotifyPropertyChanged
         set => SetField(ref objectives, value);
     }
 
-    public List<CharactersEntryController.CharacterEntry> Characters
+    public List<CharactersEntryController.CharacterEntry> CharacterEntries
+    {
+        get => characters.Select(
+            c => new CharactersEntryController.CharacterEntry()
+            {
+                name = c.Name,
+                description = c.Description
+            }
+        ).ToList();
+
+        set
+        {
+            var t = value.Select(
+                c => new BaseCharacterData()
+                {
+                    Name = c.name,
+                    Description = c.description
+                } as ICharacterData
+            ).ToList();
+            
+            SetField(ref characters, t);
+        }
+    }
+    
+    public List<ICharacterData> Characters
     {
         get => characters;
         set => SetField(ref characters, value);
@@ -57,8 +81,16 @@ public class UniverseEditViewModel : INotifyPropertyChanged
 
     public void AddCharacter(CharactersEntryController.CharacterEntry character)
     {
+        var newCharacter = BaseCharacterData.Create(character);
+        characters.Add(newCharacter);
+        OnPropertyChanged(nameof(CharacterEntries));
+    }
+    
+
+    public void AddCharacter(ICharacterData character)
+    {
         characters.Add(character);
-        OnPropertyChanged(nameof(Characters));
+        OnPropertyChanged(nameof(CharacterEntries));
     }
 
     public DateTime CreatedDate
@@ -84,15 +116,13 @@ public class UniverseEditViewModel : INotifyPropertyChanged
         if (adjacentList[from].Contains(to)) return;
         adjacentList[from].Add(to);
         adjacentList[to].Add(from);
-        
-        
     }
 
     public void AddBackgroundPart(string name, EBackgroundPartType type)
     {
         var newPart = new BackgroundPartData()
         {
-            Id = nextBackgroundKey,
+            id = nextBackgroundKey,
             Name = name,
             Type = type
         };
@@ -122,5 +152,11 @@ public class UniverseEditViewModel : INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
+    }
+
+    public void RemoveCharacter(ICharacterData characterData)
+    {
+        characters.Remove(characterData);
+        OnPropertyChanged(nameof(CharacterEntries));
     }
 }

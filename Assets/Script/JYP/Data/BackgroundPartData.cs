@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-public class BackgroundPartData
+﻿public class BackgroundPartData
 {
-    public int Id;
+    public int id;
+    public int universeId;
     public string Name;
     public EBackgroundPartType Type;
 }

@@ -19,6 +19,7 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     public GameObject linkable;
     public CinemachineVirtualCamera detailViewCamera;
     private EViewType viewType = EViewType.LinkableView;
+    public int backgroundPartId = -1;
 
     public void Init(string name, EBackgroundPartType type)
     {
