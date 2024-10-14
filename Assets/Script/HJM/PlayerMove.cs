@@ -21,8 +21,7 @@ public class PlayerMove : MonoBehaviourPun
 
     Animator animator;
 
-    [Header("Movement")]
-    //[SerializeField] ParticleSystem clickEffect;
+    [Header("클릭이동 가능한 레이어")]
     [SerializeField] LayerMask clickableLayers;
 
     float lookRotationSpeed = 8.0f;
@@ -129,7 +128,8 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
-    // 애니메이션 재생 (테스트용으로 걷기만) 
+    // 애니메이션 재생 (테스트용으로 idle, walk 만)
+    // 나중에 포톤으로 변경하고 동기화해야함 !!!
     void SetAnimaions()
     {
         if (agent.velocity == Vector3.zero)
