@@ -8,16 +8,51 @@ public class DiceRollManager : MonoBehaviour
 {
     public static DiceRollManager instance;
 
-    private void Awake()
+    public static DiceRollManager Get()
     {
         if (instance == null)
         {
-            instance = this;
+            // 프리팹 로드
+            GameObject prefabToInstantiate = Resources.Load<GameObject>("scripts/dice/DiceRollManager");
+            if (prefabToInstantiate != null)
+            {
+                // 프리팹 생성
+                GameObject newInstance = Instantiate(prefabToInstantiate);
+                instance = newInstance.GetComponent<DiceRollManager>();
+
+                if (instance == null)
+                {
+                    Debug.LogError("DiceRollManager 컴포넌트를 찾을 수 없습니다!");
+                    return null;
+                }
+            }
+            else
+            {
+                print("없는데요?");
+                return null;
+            }
         }
-        else
+
+        return instance;
+    }
+
+    private void Awake()
+    {
+        if (instance != null)
         {
             Destroy(gameObject);
         }
+
+        diceObjects = new GameObject[diceCount];
+
+        for (int i = 0; i < diceCount; i++)
+        {
+            diceObjects[i] = Instantiate(dicePrefab, transform);
+            diceObjects[i].transform.parent = transform;
+            diceObjects[i].SetActive(false);
+        }
+
+        diceSound = GetComponent<AudioSource>();
     }
 
     //주사위 프리팹
@@ -53,16 +88,7 @@ public class DiceRollManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        diceObjects = new GameObject[diceCount];
 
-        for (int i = 0; i < diceCount; i++)
-        {
-            diceObjects[i] = Instantiate(dicePrefab, transform);
-            diceObjects[i].transform.parent = transform;
-            diceObjects[i].SetActive(false);
-        }
-
-        diceSound = GetComponent<AudioSource>();
     }
 
     //int 값으로 반환
@@ -180,14 +206,5 @@ public class DiceRollManager : MonoBehaviour
 
         // 주사위의 최종 위치와 회전 설정
         rb.MoveRotation(finalRotation);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            int result = DiceRoll(2);
-            Debug.Log("반환된 주사위 결과: " + result);
-        }
     }
 }
