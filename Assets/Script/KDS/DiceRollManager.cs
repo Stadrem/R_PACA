@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class DiceRollManager : MonoBehaviour
@@ -25,7 +26,7 @@ public class DiceRollManager : MonoBehaviour
     //오브젝트풀 생성
     GameObject[] diceObjects;
 
-    //등장할 주사위 갯수
+    //생성할 주사위 갯수
     public int diceCount = 4;
 
     // 주사위 결과 저장 리스트
@@ -37,8 +38,17 @@ public class DiceRollManager : MonoBehaviour
     //사운드
     AudioSource diceSound;
 
+    public LayerMask layerMask;
+
+    // 레이캐스트가 도달할 최대 거리
+    float maxRayDistance = 1000f; 
+
     //적정값 입력
-    float rollDuration = 0.8f; // 주사위가 굴러가는 시간
+    float rollDuration = 0.9f; // 주사위가 굴러가는 시간
+
+    public GameObject canvas;
+
+    public TMP_Text diceText;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +67,27 @@ public class DiceRollManager : MonoBehaviour
 
     //int 값으로 반환
     public int DiceRoll(int callDiceCount) 
-    { 
+    {
+        // 카메라 중심에서 레이캐스트 발사
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        RaycastHit hit; // 충돌 정보를 저장할 변수
+
+        // 레이캐스트가 충돌했는지 확인
+        if (Physics.Raycast(ray, out hit, maxRayDistance, layerMask))
+        {
+            // 충돌 지점의 월드 좌표
+            Vector3 hitPoint = hit.point;
+
+            transform.position = new Vector3(hitPoint.x, 0, hitPoint.z);
+        }
+        else
+        {
+            // 레이캐스트가 아무 오브젝트와도 충돌하지 않았을 때
+            transform.position = new Vector3(0, 0, 0);
+            print("없음");
+        }
+
         //저장된 값 초기화
         diceResults.Clear();
         diceResult = 0;
@@ -97,6 +127,10 @@ public class DiceRollManager : MonoBehaviour
         // 주사위가 굴러가는 시간을 기다림
         yield return new WaitForSeconds(rollDuration);
 
+        diceText.text = diceResults.Count + "D" + diceResult;
+
+        canvas.SetActive(true);
+
         // 주사위의 결과에 맞게 회전 설정
         for (int i = 0; i < callDiceCount; i++)
         {
@@ -104,6 +138,10 @@ public class DiceRollManager : MonoBehaviour
             Rigidbody rb = diceObjects[i].GetComponent<Rigidbody>();
             SetDiceResult(diceResults[i], rb);
         }
+
+        yield return new WaitForSeconds(2);
+
+        canvas.SetActive(false);
     }
 
     //주사위 회전 함수
@@ -148,7 +186,7 @@ public class DiceRollManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            int result = DiceRoll(4);
+            int result = DiceRoll(2);
             Debug.Log("반환된 주사위 결과: " + result);
         }
     }
