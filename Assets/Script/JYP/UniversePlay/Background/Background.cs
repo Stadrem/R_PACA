@@ -4,9 +4,10 @@ using UnityEngine;
 public class Background : MonoBehaviour
 {
     private int id;
+    public int Id => id;
     private string name;
     private bool isLoaded;
-    
+
 
     public void Init(int id, string name, GameObject preset = null)
     {
@@ -16,21 +17,18 @@ public class Background : MonoBehaviour
         {
             Instantiate(preset);
         }
-        
     }
 
     public void LoadMap()
     {
         //get placed background parts
         //
-        
     }
-    
+
     public void Show()
     {
-        
     }
-    
+
     public void Hide()
     {
     }
