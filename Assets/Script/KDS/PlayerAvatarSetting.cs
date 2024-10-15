@@ -12,7 +12,6 @@ public class PlayerAvatarSetting : MonoBehaviour
     [System.Serializable]
     public struct MyAvatar
     {
-        public string userName;
         public string userID;
         public int userAvatarGender; //0이면 남자, 1이면 여자.
         public int userAvatarSkin;
