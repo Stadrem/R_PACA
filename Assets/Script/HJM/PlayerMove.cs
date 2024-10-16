@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviourPun
     // 카메라 
     public GameObject cam;
 
-
+    // 오타 조심
     const string IDLE = "Idle";
     const string WALK = "Walk";
 
@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviourPun
     Animator animator;
 
     [Header("클릭이동 가능한 레이어")]
-    [SerializeField] LayerMask clickableLayers;
+    [SerializeField] LayerMask clickableLayers; // 나중에 레이어 제대로 분리해서 땅만 선택 레이어에 넣기
 
     float lookRotationSpeed = 8.0f;
 
@@ -86,6 +86,7 @@ public class PlayerMove : MonoBehaviourPun
 
             // 일정 시간이 지나면 이펙트를 삭제
             StartCoroutine(DestroyAfterTime(clickEffect, 2.0f)); // 2초 후 삭제됨
+            // 추후에 클릭이펙트가 플레이어 도착 시 사라지도록 수정
         }
 
     }
@@ -128,8 +129,8 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
-    // 애니메이션 재생 (테스트용으로 idle, walk 만)
-    // 나중에 포톤으로 변경하고 동기화해야함 !!!
+    // 애니메이션 재생 (테스트용으로 idle, walk 만), 다른 방식으로 애니메이션 넣어도 됨
+    // 나중에 포톤 동기화해야함 !!! 아바타설정 후에 하면 될듯
     void SetAnimaions()
     {
         if (agent.velocity == Vector3.zero)

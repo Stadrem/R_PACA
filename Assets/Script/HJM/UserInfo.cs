@@ -19,7 +19,7 @@ public class UserInfo : MonoBehaviour
     public int userAvatarHand;
 
 
-    // 유저 정보 초기화
+    // 유저 정보 초기화용 함수
     public void Initialize(string inputID, string inputPW, string inputName, int gender, int hair, int body, int skin, int hand)
     {
         userID = inputID;
