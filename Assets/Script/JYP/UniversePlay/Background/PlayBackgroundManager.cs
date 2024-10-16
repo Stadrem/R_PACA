@@ -1,64 +1,48 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayBackgroundManager : MonoBehaviour
 {
     private List<BackgroundPartData> backgroundPartDataList;
-    private List<Background> backgroundList;
-    
+
     private UniverseData universeData;
     private Background currentBackground;
-    
+
     private void Awake()
     {
-        backgroundPartDataList = new List<BackgroundPartData>();
-    }
-    
-    public void Init(UniverseData universeData,List<BackgroundPartData> backgroundPartDataList)
-    {
-        this.universeData = universeData;
-        this.backgroundPartDataList = backgroundPartDataList;
-        backgroundList = new List<Background>(backgroundPartDataList.Count);
-        backgroundList.Find(x => x.Id == universeData.startBackgroundId).Show();
     }
 
-    private IEnumerator LoadData()
+    public void Init(UniverseData universe, List<BackgroundPartData> universeBackgroundPartDataList)
     {
-        for(int i = 0;i < backgroundList.Count; i++)
+        this.universeData = universe;
+        this.backgroundPartDataList = universeBackgroundPartDataList;
+        var type = universeBackgroundPartDataList.Find(x => x.id == universe.startBackgroundId).Type;
+        LoadSceneByPreset(type);
+    }
+
+    private void LoadSceneByPreset(EBackgroundPartType type)
+    {
+        switch (type)
         {
-            var backgroundPartData = backgroundPartDataList[i];
-            GameObject backgroundPartPresetPrefab;
-
-            switch (backgroundPartData.Type)
-            {
-                case EBackgroundPartType.None:
-                    backgroundPartPresetPrefab = Resources.Load<GameObject>("BackgroundPartPresets/Default");
-                    break;
-                case EBackgroundPartType.Town:
-                    backgroundPartPresetPrefab = Resources.Load<GameObject>("BackgroundPartPresets/Town");
-                    break;
-                case EBackgroundPartType.Dungeon:
-                    backgroundPartPresetPrefab = Resources.Load<GameObject>("BackgroundPartPresets/Dungeon");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            if (backgroundPartPresetPrefab == null)
-            {
-                Debug.LogError($"Background part {backgroundPartData.Name} not found");
-                continue;
-            }
+            case EBackgroundPartType.None:
+                break;
+            case EBackgroundPartType.Town:
+                SceneManager.LoadScene("Town");
+                break;
+            case EBackgroundPartType.Dungeon:
+                SceneManager.LoadScene("Dungeon");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
-        yield return null;
     }
+
 
     public void MoveTo(int backgroundId)
     {
-        if (currentBackground == null) return;
-        currentBackground.Hide();
-        currentBackground = backgroundList.Find(x => x.Id == backgroundId);
-        currentBackground.Show();
+        var type = backgroundPartDataList.Find(x => x.id == backgroundId).Type;
+        LoadSceneByPreset(type);
     }
 }
