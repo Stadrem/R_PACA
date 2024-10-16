@@ -35,6 +35,13 @@ public class PlayerAvatarSetting : MonoBehaviour
 
         ChangeAvatar();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeAvatar();
+        }
+    }
 
     //0번 게임 오브젝트 : 성별 바디 // 2번: 모자 // 3번: 의류 // 4번: 도구
     public void ChangeAvatar()
