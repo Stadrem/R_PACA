@@ -17,6 +17,13 @@ public class PlayUniverseManager : MonoBehaviour
 
     public PlayNpcManager NpcManager => playNpcManager;
 
+    [SerializeField]
+    private NpcChatManager npcChatManager;
+    public  NpcChatManager NpcChatManager => npcChatManager;
+    
+    [SerializeField]
+    private CamSettingStateManager camSettingManager;
+    public CamSettingStateManager CamSettingManager => camSettingManager;
     public static PlayUniverseManager Instance
     {
         get
@@ -55,11 +62,12 @@ public class PlayUniverseManager : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, 1000))
+            if (Physics.Raycast(ray, out var hit, float.MaxValue))
             {
-                if (hit.collider.CompareTag("NPC"))
+                if (hit.collider.CompareTag("InPlayNPC"))
                 {
-                    //ToDo Interaction View(Chat)s
+                    playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
+                    CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
                 }
             }
         }
