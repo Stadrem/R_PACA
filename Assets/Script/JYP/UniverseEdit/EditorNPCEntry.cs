@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class EditorNPCEntry : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public NPCData characterData;
+    public NpcData characterData;
     public NPCSpawner npcSpawner; // Reference to NPCSpawner
 
     public void OnBeginDrag(PointerEventData eventData)

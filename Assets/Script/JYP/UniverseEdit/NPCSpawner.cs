@@ -13,7 +13,7 @@ public class NPCSpawner : MonoBehaviour
     private UniverseEditViewModel viewModel;
     private GameObject draggedNPCEntry = null;
     private bool isDragging = false;
-    private NPCData draggingNPCData = null;
+    private NpcData draggingNPCData = null;
     private int drraggedBackgroundPartId = -1;
 
     private void Start()
@@ -79,7 +79,7 @@ public class NPCSpawner : MonoBehaviour
                 var spawnedPos = SpawnNPCAtMousePosition();
                 if (!spawnedPos.HasValue) return;
                 viewModel.RemoveCharacter(draggingNPCData);
-                var newData = new NPCData()
+                var newData = new NpcData()
                 {
                     Name = draggingNPCData.Name,
                     Description = draggingNPCData.Description,
@@ -134,7 +134,7 @@ public class NPCSpawner : MonoBehaviour
         {
             case BaseCharacterData baseCharacter:
                 break;
-            case NPCData npcData:
+            case NpcData npcData:
                 // change the NPCData to BaseCharacterData
                 ICharacterData newData = new BaseCharacterData()
                 {

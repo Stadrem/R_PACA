@@ -27,6 +27,8 @@ public class Background
             var portalInPlay = go.GetComponent<PortalInPlay>();
             portalInPlay.Init(portal);
         }
+        
+        
     }
     
 }
