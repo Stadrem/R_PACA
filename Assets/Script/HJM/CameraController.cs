@@ -14,9 +14,8 @@ public class CameraController : MonoBehaviour
     {
         if (target == null) return;
 
-        Vector3 desirePos = new Vector3(target.position.x, target.position.y + offset.y, target.position.z + offset.z);
-        Vector3 smoothedPos = Vector3.Lerp(transform.position, desirePos, smoothSpeed * Time.deltaTime);
-        transform.position = desirePos;
+        Vector3 camPos = new Vector3(target.position.x, target.position.y + offset.y, target.position.z + offset.z);
+        transform.position = camPos;
 
         // 카메라가 항상 타겟을 바라보게 설정
         transform.LookAt(target);

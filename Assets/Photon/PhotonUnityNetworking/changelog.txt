@@ -124,7 +124,7 @@ Updated: Realtime API to 4.1.5.4, preventing several error cases.
 v2.29 (15. March 2021)
 Updated: Minimum supported Unity version to 2018.4.x. We develop PUN 2 in Unity 2018.4.22 from now on. Also the language compatibility level '.Net 4.x' or '.Net Standard 2.0' is now expected.
 Updated: Export settings for the dlls in Assets\PhotonLibs. All platforms will use .Net Standard 2.0, except the UWP export with .Net Runtime (which uses Metro with a placeholder being the lib in PhotonLibs\).
-Removed: Setting of protocol 1.6 when connecting directly to a Master Server. This was a workaround for older Photon Server SDKs.
+Removed: Setting of protocol 1.6 when connecting directly to a 마스터 서버. This was a workaround for older Photon Server SDKs.
 Note: If you host Photon yourself, you can set the LoadBalancingClient.SerializationProtocol to SerializationProtocol.GpBinaryV16, before you connect.
 Added: IPunOwnershipCallbacks.OnOwnershipTransferFailed. This helps react when an Ownership Transfer request failed (due to earlier changes). This might mean you have to implement OnOwnershipTransferFailed in some scripts.
 Changed: PhotonView OwnerActorNr and ControllerActorNr to make use of the new Room.GetPlayer() option (to get the Master Client instance if the owner/controller is set to 0).
@@ -308,7 +308,7 @@ Fixed: Some warnings that Unity was showing on build.
 Changed: The checks before sending operations. As long as the peer is switching servers, there is no connection and operations can not be sent. This is logged better.
 Added: Logging of OnJoinRoomFailed to SupportLogger.
 Changed: StripKeysWithNullValues to reuse a list of key with null-values. This causes less allocations and garbage to clean.
-Fixed: Setting the serialization protocol for connections that directly go to the Master Server. This was broken in v2.17 by accident.
+Fixed: Setting the serialization protocol for connections that directly go to the 마스터 서버. This was broken in v2.17 by accident.
 Changed: The assembly PhotonWebsocket (WebSocket folder) will no longer export to UWP / Windows Store builds, even if the compile define WEBSOCKET is set. It is simply incompatible with the platform.
 Changed: LoadBalancingPeer.ConfigUnitySockets() will not set the UDP/TCP sockets for Windows Store builds.
 Changed: RegionHandler.GetPingImplementation will no longer use PingMono class, unless it is defined by some platform-specific code.
@@ -335,7 +335,7 @@ Updated: The Realtime API and Photon3Unity3d.dll (v4.1.3.0) with lots of improve
 v2.16 (26. November 2019)
 Reverted: Some changes in the TypedLobby class. Setting Name and Type does not depend on some other state. Just make sure the Name is not null or empty or the TypedLobby will point to the "default lobby" with a fixed/defined behaviour.
 Fixed: Properly set the received interest group on the PhotonViews of the locally instantiated networked GameObject.
-Fixed: Issue in RegionHandler in WebGL which prevented connection to master server if a scene was loaded during best region ping/calculation.
+Fixed: Issue in RegionHandler in WebGL which prevented connection to 마스터 서버 if a scene was loaded during best region ping/calculation.
 Fixed: A rare condition where a region preference can't be parsed into the region and ping values the inspector attempts to show. We check the result of the "split" now.
 Updated: The email check for registrations. Should be more accurate.
 Internal: Optimized Instantiation, RPC calling and sending with cached / reusable keys. This avoids some garbage creation.
@@ -454,8 +454,8 @@ v2.8 (15. March 2019)
 Changed: Unity 5.6.6f2 is now the minimum supported version. Older versions won't run in the most up to date MacOS anymore, so we decided to drop those.
 Added: VIVEPORT Authentication provider. See: https://www.photonengine.com/en-us/viveport and docs: https://doc.photonengine.com/en-us/arvr/current/connection-and-authentication/authentication/viveport-auth
 Changed: The cached "best region" is cleared whenever a region's pinging finishes. This fixes a potential issue when the BestRegion value is used before the pinging is done. Then, you end up with a wrong selection.
-Added: When connecting to a Master Server directly (likely a Photon Server / OnPremise) without a UserId, PUN will now set a GUID. This reflects the behaviour of the Photon Cloud and helps differentiate clients by a UserId in matchmaking.
-Changed: When connecting to a Master Server directly (likely a Photon Server / OnPremise) with WebSockets, PUN now automatically uses a compatible serialization protocol (GpBinaryV16).
+Added: When connecting to a 마스터 서버 directly (likely a Photon Server / OnPremise) without a UserId, PUN will now set a GUID. This reflects the behaviour of the Photon Cloud and helps differentiate clients by a UserId in matchmaking.
+Changed: When connecting to a 마스터 서버 directly (likely a Photon Server / OnPremise) with WebSockets, PUN now automatically uses a compatible serialization protocol (GpBinaryV16).
 Changed: The callbacks OnRoomPropertiesUpdate and OnPlayerPropertiesUpdate are not called when/before entering a room. It was the case whenever properties change, which is also the case when the Realtime API constructs the room or the player (with properties). Wait for OnJoinedRoom and check properties the first time when that's called.
 Updated: Photon3Unity3d.dll library to 4.1.2.10, rev5023.
 
@@ -530,7 +530,7 @@ Removed: Surplus warning logged when the lower-level connection reports a Discon
 Fixed: When using the 4.x mono runtime in Unity, the Socket.Receive method could get stuck and cause timeouts (in Editor and builds). The LoadBalancingClient now works around this by using the SocketUdpAsync class from our Photon dll in those cases. Please report if there are network-issues with 4.x runtime, mono.
 Changed: Enum DisconnectCause. Replace TimeoutDisconnect with ClientTimeout. Replace DisconnectByServer with ServerTimeout. Replace DisconnectByServerUserLimit with MaxCcuReached.
 Added: Enum DisconnectCause.DisconnectByServerReasonUnknown for the case it's neither a ccu-limit, timeout nor a disconnect by the room's logic.
-Changed: Warning-dialog "AppId not set" is not shown, if the configuration points to a Master Server (Photon OnPremise). When the new server SDK expects an AppId, too, this could be reverted.
+Changed: Warning-dialog "AppId not set" is not shown, if the configuration points to a 마스터 서버 (Photon OnPremise). When the new server SDK expects an AppId, too, this could be reverted.
 Updated: Cockpit demo scene to expose automaticallySyncLevel and load level form. Updated links to docs.
 Updated: The readme.txt.
 Updated: The Photon3Unity3d.dll to v4.1.2.2, which has a few changes. See release_history.txt.
@@ -562,7 +562,7 @@ Changed: The Asteroids demo caches a list of available rooms now.
 v2.0.1  (4th September 2018)
 Updated: Asteroids Demo. Fixed room listing, player listing, the ready-button and the countdown for ship instantiation.
 Added: A "teleport" setting to the PhotonRigidbody2DView and PhotonRigidbodyView. With this, you can implement teleporting as done in the Asteroids Demo.
-Changed: When the PhotonServerSettings point to a Master Server, ConnectUsingSettings() will re-set the serialization protocol (SerializationProtocolType) to be compatible with the Photon Server SDK.
+Changed: When the PhotonServerSettings point to a 마스터 서버, ConnectUsingSettings() will re-set the serialization protocol (SerializationProtocolType) to be compatible with the Photon Server SDK.
 
 v2.0  (7th August 2018)
 Updated: PUN! Cleaned up naming, callbacks, APIs and demos.
