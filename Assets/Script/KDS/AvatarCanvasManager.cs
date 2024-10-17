@@ -4,11 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using static PlayerAvatarSetting;
 
-public class AvatarCanvasManager : MonoBehaviour
+public class AvatarCanvasManager : AvatarHTTPManager
 {
     public static AvatarCanvasManager instance;
 
+    public GameObject playerAvatar;
+
     public GameObject itemsPrefab;
+
+    PlayerAvatarSetting pas;
+
+    public ConnectionMgr cm;
 
     private void Awake()
     {
@@ -24,11 +30,10 @@ public class AvatarCanvasManager : MonoBehaviour
 
     public void Start()
     {
-        //시작 시 아바타 정보 받아오기
-        AvatarHTTPManager.instance.StartGetAvatarInfo("아이디");
-
         //ui 아이콘 생성
         ContentsChildSet(0);
+
+        pas = playerAvatar.GetComponent<PlayerAvatarSetting>();
     }
 
     //AvatarPresetSettings에 설정한 모든 내용을 기반으로 UI 아이콘 자동 생성
@@ -64,12 +69,6 @@ public class AvatarCanvasManager : MonoBehaviour
 
                 itemCard.itemNum = i;
 
-                /*
-                itemCard.itemName = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].name;
-                itemCard.mesh = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].mesh;
-                itemCard.material = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].material;
-                */
-
                 itemCard.sprite = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].sprite;
 
                 //스프라이트 교체
@@ -90,7 +89,11 @@ public class AvatarCanvasManager : MonoBehaviour
     public void OnClickAvatarFinish()
     {
         // POST 요청을 위한 코루틴 실행
-        AvatarHTTPManager.instance.StartPostAvatarInfo();
+        StartPostAvatarInfo(myAvatar);
+
+        TempFakeServer.instance.myAvatar = myAvatar;
+
+        cm.OnClickConnect();
     }
 
     public MyAvatar myAvatar;
@@ -119,7 +122,9 @@ public class AvatarCanvasManager : MonoBehaviour
 
         print("성별 " + myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
 
-        AvatarHTTPManager.instance.AvatarRefresh(myAvatar);
+        pas.myAvatar = myAvatar;
+
+        pas.ChangeAvatar();
     }
 }
 

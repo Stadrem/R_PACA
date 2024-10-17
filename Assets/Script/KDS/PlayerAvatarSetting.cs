@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //Player Prefab 최상단에 붙일 스크립트
-public class PlayerAvatarSetting : MonoBehaviour
+public class PlayerAvatarSetting : AvatarHTTPManager
 {
     //몸체 3D 게임 오브젝트 저장
     //0번 바디, 1번 헤어, 2번 옷, 3번 무기
@@ -12,19 +13,7 @@ public class PlayerAvatarSetting : MonoBehaviour
 
     PhotonView pv;
 
-    UserInfo info;
-
-    //현재 아바타 세팅 저장
-    [System.Serializable]
-    public struct MyAvatar
-    {
-        public string userID;
-        public int userAvatarGender; //0이면 남자, 1이면 여자.
-        public int userAvatarSkin;
-        public int userAvatarHair;
-        public int userAvatarBody;
-        public int userAvatarHand;
-    }
+    GetMyAvatar info;
 
     public MyAvatar myAvatar;
 
@@ -32,34 +21,59 @@ public class PlayerAvatarSetting : MonoBehaviour
 
     private void Awake()
     {
-        pv = transform.parent.GetComponent<PhotonView>();
+        // 현재 씬의 이름을 가져옴
+        Scene currentScene = SceneManager.GetActiveScene();
 
-        info = transform.parent.GetComponent<UserInfo>();
+        // 씬 이름 비교
+        if (currentScene.name != "AvatarCreate")
+        {
+            //info = 
 
-        AvatarHTTPManager.Get().StartGetAvatarInfo(info.userID);
+            pv = transform.parent.GetComponent<PhotonView>();
+        }
     }
 
     void Start()
     {
-        /*
-        //자식으로 있는 오브젝트들 받아오기
-        avatarParts = new GameObject[transform.childCount];
+        RefreshAvatar();
 
-
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            avatarParts[i] = transform.GetChild(i).gameObject;
-        }
-        */
-
-        ChangeAvatar();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ChangeAvatar();
         }
+    }
+
+    // 씬이 로드될 때마다 호출되는 함수
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        RefreshAvatar();
+    }
+
+    void RefreshAvatar()
+    {
+        info.userID = TempFakeServer.instance.info.userID;
+
+        //서버에서 아바타 정보 받아오기
+        StartGetAvatarInfo(info.userID, (getAvatar) =>
+        {
+            myAvatar = getAvatar;
+        });
+
+        myAvatar = TempFakeServer.instance.myAvatar;
+
+        // 씬 로드 후 실행할 함수 호출
+        ChangeAvatar();
+    }
+
+    void OnDestroy()
+    {
+        // 오브젝트가 파괴될 때 이벤트 등록 해제 (중복 방지)
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     //0번 게임 오브젝트 : 성별 바디 // 2번: 모자 // 3번: 의류 // 4번: 도구

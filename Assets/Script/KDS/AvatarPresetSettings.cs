@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 //생성할 아바타 데이터 지정
 public class AvatarPresetSettings : MonoBehaviour
 {

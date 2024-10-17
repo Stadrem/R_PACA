@@ -4,75 +4,15 @@ using UnityEngine;
 using static HttpManager;
 using UnityEngine.Networking;
 using static PlayerAvatarSetting;
+using System;
+using UnityEditor.Experimental.GraphView;
 
 public class AvatarHTTPManager : MonoBehaviour
 {
-    public static AvatarHTTPManager instance;
-
-    public GameObject player;
-
-    PlayerAvatarSetting pas;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            // 인스턴스 설정
-            instance = this;
-
-            //씬 전환 시 객체 파괴 방지
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            // 이미 인스턴스가 존재하면 현재 객체를 파괴
-            Destroy(gameObject);
-        }
-    }
-
-    public static AvatarHTTPManager Get()
-    {
-        if (instance == null)
-        {
-            // 프리팹 생성
-            GameObject newInstance = new GameObject("AvatarHTTPManager");
-            instance = newInstance.AddComponent<AvatarHTTPManager>();
-
-            if (instance == null)
-            {
-                return null;
-            }
-        }
-        else
-        {
-            print("없는데요?");
-            return null;
-        }
-        return instance;
-    }
-
-
-private void Start()
-    {
-        pas = player.GetComponent<PlayerAvatarSetting>();
-    }
-
-    void FindIsMinePlayer()
-    {
-        pas = player.GetComponent<PlayerAvatarSetting>();
-    }
-
-    public void AvatarRefresh(MyAvatar post)
-    {
-        pas.myAvatar = post;
-
-        pas.ChangeAvatar();
-    }
-
     //서버에 아바타 정보 업로드
-    public void StartPostAvatarInfo()
+    public void StartPostAvatarInfo(MyAvatar myAvatar)
     {
-        MyAvatar postMyAvatar = pas.myAvatar;
+        MyAvatar postMyAvatar = myAvatar;
 
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
@@ -96,7 +36,7 @@ private void Start()
     }
 
     //서버에서 아바타 정보 받아오기
-    public void StartGetAvatarInfo(string id)
+    public void StartGetAvatarInfo(string id, Action<MyAvatar> onAvatarReceived)
     {
         GetMyAvatar getMyAvatar = new GetMyAvatar();
 
@@ -120,9 +60,10 @@ private void Start()
             //아바타 정보를 스크립트에 반환
             string json = downloadHandler.text;
 
-            MyAvatar post = JsonUtility.FromJson<MyAvatar>(json);
+            MyAvatar get = JsonUtility.FromJson<MyAvatar>(json);
 
-            AvatarRefresh(post);
+            // 콜백 함수로 아바타 정보 반환
+            onAvatarReceived?.Invoke(get);
         };
 
         StartCoroutine(GetAvatarInfo(info));
@@ -179,4 +120,16 @@ private void Start()
 public struct GetMyAvatar
 {
     public string userID;
+}
+
+//현재 아바타 세팅 저장
+[System.Serializable]
+public struct MyAvatar
+{
+    public string userID;
+    public int userAvatarGender; //0이면 남자, 1이면 여자.
+    public int userAvatarSkin;
+    public int userAvatarHair;
+    public int userAvatarBody;
+    public int userAvatarHand;
 }
