@@ -1,37 +1,32 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Background : MonoBehaviour
+public class Background
 {
-    private int id;
-    private string name;
-    private bool isLoaded;
-    
+    public int Id => data.id;
 
-    public void Init(int id, string name, GameObject preset = null)
+    private BackgroundPartData data;
+    private List<PortalInPlay> portalParts;
+    private Transform parent = null;
+    public void Init(BackgroundPartData data)
     {
-        this.id = id;
-        this.name = name;
-        if (preset != null)
+        this.data = data;
+    }
+
+    public void LoadParts()
+    {
+        if (data == null) return;
+        Debug.Log($"LoadParts on {SceneManager.GetActiveScene().name} / {data.Name}");
+        var portals = data.portalList;
+        foreach (var portal in portals)
         {
-            Instantiate(preset);
+            var portalPrefab = Resources.Load<GameObject>("BackgroundPart/Portal_Play");
+            var go = GameObject.Instantiate(portalPrefab, portal.position, Quaternion.identity, parent);
+            var portalInPlay = go.GetComponent<PortalInPlay>();
+            portalInPlay.Init(portal);
         }
-        
-    }
-
-    public void LoadMap()
-    {
-        //get placed background parts
-        //
-        
     }
     
-    public void Show()
-    {
-        
-    }
-    
-    public void Hide()
-    {
-    }
 }
