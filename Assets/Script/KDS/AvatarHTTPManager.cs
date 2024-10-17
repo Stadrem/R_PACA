@@ -30,8 +30,29 @@ public class AvatarHTTPManager : MonoBehaviour
         }
     }
 
+    public static AvatarHTTPManager Get()
+    {
+        if (instance == null)
+        {
+            // 프리팹 생성
+            GameObject newInstance = new GameObject("AvatarHTTPManager");
+            instance = newInstance.AddComponent<AvatarHTTPManager>();
 
-    private void Start()
+            if (instance == null)
+            {
+                return null;
+            }
+        }
+        else
+        {
+            print("없는데요?");
+            return null;
+        }
+        return instance;
+    }
+
+
+private void Start()
     {
         pas = player.GetComponent<PlayerAvatarSetting>();
     }

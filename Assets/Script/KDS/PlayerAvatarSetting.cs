@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,10 @@ public class PlayerAvatarSetting : MonoBehaviour
     //몸체 3D 게임 오브젝트 저장
     //0번 바디, 1번 헤어, 2번 옷, 3번 무기
     public GameObject[] avatarParts;
+
+    PhotonView pv;
+
+    UserInfo info;
 
     //현재 아바타 세팅 저장
     [System.Serializable]
@@ -24,6 +29,16 @@ public class PlayerAvatarSetting : MonoBehaviour
     public MyAvatar myAvatar;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        pv = transform.parent.GetComponent<PhotonView>();
+
+        info = transform.parent.GetComponent<UserInfo>();
+
+        AvatarHTTPManager.Get().StartGetAvatarInfo(info.userID);
+    }
+
     void Start()
     {
         /*
