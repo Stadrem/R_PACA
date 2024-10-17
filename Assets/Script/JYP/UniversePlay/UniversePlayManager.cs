@@ -5,7 +5,10 @@ public class UniversePlayManager : MonoBehaviour
 {
     private static UniversePlayManager instance;
 
-    [SerializeField] private PlayBackgroundManager playBackgroundManager;
+    [SerializeField]
+    private PlayBackgroundManager playBackgroundManager;
+
+    public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
     public static UniversePlayManager Instance
     {
@@ -45,11 +48,22 @@ public class UniversePlayManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            var universe = new UniverseData()
+            var portalList1 = new List<PortalData>()
             {
-                id = 0,
-                name = "Universe 0",
-                startBackgroundId = 0,
+                new PortalData()
+                {
+                    position = new Vector3(0, 0, 0),
+                    targetBackgroundId = 1,
+                },
+            };
+
+            var portalList2 = new List<PortalData>()
+            {
+                new PortalData()
+                {
+                    position = new Vector3(0, 0, 0),
+                    targetBackgroundId = 0,
+                },
             };
             var backgroundList = new List<BackgroundPartData>()
             {
@@ -59,6 +73,7 @@ public class UniversePlayManager : MonoBehaviour
                     Name = "Town 0",
                     Type = EBackgroundPartType.Town,
                     universeId = 0,
+                    portalList = portalList1,
                 },
                 new BackgroundPartData()
                 {
@@ -66,8 +81,17 @@ public class UniversePlayManager : MonoBehaviour
                     Name = "Dungeon 0",
                     Type = EBackgroundPartType.Dungeon,
                     universeId = 0,
+                    portalList = portalList2,
                 },
             };
+
+            var universe = new UniverseData()
+            {
+                id = 0,
+                name = "Universe 0",
+                startBackground = backgroundList[0],
+            };
+
             playBackgroundManager.Init(universe, backgroundList);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
