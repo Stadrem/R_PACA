@@ -721,8 +721,8 @@ LoadBalancing:
     Updated: EventCode ErrorInfo reference with a link to "WebHooks" doc online.
     Changed: Disconnect handling in the LoadBalancingClient. The client should reset correctly and log info, if it's in a State where a disconnect is a proper error. Note: In some cases like "switching server", a disconnect is expected, so it's not an error then.
     Fixed: PlayerProperties sent to game server will now include well-known properties again. This fixes the "NickName missing" bug.
-    Fixed: LoadBalancingClient.State value when the client fails to join or create a game on the Master Server. The state is correctly re-set to ClientState.JoinedLobby or ClientState.ConnectedToMaster.
-    Internal: Added private inLobby value, to store if the client was/is in a lobby on the Master Server.
+    Fixed: LoadBalancingClient.State value when the client fails to join or create a game on the 마스터 서버. The state is correctly re-set to ClientState.JoinedLobby or ClientState.ConnectedToMaster.
+    Internal: Added private inLobby value, to store if the client was/is in a lobby on the 마스터 서버.
     Fixed: DemoClient (in demo-loadbalancing) now makes use of the Name Server by using: ConnectToRegionMaster("eu").
     Added: DemoClient now has debug output when the connection times out or can't be established.
 
@@ -805,7 +805,7 @@ LoadBalancing (Realtime and Turnbased API)
     Changed: LoadBalancingClient.UserId no longer directly stores the id but puts it into AuthValues. This means, the UserId could also be set via setting AuthValues.
     Changed: The API of AuthenticationValues. There is now the UserId and AddAuthParameter() replaces the less general SetAuthParameters() (which only set specific key/values).
     Changed: PlayerName gets renamed to NickName, so PhotonPlayer.Name becomes .NickName and LoadBalancingClient.Name becomes .NickName, too. The old naming is marked as obsolete.
-    Changed: Particle Demo now connects to the Cloud by default (because it's easier to setup and try). You can define your own Master Server (Photon OnPremise) of course.
+    Changed: Particle Demo now connects to the Cloud by default (because it's easier to setup and try). You can define your own 마스터 서버 (Photon OnPremise) of course.
     Added: GamePropertyKey.MasterClientId (248) and ParameterCode.MasterClientId (203)
     Added: ParameterCode.ExpectedValues (231)
     Added: ParameterCode.SuppressRoomEvents (237)
@@ -1042,7 +1042,7 @@ LoadBalancing API
     Added: ErrorCode.CustomAuthenticationFailed to be used in switches for OperationResponse.ErrorCode (for OpAuthenticate).
     Changed: LoadBalancingClient.PlayerName can be set before connecting to get a UserId which is "findable" by OpFindFriends(). Find friends does NOT use any values set for custom authentication!
     Added: Class FriendInfo to contain a friend's name, online state and room name (if available and after using OpFindFriends()).
-    Added: OpFindFriends() to actually find the friends. Use on the Master Server only, not on a room.
+    Added: OpFindFriends() to actually find the friends. Use on the 마스터 서버 only, not on a room.
     Added: LoadBalancingClient.FriendList, a List of FriendInfo entries. Filled by using OpFindFriends (don't modify this list directly!).
     Added: LoadBalancingClient.FriendListAge, to let you know how old the FriendList is. Only get updates when the list gets "old".
     Fixed: OpRaiseEvent will no longer send "group" if it's 0 (which is the default).

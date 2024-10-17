@@ -40,6 +40,7 @@ public class AvatarPresetSettings : MonoBehaviour
     {
         public string name;
         public SkinnedMeshRenderer mesh;
+        public MeshFilter meshB;
         public Material material;
         public Sprite sprite;
     }

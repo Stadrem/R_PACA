@@ -30,33 +30,50 @@ public class AvatarHTTPManager : MonoBehaviour
         }
     }
 
-
-    private void Start()
+    public static AvatarHTTPManager Get()
     {
-        
+        if (instance == null)
+        {
+            // 프리팹 생성
+            GameObject newInstance = new GameObject("AvatarHTTPManager");
+            instance = newInstance.AddComponent<AvatarHTTPManager>();
+
+            if (instance == null)
+            {
+                return null;
+            }
+        }
+        else
+        {
+            print("없는데요?");
+            return null;
+        }
+        return instance;
+    }
+
+
+private void Start()
+    {
+        pas = player.GetComponent<PlayerAvatarSetting>();
+    }
+
+    void FindIsMinePlayer()
+    {
+        pas = player.GetComponent<PlayerAvatarSetting>();
     }
 
     public void AvatarRefresh(MyAvatar post)
     {
-        pas = player.GetComponent<PlayerAvatarSetting>();
-
         pas.myAvatar = post;
 
         pas.ChangeAvatar();
-    }
-    
-    MyAvatar GetMyAvatarInfo()
-    {
-        pas = player.GetComponent<PlayerAvatarSetting>();
-
-        MyAvatar postMyAvatar = pas.myAvatar;
-
-        return postMyAvatar;
     }
 
     //서버에 아바타 정보 업로드
     public void StartPostAvatarInfo()
     {
+        MyAvatar postMyAvatar = pas.myAvatar;
+
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
 
@@ -64,7 +81,7 @@ public class AvatarHTTPManager : MonoBehaviour
         info.url = "";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        info.body = JsonUtility.ToJson(GetMyAvatarInfo()); ;
+        info.body = JsonUtility.ToJson(postMyAvatar); ;
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";

@@ -327,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dicePrefab: {fileID: 2399920660744897311, guid: 99db23f798df8b44497b34a1031058c3,
     type: 3}
-  diceCount: 4
+  diceCount: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 1048576

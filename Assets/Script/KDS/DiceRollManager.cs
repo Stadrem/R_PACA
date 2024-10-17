@@ -62,7 +62,7 @@ public class DiceRollManager : MonoBehaviour
     GameObject[] diceObjects;
 
     //생성할 주사위 갯수
-    public int diceCount = 4;
+    public int diceCount = 2;
 
     // 주사위 결과 저장 리스트
     List<int> diceResults = new List<int>(); 
@@ -92,7 +92,7 @@ public class DiceRollManager : MonoBehaviour
     }
 
     //int 값으로 반환
-    public int DiceRoll(int callDiceCount) 
+    public int DiceRoll(int diceA, int diceB) 
     {
         // 카메라 중심에서 레이캐스트 발사
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -119,7 +119,7 @@ public class DiceRollManager : MonoBehaviour
         diceResult = 0;
 
         //주사위 오브젝트풀 활성화
-        for (int i = 0; i < callDiceCount; i++)
+        for (int i = 0; i < diceCount; i++)
         {
             diceObjects[i].SetActive(true);
 
@@ -130,8 +130,11 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.0f, 2.0f), 30 * Random.Range(1.0f, 2.0f)));
 
             //주사위 1개당 주사위 값 생성
-            diceResults.Add(Random.Range(1,7));
+            //diceResults.Add(Random.Range(1,7));
         }
+
+        diceResults.Add(diceA);
+        diceResults.Add(diceB);
 
         diceSound.Play();
 
@@ -141,14 +144,14 @@ public class DiceRollManager : MonoBehaviour
         print(diceResults.Count + "D" +diceResult);
 
         // 주사위가 굴러가는 동안 회전 값 설정
-        StartCoroutine(SetDiceResultsAfterRoll(callDiceCount));
+        StartCoroutine(SetDiceResultsAfterRoll(diceCount));
 
         //int 값 반환
         return diceResult;
     }
 
     // 코루틴으로 주사위 회전값 설정 (일정 시간 후)
-    private IEnumerator SetDiceResultsAfterRoll(int callDiceCount)
+    private IEnumerator SetDiceResultsAfterRoll(int diceCount)
     {
         // 주사위가 굴러가는 시간을 기다림
         yield return new WaitForSeconds(rollDuration);
@@ -158,7 +161,7 @@ public class DiceRollManager : MonoBehaviour
         canvas.SetActive(true);
 
         // 주사위의 결과에 맞게 회전 설정
-        for (int i = 0; i < callDiceCount; i++)
+        for (int i = 0; i < diceCount; i++)
         {
             //주사위 나온 값에 맞춰서 최종 회전값 설정
             Rigidbody rb = diceObjects[i].GetComponent<Rigidbody>();
