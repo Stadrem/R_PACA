@@ -14,7 +14,7 @@ public class PortalInPlay : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            UniversePlayManager.Instance.BackgroundManager.MoveTo(targetBackgroundId);
+            PlayUniverseManager.Instance.BackgroundManager.MoveTo(targetBackgroundId);
         }
     }
 }

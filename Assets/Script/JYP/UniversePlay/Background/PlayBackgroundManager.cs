@@ -56,6 +56,7 @@ public class PlayBackgroundManager : MonoBehaviour
                 {
                     currentBackground.Init(background);
                     currentBackground.LoadParts();
+                    PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.npcList);
                 }
             )
         );
