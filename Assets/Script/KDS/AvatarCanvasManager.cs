@@ -89,40 +89,40 @@ public class AvatarCanvasManager : AvatarHTTPManager
     public void OnClickAvatarFinish()
     {
         // POST 요청을 위한 코루틴 실행
-        StartPostAvatarInfo(myAvatar);
+        StartPostAvatarInfo(pas.myAvatar);
 
-        TempFakeServer.instance.myAvatar = myAvatar;
+        TempFakeServer.Get().myAvatar = pas.myAvatar;
 
         cm.OnClickConnect();
     }
 
-    public MyAvatar myAvatar;
+    //public MyAvatar myAvatar;
 
     public void PushAvatarCode(int parts, int code)
     {
         switch (parts)
         {
             case 0:
-                myAvatar.userAvatarGender = code;
+                pas.myAvatar.userAvatarGender = code;
                 ContentsChildSet(code);
                 break;
             case 1:
-                myAvatar.userAvatarSkin = code;
+                pas.myAvatar.userAvatarSkin = code;
                 break;
             case 2:
-                myAvatar.userAvatarHair = code;
+                pas.myAvatar.userAvatarHair = code;
                 break;
             case 3:
-                myAvatar.userAvatarBody = code;
+                pas.myAvatar.userAvatarBody = code;
                 break;
             case 4:
-                myAvatar.userAvatarHand = code;
+                pas.myAvatar.userAvatarHand = code;
                 break;
         }
 
-        print("성별 " + myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
+        print("성별 " + pas.myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
 
-        pas.myAvatar = myAvatar;
+        //pas.myAvatar = pas.myAvatar;
 
         pas.ChangeAvatar();
     }

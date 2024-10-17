@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8662868281343928976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1584.4432, y: 250.5064, z: -74.571}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,11 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c97803dbba01804c9ecf22dc6ff3b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myAvatar:
-    userName: 
-    userID: 
-    userAvatarGender: 0
-    userAvatarSkin: 0
-    userAvatarHair: 0
-    userAvatarBody: 0
-    userAvatarHand: 0

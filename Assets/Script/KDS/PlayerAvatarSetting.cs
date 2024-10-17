@@ -13,11 +13,9 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     PhotonView pv;
 
-    GetMyAvatar info;
+    //GetMyAvatar info;
 
     public MyAvatar myAvatar;
-
-    // Start is called before the first frame update
 
     private void Awake()
     {
@@ -27,8 +25,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         // 씬 이름 비교
         if (currentScene.name != "AvatarCreate")
         {
-            //info = 
-
             pv = transform.parent.GetComponent<PhotonView>();
         }
     }
@@ -56,15 +52,15 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     void RefreshAvatar()
     {
-        info.userID = TempFakeServer.instance.info.userID;
+        myAvatar.userID = TempFakeServer.Get().myAvatar.userID;
 
         //서버에서 아바타 정보 받아오기
-        StartGetAvatarInfo(info.userID, (getAvatar) =>
+        StartGetAvatarInfo(myAvatar.userID, (getAvatar) =>
         {
             myAvatar = getAvatar;
         });
 
-        myAvatar = TempFakeServer.instance.myAvatar;
+        myAvatar = TempFakeServer.Get().myAvatar;
 
         // 씬 로드 후 실행할 함수 호출
         ChangeAvatar();
@@ -81,16 +77,14 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         //이 알 수 없는 로직에 대한 설명
         //스킨메쉬 렌더러 컴포넌트 받아오기 -> 스킨메쉬 컴포넌트 비활성 -> 비우기 -> 받아오기 -> 컴포넌트 활성화
-        //이따위로 해놓은 이유 : 스키닝 데이터와 버텍스 데이터가 틀리다고 에러 계속 뿜어대서, 해결 방안이 이것이었음
+        //이따위로 해놓은 이유 : 교체 전 스키닝 메쉬 데이터와 교체 후 메쉬 데이터의 버텍스 값이 틀리다고 에러 계속 뿜어대서, 해결 방안이 이것이었음
 
         //성별
         int tempNum = 0;
         SkinnedMeshRenderer skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
-        //Transform[] originalBones = skinnedMeshRenderer.bones;
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
         skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
-        //skinnedMeshRenderer.bones = originalBones;
         skinnedMeshRenderer.enabled = true;
         //피부
         skinnedMeshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarSkin].material;
@@ -101,7 +95,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
         skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHair].mesh.sharedMesh;
-        //skinnedMeshRenderer.bones = originalBones;
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHair].material;
 
@@ -111,13 +104,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
         skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].mesh.sharedMesh;
-        //skinnedMeshRenderer.bones = originalBones;
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].material;
 
         //손
         tempNum = 3;
-
         MeshFilter meshFilter = avatarParts[tempNum].GetComponent<MeshFilter>();
         meshFilter.mesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].meshB.sharedMesh;
         MeshRenderer meshRenderer = avatarParts[tempNum].GetComponent<MeshRenderer>();
