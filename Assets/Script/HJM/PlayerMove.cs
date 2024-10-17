@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviourPun
 
     NavMeshAgent agent;
 
-    Animator animator;
+    public Animator animator;
 
     [Header("클릭이동 가능한 레이어")]
     [SerializeField] LayerMask clickableLayers; // 나중에 레이어 제대로 분리해서 땅만 선택 레이어에 넣기
@@ -39,8 +39,6 @@ public class PlayerMove : MonoBehaviourPun
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-
         input = new CustomActions();
         AssignInputs();
 
