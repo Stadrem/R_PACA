@@ -17,12 +17,20 @@ public class Billboard : MonoBehaviourPun
 
     void Update()
     {
-        // PhotonView로 확인하여 모든 플레이어의 오브젝트에 대해 빌보드 적용
-        if (photonView.IsMine || !photonView.IsMine)
+        if (cam == null)
         {
-            // 항상 카메라를 바라보도록 회전
-            transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward,
-                            cam.transform.rotation * Vector3.up);
+            cam = Camera.main; // 카메라가 없으면 다시 할당
+        }
+
+        if (cam != null)
+        {
+            // PhotonView로 확인하여 모든 플레이어의 오브젝트에 대해 빌보드 적용
+            if (photonView.IsMine || !photonView.IsMine)
+            {
+                // 항상 카메라를 바라보도록 회전
+                transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward,
+                                cam.transform.rotation * Vector3.up);
+            }
         }
     }
 }

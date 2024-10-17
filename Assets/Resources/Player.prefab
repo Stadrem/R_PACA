@@ -1372,6 +1372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 7269622975650453198}
+  animator: {fileID: 3226658914930203315}
   clickableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
