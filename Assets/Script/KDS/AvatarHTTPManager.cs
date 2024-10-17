@@ -33,7 +33,7 @@ public class AvatarHTTPManager : MonoBehaviour
 
     private void Start()
     {
-        
+        pas = player.GetComponent<PlayerAvatarSetting>();
     }
 
     void FindIsMinePlayer()

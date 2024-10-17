@@ -396,6 +396,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: AvatarPresetSettings
       objectReference: {fileID: 0}
+    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
+        type: 3}
+      propertyPath: genderParts.Array.data[0].avatarParts.Array.data[2].avatarItems.Array.data[0].mesh
+      value: 
+      objectReference: {fileID: 464141968781854204, guid: 2c3182560986cf84c8e28483c4b36312,
+        type: 3}
+    - target: {fileID: 7719133834405728395, guid: 32652edfc942ca94ebc4575cd438cc47,
+        type: 3}
+      propertyPath: genderParts.Array.data[0].avatarParts.Array.data[2].avatarItems.Array.data[1].mesh
+      value: 
+      objectReference: {fileID: 1630794972795428178, guid: 747d9918170a53745adfa86474243717,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
