@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public partial class Portal : MonoBehaviour, IDraggable
+public class Portal : MonoBehaviour, IDraggable
 {
     public LinkedBackgroundPart towardPart;
     public bool IsDraggable => true;

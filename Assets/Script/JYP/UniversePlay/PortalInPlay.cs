@@ -4,14 +4,6 @@ public class PortalInPlay : MonoBehaviour
 {
     private int targetBackgroundId;
 
-    private void Awake()
-    {
-    }
-
-    private void Update()
-    {
-    }
-
     public void Init(PortalData portalData)
     {
         this.targetBackgroundId = portalData.targetBackgroundId;

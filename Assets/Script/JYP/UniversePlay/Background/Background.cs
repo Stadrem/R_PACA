@@ -22,8 +22,10 @@ public class Background
         var portals = data.portalList;
         foreach (var portal in portals)
         {
-            var portalPrefab = Resources.Load<GameObject>("BackgroundPart/Portal");
+            var portalPrefab = Resources.Load<GameObject>("BackgroundPart/Portal_Play");
             var go = GameObject.Instantiate(portalPrefab, portal.position, Quaternion.identity, parent);
+            var portalInPlay = go.GetComponent<PortalInPlay>();
+            portalInPlay.Init(portal);
         }
     }
     
