@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bullet
   - RoomNPC
+  - InPlayNPC
   layers:
   - Default
   - TransparentFX

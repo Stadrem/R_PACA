@@ -8,4 +8,7 @@ public class BackgroundPartData
     public string Name;
     public EBackgroundPartType Type;
     public List<PortalData> portalList;
+    public List<NpcData> npcList;
+    
+    
 }
