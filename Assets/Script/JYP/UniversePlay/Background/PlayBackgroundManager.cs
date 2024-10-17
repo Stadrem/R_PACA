@@ -27,6 +27,7 @@ public class PlayBackgroundManager : MonoBehaviour
         this.universeData = universe;
         this.backgroundPartDataList = universeBackgroundPartDataList;
         var background = universeBackgroundPartDataList.Find(x => x.id == universe.startBackground.id);
+        LoadScene(background);
     }
 
     private void LoadScene(BackgroundPartData background)
