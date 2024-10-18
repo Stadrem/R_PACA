@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
+
 
 public class DummyCSV : MonoBehaviour
 {
@@ -42,6 +45,16 @@ public class DummyCSV : MonoBehaviour
             string [] temp = lines[i].Split("\r");
             lines[i] = temp[0];
             print(lines[i]);
+        }
+
+        // , 를 기준으로 lines의 첫번째 값을 나누자.(변수)
+        string[] variables = lines[0].Split(",");
+
+
+        // , 를 기준으로 나머지 값들을 나누자
+        for(int i = 1; i < lines.Length; i++)
+        {
+            string[] value = lines[i].Split(",");
         }
     }
 }

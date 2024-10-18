@@ -6768,6 +6768,100 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7c476d6be75b74782f6c354c384e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1080549995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080549997}
+  - component: {fileID: 1080549996}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1080549996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080549995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d10dd461e15bd449f292de7d394b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uni:
+  - id: 0
+    onwerUserid: 0
+    mainObjective: "\uB9C8\uC655 \uD1F4\uCE58"
+    subObjectives:
+    - content: "\uC131\uAC80 \uD68D\uB4DD"
+    - content: "\uB098\uADF8\uB124\uC640 \uB300\uD654"
+    characters:
+    - name: "\uB098\uADF8\uB124"
+      type: 0
+      stat:
+      - name: "\uD798"
+        value: 5
+      - name: "\uC190\uC7AC\uC8FC"
+        value: 8
+      - name: "\uC0DD\uBA85\uB825"
+        value: 10
+      x: 0
+      y: 0
+      z: 0
+    backgrounds:
+    - id: 0
+      name: "\uB9C8\uC744"
+      customObject:
+      - objectType: 0
+        x: 0
+        y: 0
+        z: 0
+      link:
+      - id: 1
+        name: "\uB358\uC804"
+        customObject:
+        - objectType: 0
+          x: 0
+          y: 0
+          z: 0
+        link: []
+    - id: 1
+      name: "\uB358\uC804"
+      customObject:
+      - objectType: 0
+        x: 0
+        y: 0
+        z: 0
+      link:
+      - id: 0
+        name: 
+        customObject: []
+        link: []
+  temp1: {fileID: 0}
+--- !u!4 &1080549997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080549995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 687.2709, y: 511.27896, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1086499023
 GameObject:
   m_ObjectHideFlags: 0
@@ -8743,7 +8837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1496119879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11723,3 +11817,4 @@ SceneRoots:
   - {fileID: 830191896}
   - {fileID: 603850710}
   - {fileID: 1496119880}
+  - {fileID: 1080549997}
