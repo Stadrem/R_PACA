@@ -10,11 +10,9 @@ public class NpcChatManager : MonoBehaviour
     public RectTransform listContent;
 
     public GameObject ChatBubblePrefab;
-    public StringBuilder ChatLog;
-    
+
     public void Start()
     {
-        ChatLog = new StringBuilder();
         ChatInputField.onSubmit.AddListener(OnSubmitText);
     }
 
@@ -36,7 +34,6 @@ public class NpcChatManager : MonoBehaviour
 
     public void ShowChatBubble(string text)
     {
-        ChatLog.AppendLine(text);
         GameObject chatBubble = Instantiate(ChatBubblePrefab, listContent);
         chatBubble.GetComponent<NpcChatItem>()
             .SetText(
@@ -44,6 +41,10 @@ public class NpcChatManager : MonoBehaviour
                 text,
                 Random.Range(0, 2) == 0
             );
-
+    }
+    
+    public void SetChattable(bool chattable)
+    {
+        ChatInputField.interactable = chattable;
     }
 }

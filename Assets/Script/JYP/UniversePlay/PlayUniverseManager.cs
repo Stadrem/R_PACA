@@ -24,6 +24,11 @@ public class PlayUniverseManager : MonoBehaviour
     [SerializeField]
     private CamSettingStateManager camSettingManager;
     public CamSettingStateManager CamSettingManager => camSettingManager;
+    
+    public List<int> testPlayerIdList = new List<int>()
+    {
+        0, 1, 2, 3
+    };
     public static PlayUniverseManager Instance
     {
         get
