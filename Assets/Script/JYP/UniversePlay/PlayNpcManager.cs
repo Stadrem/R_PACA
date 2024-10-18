@@ -13,6 +13,7 @@ public class PlayNpcManager : MonoBehaviourPun
     private NpcInPlay currentInteractNpc;
 
     private TurnSystem turnSystem = new TurnSystem();
+    private NpcChatUIManager npcChatUIManager = PlayUniverseManager.Instance.NpcChatUIManager;
 
 
     public void LoadNpcList(List<NpcData> npcList)
@@ -61,15 +62,35 @@ public class PlayNpcManager : MonoBehaviourPun
         currentInteractNpc = npc;
         StartCoroutine(PlayUserTurn());
     }
-    
+
     public void OnChatSubmit(string msg)
     {
-        //send to backend
-        
-        
     }
-    
-    private 
+
+    private IEnumerator ConversationWithNpc(string sender, string message)
+    {
+        bool wait = true;
+        yield return MockServer.Instance.Get<string>(
+            (t) =>
+            {
+                wait = false;
+                Debug.Log(t);
+            }
+        );
+
+        yield return new WaitWhile(() => wait);
+        bool testDiceReq = false;
+        if (testDiceReq)
+        {
+            yield return MockServer.Instance.Get<int>(
+                (t) => { }
+            );
+        }
+        else
+        {
+            
+        }
+    }
 
     IEnumerator PlayUserTurn()
     {
@@ -93,14 +114,10 @@ public class PlayNpcManager : MonoBehaviourPun
     {
         //send to backend
         photonView.RPC("MessageSend", RpcTarget.All, MyId, msg);
-        
     }
-    
+
     [PunRPC]
-    private void MessageSend(int senderId, string message) 
+    private void MessageSend(int senderId, string message)
     {
-        
     }
-    
-    
 }
