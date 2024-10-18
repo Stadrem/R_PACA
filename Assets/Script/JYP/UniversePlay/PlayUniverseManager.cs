@@ -11,24 +11,28 @@ public class PlayUniverseManager : MonoBehaviour
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [FormerlySerializedAs("playNPCManager")]
     [SerializeField]
     private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
     [SerializeField]
-    private NpcChatManager npcChatManager;
-    public  NpcChatManager NpcChatManager => npcChatManager;
-    
+    private NpcChatUIManager npcChatUIManager;
+
+    public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
+
     [SerializeField]
     private CamSettingStateManager camSettingManager;
+
     public CamSettingStateManager CamSettingManager => camSettingManager;
-    
+
+
+
     public List<int> testPlayerIdList = new List<int>()
     {
         0, 1, 2, 3
     };
+
     public static PlayUniverseManager Instance
     {
         get
@@ -64,7 +68,7 @@ public class PlayUniverseManager : MonoBehaviour
 
     private void UserInteraction()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, float.MaxValue))
@@ -76,7 +80,8 @@ public class PlayUniverseManager : MonoBehaviour
                 }
                 else if (hit.collider.CompareTag("Portal"))
                 {
-                    hit.collider.GetComponent<PortalInPlay>()?.InteractByUser();
+                    hit.collider.GetComponent<PortalInPlay>()
+                        ?.InteractByUser();
                 }
             }
         }

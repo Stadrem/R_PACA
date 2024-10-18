@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KDS/AvatarCreate.unity
     guid: c0147875ffcac974a9823e54aa385419
+  - enabled: 1
+    path: Assets/Scenes/JYP/JYP_PlayScene.unity
+    guid: bf570670ec94eea4a9326218bdda56f2
   m_configObjects: {}

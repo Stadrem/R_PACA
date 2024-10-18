@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
+using UnityEngine;
 
-public class TurnSystem
+public class TurnSystem : MonoBehaviour, IPunObservable
 {
     public int Turn { get; private set; }
 
@@ -14,5 +16,10 @@ public class TurnSystem
     public void InitTurn(List<NpcInPlay> players)
     {
         Turn = 0;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
     }
 }

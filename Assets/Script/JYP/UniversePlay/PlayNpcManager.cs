@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayNpcManager : MonoBehaviour
+public class PlayNpcManager : MonoBehaviourPun
 {
     private List<NpcData> currentBackgroundNPCList = new();
     private List<NpcInPlay> currentNpcList = new();
@@ -12,6 +13,7 @@ public class PlayNpcManager : MonoBehaviour
     private NpcInPlay currentInteractNpc;
 
     private TurnSystem turnSystem = new TurnSystem();
+
 
     public void LoadNpcList(List<NpcData> npcList)
     {
@@ -59,6 +61,15 @@ public class PlayNpcManager : MonoBehaviour
         currentInteractNpc = npc;
         StartCoroutine(PlayUserTurn());
     }
+    
+    public void OnChatSubmit(string msg)
+    {
+        //send to backend
+        
+        
+    }
+    
+    private 
 
     IEnumerator PlayUserTurn()
     {
@@ -73,12 +84,23 @@ public class PlayNpcManager : MonoBehaviour
         );
 
         yield return new WaitUntil(() => res);
-        PlayUniverseManager.Instance.NpcChatManager.SetChattable(id == MyId);
+        PlayUniverseManager.Instance.NpcChatUIManager.SetChattable(id == MyId);
     }
 
     public int MyId { get; } = 0;
 
-    public void ChatNpc()
+    public void ChatToNPC(string msg)
     {
+        //send to backend
+        photonView.RPC("MessageSend", RpcTarget.All, MyId, msg);
+        
     }
+    
+    [PunRPC]
+    private void MessageSend(int senderId, string message) 
+    {
+        
+    }
+    
+    
 }

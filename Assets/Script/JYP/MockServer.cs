@@ -28,4 +28,11 @@ public class MockServer
         yield return null;
         callback(default);
     }
+
+    public IEnumerator PostDiceRequired(Action<bool> callback)
+    {
+        yield return null;
+        callback(true);
+    }
+    
 }
