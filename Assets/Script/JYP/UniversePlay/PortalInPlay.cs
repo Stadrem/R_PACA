@@ -10,11 +10,9 @@ public class PortalInPlay : MonoBehaviour
         transform.position = portalData.position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void InteractByUser()
     {
-        if (other.CompareTag("Player"))
-        {
-            PlayUniverseManager.Instance.BackgroundManager.MoveTo(targetBackgroundId);
-        }
+        PlayUniverseManager.Instance.BackgroundManager.MoveTo(targetBackgroundId);
+
     }
 }
