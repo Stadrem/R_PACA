@@ -9,6 +9,11 @@ using UnityEditor.Experimental.GraphView;
 
 public class AvatarHTTPManager : MonoBehaviour
 {
+    public bool CheckConnect()
+    {
+        return true;
+    }
+
     //서버에 아바타 정보 업로드
     public void StartPostAvatarInfo(MyAvatar myAvatar)
     {
@@ -18,7 +23,7 @@ public class AvatarHTTPManager : MonoBehaviour
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = "";
+        info.url = "http://125.132.216.190:8765/user/upload";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
         info.body = JsonUtility.ToJson(postMyAvatar); ;
@@ -36,17 +41,17 @@ public class AvatarHTTPManager : MonoBehaviour
     }
 
     //서버에서 아바타 정보 받아오기
-    public void StartGetAvatarInfo(string id, Action<MyAvatar> onAvatarReceived)
+    public void StartGetAvatarInfo(int id, Action<MyAvatar> onAvatarReceived)
     {
         GetMyAvatar getMyAvatar = new GetMyAvatar();
 
-        getMyAvatar.userID = id;
+        getMyAvatar.userCode = id;
 
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = "";
+        info.url = "http://125.132.216.190:8765/update/";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
         info.body = JsonUtility.ToJson(getMyAvatar); ;
@@ -119,14 +124,14 @@ public class AvatarHTTPManager : MonoBehaviour
 [System.Serializable]
 public struct GetMyAvatar
 {
-    public string userID;
+    public int userCode;
 }
 
 //현재 아바타 세팅 저장
 [System.Serializable]
 public struct MyAvatar
 {
-    public string userID;
+    public int userCode;
     public int userAvatarGender; //0이면 남자, 1이면 여자.
     public int userAvatarSkin;
     public int userAvatarHair;

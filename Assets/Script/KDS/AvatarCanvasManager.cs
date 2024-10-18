@@ -54,7 +54,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
             contents[j].children = new List<GameObject>();
 
             //생성되어있는 요소들 만큼 자식 오브젝트 생성
-            for (int i = 0; i < AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems.Length; i++)
+            for (int i = 0; i < AvatarPresetSettings.Get().genderParts[genderTemp].avatarParts[j].avatarItems.Length; i++)
             {
                 GameObject instance = Instantiate(itemsPrefab);
 
@@ -69,7 +69,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
                 itemCard.itemNum = i;
 
-                itemCard.sprite = AvatarPresetSettings.instance.genderParts[genderTemp].avatarParts[j].avatarItems[i].sprite;
+                itemCard.sprite = AvatarPresetSettings.Get().genderParts[genderTemp].avatarParts[j].avatarItems[i].sprite;
 
                 //스프라이트 교체
                 GameObject temp = itemCard.transform.GetChild(0).gameObject;
