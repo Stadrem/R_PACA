@@ -52,10 +52,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     void RefreshAvatar()
     {
-        myAvatar.userID = TempFakeServer.Get().myAvatar.userID;
+        myAvatar.userCode = TempFakeServer.Get().myAvatar.userCode;
 
         //서버에서 아바타 정보 받아오기
-        StartGetAvatarInfo(myAvatar.userID, (getAvatar) =>
+        StartGetAvatarInfo(myAvatar.userCode, (getAvatar) =>
         {
             myAvatar = getAvatar;
         });
@@ -84,34 +84,34 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         SkinnedMeshRenderer skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
-        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
+        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
         //피부
-        skinnedMeshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarSkin].material;
+        skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarSkin].material;
 
         //모자
         tempNum = 1;
         skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
-        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHair].mesh.sharedMesh;
+        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHair].mesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
-        skinnedMeshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHair].material;
+        skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHair].material;
 
         //의류
         tempNum = 2;
         skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
-        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].mesh.sharedMesh;
+        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].mesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
-        skinnedMeshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].material;
+        skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].material;
 
         //손
         tempNum = 3;
         MeshFilter meshFilter = avatarParts[tempNum].GetComponent<MeshFilter>();
-        meshFilter.mesh = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].meshB.sharedMesh;
+        meshFilter.mesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].meshB.sharedMesh;
         MeshRenderer meshRenderer = avatarParts[tempNum].GetComponent<MeshRenderer>();
-        meshRenderer.material = AvatarPresetSettings.instance.genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
+        meshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
     }
 }
