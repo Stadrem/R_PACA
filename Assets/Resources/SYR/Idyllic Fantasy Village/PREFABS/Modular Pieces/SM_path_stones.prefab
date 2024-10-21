@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4517839881848882240}
   - component: {fileID: 1825752417277505674}
   - component: {fileID: 1051579000951958540}
+  - component: {fileID: 3721309391556241001}
   m_Layer: 0
   m_Name: SM_path_stones
   m_TagString: Untagged
@@ -106,3 +107,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -121069729575949154, guid: e28ac33acd4ac2644a949d6cd8c7e234, type: 3}
+--- !u!65 &3721309391556241001
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168493930345484639}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.2779355, y: 0.12709044, z: 1.6550313}
+  m_Center: {x: 0.017700726, y: -0.00026303052, z: 0.036327887}

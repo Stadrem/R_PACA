@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1954346646613708028}
   - component: {fileID: 4394330858886150198}
   - component: {fileID: 3114899964381144240}
+  - component: {fileID: 4371971581598321636}
   m_Layer: 0
   m_Name: SM_crate_apples
   m_TagString: Untagged
@@ -108,3 +109,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5235648689648786991, guid: 919de7fbe224f844c9a6f1ce5bbb53aa, type: 3}
+--- !u!65 &4371971581598321636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2880950067212949987}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7864492, y: 0.6147906, z: 0.46057308}
+  m_Center: {x: -0.000015388205, y: 0.3150232, z: -0.0000036601728}

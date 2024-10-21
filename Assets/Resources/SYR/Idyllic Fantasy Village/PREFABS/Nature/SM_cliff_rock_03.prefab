@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7549931443264241493}
   - component: {fileID: 5702201358585809823}
   - component: {fileID: 6405205319443765017}
+  - component: {fileID: 3631448146331438558}
   m_Layer: 0
   m_Name: SM_cliff_rock_03
   m_TagString: Untagged
@@ -106,3 +107,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3318304298363951770, guid: b8f2f0485f6f1b841b379f2501e21dcc, type: 3}
+--- !u!65 &3631448146331438558
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062607732814277194}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.119107, y: 1.2025164, z: 2.033496}
+  m_Center: {x: -0.079786815, y: 0.5612445, z: -0.005897816}

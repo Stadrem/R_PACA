@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 144425270738577489}
   - component: {fileID: 2730849665462738075}
   - component: {fileID: 3613145758318198813}
+  - component: {fileID: 8304217742506634625}
   m_Layer: 0
   m_Name: SM_flowerpot_03
   m_TagString: Untagged
@@ -109,3 +110,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4169428159936385744, guid: 75e60e16ee11a0845ba40dc2a288ac15, type: 3}
+--- !u!65 &8304217742506634625
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532047555357916494}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35034332, y: 0.82177585, z: 0.4431825}
+  m_Center: {x: -0.00023272714, y: 0.40677467, z: 0.02599381}
