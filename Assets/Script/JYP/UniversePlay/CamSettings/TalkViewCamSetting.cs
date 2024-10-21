@@ -15,7 +15,7 @@ public class TalkViewCamSetting : ICamSettingState
             Vcam.gameObject.SetActive(true);
         }
         Vcam.Priority = 10;
-        PlayUniverseManager.Instance.NpcChatManager.Show();
+        PlayUniverseManager.Instance.NpcChatUIManager.Show();
     }
 
     public void OnUpdate()
@@ -26,6 +26,6 @@ public class TalkViewCamSetting : ICamSettingState
     {
         Vcam.gameObject.SetActive(false);
         Vcam.enabled = false;
-        PlayUniverseManager.Instance.NpcChatManager.Hide();
+        PlayUniverseManager.Instance.NpcChatUIManager.Hide();
     }
 }
