@@ -3,13 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Photon.Pun;
+using WebSocketSharp;
 
 public class NpcChatUIManager : MonoBehaviourPun
 {
     public Canvas chatCanvas;
     public TMP_InputField ChatInputField;
     public RectTransform listContent;
-
+    public TMP_Text turnText;
     public GameObject ChatBubblePrefab;
 
     public void Start()
@@ -24,6 +25,18 @@ public class NpcChatUIManager : MonoBehaviourPun
         ChatInputField.text = "";
     }
 
+    public void SetTurnText(int turn, string text)
+    {
+        if (text.IsNullOrEmpty())
+        {
+            turnText.text = $"{turn} 턴";
+        }
+        else
+        {
+            turnText.text = $"{turn} 턴 - {text}";
+        }
+    }
+
     public void Show()
     {
         chatCanvas.gameObject.SetActive(true);
@@ -32,6 +45,11 @@ public class NpcChatUIManager : MonoBehaviourPun
     public void Hide()
     {
         chatCanvas.gameObject.SetActive(false);
+    }
+
+    public void RPC_AddChatBubble(string sender, string text)
+    {
+        photonView.RPC("AddChatBubble", RpcTarget.All, sender, text);
     }
 
     [PunRPC]
@@ -45,8 +63,7 @@ public class NpcChatUIManager : MonoBehaviourPun
                 Random.Range(0, 2) == 0
             );
     }
-    
-    
+
 
     public void SetChattable(bool chattable)
     {

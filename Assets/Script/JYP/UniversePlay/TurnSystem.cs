@@ -13,7 +13,7 @@ public class TurnSystem : MonoBehaviour
         Turn++;
     }
 
-    public void InitTurn(List<NpcInPlay> players)
+    public void InitTurn()
     {
         Turn = 0;
     }

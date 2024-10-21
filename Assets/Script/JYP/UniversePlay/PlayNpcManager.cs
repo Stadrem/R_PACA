@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using Photon.Pun;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayNpcManager : MonoBehaviourPun
 {
@@ -13,8 +14,9 @@ public class PlayNpcManager : MonoBehaviourPun
     private NpcInPlay currentInteractNpc;
 
     private TurnSystem turnSystem = new TurnSystem();
-    private NpcChatUIManager npcChatUIManager = PlayUniverseManager.Instance.NpcChatUIManager;
-
+    private NpcChatUIManager NpcChatUIManager => PlayUniverseManager.Instance.NpcChatUIManager;
+    private int currentPlayerId = -1;
+    private bool isFinished = false;
 
     public void LoadNpcList(List<NpcData> npcList)
     {
@@ -60,15 +62,28 @@ public class PlayNpcManager : MonoBehaviourPun
     public void InteractNpc(NpcInPlay npc)
     {
         currentInteractNpc = npc;
-        StartCoroutine(PlayUserTurn());
+        photonView.RPC("InitPlay", RpcTarget.All);
+        StartCoroutine(
+            CheckCurrentTurnUser(
+                (t =>
+                    {
+                        currentPlayerId = t;
+                        photonView.RPC("NextTurn", RpcTarget.All, 0); // 0 for test
+                    }
+                )
+            )
+        );
     }
 
     public void OnChatSubmit(string msg)
     {
+        StartCoroutine(ConversationWithNpc(PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name, msg));
     }
 
     private IEnumerator ConversationWithNpc(string sender, string message)
     {
+        //sync with players
+
         bool wait = true;
         yield return MockServer.Instance.Get<string>(
             (t) =>
@@ -79,45 +94,72 @@ public class PlayNpcManager : MonoBehaviourPun
         );
 
         yield return new WaitWhile(() => wait);
-        bool testDiceReq = false;
+        bool testDiceReq = true;
         if (testDiceReq)
         {
+            bool waitRes = true;
+            bool waitRoll = true;
             yield return MockServer.Instance.Get<int>(
-                (t) => { }
+                (t) => { waitRes = false; }
             );
+            //roll dice
+            waitRoll = false;
+            string something = "something with dice";
+            
+            yield return new WaitWhile(() => waitRes || waitRoll);
         }
         else
         {
-            
         }
-    }
 
-    IEnumerator PlayUserTurn()
-    {
+        string somethingToShow = "";
+        yield return MockServer.Instance.Get<string>(
+            (t) =>
+            {
+                somethingToShow = "somethingToShow";
+            }
+        );
+        yield return new WaitForSeconds(1f);
+        NpcChatUIManager.RPC_AddChatBubble(sender, somethingToShow);
+        //next turn
         bool res = false;
         int id = 0;
-        yield return MockServer.Instance.Get<int>(
+        
+        yield return CheckCurrentTurnUser(
             (t) =>
             {
                 res = true;
-                id = t;
+                id = 0;
             }
         );
-
+        
         yield return new WaitUntil(() => res);
-        PlayUniverseManager.Instance.NpcChatUIManager.SetChattable(id == MyId);
+        
+        photonView.RPC("NextTurn", RpcTarget.All, id);
     }
 
-    public int MyId { get; } = 0;
-
-    public void ChatToNPC(string msg)
+    IEnumerator CheckCurrentTurnUser(Action<int> callback)
     {
-        //send to backend
-        photonView.RPC("MessageSend", RpcTarget.All, MyId, msg);
+        yield return MockServer.Instance.Get<int>(
+            (t) => { callback(t); }
+        );
     }
 
     [PunRPC]
-    private void MessageSend(int senderId, string message)
+    private void NextTurn(int id)
     {
+        turnSystem.NextTurn(id);
+        PlayUniverseManager.Instance.NpcChatUIManager.SetTurnText(turnSystem.Turn, "");
+        PlayUniverseManager.Instance.NpcChatUIManager.SetChattable(
+            id == PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.id
+        );
+    }
+    
+    [PunRPC]
+    private void InitPlay()
+    {
+        turnSystem.InitTurn();
+        PlayUniverseManager.Instance.NpcChatUIManager.SetTurnText(turnSystem.Turn, "");
+        
     }
 }

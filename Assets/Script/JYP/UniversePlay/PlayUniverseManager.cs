@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayUniverseManager : MonoBehaviour
 {
@@ -25,13 +24,8 @@ public class PlayUniverseManager : MonoBehaviour
     private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
+    public InGamePlayerManager InGamePlayerManager { get; private set; }
 
-
-
-    public List<int> testPlayerIdList = new List<int>()
-    {
-        0, 1, 2, 3
-    };
 
     public static PlayUniverseManager Instance
     {
@@ -58,6 +52,11 @@ public class PlayUniverseManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        InGamePlayerManager = GetComponent<InGamePlayerManager>();
     }
 
     private void Update()
