@@ -1,29 +1,29 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="CharacterShapeSelectionPopup" src="project://database/Assets/UI/UXML/CharacterShapeSelectionPopup.uxml?fileID=9197481963319205126&amp;guid=894b8a10e2d10a744964de5856492199&amp;type=3#CharacterShapeSelectionPopup" />
     <Style src="project://database/Assets/UI/USS/base.uss?fileID=7433441132597879392&amp;guid=ed2135ebda179b04e8d23b5eade416a3&amp;type=3#base" />
     <ui:VisualElement style="flex-grow: 1; background-color: rgb(230, 230, 230); margin-top: 8px; margin-right: 4px; margin-bottom: 8px; margin-left: 4px; padding-top: 32px; padding-right: 12px; padding-bottom: 32px; padding-left: 16px; width: 480px; border-top-width: 4px; border-right-width: 4px; border-bottom-width: 4px; border-left-width: 4px; border-left-color: rgb(101, 101, 101); border-right-color: rgb(101, 101, 101); border-top-color: rgb(101, 101, 101); border-bottom-color: rgb(101, 101, 101); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px;">
-        <ui:VisualElement name="container_shape" style="flex-grow: 0; height: 55px; flex-direction: row; justify-content: flex-start;">
-            <ui:Label tabindex="-1" text="외형" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; background-color: rgb(117, 117, 117); color: rgb(255, 255, 255); padding-top: 8px; padding-bottom: 8px; width: 112px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;" />
-            <ui:Label tabindex="-1" text="인간" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_shapeType" style="flex-grow: 1; -unity-text-align: middle-center; margin-left: 15px; background-color: rgb(202, 202, 202);" />
+        <ui:VisualElement name="container_shape" style="flex-grow: 0; height: 60px; flex-direction: row; justify-content: flex-start;">
+            <ui:Button text="외형 선택..." parse-escape-sequences="true" display-tooltip-when-elided="true" name="button_selectShapeType" style="flex-grow: 1; background-color: rgb(13, 153, 255); color: rgb(255, 255, 255); -unity-text-align: middle-center;" />
         </ui:VisualElement>
-        <ui:VisualElement name="container_name" style="flex-grow: 0; height: 55px; flex-direction: row; justify-content: flex-start; margin-top: 20px;">
+        <ui:VisualElement name="container_name" style="flex-grow: 0; height: 60px; flex-direction: row; justify-content: flex-start; margin-top: 10px;">
             <ui:Label tabindex="-1" text="이름" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; background-color: rgb(117, 117, 117); color: rgb(255, 255, 255); padding-top: 8px; padding-bottom: 8px; width: 112px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;" />
-            <ui:Label tabindex="-1" text="NPC 이름" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_name" style="flex-grow: 1; -unity-text-align: middle-center; margin-left: 15px; background-color: rgb(202, 202, 202);" />
+            <ui:TextField picking-mode="Ignore" name="input_name" value="이름 입력..." style="flex-grow: 1;" />
         </ui:VisualElement>
-        <ui:Label tabindex="-1" text="긴 글자 테스트 입니다 긴 글자 테스트 입니다. " parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_description" style="flex-grow: 1; flex-shrink: 1; background-color: rgb(179, 179, 179); margin-top: 50px; margin-bottom: 50px; -unity-text-align: middle-center; white-space: normal; padding-right: 15px; padding-left: 14px;" />
+        <ui:TextField picking-mode="Ignore" value="설명 입력.." name="input_description" style="-unity-text-align: middle-center; flex-grow: 1; margin-top: 50px; margin-bottom: 50px; padding-right: 15px; padding-left: 14px; -unity-background-scale-mode: stretch-to-fill;" />
         <ui:VisualElement name="Container_stats" style="flex-grow: 0; height: 180px; background-color: rgb(249, 249, 249); margin-bottom: 20px; justify-content: flex-start;">
             <ui:Label tabindex="-1" text="스탯" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_stats" style="height: 60px; -unity-text-align: middle-center; background-color: rgb(117, 117, 117); color: rgb(255, 255, 255); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;" />
             <ui:VisualElement style="flex-grow: 1; flex-direction: row; align-items: stretch; height: auto; justify-content: space-around;">
                 <ui:VisualElement style="flex-grow: 0; width: 30%; align-items: stretch; justify-content: center; align-self: auto;">
                     <ui:Label tabindex="-1" text="생명력" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_hpHeader" style="-unity-text-align: lower-center;" />
-                    <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_characterHp" style="-unity-text-align: middle-center; background-color: rgb(179, 179, 179); height: 45px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;" />
+                    <ui:IntegerField value="0" name="input_hp" style="background-color: rgba(0, 0, 0, 0);" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-grow: 0; width: 30%; align-items: stretch; justify-content: center; align-self: auto;">
                     <ui:Label tabindex="-1" text="힘" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_strengthHeader" style="-unity-text-align: lower-center;" />
-                    <ui:Label tabindex="-1" text="10" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_characterStrength" style="-unity-text-align: middle-center; background-color: rgb(179, 179, 179); height: 45px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;" />
+                    <ui:IntegerField value="0" name="input_strength" style="background-color: rgba(0, 0, 0, 0);" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-grow: 0; width: 30%; align-items: stretch; justify-content: center; align-self: auto;">
                     <ui:Label tabindex="-1" text="손재주" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_dexHeader" style="-unity-text-align: lower-center;" />
-                    <ui:Label tabindex="-1" text="8" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_characterDex" style="-unity-text-align: middle-center; background-color: rgb(179, 179, 179); height: 45px; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px;" />
+                    <ui:IntegerField value="0" name="input_dex" style="background-color: rgba(0, 0, 0, 0);" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
@@ -32,7 +32,8 @@
                 <ui:Toggle name="Toggle_playable" value="true" style="width: auto; justify-content: flex-start; align-items: center; padding-right: 4px; padding-left: 10px;" />
                 <ui:Label tabindex="-1" text="플레이가능" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 24px; color: rgb(255, 255, 255); padding-right: 10px; -unity-text-align: middle-left;" />
             </ui:VisualElement>
-            <ui:Button text="삭제" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button_RemoveCharacter" style="flex-shrink: 1; -unity-text-align: upper-center; background-color: rgb(242, 72, 34); color: rgb(255, 255, 255); font-size: 24px; width: 100px; align-self: flex-end;" />
+            <ui:Button text="추가" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button_AddCharacter" style="flex-shrink: 1; -unity-text-align: upper-center; background-color: rgb(13, 153, 255); color: rgb(255, 255, 255); font-size: 24px; width: 100px; align-self: flex-end;" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Instance template="CharacterShapeSelectionPopup" name="selection_popup" class="shape-selection-popup--hide" style="transition-duration: 2s; position: absolute; left: 483px; height: -49px; top: 49px; width: -101px;" />
 </ui:UXML>

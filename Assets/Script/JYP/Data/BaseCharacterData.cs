@@ -3,7 +3,7 @@
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public static BaseCharacterData Create(CharactersEntryController.CharacterEntry character)
+    public static BaseCharacterData Create(CharacterInfo character)
     {
         return new BaseCharacterData()
         {

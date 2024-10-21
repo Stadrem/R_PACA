@@ -24,7 +24,7 @@ public class NPCSpawner : MonoBehaviour
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(viewModel.CharacterEntries))
+        if (e.PropertyName == nameof(viewModel.Characters))
         {
             // Clear the NPC list UI
             foreach (Transform child in npcListUI)
@@ -78,7 +78,7 @@ public class NPCSpawner : MonoBehaviour
                 // If dropped outside UI, spawn the NPC in the 3D world
                 var spawnedPos = SpawnNPCAtMousePosition();
                 if (!spawnedPos.HasValue) return;
-                viewModel.RemoveCharacter(draggingNPCData);
+                // viewModel.RemoveCharacter(draggingNPCData);
                 var newData = new NpcData()
                 {
                     Name = draggingNPCData.Name,
@@ -87,12 +87,12 @@ public class NPCSpawner : MonoBehaviour
                     Position = spawnedPos.Value
                 };
                 
-                viewModel.AddCharacter(newData);
+                // viewModel.AddCharacter(newData);
                 Destroy(draggedNPCEntry); // Remove NPC entry from UI
             }
             else
             {
-                CreateNPCEntryUI(draggingNPCData);
+                // CreateNPCEntryUI(draggingNPCData);
                 draggingNPCData = null;
                 Destroy(draggedNPCEntry); // Remove the dragged instance
             }
@@ -128,26 +128,18 @@ public class NPCSpawner : MonoBehaviour
     
 
 
-    private void CreateNPCEntryUI(ICharacterData characterData)
+    private void CreateNPCEntryUI(CharacterInfo characterInfo)
     {
-        switch (characterData)
-        {
-            case BaseCharacterData baseCharacter:
-                break;
-            case NpcData npcData:
-                // change the NPCData to BaseCharacterData
-                ICharacterData newData = new BaseCharacterData()
-                {
-                    Name = characterData.Name,
-                    Description = characterData.Description,
-                };
-                viewModel.RemoveCharacter(characterData);
-                viewModel.AddCharacter(newData);
-                break;
-            default:
-                Debug.LogError("Unknown character data type: " + characterData.GetType());
-                break;
-        }
+        // if(!characterInfo.isPlayable)
+        // {
+        //         ICharacterData newData = new BaseCharacterData()
+        //         {
+        //             Name = characterInfo.Name,
+        //             Description = characterInfo.Description,
+        //         };
+        //         viewModel.DeleteCharacter(characterInfo);
+        //         viewModel.AddCharacter(newData);
+        // }
 
         // Instantiate a new NPC entry UI and add it to the NPC list
         GameObject newNPCEntry = Instantiate(npcEntryUIPrefab, npcListUI);
