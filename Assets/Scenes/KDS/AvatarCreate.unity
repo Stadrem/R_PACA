@@ -1470,6 +1470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerAvatar
       objectReference: {fileID: 0}
+    - target: {fileID: 6340439059843399461, guid: 5e258fec91d27484294348b0594c80b7,
+        type: 3}
+      propertyPath: myAvatar.userCode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9210420862258190837, guid: 5e258fec91d27484294348b0594c80b7,
         type: 3}
       propertyPath: m_LocalPosition.x

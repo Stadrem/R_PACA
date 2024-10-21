@@ -89,7 +89,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
     public void OnClickAvatarFinish()
     {
         // POST 요청을 위한 코루틴 실행
-        StartPostAvatarInfo(pas.myAvatar);
+        StartPutAvatarInfo(pas.myAvatar);
 
         TempFakeServer.Get().myAvatar = pas.myAvatar;
 

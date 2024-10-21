@@ -15,7 +15,7 @@ public class AvatarHTTPManager : MonoBehaviour
     }
 
     //서버에 아바타 정보 업로드
-    public void StartPostAvatarInfo(MyAvatar myAvatar)
+    public void StartPutAvatarInfo(MyAvatar myAvatar)
     {
         MyAvatar postMyAvatar = myAvatar;
 
@@ -37,7 +37,7 @@ public class AvatarHTTPManager : MonoBehaviour
             print(downloadHandler.text + "아바타 데이터 업로드 성공");
         };
 
-        StartCoroutine(PostAvatarInfo(info));
+        StartCoroutine(PutAvatarInfo(info));
     }
 
     //서버에서 아바타 정보 받아오기
@@ -51,7 +51,7 @@ public class AvatarHTTPManager : MonoBehaviour
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = "http://125.132.216.190:8765/update/";
+        info.url = "http://125.132.216.190:8765/user/";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
         info.body = JsonUtility.ToJson(getMyAvatar); ;
@@ -75,10 +75,10 @@ public class AvatarHTTPManager : MonoBehaviour
     }
 
     //아바타 정보 서버에 저장
-    public IEnumerator PostAvatarInfo(HttpInfo info)
+    public IEnumerator PutAvatarInfo(HttpInfo info)
     {
         // GET 요청 생성
-        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Put"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -133,8 +133,8 @@ public struct MyAvatar
 {
     public int userCode;
     public int userAvatarGender; //0이면 남자, 1이면 여자.
-    public int userAvatarSkin;
     public int userAvatarHair;
     public int userAvatarBody;
+    public int userAvatarSkin;
     public int userAvatarHand;
 }
