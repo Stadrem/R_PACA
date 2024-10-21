@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2069789418725484875}
   - component: {fileID: 4277761912511290753}
   - component: {fileID: 3214510662924157191}
+  - component: {fileID: 7489617263251173991}
   m_Layer: 0
   m_Name: SM_clothstand_02
   m_TagString: Untagged
@@ -107,3 +108,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1241524091328640773, guid: e94c4af38a2b3c04d87607d328a33774, type: 3}
+--- !u!65 &7489617263251173991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332114444940868692}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.8199852, y: 3.0307148, z: 2.530218}
+  m_Center: {x: -0.027630506, y: 1.5042816, z: 0.03621397}

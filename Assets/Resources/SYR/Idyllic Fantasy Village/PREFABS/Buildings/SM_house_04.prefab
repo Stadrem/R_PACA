@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8174253040049044546}
   - component: {fileID: 6238664836265756808}
   - component: {fileID: -3279485921332219193}
+  - component: {fileID: 1957520751930635139}
   m_Layer: 0
   m_Name: SM_house_04
   m_TagString: Untagged
@@ -116,3 +117,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5002588695854279491, guid: 78ec93ba05a50de4e841bab979387dd5, type: 3}
+--- !u!65 &1957520751930635139
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5590318357514086749}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.4630938, y: 6.074508, z: 6.474581}
+  m_Center: {x: 0.0074619483, y: 2.8751233, z: -0.79602784}

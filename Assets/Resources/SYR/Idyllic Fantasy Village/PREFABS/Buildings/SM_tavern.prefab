@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2271580555291773764}
   - component: {fileID: -1299073893029007845}
   - component: {fileID: 394226118084637204}
+  - component: {fileID: 7986670987977993266}
   m_Layer: 0
   m_Name: SM_tavern
   m_TagString: Untagged
@@ -142,3 +143,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4740022237920518518, guid: 29503e239f7e6dc41812a2bd9b682840, type: 3}
+--- !u!65 &7986670987977993266
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326152579345443473}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.790909, y: 12.489934, z: 7.543309}
+  m_Center: {x: 0.46460444, y: 6.1730514, z: -0.6777973}

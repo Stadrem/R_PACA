@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2094725777140828159}
   - component: {fileID: 4248304808802759477}
   - component: {fileID: 3257394554477162419}
+  - component: {fileID: 464371882749788610}
   m_Layer: 0
   m_Name: SM_waterwell
   m_TagString: Untagged
@@ -111,3 +112,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4338350820664035806, guid: 1d1f4b81164cebc459f46b54ce49aa44, type: 3}
+--- !u!65 &464371882749788610
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2447142103816999648}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.2990246, y: 2.1747067, z: 1.9871264}
+  m_Center: {x: 0.012424707, y: 1.0761746, z: -0.002611279}

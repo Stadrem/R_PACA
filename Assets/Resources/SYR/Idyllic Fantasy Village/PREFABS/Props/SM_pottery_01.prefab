@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1812239211682692809}
   - component: {fileID: 4522364717283510787}
   - component: {fileID: 2955275179184559749}
+  - component: {fileID: 5772608571031745566}
   m_Layer: 0
   m_Name: SM_pottery_01
   m_TagString: Untagged
@@ -106,3 +107,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -738592045945273958, guid: 618ef932543672142961cf0313e73d97, type: 3}
+--- !u!65 &5772608571031745566
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720832575179205590}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.62237823, y: 1.0860133, z: 0.5100838}
+  m_Center: {x: -0.000045880675, y: 0.53961337, z: -0.000007584691}

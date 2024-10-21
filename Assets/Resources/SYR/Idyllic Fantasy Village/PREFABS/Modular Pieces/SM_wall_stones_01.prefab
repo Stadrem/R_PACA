@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6378451931916789159}
   - component: {fileID: 9178379424999739757}
   - component: {fileID: 7539503878731959791}
+  - component: {fileID: 3631599763059655907}
   m_Layer: 0
   m_Name: SM_wall_stones_01
   m_TagString: Untagged
@@ -106,3 +107,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -464306792794072243, guid: 392171258cf3a23449dbfa11ec3fbf22, type: 3}
+--- !u!65 &3631599763059655907
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7233021816320733368}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.8168771, y: 1.1630771, z: 0.49664342}
+  m_Center: {x: -0.0034837723, y: 0.5726882, z: -0.000012546778}
