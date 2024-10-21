@@ -105,7 +105,7 @@ public class PlayNpcManager : MonoBehaviourPun
             //roll dice
             waitRoll = false;
             string something = "something with dice";
-            
+
             yield return new WaitWhile(() => waitRes || waitRoll);
         }
         else
@@ -114,17 +114,14 @@ public class PlayNpcManager : MonoBehaviourPun
 
         string somethingToShow = "";
         yield return MockServer.Instance.Get<string>(
-            (t) =>
-            {
-                somethingToShow = "somethingToShow";
-            }
+            (t) => { somethingToShow = "somethingToShow"; }
         );
         yield return new WaitForSeconds(1f);
         NpcChatUIManager.RPC_AddChatBubble(sender, somethingToShow);
         //next turn
         bool res = false;
         int id = 0;
-        
+
         yield return CheckCurrentTurnUser(
             (t) =>
             {
@@ -132,9 +129,9 @@ public class PlayNpcManager : MonoBehaviourPun
                 id = 0;
             }
         );
-        
+
         yield return new WaitUntil(() => res);
-        
+
         photonView.RPC("NextTurn", RpcTarget.All, id);
     }
 
@@ -154,12 +151,16 @@ public class PlayNpcManager : MonoBehaviourPun
             id == PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.id
         );
     }
-    
+
     [PunRPC]
     private void InitPlay()
     {
         turnSystem.InitTurn();
         PlayUniverseManager.Instance.NpcChatUIManager.SetTurnText(turnSystem.Turn, "");
-        
+    }
+
+    public void FinishConversation()
+    {
+        NpcChatUIManager.Hide();
     }
 }
