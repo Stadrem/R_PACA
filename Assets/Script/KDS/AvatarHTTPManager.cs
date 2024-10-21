@@ -17,16 +17,16 @@ public class AvatarHTTPManager : MonoBehaviour
     //서버에 아바타 정보 업로드
     public void StartPutAvatarInfo(MyAvatar myAvatar)
     {
-        MyAvatar postMyAvatar = myAvatar;
+        //MyAvatar postMyAvatar = myAvatar;
 
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = "http://125.132.216.190:8765/user/upload";
+        info.url = $"http://125.132.216.190:8765/user/update?userCode={myAvatar.userCode}&userAvatarGender={myAvatar.userAvatarGender}&userAvatarHair={myAvatar.userAvatarHair}&userAvatarBody={myAvatar.userAvatarBody}&userAvatarSkin={myAvatar.userAvatarSkin}&userAvatarHand={myAvatar.userAvatarHand}";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        info.body = JsonUtility.ToJson(postMyAvatar); ;
+        //info.body = JsonUtility.ToJson(postMyAvatar); ;
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";
@@ -43,18 +43,18 @@ public class AvatarHTTPManager : MonoBehaviour
     //서버에서 아바타 정보 받아오기
     public void StartGetAvatarInfo(int id, Action<MyAvatar> onAvatarReceived)
     {
-        GetMyAvatar getMyAvatar = new GetMyAvatar();
+        //GetMyAvatar getMyAvatar = new GetMyAvatar();
 
-        getMyAvatar.userCode = id;
+        //getMyAvatar.userCode = id;
 
         // HttpInfo 객체 생성
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = "http://125.132.216.190:8765/user/";
+        info.url = $"http://125.132.216.190:8765/user?userCode={id}";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        info.body = JsonUtility.ToJson(getMyAvatar); ;
+        //info.body = JsonUtility.ToJson(getMyAvatar); ;
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";
@@ -69,6 +69,8 @@ public class AvatarHTTPManager : MonoBehaviour
 
             // 콜백 함수로 아바타 정보 반환
             onAvatarReceived?.Invoke(get);
+
+            print("유저 ID: " + id + " 아바타 정보 받아오기 성공");
         };
 
         StartCoroutine(GetAvatarInfo(info));
@@ -80,10 +82,10 @@ public class AvatarHTTPManager : MonoBehaviour
         // GET 요청 생성
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Put"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            //byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            //webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", info.contentType);
+            //webRequest.SetRequestHeader("Content-Type", info.contentType);
 
             // 요청 전송 및 응답 대기
             yield return webRequest.SendWebRequest();
@@ -103,8 +105,13 @@ public class AvatarHTTPManager : MonoBehaviour
     public IEnumerator GetAvatarInfo(HttpInfo info)
     {
         // GET 요청 생성
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Get"))
         {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
             // 요청 전송 및 응답 대기
             yield return webRequest.SendWebRequest();
 

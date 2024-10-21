@@ -52,15 +52,17 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     void RefreshAvatar()
     {
-        myAvatar.userCode = TempFakeServer.Get().myAvatar.userCode;
+        //myAvatar.userCode = TempFakeServer.Get().myAvatar.userCode;
 
         //서버에서 아바타 정보 받아오기
         StartGetAvatarInfo(myAvatar.userCode, (getAvatar) =>
         {
             myAvatar = getAvatar;
+
+            ChangeAvatar();
         });
 
-        myAvatar = TempFakeServer.Get().myAvatar;
+        //myAvatar = TempFakeServer.Get().myAvatar;
 
         // 씬 로드 후 실행할 함수 호출
         ChangeAvatar();
