@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1462162499589243454}
   - component: {fileID: 3724004385537849076}
   - component: {fileID: 2625536889298905718}
+  - component: {fileID: 5821612839390127771}
   m_Layer: 0
   m_Name: SM_chest_01
   m_TagString: Untagged
@@ -108,3 +109,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7148477833750598138, guid: 2f025b386c7bada4384fec8a273dc600, type: 3}
+--- !u!65 &5821612839390127771
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2931471938231818017}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6885477, y: 0.8501697, z: 1.0355775}
+  m_Center: {x: -0.0019554198, y: 0.42865983, z: 0.00000011920928}

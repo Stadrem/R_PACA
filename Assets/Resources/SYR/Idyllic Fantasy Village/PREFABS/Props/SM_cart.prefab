@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5727144959096092557}
   - component: {fileID: 7538481203524371271}
   - component: {fileID: 9178200899848576989}
+  - component: {fileID: 2141383569588739623}
   m_Layer: 0
   m_Name: SM_cart
   m_TagString: Untagged
@@ -107,3 +108,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2394985833497583912, guid: 4314745d86a3f6a468ebda54531ca785, type: 3}
+--- !u!65 &2141383569588739623
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8331356700068553362}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9940312, y: 1.1917276, z: 1.671461}
+  m_Center: {x: 0.23443492, y: 0.5835616, z: 0.00000005999343}

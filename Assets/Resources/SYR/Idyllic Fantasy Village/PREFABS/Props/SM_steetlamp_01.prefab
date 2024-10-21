@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4568783627184335149}
   - component: {fileID: 1766365195072019943}
   - component: {fileID: 1099712188140159341}
+  - component: {fileID: 2189785747281528100}
   m_Layer: 0
   m_Name: SM_steetlamp_01
   m_TagString: Untagged
@@ -107,3 +108,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4700339949008730407, guid: 7d7a5921a30355e47ae89833d496e481, type: 3}
+--- !u!65 &2189785747281528100
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253221623082925106}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.21955632, y: 2.917582, z: 0.2545122}
+  m_Center: {x: -0.0026578133, y: 1.4634409, z: 0.012899598}

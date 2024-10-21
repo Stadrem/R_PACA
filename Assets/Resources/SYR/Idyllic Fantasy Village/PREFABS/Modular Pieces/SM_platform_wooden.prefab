@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2674109595378048644}
   - component: {fileID: 214114271412890190}
   - component: {fileID: 1529317777327437516}
+  - component: {fileID: 97743623870469077}
   m_Layer: 0
   m_Name: SM_platform_wooden
   m_TagString: Untagged
@@ -104,6 +105,27 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6824183293225592588, guid: 676d57c4b7defe94d968eb728aef0ec3, type: 3}
+--- !u!65 &97743623870469077
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871337710317702043}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7176477, y: 1.2215494, z: 1.4772637}
+  m_Center: {x: 0.006518991, y: 0.58783215, z: 0.000008493467}
