@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/base.uss?fileID=7433441132597879392&amp;guid=ed2135ebda179b04e8d23b5eade416a3&amp;type=3#base" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 8px; margin-right: 4px; margin-bottom: 8px; margin-left: 4px; padding-top: 16px; padding-right: 12px; padding-bottom: 12px; padding-left: 16px; width: 312px;">
+        <ui:VisualElement name="image_profile" style="flex-grow: 0; margin-top: 12px; margin-right: 12px; margin-bottom: 12px; margin-left: 12px; background-color: rgb(0, 0, 0); height: 250px; width: 250px;" />
+        <ui:Label tabindex="-1" text="이름" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_name" style="-unity-text-align: upper-center; margin-top: 8px; margin-bottom: 8px; padding-top: 12px; padding-bottom: 12px;" />
+        <ui:TextField picking-mode="Ignore" value="filler text" name="input_description" style="height: 15%; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px;" />
+        <ui:VisualElement name="Container_stats" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="주요 스탯" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_stats" style="height: 40px;" />
+            <ui:ListView name="ListView" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

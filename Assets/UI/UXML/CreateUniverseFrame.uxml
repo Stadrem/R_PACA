@@ -1,0 +1,48 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/base.uss?fileID=7433441132597879392&amp;guid=ed2135ebda179b04e8d23b5eade416a3&amp;type=3#base" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.44); padding-top: 80px; padding-right: 40px; padding-bottom: 40px; padding-left: 40px;">
+        <ui:VisualElement name="Header" style="flex-grow: 1; height: 20%; flex-direction: row; align-self: stretch; justify-content: space-between; align-items: flex-end; padding-top: 0;">
+            <ui:Button text="닫기" parse-escape-sequences="true" display-tooltip-when-elided="true" name="btn_back" style="left: 0; padding-right: 70px; padding-left: 70px; align-self: flex-start; background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);" />
+            <ui:Label tabindex="-1" text="세계관 보기" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_indicator" style="align-self: flex-start; padding-top: 20px; font-size: 38px; padding-bottom: 20px; padding-right: 250px; padding-left: 250px; background-color: rgb(255, 255, 255); white-space: nowrap; -unity-text-align: middle-center; text-overflow: clip; left: 568px; position: absolute; right: 568px; top: 0; width: 700px;" />
+            <ui:Label tabindex="-1" text="생성일자 2024 / 10  / 05" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_createdDate" style="align-self: flex-start; padding-top: 20px; font-size: 38px; padding-bottom: 20px; padding-right: 48px; padding-left: 48px; background-color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Body" style="flex-grow: 1; height: 80%;">
+            <ui:VisualElement name="Container_ContentInput" style="flex-grow: 1; flex-direction: row;">
+                <ui:VisualElement name="Container_ContentLeft" style="flex-grow: 0; width: initial; flex-basis: 80%; flex-shrink: 0;">
+                    <ui:VisualElement style="flex-grow: 0; height: 150px; flex-direction: row;">
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px; width: 50%;">
+                            <ui:Label tabindex="-1" text="제목" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 80px; -unity-text-align: middle-center;" />
+                            <ui:TextField picking-mode="Ignore" name="input_title" style="flex-grow: 0; width: auto; -unity-text-align: middle-left; align-self: center; flex-shrink: 1; flex-basis: auto; align-items: stretch; justify-content: flex-start;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px; width: 50%;">
+                            <ui:Label tabindex="-1" text="장르" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 80px; -unity-text-align: middle-center;" />
+                            <ui:TextField picking-mode="Ignore" name="input_genre" style="flex-grow: 0; width: auto; -unity-text-align: middle-left; align-self: center; flex-shrink: 1;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; height: 410px; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row;">
+                        <ui:Label tabindex="-1" text="세계관\n내용" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_universeContent" style="width: 200px; height: 120px; -unity-text-align: middle-center; align-self: flex-start;" />
+                        <ui:TextField picking-mode="Ignore" value="asdfghjk" name="input_universe" style="flex-grow: 1; flex-direction: column; -unity-text-align: upper-left; width: auto; flex-shrink: 1;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 0; height: 110px; flex-direction: row; align-items: stretch; justify-content: space-around;">
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px;">
+                            <ui:Label tabindex="-1" text="등장인물" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 40px; -unity-text-align: upper-center;" />
+                            <ui:Label tabindex="-1" text=";djaskflsd;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_characters" style="width: auto; flex-grow: 1; text-overflow: ellipsis; -unity-text-align: middle-left; flex-shrink: 1;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); margin-top: 16px; margin-right: 16px; margin-bottom: 16px; margin-left: 16px; flex-direction: row; padding-top: 7px; padding-bottom: 7px; padding-right: 10px; padding-left: 10px;">
+                            <ui:Label tabindex="-1" text="배경" parse-escape-sequences="true" display-tooltip-when-elided="true" style="width: 200px; height: 40px; -unity-text-align: upper-center;" />
+                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lbl_backgrounds" style="flex-grow: 1; -unity-text-align: middle-left; flex-shrink: 1;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 0; height: 100px; flex-direction: row; padding-right: 15px;">
+                        <ui:Label tabindex="-1" text="태그" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_tag" style="padding-right: 24px; padding-left: 24px; align-items: stretch; align-self: center; -unity-text-align: upper-center;" />
+                        <ui:TextField picking-mode="Ignore" value="hihihihihihihi" name="input_tags" style="align-items: stretch; justify-content: flex-start; align-self: center; width: auto; height: 60px; -unity-text-align: middle-left; flex-grow: 1; flex-shrink: 1;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Container_ContentRight" style="flex-grow: 0; width: 350px; flex-shrink: 0;">
+                    <ui:Label tabindex="-1" text="목표" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-color: rgb(108, 108, 108); width: 100%; color: rgb(255, 255, 255);" />
+                    <ui:ListView name="list_objectives" style="flex-grow: 1; background-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

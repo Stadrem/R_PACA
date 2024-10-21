@@ -8,7 +8,7 @@ public class DiceStart : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            int result = DiceRollManager.Get().DiceRoll(2);
+            int result = DiceRollManager.Get().DiceRoll(3,4);
             Debug.Log("반환된 주사위 결과: " + result);
         }
     }
