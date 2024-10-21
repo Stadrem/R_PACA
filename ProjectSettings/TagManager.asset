@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - RoomNPC
   - InPlayNPC
+  - Portal
   layers:
   - Default
   - TransparentFX

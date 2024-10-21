@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayUniverseManager : MonoBehaviour
 {
@@ -11,19 +10,23 @@ public class PlayUniverseManager : MonoBehaviour
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [FormerlySerializedAs("playNPCManager")]
     [SerializeField]
     private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
     [SerializeField]
-    private NpcChatManager npcChatManager;
-    public  NpcChatManager NpcChatManager => npcChatManager;
-    
+    private NpcChatUIManager npcChatUIManager;
+
+    public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
+
     [SerializeField]
     private CamSettingStateManager camSettingManager;
+
     public CamSettingStateManager CamSettingManager => camSettingManager;
+    public InGamePlayerManager InGamePlayerManager { get; private set; }
+
+
     public static PlayUniverseManager Instance
     {
         get
@@ -51,15 +54,19 @@ public class PlayUniverseManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        InGamePlayerManager = GetComponent<InGamePlayerManager>();
+    }
+
     private void Update()
     {
-        TestingByKey();
         UserInteraction();
     }
 
     private void UserInteraction()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, float.MaxValue))
@@ -69,90 +76,18 @@ public class PlayUniverseManager : MonoBehaviour
                     playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
                     CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
                 }
+                else if (hit.collider.CompareTag("Portal"))
+                {
+                    hit.collider.GetComponent<PortalInPlay>()
+                        ?.InteractByUser();
+                }
             }
         }
     }
-
-    #region Test
-
-    private void TestingByKey()
+    
+    public void FinishConversation()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            var portalList1 = new List<PortalData>()
-            {
-                new PortalData()
-                {
-                    position = new Vector3(0, 0, 0),
-                    targetBackgroundId = 1,
-                },
-            };
-
-            var portalList2 = new List<PortalData>()
-            {
-                new PortalData()
-                {
-                    position = new Vector3(0, 0, 0),
-                    targetBackgroundId = 0,
-                },
-            };
-
-            var npcList1 = new List<NpcData>()
-            {
-                new NpcData()
-                {
-                    Name = "마을사람 1",
-                    Position = new Vector3(0, 0, 0),
-                    Type = NpcData.ENPCType.Human,
-                },
-
-                new NpcData()
-                {
-                    Name = "고블린 1",
-                    Position = new Vector3(2, 0, 0),
-                    Type = NpcData.ENPCType.Goblin,
-                }
-            };
-            var backgroundList = new List<BackgroundPartData>()
-            {
-                new BackgroundPartData()
-                {
-                    id = 0,
-                    Name = "Town 0",
-                    Type = EBackgroundPartType.Town,
-                    universeId = 0,
-                    portalList = portalList1,
-                    npcList = npcList1,
-                },
-                new BackgroundPartData()
-                {
-                    id = 1,
-                    Name = "Dungeon 0",
-                    Type = EBackgroundPartType.Dungeon,
-                    universeId = 0,
-                    portalList = portalList2,
-                    npcList = new List<NpcData>()
-                },
-            };
-
-            var universe = new UniverseData()
-            {
-                id = 0,
-                name = "Universe 0",
-                startBackground = backgroundList[0],
-            };
-
-            playBackgroundManager.Init(universe, backgroundList);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            playBackgroundManager.MoveTo(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            playBackgroundManager.MoveTo(1);
-        }
+        CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
     }
 
-    #endregion
 }

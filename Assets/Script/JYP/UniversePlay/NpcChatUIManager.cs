@@ -2,26 +2,39 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Photon.Pun;
+using WebSocketSharp;
 
-public class NpcChatManager : MonoBehaviour
+public class NpcChatUIManager : MonoBehaviourPun
 {
     public Canvas chatCanvas;
     public TMP_InputField ChatInputField;
     public RectTransform listContent;
-
+    public TMP_Text turnText;
     public GameObject ChatBubblePrefab;
-    public StringBuilder ChatLog;
-    
+
     public void Start()
     {
-        ChatLog = new StringBuilder();
         ChatInputField.onSubmit.AddListener(OnSubmitText);
     }
 
     private void OnSubmitText(string txt)
     {
-        ShowChatBubble(txt);
+        PlayUniverseManager.Instance.NpcManager.OnChatSubmit(txt);
+        photonView.RPC("AddChatBubble", RpcTarget.All, "누군가..", txt);
         ChatInputField.text = "";
+    }
+
+    public void SetTurnText(int turn, string text)
+    {
+        if (text.IsNullOrEmpty())
+        {
+            turnText.text = $"{turn} 턴";
+        }
+        else
+        {
+            turnText.text = $"{turn} 턴 - {text}";
+        }
     }
 
     public void Show()
@@ -34,16 +47,26 @@ public class NpcChatManager : MonoBehaviour
         chatCanvas.gameObject.SetActive(false);
     }
 
-    public void ShowChatBubble(string text)
+    public void RPC_AddChatBubble(string sender, string text)
     {
-        ChatLog.AppendLine(text);
+        photonView.RPC("AddChatBubble", RpcTarget.All, sender, text);
+    }
+
+    [PunRPC]
+    private void AddChatBubble(string sender, string text)
+    {
         GameObject chatBubble = Instantiate(ChatBubblePrefab, listContent);
         chatBubble.GetComponent<NpcChatItem>()
             .SetText(
-                "누군가..",
+                sender,
                 text,
                 Random.Range(0, 2) == 0
             );
+    }
 
+
+    public void SetChattable(bool chattable)
+    {
+        ChatInputField.interactable = chattable;
     }
 }
