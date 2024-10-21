@@ -79,7 +79,7 @@ public class DiceRollManager : MonoBehaviour
     float maxRayDistance = 1000f; 
 
     //적정값 입력
-    float rollDuration = 0.9f; // 주사위가 굴러가는 시간
+    float rollDuration = 0.7f; // 주사위가 굴러가는 시간
 
     public GameObject canvas;
 
@@ -124,10 +124,10 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].SetActive(true);
 
             //등장 위치 무작위
-            diceObjects[i].transform.localPosition = new Vector3(i * 1.5f, 5, Random.Range(-1.1f, 1.1f));
+            diceObjects[i].transform.localPosition = new Vector3(i * 2f, 5, Random.Range(-1.1f, 1.1f));
 
             //회전 값 무작위
-            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.0f, 2.0f), 30 * Random.Range(1.0f, 2.0f)));
+            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.0f, 2.0f), 60 * Random.Range(1.0f, 2.0f)));
 
             //주사위 1개당 주사위 값 생성
             //diceResults.Add(Random.Range(1,7));

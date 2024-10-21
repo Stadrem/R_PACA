@@ -26,7 +26,7 @@ public class AvatarHTTPManager : MonoBehaviour
         info.url = $"http://125.132.216.190:8765/user/update?userCode={myAvatar.userCode}&userAvatarGender={myAvatar.userAvatarGender}&userAvatarHair={myAvatar.userAvatarHair}&userAvatarBody={myAvatar.userAvatarBody}&userAvatarSkin={myAvatar.userAvatarSkin}&userAvatarHand={myAvatar.userAvatarHand}";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
-        //info.body = JsonUtility.ToJson(postMyAvatar); ;
+        //info.body = JsonUtility.ToJson(postMyAvatar);
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";

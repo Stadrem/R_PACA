@@ -17,6 +17,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     public MyAvatar myAvatar;
 
+    TempFakeServer tfs;
+
+    bool notUseNetworkOn = false;
+
     private void Awake()
     {
         // 현재 씬의 이름을 가져옴
@@ -34,13 +38,20 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         RefreshAvatar();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+
+        //백엔드 없을 시 디버그 전용. 제거해도 됨.
+        if (GameObject.Find("TempFakeServer"))
         {
-            ChangeAvatar();
+            tfs = GameObject.Find("TempFakeServer").GetComponent<TempFakeServer>();
+
+            notUseNetworkOn = true;
+
+            print("백엔드 없음");
+        }
+        else
+        {
+            print("정상 접속 상황");
         }
     }
 
@@ -62,7 +73,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
             ChangeAvatar();
         });
 
-        //myAvatar = TempFakeServer.Get().myAvatar;
+        //백엔드 없을 시 디버그용
+        if (notUseNetworkOn)
+        {
+            myAvatar = TempFakeServer.Get().myAvatar;
+        }
 
         // 씬 로드 후 실행할 함수 호출
         ChangeAvatar();

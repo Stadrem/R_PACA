@@ -16,6 +16,10 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     public ConnectionMgr cm;
 
+    public GameObject debugPanel;
+
+    public bool notUseNetworkOn = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -34,6 +38,28 @@ public class AvatarCanvasManager : AvatarHTTPManager
         ContentsChildSet(0);
 
         pas = playerAvatar.GetComponent<PlayerAvatarSetting>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            DebugPanel();
+        }
+    }
+
+    //백엔드 없을 시 디버그용
+    public void OnClickNotUseNetwork()
+    {
+        TempFakeServer.Get().myAvatar = pas.myAvatar;
+
+        notUseNetworkOn = true;
+    }
+
+    //백엔드 없을 시 디버그용
+    void DebugPanel()
+    {
+        debugPanel.SetActive(!debugPanel.activeSelf);
     }
 
     //AvatarPresetSettings에 설정한 모든 내용을 기반으로 UI 아이콘 자동 생성
@@ -88,10 +114,13 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     public void OnClickAvatarFinish()
     {
+        if(notUseNetworkOn == true)
+        {
+            TempFakeServer.Get().myAvatar = pas.myAvatar;
+        }
+
         // POST 요청을 위한 코루틴 실행
         StartPutAvatarInfo(pas.myAvatar);
-
-        TempFakeServer.Get().myAvatar = pas.myAvatar;
 
         cm.OnClickConnect();
     }

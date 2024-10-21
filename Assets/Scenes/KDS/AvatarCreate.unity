@@ -414,6 +414,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 536852610}
   m_LocalEulerAnglesHint: {x: 0, y: -23.806, z: 0}
+--- !u!114 &417598904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8307633813187719746, guid: 76932f8acda1cf24c96d2702da34cfab,
+    type: 3}
+  m_PrefabInstance: {fileID: 3812696727113034437}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d4f8b55532fe140b47ecb236818aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &536852609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,6 +1655,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 417598904}
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickNotUseNetwork
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AvatarCanvasManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225669703327249974, guid: 76932f8acda1cf24c96d2702da34cfab,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4032914865509184998, guid: 76932f8acda1cf24c96d2702da34cfab,
         type: 3}
       propertyPath: m_AnchorMax.y
