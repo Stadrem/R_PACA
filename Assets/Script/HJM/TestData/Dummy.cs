@@ -11,7 +11,7 @@ public class Universe
     public string mainObjective;
     public List<Objective> subObjectives;
     public List<Character> characters;
-    public List<Background> backgrounds;
+    public List<Backgrounds> backgrounds;
 }
 
 [Serializable]
@@ -39,12 +39,12 @@ public class Stat
 }
 
 [Serializable]
-public class Background
+public class Backgrounds
 {
     public int id;
     public string name;
     public List<CustomObject> customObject;
-    public List<Background> link;
+    public List<Backgrounds> link;
 }
 
 [Serializable]
