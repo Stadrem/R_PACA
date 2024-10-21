@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6950451138990804848}
   - component: {fileID: 5156622902804708282}
   - component: {fileID: 5787570361016248124}
+  - component: {fileID: 547489325654001437}
   m_Layer: 0
   m_Name: SM_floor_woodenplanks
   m_TagString: Untagged
@@ -106,3 +107,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -203994540891914487, guid: fdfa2abe3645296458a9e86ffc15af84, type: 3}
+--- !u!65 &547489325654001437
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670109524101093999}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.5141296, y: 0.10923271, z: 4.8392715}
+  m_Center: {x: 0.008406522, y: 0.07142061, z: -0.0000027418137}
