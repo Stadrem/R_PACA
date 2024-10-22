@@ -25,7 +25,7 @@ namespace Script.JYP.UniversePlay
                 {
                     new PortalData()
                     {
-                        position = new Vector3(0, 0, 0),
+                        position = new Vector3(69.5699997f,9.57999992f,63.9599991f),
                         targetBackgroundId = 1,
                     },
                 };
@@ -34,7 +34,7 @@ namespace Script.JYP.UniversePlay
                 {
                     new PortalData()
                     {
-                        position = new Vector3(0, 0, 0),
+                        position = Vector3.zero,
                         targetBackgroundId = 0,
                     },
                 };
@@ -44,14 +44,14 @@ namespace Script.JYP.UniversePlay
                     new NpcData()
                     {
                         Name = "마을사람 1",
-                        Position = new Vector3(0, 0, 0),
+                        Position = new Vector3(74.1738663f, 9.97296429f, 69.3324738f),
                         Type = NpcData.ENPCType.Human,
                     },
 
                     new NpcData()
                     {
                         Name = "고블린 1",
-                        Position = new Vector3(2, 0, 0),
+                        Position = new Vector3(70.1738663f, 9.97296429f, 69.3324738f),
                         Type = NpcData.ENPCType.Goblin,
                     }
                 };

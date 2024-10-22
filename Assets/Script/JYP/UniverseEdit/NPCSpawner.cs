@@ -1,20 +1,20 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class NPCSpawner : MonoBehaviour
 {
-    public Camera mainCamera; // Main camera for raycasting mouse position
-    public GameObject npcPrefab; // Prefab to spawn the NPC
-    public RectTransform npcListUI; // UI container for the NPC list
-    public Transform npcParent; // Parent for the NPCs in the 3D world
-    public GameObject npcEntryUIPrefab; // Prefab for the NPC entry in the UI list
-
+    public RectTransform root;
+    public RectTransform npcListTransform; // UI container for the NPC list
+    public GameObject npcPrefab;
+    public GameObject npcUIEntryPrefab;
     private UniverseEditViewModel viewModel;
-    private GameObject draggedNPCEntry = null;
-    private bool isDragging = false;
-    private NpcData draggingNPCData = null;
-    private int drraggedBackgroundPartId = -1;
+
+    private List<DraggableNpcUIController> npcEntries = new List<DraggableNpcUIController>();
+    private Dictionary<CharacterInfo, GameObject> spawnedNpcs = new Dictionary<CharacterInfo, GameObject>();
+    private int currentBackgroundPartId = -1;
+    private Transform npcPositionOffset;
 
     private void Start()
     {
@@ -22,129 +22,88 @@ public class NPCSpawner : MonoBehaviour
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
+
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(viewModel.Characters))
         {
-            // Clear the NPC list UI
-            foreach (Transform child in npcListUI)
-            {
-                Destroy(child.gameObject);
-            }
-
-            // Create a new NPC entry for each character in the view model
+            ClearNpcList();
             foreach (var character in viewModel.Characters)
             {
-                CreateNPCEntryUI(character);
+                var entry = Instantiate(npcUIEntryPrefab, npcListTransform)
+                    .GetComponent<DraggableNpcUIController>();
+                entry.Init(character, SpawnNpc);
+                npcEntries.Add(entry);
             }
-        }
-    }
 
-    void Update()
-    {
-        if (isDragging && draggedNPCEntry != null)
-        {
-            Vector3 mousePos = Input.mousePosition;
-
-            if (!EventSystem.current.IsPointerOverGameObject())
+            // find spawned npcs that are not in the view model and remove them
+            var toRemove = spawnedNpcs.Keys.Where(c => !viewModel.Characters.Contains(c))
+                .ToList();
+            foreach (var character in toRemove)
             {
-                // Move the dragged NPC entry to the mouse position in world space
-                Ray ray = mainCamera.ScreenPointToRay(mousePos);
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    draggedNPCEntry.transform.position = hit.point;
-                }
+                Destroy(spawnedNpcs[character]);
+                spawnedNpcs.Remove(character);
             }
         }
     }
-    
-    
 
-    // Call this when NPC Entry begins dragging
-    public void StartDrag(GameObject npcEntry)
+    public void Init()
     {
-        draggedNPCEntry = npcEntry;
-        draggingNPCData = npcEntry.GetComponent<EditorNPCEntry>().characterData;
-        isDragging = true;
+        ClearNpcList();
+        root.gameObject.SetActive(false);
     }
 
-    // Call this when NPC Entry is dropped
-    public void EndDrag(PointerEventData eventData)
+    private void ClearNpcList()
     {
-        if (isDragging && draggedNPCEntry != null)
+        foreach (var entry in npcEntries)
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                // If dropped outside UI, spawn the NPC in the 3D world
-                var spawnedPos = SpawnNPCAtMousePosition();
-                if (!spawnedPos.HasValue) return;
-                // viewModel.RemoveCharacter(draggingNPCData);
-                var newData = new NpcData()
-                {
-                    Name = draggingNPCData.Name,
-                    Description = draggingNPCData.Description,
-                    BackgroundPartId = drraggedBackgroundPartId,
-                    Position = spawnedPos.Value
-                };
-                
-                // viewModel.AddCharacter(newData);
-                Destroy(draggedNPCEntry); // Remove NPC entry from UI
-            }
-            else
-            {
-                // CreateNPCEntryUI(draggingNPCData);
-                draggingNPCData = null;
-                Destroy(draggedNPCEntry); // Remove the dragged instance
-            }
-
-            draggedNPCEntry = null;
-            isDragging = false;
+            Destroy(entry.gameObject);
         }
-    }
 
-    private Vector3? SpawnNPCAtMousePosition()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        Ray ray = mainCamera.ScreenPointToRay(mousePos);
+        npcEntries.Clear();
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        foreach (var npc in spawnedNpcs)
         {
-            Instantiate(npcPrefab, hit.point, Quaternion.identity, npcParent);
+            Destroy(npc.Value);
         }
-        return hit.point;
+
+        spawnedNpcs.Clear();
     }
 
-    public void TurnOffSpawnable()
+    public void StartSpawner(Transform npcOffset)
     {
-        npcListUI.gameObject.SetActive(false);
+        npcPositionOffset = npcOffset;
+        root.gameObject.SetActive(true);
     }
-    
-    public void TurnOnSpawnable(Transform detail, int backgroundPartId)
+
+    public void FinishSpawner()
     {
-        npcListUI.gameObject.SetActive(true);
-        npcListUI.position = detail.position;
-        drraggedBackgroundPartId = backgroundPartId;
+        root.gameObject.SetActive(false);
     }
-    
 
-
-    private void CreateNPCEntryUI(CharacterInfo characterInfo)
+    public void SpawnNpc(CharacterInfo character, Vector3 position)
     {
-        // if(!characterInfo.isPlayable)
-        // {
-        //         ICharacterData newData = new BaseCharacterData()
-        //         {
-        //             Name = characterInfo.Name,
-        //             Description = characterInfo.Description,
-        //         };
-        //         viewModel.DeleteCharacter(characterInfo);
-        //         viewModel.AddCharacter(newData);
-        // }
+        //TODO: Spawn By it's type
+        var npc = Instantiate(npcPrefab, position, Quaternion.identity);
+        npc.transform.SetParent(npcPositionOffset);
+        var script = npc.GetComponent<SpawnedNpc>();
+        script.characterId = character.id;
+        script.npcSpawner = this;
+        spawnedNpcs.Add(character, npc);
+        npcEntries.Remove(npcEntries.FirstOrDefault(e => e.CharacterInfo.id == character.id));
+    }
 
-        // Instantiate a new NPC entry UI and add it to the NPC list
-        GameObject newNPCEntry = Instantiate(npcEntryUIPrefab, npcListUI);
-        newNPCEntry.transform.SetParent(npcListUI, false);
+    public void ReturnToUi(int characterId)
+    {
+        var character = viewModel.Characters.FirstOrDefault(c => c.id == characterId);
+        if (spawnedNpcs[character] == null) return;
 
-        // Optionally, you can set properties or reference data on the new NPC entry here
+        Destroy(spawnedNpcs[character]);
+        spawnedNpcs.Remove(character);
+
+        var entry = Instantiate(npcUIEntryPrefab, npcListTransform)
+            .GetComponent<DraggableNpcUIController>();
+        entry.Init(character, SpawnNpc);
+        npcEntries.Add(entry);
     }
 }

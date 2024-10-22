@@ -55,7 +55,7 @@ namespace JYP
             // LoobyRoom 참여(시작하자마자 자동으로 로비룸에 입장시킬 것임
 
             // 혹은 생성
-            PhotonNetwork.JoinOrCreateRoom("LobbyRoom", lobbyRoomOption, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom("RoomTestForJYP", lobbyRoomOption, TypedLobby.Default);
         }
 
         // 로비룸 생성 성공 했을 때 호출되는 함수

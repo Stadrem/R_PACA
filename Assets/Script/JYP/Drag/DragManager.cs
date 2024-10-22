@@ -41,7 +41,7 @@ public class DragManager : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.G))
         {
             if (!isDragging) return;
-
+            print("Stop Drag");
             currentDraggable.StopDrag();
             isDragging = false;
         }

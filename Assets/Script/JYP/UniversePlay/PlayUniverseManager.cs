@@ -84,10 +84,11 @@ public class PlayUniverseManager : MonoBehaviour
             }
         }
     }
-    
+
     public void FinishConversation()
     {
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
     }
 
+ 
 }
