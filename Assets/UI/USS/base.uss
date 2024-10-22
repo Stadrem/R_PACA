@@ -4,7 +4,7 @@
     align-items: stretch;
     justify-content: flex-start;
     align-self: stretch;
-    font-size: 28px;
+    font-size: 100%;
 }
 
 .unity-base-text-field {
