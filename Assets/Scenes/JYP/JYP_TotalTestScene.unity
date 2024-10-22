@@ -721,7 +721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &265049424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,7 +1358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.0003196692}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &751982814
@@ -1894,7 +1894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1359064078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,8 +1908,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterItemTemplate: {fileID: 9197481963319205126, guid: 90fa3154e9c4d4f9a97e8a1e50574cc2,
-    type: 3}
-  addCharacterTemplate: {fileID: 9197481963319205126, guid: a53e89ae8a6994eceb655c3556cc6e6a,
     type: 3}
 --- !u!114 &1359064079
 MonoBehaviour:
@@ -2671,6 +2669,6 @@ SceneRoots:
   - {fileID: 247848107}
   - {fileID: 1454367133}
   - {fileID: 1359064080}
-  - {fileID: 265049426}
   - {fileID: 218963730}
   - {fileID: 563051951}
+  - {fileID: 265049426}
