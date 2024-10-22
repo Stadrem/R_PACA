@@ -16,6 +16,7 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     public List<LinkedBackgroundPart> linkedParts;
     public List<Portal> portals;
     public GameObject detail;
+    public Transform spawnOffset;
     public GameObject linkable;
     public CinemachineVirtualCamera detailViewCamera;
     private EViewType viewType = EViewType.LinkableView;
@@ -33,11 +34,17 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
             case EBackgroundPartType.Town:
                 var townPreset = Resources.Load<GameObject>("BackgroundPart/TownDetailPreset");
                 var go = Instantiate(townPreset, detail.transform);
+                detailViewCamera.transform.position = go.transform.Find("DetailViewCamPos")
+                    .transform.position;
+                spawnOffset = go.transform.Find("SpawnOffset");
                 go.transform.localPosition = Vector3.zero;
                 break;
             case EBackgroundPartType.Dungeon:
                 var dungeonPreset = Resources.Load<GameObject>("BackgroundPart/DungeonDetailPreset");
                 var dungeon = Instantiate(dungeonPreset, detail.transform);
+                detailViewCamera.transform.position = dungeon.transform.Find("DetailViewCamPos")
+                    .transform.position;
+                spawnOffset = dungeon.transform.Find("SpawnOffset");
                 dungeon.transform.localPosition = Vector3.zero;
                 break;
             default:

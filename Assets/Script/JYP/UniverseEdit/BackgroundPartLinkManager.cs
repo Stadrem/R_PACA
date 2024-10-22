@@ -16,15 +16,16 @@ public class BackgroundPartLinkManager : MonoBehaviour
     private List<LinkedLine> lines = new List<LinkedLine>();
     private Camera camera;
 
-    [SerializeField] private BackgroundPartNPCManager npcManager;
-    [SerializeField] private EditorNPCEntry editorNpcEntry;
+    [SerializeField]
+    private NPCSpawner npcSpawner;
 
-    [SerializeField] private NPCSpawner npcSpawner;
+    private UniverseEditViewModel EditViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
     private void Start()
     {
         camera = Camera.main;
         linkViewCamera.Priority = 20;
+        npcSpawner.Init();
     }
 
     private void Update()
@@ -43,7 +44,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
                         isDetailView = true;
                         currentPart = part;
                         part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
-                        npcSpawner.TurnOnSpawnable(part.detail.transform, part.backgroundPartId);
+                        npcSpawner.StartSpawner(part.spawnOffset);
                         part.detailViewCamera.Priority = 10;
                         linkViewCamera.Priority = 0;
                     }
@@ -103,7 +104,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
         {
             if (!isDetailView) return;
             isDetailView = false;
-            npcSpawner.TurnOffSpawnable();
+            npcSpawner.FinishSpawner();
             currentPart.ChangeViewType(LinkedBackgroundPart.EViewType.LinkableView);
             currentPart.detailViewCamera.Priority = 0;
             linkViewCamera.Priority = 20;

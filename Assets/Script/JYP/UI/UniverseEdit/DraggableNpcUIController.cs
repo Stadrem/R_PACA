@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,17 +14,23 @@ public class DraggableNpcUIController : MonoBehaviour, IBeginDragHandler, IDragH
     private Canvas canvas;
     private Vector2 originalPosition;
 
+    private Action<CharacterInfo, Vector3> onDroppedInGround;
+    private CharacterInfo characterInfo;
+    public CharacterInfo CharacterInfo => characterInfo;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();
+        containerRectTransform = transform.parent.GetComponent<RectTransform>();
     }
 
-    public void Init(string npcName, string npcShape)
+    public void Init(CharacterInfo character, Action<CharacterInfo, Vector3> onDroppedOnGround)
     {
-        npcNameText.text = npcName;
-        npcShapeText.text = npcShape;
+        characterInfo = character;
+        npcNameText.text = character.name;
+        npcShapeText.text = character.shapeType.ToString();
+        onDroppedInGround = onDroppedOnGround;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -38,14 +45,6 @@ public class DraggableNpcUIController : MonoBehaviour, IBeginDragHandler, IDragH
 
     public void OnDrag(PointerEventData eventData)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            containerRectTransform,
-            Input.mousePosition,
-            eventData.pressEventCamera,
-            out var localPoint
-        );
-        print($"{localPoint} / Contains: {containerRectTransform.rect.Contains(localPoint)}");
-
         if (canvas != null)
         {
             rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
@@ -56,21 +55,17 @@ public class DraggableNpcUIController : MonoBehaviour, IBeginDragHandler, IDragH
     {
         if (canvasGroup == null) return;
 
-        // Re-enable raycasts when dragging ends
         canvasGroup.blocksRaycasts = true;
-        rectTransform.anchoredPosition = originalPosition;
 
-        // Convert the mouse position into local point in the scrollview's RectTransform space
-        Vector2 localMousePosition;
-
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                containerRectTransform,
-                Input.mousePosition,
-                eventData.pressEventCamera,
-                out localMousePosition
-            ))
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hit, float.MaxValue, 1 << LayerMask.NameToLayer("DetailGround")))
         {
-            
+            onDroppedInGround?.Invoke(characterInfo, hit.point);
+            Destroy(gameObject);
+        }
+        else
+        {
+            rectTransform.anchoredPosition = originalPosition;
         }
     }
 }
