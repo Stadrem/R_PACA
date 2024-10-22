@@ -151,7 +151,7 @@ PrefabInstance:
     - target: {fileID: 2798571931629060426, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: m_Name
-      value: Player Variant
+      value: Player_Avatar
       objectReference: {fileID: 0}
     - target: {fileID: 4731209702277371698, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
@@ -168,6 +168,11 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 3715872329771150271}
+    - target: {fileID: 8100631587066389438, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
+      propertyPath: clickableLayers.m_Bits
+      value: 1048576
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3226658914930203315, guid: 2c867f7b3cea5d94e9520299e3a25948, type: 3}
     m_RemovedGameObjects:

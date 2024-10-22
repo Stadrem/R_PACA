@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DiceRollManager : MonoBehaviour
 {
+    //싱글톤
     public static DiceRollManager instance;
 
     public static DiceRollManager Get()
@@ -32,7 +33,6 @@ public class DiceRollManager : MonoBehaviour
                 return null;
             }
         }
-
         return instance;
     }
 
@@ -85,11 +85,8 @@ public class DiceRollManager : MonoBehaviour
 
     public TMP_Text diceText;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    //코루틴 변수
+    private IEnumerator coroutine;
 
     //int 값으로 반환
     public int DiceRoll(int diceA, int diceB) 
@@ -142,13 +139,22 @@ public class DiceRollManager : MonoBehaviour
         diceResult = diceResults.Sum();
 
         print(diceResults.Count + "D" +diceResult);
+        
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+
+        coroutine = SetDiceResultsAfterRoll(diceCount);
 
         // 주사위가 굴러가는 동안 회전 값 설정
-        StartCoroutine(SetDiceResultsAfterRoll(diceCount));
+        StartCoroutine(coroutine);
 
         //int 값 반환
         return diceResult;
     }
+
+
 
     // 코루틴으로 주사위 회전값 설정 (일정 시간 후)
     private IEnumerator SetDiceResultsAfterRoll(int diceCount)
@@ -168,9 +174,14 @@ public class DiceRollManager : MonoBehaviour
             SetDiceResult(diceResults[i], rb);
         }
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
 
         canvas.SetActive(false);
+
+        for(int j = 0; j < diceCount; j++)
+        {
+            diceObjects[j].SetActive(false);
+        }
     }
 
     //주사위 회전 함수
