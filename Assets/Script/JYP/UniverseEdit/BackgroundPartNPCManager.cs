@@ -19,7 +19,7 @@ public class BackgroundPartNPCManager : MonoBehaviour
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
     {
-        if(propertyChangedEventArgs.PropertyName == nameof(viewModel.CharacterEntries))
+        if(propertyChangedEventArgs.PropertyName == nameof(viewModel.Characters))
         {
             
         }
@@ -27,7 +27,7 @@ public class BackgroundPartNPCManager : MonoBehaviour
 
     public void SpawnNPC(Transform parent, int characterId)
     {
-        var character = viewModel.CharacterEntries[characterId];
+        var character = viewModel.Characters[characterId];
         var npc = Instantiate(NPCPrefab, parent);
         npc.transform.localPosition = Vector3.zero;
         placedNPC.Add(npc);

@@ -1,68 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine.UIElements;
 
-public class CharactersListViewController
+namespace UI.Universe.Edit
 {
-    private VisualElement root;
-    private VisualTreeAsset characterItemTemplate;
-    private VisualTreeAsset addItemTemplate;
-    private Action onAddCharacterClicked;
-    private ScrollView scrollView;
-
-    private readonly List<CharactersEntryController.ICharacterEntry> characters =
-        new List<CharactersEntryController.ICharacterEntry>();
-
-    public List<CharactersEntryController.CharacterEntry> Characters => characters
-        .OfType<CharactersEntryController.CharacterEntry>()
-        .ToList();
-
-
-    public void Initialize(VisualElement root, VisualTreeAsset characterItemTemplate, VisualTreeAsset addItemTemplate,
-        Action onAddCharacterClicked)
+    public class CharactersListViewController
     {
-        this.root = root;
-        this.characterItemTemplate = characterItemTemplate;
-        this.addItemTemplate = addItemTemplate;
-        this.onAddCharacterClicked = onAddCharacterClicked;
+        private VisualElement root;
+        private VisualTreeAsset characterEntryTemplate;
+        private ScrollView characterListScrollView;
 
-        scrollView = root.Q<ScrollView>("scroll_characters");
-    }
+        private Action<int> onDeleteCharacterClicked;
 
-    public void SetItem(List<CharactersEntryController.CharacterEntry> newCharacters)
-    {
-        this.characters.Clear();
-        this.characters.AddRange(newCharacters);
-        this.characters.Add(new CharactersEntryController.AddCharacterEntry());
-
-        OnListChanged();
-    }
-
-    private void OnListChanged()
-    {
-        scrollView.Clear();
-        foreach (var character in characters)
+        public void Initialize(VisualElement root,
+            VisualTreeAsset characterItemTemplate,
+            Action<int> onDeleteCharacterClicked)
         {
-            CreateCharacterView(character);
+            this.root = root;
+            this.characterEntryTemplate = characterItemTemplate;
+            this.onDeleteCharacterClicked = onDeleteCharacterClicked;
+            characterListScrollView = root.Q<ScrollView>("scroll_characters");
         }
-    }
 
-    private void CreateCharacterView(CharactersEntryController.ICharacterEntry character)
-    {
-        var item = new VisualElement
+        public void SetItem(List<CharacterInfo> newCharacters)
         {
-            style =
+            characterListScrollView.Clear();
+            foreach (var character in newCharacters)
             {
-                flexDirection = FlexDirection.Column,
-                height = Length.Percent(100), // 각 아이템의 높이를 ScrollView에 맞춤
-                width = 312
+                CreateCharacterView(character);
+                CreateSpace();
             }
-        };
-        var characterEntryController = new CharactersEntryController();
-        characterEntryController.Initialize(item, characterItemTemplate, addItemTemplate);
-        characterEntryController.BindItem(character, onAddCharacterClicked);
+        }
 
-        scrollView.Add(item);
+        private void CreateSpace()
+        {
+            var space = new VisualElement();
+            space.style.width = 20;
+            characterListScrollView.Add(space);
+        }
+
+        private void CreateCharacterView(CharacterInfo character)
+        {
+            var characterItem = characterEntryTemplate.CloneTree();
+            characterItem.style.height = Length.Percent(100);
+            characterItem.style.width = 480;
+
+
+            var characterEntryController = new CharacterEntryController();
+            characterEntryController.Initialize(characterItem);
+            characterEntryController.BindItem(character, onDeleteCharacterClicked);
+            characterListScrollView.Add(characterItem);
+        }
     }
 }

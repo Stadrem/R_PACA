@@ -1,36 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using UI.Universe.Edit;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UniverseCharactersListController : MonoBehaviour
+public class UniverseCharactersEditController : MonoBehaviour
 {
     public VisualTreeAsset characterItemTemplate;
-    public VisualTreeAsset addCharacterTemplate;
-
 
     private UniverseEditViewModel viewModel;
     private CharactersListViewController charactersListController;
+    private CharacterCreationController characterCreationController;
     private Button backButton;
     private Label createdDate;
 
-
     private void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        var root = GetComponent<UIDocument>()
+            .rootVisualElement;
+        backButton = root.Q<Button>("btn_back");
+        createdDate = root.Q<Label>("label_createdDate");
+
+        viewModel = ViewModelManager.Instance.UniverseEditViewModel;
+
         charactersListController = new CharactersListViewController();
         charactersListController.Initialize(
             root,
             characterItemTemplate,
-            addCharacterTemplate,
-            onAddCharacterClicked: OnAddCharacterClicked
+            viewModel.DeleteCharacter
         );
-        viewModel = ViewModelManager.Instance.UniverseEditViewModel;
-        backButton = root.Q<Button>("btn_back");
-        createdDate = root.Q<Label>("label_createdDate");
-        charactersListController.SetItem(viewModel.CharacterEntries);
-        backButton.clicked += () => { };
+        charactersListController.SetItem(viewModel.Characters);
+
+
+        characterCreationController = new CharacterCreationController();
+        characterCreationController.Initialize(root);
+
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
+
+        backButton.clicked += () => { };
+
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
@@ -46,15 +54,13 @@ public class UniverseCharactersListController : MonoBehaviour
         {
             createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
         }
-        else if (e.PropertyName == nameof(viewModel.CharacterEntries))
+        else if (e.PropertyName == nameof(viewModel.Characters))
         {
-            charactersListController.SetItem(viewModel.CharacterEntries);
+            charactersListController.SetItem(viewModel.Characters);
         }
     }
 
     private void OnAddCharacterClicked()
     {
-        print($"Add character clicked!");
-        viewModel.AddCharacter(new CharactersEntryController.CharacterEntry());
     }
 }

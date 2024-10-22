@@ -1,10 +1,10 @@
 .unity-text-element {
     -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
-    -unity-text-align: upper-left;
+    -unity-text-align: middle-center;
     align-items: stretch;
     justify-content: flex-start;
     align-self: stretch;
-    font-size: 28px;
+    font-size: 100%;
 }
 
 .unity-base-text-field {
@@ -12,7 +12,26 @@
 }
 
 .unity-text-field {
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .unity-base-field--no-label {
+}
+
+.character-shape--selected {
+    border-left-color: rgb(255, 249, 0);
+    border-right-color: rgb(255, 249, 0);
+    border-top-color: rgb(255, 249, 0);
+    border-bottom-color: rgb(255, 249, 0);
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+}
+
+.shape-selection-popup--hide {
+    display: none;
+    opacity: 0;
+    translate: -500px 0;
+    transition-duration: 2s;
 }
