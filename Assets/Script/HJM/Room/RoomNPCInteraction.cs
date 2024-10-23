@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class RoomNPCInteraction : MonoBehaviour
+public class RoomNPCInteraction : MonoBehaviourPunCallbacks
 {
     // UI 오브젝트
     public GameObject npcUI;
@@ -39,8 +40,22 @@ public class RoomNPCInteraction : MonoBehaviour
                 {
                     // UI를 활성화
                     npcUI.SetActive(true);
+                    // 게임 서버에 머물면서 로비 정보를 가져오기 위해 로비에 접속
+                    PhotonNetwork.JoinLobby();
                 }
+
+                // 로비에 접속하면 호출됨
+
             }
         }
+    }
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("로비에 성공적으로 접속했습니다.");
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.LogError($"서버에서 연결이 끊겼습니다. 원인: {cause}");
     }
 }

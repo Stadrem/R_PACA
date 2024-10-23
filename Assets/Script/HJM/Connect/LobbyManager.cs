@@ -1,7 +1,10 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -12,7 +15,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     void Start()
     {
         // 플레이어를 생성 (현재 로비룸에 함께 접속해 있는 유저들에게도 보이게 동기화)
-        PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
         // 리소스 폴더내에서 / 경로 설정하고 폴더 파도 됨
 
         // RPC 보내는 빈도 설정
@@ -21,8 +24,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 60;
 
     }
-    void Update()
-    {
-        
-    }
+
 }
