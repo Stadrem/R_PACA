@@ -101,7 +101,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         SkinnedMeshRenderer skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
-        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
+        //skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
+        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[2].avatarItems[myAvatar.userAvatarBody].subMesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
         //피부
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarSkin].material;
