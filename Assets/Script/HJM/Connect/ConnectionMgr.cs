@@ -38,7 +38,7 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         Debug.Log("로비서버 입장 완료했습니다.");
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel("LobbyScene");
         //JoinOrCreatLobbyRoom();
 
     }
