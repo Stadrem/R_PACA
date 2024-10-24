@@ -1,27 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
 using UnityEngine;
 
 public class PlayUniverseManager : MonoBehaviour
 {
     private static PlayUniverseManager instance;
 
-    [SerializeField]
-    private PlayBackgroundManager playBackgroundManager;
+    [SerializeField] private PlayBackgroundManager playBackgroundManager;
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [SerializeField]
-    private PlayNpcManager playNpcManager;
+    [SerializeField] private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
-    [SerializeField]
-    private NpcChatUIManager npcChatUIManager;
+    [SerializeField] private NpcChatUIManager npcChatUIManager;
 
     public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
 
-    [SerializeField]
-    private CamSettingStateManager camSettingManager;
+    [SerializeField] private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
     public InGamePlayerManager InGamePlayerManager { get; private set; }
@@ -89,6 +85,4 @@ public class PlayUniverseManager : MonoBehaviour
     {
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
     }
-
- 
 }

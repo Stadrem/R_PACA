@@ -1125,8 +1125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 2043557022}
   npcListTransform: {fileID: 719479855}
-  npcPrefab: {fileID: 2389740261151551814, guid: 461f3380eed464be8ac7ef5a286b9309,
-    type: 3}
+  npcPrefabs:
+  - {fileID: 2389740261151551814, guid: a0f76cf139fb74ffe85e83d1f10014f5, type: 3}
+  - {fileID: 2389740261151551814, guid: 3ef53dde4ddbb49c4bca5d959c2e3b89, type: 3}
   npcUIEntryPrefab: {fileID: 5719417202312447579, guid: f426d01e49a6d9042a9b8f9607fb3011,
     type: 3}
 --- !u!1 &223715000
@@ -1712,6 +1713,8 @@ MonoBehaviour:
   backgroundCreateUIController: {fileID: 397478003}
   createButton: {fileID: 1317505855}
   backButton: {fileID: 1021477871}
+  headerText: {fileID: 2097844042}
+  backgroundPartLinkManager: {fileID: 712830963}
 --- !u!1 &368093660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2765,6 +2768,7 @@ MonoBehaviour:
   yAlignment: 0.5
   linkViewCamera: {fileID: 1547818315}
   npcSpawner: {fileID: 218963731}
+  backgroundEditUIController: {fileID: 359884505}
 --- !u!4 &712830964
 Transform:
   m_ObjectHideFlags: 0
@@ -5746,7 +5750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1573187431
 Transform:
   m_ObjectHideFlags: 0

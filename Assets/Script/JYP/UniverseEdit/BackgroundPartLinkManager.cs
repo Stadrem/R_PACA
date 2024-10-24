@@ -19,7 +19,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
     private List<LinkedBackgroundPart> linkedParts = new List<LinkedBackgroundPart>();
 
     [SerializeField] private NPCSpawner npcSpawner;
-
+    [SerializeField] private BackgroundEditUIController backgroundEditUIController;
     private UniverseEditViewModel EditViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
     private void Start()
@@ -58,11 +58,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!isDetailView) return;
-            isDetailView = false;
-            npcSpawner.FinishSpawner();
-            currentPart.ChangeViewType(LinkedBackgroundPart.EViewType.LinkableView);
-            currentPart.detailViewCamera.Priority = 0;
-            linkViewCamera.Priority = 20;
+            ExitDetailMode();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
@@ -77,6 +73,16 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ExitDetailMode()
+    {
+        isDetailView = false;
+        backgroundEditUIController.SetLinkMode();
+        npcSpawner.FinishSpawner();
+        currentPart.ChangeViewType(LinkedBackgroundPart.EViewType.LinkableView);
+        currentPart.detailViewCamera.Priority = 0;
+        linkViewCamera.Priority = 20;
     }
 
     private void Link()
@@ -119,6 +125,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     private void ShowBackgroundPartDetailView(LinkedBackgroundPart part)
     {
+        backgroundEditUIController.SetDetailNpcMode();
         isDetailView = true;
         currentPart = part;
         part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);

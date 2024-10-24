@@ -62,13 +62,15 @@ public class PlayNpcManager : MonoBehaviourPun
     public void InteractNpc(NpcInPlay npc)
     {
         currentInteractNpc = npc;
-        photonView.RPC("InitPlay", RpcTarget.All);
+        InitPlay();
+        // photonView.RPC("InitPlay", RpcTarget.All);
         StartCoroutine(
             CheckCurrentTurnUser(
                 (t =>
                     {
                         currentPlayerId = t;
-                        photonView.RPC("NextTurn", RpcTarget.All, 0); // 0 for test
+                        NextTurn(0);
+                        // photonView.RPC("NextTurn", RpcTarget.All, 0); // 0 for test
                     }
                 )
             )
@@ -132,7 +134,8 @@ public class PlayNpcManager : MonoBehaviourPun
 
         yield return new WaitUntil(() => res);
 
-        photonView.RPC("NextTurn", RpcTarget.All, id);
+        NextTurn(id);
+        // photonView.RPC("NextTurn", RpcTarget.All, id);
     }
 
     IEnumerator CheckCurrentTurnUser(Action<int> callback)

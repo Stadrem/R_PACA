@@ -26,23 +26,36 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         // 현재 씬의 이름을 가져옴
         Scene currentScene = SceneManager.GetActiveScene();
 
-        /*
-        if (transform.parent.GetComponent<PhotonView>())
+        if (transform.parent != null && transform.parent.GetComponent<PhotonView>() != null)
         {
             pv = transform.parent.GetComponent<PhotonView>();
 
             if (pv.IsMine)
             {
-                myAvatar.userCode = UserCodeMgr.Instance.UserCode;
+                if(UserCodeMgr.Instance != null)
+                {
+                    myAvatar.userCode = UserCodeMgr.Instance.UserCode;
+                }
             }
         }
-        */
+        else
+        {
+            if (UserCodeMgr.Instance != null)
+            {
+                myAvatar.userCode = UserCodeMgr.Instance.UserCode;
+            }
+            else
+            {
+                myAvatar.userCode = 12;
+            }
+        }
 
-        myAvatar.userCode = UserCodeMgr.Instance.UserCode;
     }
 
     void Start()
     {
+        StartPostAvatarInfo(myAvatar.userCode);
+
         RefreshAvatar();
 
         SceneManager.sceneLoaded += OnSceneLoaded;

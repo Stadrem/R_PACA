@@ -14,6 +14,7 @@ public class ObjectiveSelectionPopupController
 
     public void Init(VisualElement root)
     {
+        this.root = root;
         selectionCollectSword = root.Q<VisualElement>("selection_getSword");
         selectionDemonKing = root.Q<VisualElement>("selection_objectiveDemonKing");
         confirm = root.Q<Button>("button_objectiveConfirm");

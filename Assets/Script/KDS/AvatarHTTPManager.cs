@@ -73,7 +73,7 @@ public class AvatarHTTPManager : MonoBehaviour
             print("유저 ID: " + id + " 아바타 정보 받아오기 성공");
         };
 
-        StartCoroutine(GetAvatarInfo(info));
+        StartCoroutine(GetAvatarInfo(info, id));
     }
 
     //아바타 정보 서버에 저장
@@ -102,7 +102,7 @@ public class AvatarHTTPManager : MonoBehaviour
     }
 
     //아바타 정보 가져오기
-    public IEnumerator GetAvatarInfo(HttpInfo info)
+    public IEnumerator GetAvatarInfo(HttpInfo info, int id)
     {
         // GET 요청 생성
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Get"))
@@ -123,6 +123,45 @@ public class AvatarHTTPManager : MonoBehaviour
             else
             {
                 Debug.Log("failed: " + webRequest.error);
+            }
+        }
+    }
+
+    public void StartPostAvatarInfo(int id)
+    {
+        // HttpInfo 객체 생성
+        HttpInfo info = new HttpInfo();
+
+        // 요청할 URL 설정
+        info.url = $"http://125.132.216.190:8765/user/upload?userCode={id}&userAvatarGender=0&userAvatarHair=0&userAvatarBody=0&userAvatarSkin=0&userAvatarHand=0";
+
+        //델리게이트에 그냥 넣기 - 람다식 방식  - 지금 여기선 연산 단계 없음
+        info.onComplete = (DownloadHandler downloadHandler) =>
+        {
+            StartCoroutine(GetAvatarInfo(info, id));
+        };
+
+        StartCoroutine(PostAvatarInfo(info));
+    }
+
+    //아바타 정보 서버에 저장
+    public IEnumerator PostAvatarInfo(HttpInfo info)
+    {
+        // GET 요청 생성
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Post"))
+        {
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+
+            // 요청 전송 및 응답 대기
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                info.onComplete(webRequest.downloadHandler);
+            }
+            else
+            {
+                Debug.Log("failed: " + webRequest.error); 
             }
         }
     }
