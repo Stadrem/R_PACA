@@ -25,6 +25,7 @@ public class LoginManager : MonoBehaviour
         Debug.Log("UserID 입력값: " + userId);
         connection = GetComponent<ConnectionMgr>();
         StartCoroutine(LoginRequest(userId, password));
+        Debug.Log("로그인 시도" + userId);
     }
 
     private IEnumerator LoginRequest(string userId, string password)

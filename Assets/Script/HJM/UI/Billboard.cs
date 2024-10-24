@@ -15,7 +15,8 @@ public class Billboard : MonoBehaviourPun
         }
     }
 
-    void Update()
+
+    void LateUpdate()
     {
         if (cam == null)
         {

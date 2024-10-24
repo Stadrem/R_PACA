@@ -8,9 +8,9 @@ public class CameraController : MonoBehaviour
     public float smoothSpeed = 8.0f;
     public Vector3 offset;
 
-    
 
-    void Update()
+
+    void LateUpdate()
     {
         if (target == null) return;
 

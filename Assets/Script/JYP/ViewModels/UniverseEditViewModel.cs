@@ -16,7 +16,7 @@ public class UniverseEditViewModel : INotifyPropertyChanged
     private Dictionary<BackgroundPartData, List<BackgroundPartData>> adjacentList = new();
     private int nextBackgroundKey = 0;
 
-    private DateTime createdDate;
+    private DateTime createdDate = DateTime.Today;
     // private List<string> backgrounds = new List<string>();
 
     public string Title
@@ -90,7 +90,7 @@ public class UniverseEditViewModel : INotifyPropertyChanged
             .Add(from);
     }
 
-    public void AddBackgroundPart(string name, EBackgroundPartType type)
+    public void AddBackgroundPart(string name,string description, EBackgroundPartType type)
     {
         var newPart = new BackgroundPartData()
         {
