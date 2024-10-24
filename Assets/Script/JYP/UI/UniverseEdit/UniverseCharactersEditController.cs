@@ -37,7 +37,7 @@ public class UniverseCharactersEditController : MonoBehaviour
 
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
 
-        backButton.clicked += () => { };
+        backButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); };
 
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
