@@ -114,13 +114,13 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     public void OnClickAvatarFinish()
     {
-        if(notUseNetworkOn == true)
+        // Put 요청을 위한 코루틴 실행
+        StartPutAvatarInfo(pas.myAvatar);
+
+        if (notUseNetworkOn == true)
         {
             TempFakeServer.Get().myAvatar = pas.myAvatar;
         }
-
-        // POST 요청을 위한 코루틴 실행
-        StartPutAvatarInfo(pas.myAvatar);
 
         cm.OnClickConnect();
     }
