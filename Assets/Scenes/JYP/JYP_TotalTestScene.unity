@@ -1844,7 +1844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &397478000
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1920,7 +1920,6 @@ MonoBehaviour:
   backgroundNameInputField: {fileID: 759051607}
   backgroundDescriptionInputField: {fileID: 633255508}
   createButton: {fileID: 1807241158}
-  backButton: {fileID: 0}
 --- !u!1 &420835149
 GameObject:
   m_ObjectHideFlags: 0
@@ -3497,8 +3496,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60.000004
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 160
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5699,7 +5698,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 5
+    OrthographicSize: 160
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -5726,7 +5725,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 400, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7.625, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 88282743}
@@ -5742,7 +5741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1573187431}
   m_Layer: 0
-  m_Name: Prefabs
+  m_Name: ---Prefabs---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5765,7 +5764,7 @@ Transform:
   - {fileID: 389470227}
   - {fileID: 3147808944841049528}
   - {fileID: 3270576836084641896}
-  m_Father: {fileID: 1878337526}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582337590
 GameObject:
@@ -6595,7 +6594,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 712830964}
-  - {fileID: 1573187431}
   - {fileID: 247848107}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7549,6 +7547,7 @@ SceneRoots:
   - {fileID: 1160234427}
   - {fileID: 347633324}
   - {fileID: 265049426}
+  - {fileID: 1573187431}
   - {fileID: 294168855}
   - {fileID: 6380295}
   - {fileID: 1878337526}

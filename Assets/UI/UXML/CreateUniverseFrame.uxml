@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/UI/USS/base.uss?fileID=7433441132597879392&amp;guid=ed2135ebda179b04e8d23b5eade416a3&amp;type=3#base" />
     <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgb(230, 240, 240); padding-top: 80px; padding-right: 40px; padding-bottom: 40px; padding-left: 40px;">
         <ui:VisualElement name="Header" style="flex-grow: 1; height: 20%; flex-direction: row; align-self: stretch; justify-content: space-between; align-items: flex-end; padding-top: 0;">
-            <ui:Button text="닫기" parse-escape-sequences="true" display-tooltip-when-elided="true" name="btn_back" style="left: 0; padding-right: 70px; padding-left: 70px; align-self: flex-start; background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);" />
+            <ui:VisualElement style="flex-grow: 1;" />
             <ui:Label tabindex="-1" text="세계관 생성" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_indicator" style="align-self: flex-start; padding-top: 20px; font-size: 38px; padding-bottom: 20px; padding-right: 250px; padding-left: 250px; background-color: rgb(255, 255, 255); white-space: nowrap; -unity-text-align: middle-center; text-overflow: clip; left: 568px; position: absolute; right: 568px; top: 0; width: 700px;" />
             <ui:Label tabindex="-1" text="생성일자 2024 / 10  / 05" parse-escape-sequences="true" display-tooltip-when-elided="true" name="label_createdDate" style="align-self: flex-start; padding-top: 20px; font-size: 38px; padding-bottom: 20px; padding-right: 48px; padding-left: 48px; background-color: rgb(255, 255, 255);" />
         </ui:VisualElement>
