@@ -21,7 +21,8 @@ public class NpcChatUIManager : MonoBehaviourPun
     private void OnSubmitText(string txt)
     {
         PlayUniverseManager.Instance.NpcManager.OnChatSubmit(txt);
-        photonView.RPC("AddChatBubble", RpcTarget.All, "누군가..", txt);
+        AddChatBubble("누군가..", txt);
+        // photonView.RPC("AddChatBubble", RpcTarget.All, "누군가..", txt);
         ChatInputField.text = "";
     }
 
@@ -49,6 +50,8 @@ public class NpcChatUIManager : MonoBehaviourPun
 
     public void RPC_AddChatBubble(string sender, string text)
     {
+        AddChatBubble(sender, text);
+        return;
         photonView.RPC("AddChatBubble", RpcTarget.All, sender, text);
     }
 

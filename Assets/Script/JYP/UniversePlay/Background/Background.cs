@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,9 +11,12 @@ public class Background
     private BackgroundPartData data;
     private List<PortalInPlay> portalParts;
     private Transform parent = null;
+
     public void Init(BackgroundPartData data)
     {
         this.data = data;
+        var spawnPos = GameObject.Find("SpawnPoint")?.transform.position ?? Vector3.zero;
+        PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
     }
 
     public void LoadParts()
