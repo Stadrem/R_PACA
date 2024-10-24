@@ -462,7 +462,7 @@ MonoBehaviour:
   userIdField: {fileID: 1041051239}
   passwordField: {fileID: 1739787238}
   nickNameField: {fileID: 2132619163}
-  signupSuccessUI: {fileID: 0}
+  signupSuccessUI: {fileID: 1734017994}
 --- !u!114 &135535813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userIdField: {fileID: 615766654}
   passwordField: {fileID: 1012217314}
-  connection: {fileID: 0}
+  connection: {fileID: 135535810}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,14 +2123,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
+  m_ContentType: 4
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 4
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -3688,8 +3688,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -3863,14 +3863,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
+  m_ContentType: 4
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 4
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -5716,8 +5716,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -5955,7 +5955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1892853991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7047,9 +7047,9 @@ SceneRoots:
   - {fileID: 1160234427}
   - {fileID: 605031113}
   - {fileID: 1892853994}
+  - {fileID: 1734017998}
   - {fileID: 862296780}
   - {fileID: 135535811}
   - {fileID: 1240990536}
   - {fileID: 697646326}
   - {fileID: 396877230}
-  - {fileID: 1734017998}
