@@ -9,6 +9,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     public TMP_InputField inputRoomName;
     public TMP_InputField inputMaxPlayer;
     public Button btnCreate;
+    //public Button btnJoin;
 
     private string roomName;
     private byte maxPlayers;
@@ -19,22 +20,30 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
         inputRoomName.onValueChanged.AddListener(OnValueChangedRoomName);
         // inputMaxPlayer 의 내용이 변경될 때 호출되는 함수 등록
         inputMaxPlayer.onValueChanged.AddListener(OnValueChangedMaxPlayer);
+
+        //btnJoin.onClick.AddListener(OnClickJoinRoom); // 방 참여 버튼 클릭 이벤트 등록
+        //btnJoin.interactable = false; // 초기 상태에서 비활성화
     }
 
-
-    
     #region 방이름과 최대인원의 값이 있을 때만 방생성 버튼 활성화
     void OnValueChangedRoomName(string roomName)
     {
         btnCreate.interactable = roomName.Length > 0 && inputMaxPlayer.text.Length > 0;
+        UpdateJoinButtonInteractable(); // 방 이름이 변경될 때 방 참여 버튼 상태 업데이트
     }
 
     void OnValueChangedMaxPlayer(string maxPlayer)
     {
         btnCreate.interactable = maxPlayer.Length > 0 && inputRoomName.text.Length > 0;
+        UpdateJoinButtonInteractable(); // 최대 인원이 변경될 때 방 참여 버튼 상태 업데이트
+    }
+
+    // 방 참여 버튼 활성화 여부 업데이트
+    void UpdateJoinButtonInteractable()
+    {
+        //btnJoin.interactable = inputRoomName.text.Length > 0;
     }
     #endregion   
-
 
     // 방 생성 버튼을 눌렀을 때 호출 되는 함수
     public void OnClickCreateRoom()
@@ -42,38 +51,27 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
         roomName = inputRoomName.text;
         maxPlayers = byte.Parse(inputMaxPlayer.text);
 
-        // 현재 게임서버(Room)에 있는 경우 방에서 나와 마스터 서버로 돌아가야 함
-        // 로비룸은 게임서버임
-        if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-        else
-        {
-            CreateRoom();
-        }
-    }
-
-    // 방에서 나갔을 때 호출되는 콜백
-    public override void OnLeftRoom()
-    {
-        Debug.Log("로비룸에서 나왔습니다. 마스터 서버로 이동 중...");
-        PhotonNetwork.JoinLobby();  // 마스터 서버로 이동
-    }
-
-    // 마스터 서버에 연결되면 방을 생성
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("마스터 서버에 연결되었습니다. 방을 생성합니다.");
         CreateRoom();
+
     }
+
+    //// 방에서 나갔을 때 호출되는 콜백
+    //public override void OnLeftRoom()
+    //{
+    //    Debug.Log("로비룸에서 나왔습니다. 마스터 서버로 이동 중...");
+    //    PhotonNetwork.JoinLobby();  // 마스터 서버로 이동
+    //}
+
+    //// 마스터 서버에 연결되면 방을 생성
+    //public override void OnConnectedToMaster()
+    //{
+    //    Debug.Log("마스터 서버에 연결되었습니다. 방을 생성합니다.");
+    //}
 
     // 옵션으로 방을 생성
     void CreateRoom()
     {
         RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers };
-        // RoomOptions options = new RoomOptions();
-        // options.MaxPlayers = maxPlayers;
 
         if (!PhotonNetwork.CreateRoom(roomName, options))
         {
@@ -86,9 +84,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
         base.OnCreatedRoom();
         Debug.Log("방이 성공적으로 생성되었습니다.");
 
-
         // 대기실 씬으로 전환
-        // 추후에 룸 생성 -> 캐릭터 선택창 -> 아바타 갱신 -> 씬 변경해야함 일단 바로 전환
         PhotonNetwork.LoadLevel("WaitingScene");
     }
 
@@ -97,4 +93,6 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
         base.OnCreateRoomFailed(returnCode, message);
         Debug.LogError("방 생성 실패: " + message);
     }
+
+   
 }

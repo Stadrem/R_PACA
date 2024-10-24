@@ -26,11 +26,19 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         // 현재 씬의 이름을 가져옴
         Scene currentScene = SceneManager.GetActiveScene();
 
-        // 씬 이름 비교
-        if (currentScene.name != "AvatarCreate")
+        /*
+        if (transform.parent.GetComponent<PhotonView>())
         {
             pv = transform.parent.GetComponent<PhotonView>();
+
+            if (pv.IsMine)
+            {
+                myAvatar.userCode = UserCodeMgr.Instance.UserCode;
+            }
         }
+        */
+
+        myAvatar.userCode = UserCodeMgr.Instance.UserCode;
     }
 
     void Start()
@@ -101,7 +109,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         SkinnedMeshRenderer skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
         skinnedMeshRenderer.enabled = false;
         skinnedMeshRenderer.sharedMesh = null;
-        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
+        //skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].mesh.sharedMesh;
+        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[2].avatarItems[myAvatar.userAvatarBody].subMesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
         //피부
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarSkin].material;

@@ -6,6 +6,8 @@ public class CanvasActive : MonoBehaviour
 {
     public GameObject canvasPop;
     public GameObject canvasExit;
+    public GameObject canvasDestroyed;
+
 
     public void OnClickPop()
     {
@@ -17,5 +19,11 @@ public class CanvasActive : MonoBehaviour
     {
         if (canvasExit == null) return;
         canvasExit.SetActive(false);
+    }
+
+    public void OnClickDestroyed()
+    {
+        if (canvasDestroyed == null) return;
+        Destroy(canvasDestroyed);
     }
 }

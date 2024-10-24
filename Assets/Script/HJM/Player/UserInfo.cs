@@ -5,7 +5,6 @@ using UnityEngine;
 public class UserInfo : MonoBehaviour
 {
     [Header("유저 회원정보")]
-    
     // 로그인 시 유저 ID, PW, 닉네임
     public string userID;
     public string userPassword;

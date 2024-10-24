@@ -38,7 +38,11 @@ public class DiceRollManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
         {
             Destroy(gameObject);
         }
@@ -88,6 +92,8 @@ public class DiceRollManager : MonoBehaviour
     //코루틴 변수
     private IEnumerator coroutine;
 
+    public Transform createPoint;
+
     //int 값으로 반환
     public int DiceRoll(int diceA, int diceB) 
     {
@@ -121,10 +127,10 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].SetActive(true);
 
             //등장 위치 무작위
-            diceObjects[i].transform.localPosition = new Vector3(i * 2f, 5, Random.Range(-1.1f, 1.1f));
+            diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + (i*2), createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
 
             //회전 값 무작위
-            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.0f, 2.0f), 60 * Random.Range(1.0f, 2.0f)));
+            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
 
             //주사위 1개당 주사위 값 생성
             //diceResults.Add(Random.Range(1,7));
