@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class SignupManager : MonoBehaviour
 {
@@ -10,7 +11,15 @@ public class SignupManager : MonoBehaviour
     public TMP_InputField passwordField;
     public TMP_InputField nickNameField;
 
-    // 버튼 클릭 시 호출되는 함수
+    // 회원가입 성공 안내 UI
+    public GameObject signupSuccessUI;
+
+    void Start()
+    {
+
+    }
+
+    // 회원가입 버튼 클릭 시 호출되는 함수
     public void OnClickSignup()
     {
         string userId = userIdField.text;
@@ -49,6 +58,15 @@ public class SignupManager : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("회원가입 성공: " + request.downloadHandler.text);
+
+                // 회원가입 성공 UI 활성화
+                signupSuccessUI.SetActive(true);
+
+                // 1초 대기 후 AvatarCreate 씬으로 전환
+                yield return new WaitForSeconds(1f);
+
+                // AvatarCreate 씬으로 이동
+                SceneManager.LoadScene("AvatarCreate");
             }
             else
             {

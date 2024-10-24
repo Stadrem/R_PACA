@@ -18,6 +18,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
         // 리소스 폴더내에서 / 경로 설정하고 폴더 파도 됨
 
+        // 유저데이터 받아와서 넣어줘야겠네,,
+
         // RPC 보내는 빈도 설정
         PhotonNetwork.SendRate = 60;
         // OnPhotonSerializeView 보내고 받고 하는 빈도 설정

@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/base.uss?fileID=7433441132597879392&amp;guid=ed2135ebda179b04e8d23b5eade416a3&amp;type=3#base" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.38); align-items: center; justify-content: center;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 0; position: relative; width: 600px; height: 400px; left: auto; right: auto; flex-basis: auto; background-color: rgb(230, 230, 230); translate: 0 0; transform-origin: center; flex-shrink: 0; align-self: center;">
+            <ui:VisualElement style="flex-grow: 0; height: 80px; align-items: center; justify-content: center;">
+                <ui:Label tabindex="-1" text="목표 선택하기" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 32px; -unity-text-align: middle-center; align-self: center; align-items: center; -unity-font-style: bold;" />
+            </ui:VisualElement>
+            <ui:ScrollView mode="Vertical" horizontal-scroller-visibility="Hidden" class="something" style="flex-grow: 1; flex-direction: column; flex-wrap: nowrap; align-items: stretch; align-self: auto; justify-content: flex-end;">
+                <ui:VisualElement name="selection_objectiveDemonKing" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 70%; background-color: rgb(255, 166, 41); justify-content: space-around; align-self: center; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;">
+                    <ui:Label tabindex="-1" text="마왕 퇴치" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; font-size: 24px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="space" style="flex-grow: 0; height: 20px; flex-shrink: 0;" />
+                <ui:VisualElement name="selection_getSword" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 70%; background-color: rgb(255, 166, 41); justify-content: space-around; align-self: center; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; flex-direction: column;">
+                    <ui:Label tabindex="-1" text="성검 찾기" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; font-size: 24px;" />
+                </ui:VisualElement>
+            </ui:ScrollView>
+            <ui:Button text="확인" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button_objectiveConfirm" style="width: 40%; align-self: center; margin-bottom: 20px; background-color: rgb(13, 153, 255); color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

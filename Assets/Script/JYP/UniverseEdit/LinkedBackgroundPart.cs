@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cinemachine;
+using TMPro;
 using UnityEngine;
 
 public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
@@ -21,11 +22,13 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     public CinemachineVirtualCamera detailViewCamera;
     private EViewType viewType = EViewType.LinkableView;
     public int backgroundPartId = -1;
+    public TMP_Text nameText;
 
     public void Init(string name, EBackgroundPartType type)
     {
         backgroundPartName = name;
         backgroundPartType = type;
+        nameText.text = name;
         linkedParts = new List<LinkedBackgroundPart>();
         switch (type)
         {
