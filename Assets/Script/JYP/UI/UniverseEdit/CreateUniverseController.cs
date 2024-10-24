@@ -51,7 +51,7 @@ public class CreateUniverseController : MonoBehaviour
 
         charactersSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCharactersEdit(); };
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
-        objectiveSettingButton.clicked += () => { Debug.Log($"objective 설정 버튼 클릭!"); };
+        objectiveSettingButton.clicked += () => { objectiveSelectionPopupController.Show(); };
         backButton.clicked += () => { Debug.Log($"뒤로 가기(씬 나가기)"); };
         saveButton.clicked += () => { Debug.Log($"저장 클릭!"); };
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");

@@ -9,7 +9,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="Body" style="flex-grow: 1; height: 80%; flex-direction: row-reverse;">
             <ui:ScrollView name="scroll_characters" mode="Horizontal" horizontal-scroller-visibility="AlwaysVisible" vertical-scroller-visibility="Hidden" vertical-page-size="-1" horizontal-page-size="2" touch-scroll-type="Unrestricted" style="flex-grow: 1; flex-direction: row; background-color: rgb(242, 242, 242); margin-right: 4%; margin-left: 4%; align-self: stretch; justify-content: flex-start; padding-right: 50px; padding-left: 50px; width: 70%;" />
-            <ui:Instance template="CharacterCreationTemplate" name="CharacterCreationTemplate" style="width: 30%;" />
+            <ui:Instance template="CharacterCreationTemplate" name="CharacterCreationTemplate" style="width: 25%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
