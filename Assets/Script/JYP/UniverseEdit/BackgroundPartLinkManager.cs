@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Cinemachine;
 using UnityEngine;
 
@@ -15,9 +16,9 @@ public class BackgroundPartLinkManager : MonoBehaviour
     private bool isDetailView = false;
     private List<LinkedLine> lines = new List<LinkedLine>();
     private Camera camera;
+    private List<LinkedBackgroundPart> linkedParts = new List<LinkedBackgroundPart>();
 
-    [SerializeField]
-    private NPCSpawner npcSpawner;
+    [SerializeField] private NPCSpawner npcSpawner;
 
     private UniverseEditViewModel EditViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
@@ -26,7 +27,9 @@ public class BackgroundPartLinkManager : MonoBehaviour
         camera = Camera.main;
         linkViewCamera.Priority = 20;
         npcSpawner.Init();
+        EditViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
+
 
     private void Update()
     {
@@ -41,12 +44,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
                     var part = hit.collider.GetComponent<LinkedBackgroundPart>();
                     if (part != null)
                     {
-                        isDetailView = true;
-                        currentPart = part;
-                        part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
-                        npcSpawner.StartSpawner(part.spawnOffset);
-                        part.detailViewCamera.Priority = 10;
-                        linkViewCamera.Priority = 0;
+                        ShowBackgroundPartDetailView(part);
                     }
                 }
             }
@@ -54,50 +52,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
         else if (Input.GetMouseButtonDown(1))
         {
-            if (!isLinking)
-            {
-                var ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (!Physics.Raycast(ray, out var hit)) return;
-
-                currentLinkable = hit.collider.GetComponent<ILinkable>();
-                if (currentLinkable == null) return;
-
-                isLinking = true;
-            }
-
-            else
-            {
-                var ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out var hit))
-                {
-                    var linkable = hit.collider.GetComponent<ILinkable>();
-                    if (linkable != null)
-                    {
-                        linkable.Link(currentLinkable);
-                        currentLinkable.Link(linkable);
-
-                        var currentObject = (currentLinkable as LinkedBackgroundPart)?.gameObject;
-                        if (currentObject != null)
-                        {
-                            CreateLine(currentObject, hit.collider.gameObject);
-                        }
-                    }
-                }
-
-
-                currentLinkable = null;
-                isLinking = false;
-            }
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Create("Town", EBackgroundPartType.Town);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Create("Dungeon", EBackgroundPartType.Dungeon);
+            Link();
         }
 
         else if (Input.GetKeyDown(KeyCode.Escape))
@@ -122,6 +77,54 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Link()
+    {
+        if (!isLinking)
+        {
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (!Physics.Raycast(ray, out var hit)) return;
+
+            currentLinkable = hit.collider.GetComponent<ILinkable>();
+            if (currentLinkable == null) return;
+
+            isLinking = true;
+        }
+
+        else
+        {
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                var linkable = hit.collider.GetComponent<ILinkable>();
+                if (linkable != null)
+                {
+                    linkable.Link(currentLinkable);
+                    currentLinkable.Link(linkable);
+
+                    var currentObject = (currentLinkable as LinkedBackgroundPart)?.gameObject;
+                    if (currentObject != null)
+                    {
+                        CreateLine(currentObject, hit.collider.gameObject);
+                    }
+                }
+            }
+
+
+            currentLinkable = null;
+            isLinking = false;
+        }
+    }
+
+    private void ShowBackgroundPartDetailView(LinkedBackgroundPart part)
+    {
+        isDetailView = true;
+        currentPart = part;
+        part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
+        npcSpawner.StartSpawner(part.spawnOffset);
+        part.detailViewCamera.Priority = 10;
+        linkViewCamera.Priority = 0;
     }
 
     private void CreateLine(GameObject obj1, GameObject obj2)
@@ -192,6 +195,17 @@ public class BackgroundPartLinkManager : MonoBehaviour
     #endregion
 
     #region private methods
+
+    private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(EditViewModel.BackgroundParts))
+        {
+            foreach (var part in EditViewModel.BackgroundParts)
+            {
+                if (!backgroundParts.Exists(x => x.backgroundPartName == part.Name)) Create(part.Name, part.Type);
+            }
+        }
+    }
 
     private void DeleteLine(LinkedLine line)
     {
