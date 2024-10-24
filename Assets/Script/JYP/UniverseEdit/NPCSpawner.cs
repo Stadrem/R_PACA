@@ -7,7 +7,7 @@ public class NPCSpawner : MonoBehaviour
 {
     public RectTransform root;
     public RectTransform npcListTransform; // UI container for the NPC list
-    public GameObject npcPrefab;
+    public GameObject[] npcPrefabs;
     public GameObject npcUIEntryPrefab;
     private UniverseEditViewModel viewModel;
 
@@ -84,7 +84,8 @@ public class NPCSpawner : MonoBehaviour
     public void SpawnNpc(CharacterInfo character, Vector3 position)
     {
         //TODO: Spawn By it's type
-        var npc = Instantiate(npcPrefab, position, Quaternion.identity);
+        
+        var npc = Instantiate(npcPrefabs[(int)character.shapeType], position, Quaternion.identity);
         npc.transform.SetParent(npcPositionOffset);
         var script = npc.GetComponent<SpawnedNpc>();
         script.characterId = character.id;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,6 @@ public class PlayBackgroundManager : MonoBehaviour
 
     private UniverseData universeData;
     private Background currentBackground = new Background();
-
 
     private void Start()
     {

@@ -1125,8 +1125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 2043557022}
   npcListTransform: {fileID: 719479855}
-  npcPrefab: {fileID: 2389740261151551814, guid: 461f3380eed464be8ac7ef5a286b9309,
-    type: 3}
+  npcPrefabs:
+  - {fileID: 2389740261151551814, guid: a0f76cf139fb74ffe85e83d1f10014f5, type: 3}
+  - {fileID: 2389740261151551814, guid: 3ef53dde4ddbb49c4bca5d959c2e3b89, type: 3}
   npcUIEntryPrefab: {fileID: 5719417202312447579, guid: f426d01e49a6d9042a9b8f9607fb3011,
     type: 3}
 --- !u!1 &223715000
