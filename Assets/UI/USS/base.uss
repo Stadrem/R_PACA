@@ -4,7 +4,11 @@
     align-items: stretch;
     justify-content: flex-start;
     align-self: stretch;
-    font-size: 28px;
+    font-size: 18px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
 }
 
 .unity-base-text-field {
