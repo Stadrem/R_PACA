@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2781181334309597115
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.4276996
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.657698
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.09686
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.0949857
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.381905
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.24147548
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000052776157
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.97040695
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00000002120892
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -152.053
+      objectReference: {fileID: 0}
+    - target: {fileID: 195833361447765167, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719570759167745557, guid: 7f215496ed1884142ad4345144d3b1fa,
+        type: 3}
+      propertyPath: m_Name
+      value: SM_flowerbed_02 (2) Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f215496ed1884142ad4345144d3b1fa, type: 3}
