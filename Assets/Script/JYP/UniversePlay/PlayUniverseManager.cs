@@ -112,7 +112,9 @@ public class PlayUniverseManager : MonoBehaviour
         NpcManager.ShowNpcHpBar();
         InGamePlayerManager.ShowPlayersHpBar();
     }
-    
+    /// <summary>
+    /// 전투화면에서의 UI를 숨기는 함수, 등장인물들의 HP UI를 숨긴다.
+    /// </summary>
     public void HideBattleUI()
     {
         NpcManager.HideNpcHpBar();
