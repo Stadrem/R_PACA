@@ -44,6 +44,9 @@ MonoBehaviour:
   - InitPlay
   - NextTurn
   - TurnComplete
+  - SelectionUI
+  - SendTurnComplete
+  - SpawnNPCs
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
