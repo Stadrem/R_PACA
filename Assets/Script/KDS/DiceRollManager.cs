@@ -89,14 +89,64 @@ public class DiceRollManager : MonoBehaviour
 
     public TMP_Text diceText;
 
+    public TMP_Text titleText;
+
+    public TMP_Text plusText;
+
     //코루틴 변수
     private IEnumerator coroutine;
 
     public Transform createPoint;
 
-    //int 값으로 반환
-    public int DiceRoll(int diceA, int diceB) 
+    public bool BattleDiceRoll(int stat)
     {
+        bool result = false;
+
+        int diceA = Random.Range(1, 7);
+        int diceB = Random.Range(1, 7);
+        int plusDice = -2;
+
+        if (stat == 2 || stat == 3)
+        {
+            plusDice = -1;
+        }
+        else if(stat == 4 || stat == 5)
+        {
+            plusDice = 0;
+        }
+        else if (stat == 6 || stat == 7)
+        {
+            plusDice = 1;
+        }
+        else if (stat == 8 || stat == 9)
+        {
+            plusDice = 2;
+        }
+
+        int sumDice = diceA + diceB + plusDice;
+
+        if(sumDice >= 6)
+        {
+            result = true;
+            print(diceA + " " + diceB + "판정 성공!");
+        }
+        else
+        {
+            print(diceA + " " + diceB + "판정 실패!");
+        }
+
+        plusText.text = "능력치 보정: " + plusDice;
+
+        DiceRoll(diceA, diceB, result);
+
+        return result;
+    }
+
+    //int 값으로 반환
+    public void DiceRoll(int diceA, int diceB, bool decide) 
+    {
+        string decideText = "실패";
+
         // 카메라 중심에서 레이캐스트 발사
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
@@ -144,6 +194,13 @@ public class DiceRollManager : MonoBehaviour
         //나온 값 합산
         diceResult = diceResults.Sum();
 
+        if (decide)
+        {
+            decideText = "성공";
+        }
+
+        titleText.text = "결과: " + decideText;
+
         print(diceResults.Count + "D" +diceResult);
         
         if(coroutine != null)
@@ -157,10 +214,8 @@ public class DiceRollManager : MonoBehaviour
         StartCoroutine(coroutine);
 
         //int 값 반환
-        return diceResult;
+        //return diceResult;
     }
-
-
 
     // 코루틴으로 주사위 회전값 설정 (일정 시간 후)
     private IEnumerator SetDiceResultsAfterRoll(int diceCount)
@@ -184,7 +239,10 @@ public class DiceRollManager : MonoBehaviour
 
         canvas.SetActive(false);
 
-        for(int j = 0; j < diceCount; j++)
+        plusText.text = " ";
+        diceText.text = " ";
+
+        for (int j = 0; j < diceCount; j++)
         {
             diceObjects[j].SetActive(false);
         }
