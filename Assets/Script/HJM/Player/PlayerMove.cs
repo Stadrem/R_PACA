@@ -28,6 +28,8 @@ public class PlayerMove : MonoBehaviourPun
 
     public Transform lookPos;
 
+    // 클릭 이동 가능 여부
+    public bool clickMovementEnabled = true;
 
     // 서버에서 넘어오는 위치값
     Vector3 receivePos;
@@ -73,6 +75,9 @@ public class PlayerMove : MonoBehaviourPun
 
     void ClickToMove()
     {
+        // 클릭 이동이 활성화되어 있을 때만 이동 아니면 나감
+        if (!clickMovementEnabled) return;
+
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableLayers))
         {

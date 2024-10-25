@@ -26,5 +26,4 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 60;
 
     }
-
 }
