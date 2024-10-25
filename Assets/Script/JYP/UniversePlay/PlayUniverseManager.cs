@@ -1,6 +1,9 @@
 ﻿using Photon.Pun;
 using UnityEngine;
-
+/// <summary>
+/// 플레이 화면에서의 전체적인 매니저
+/// 모든 매니저들을 관리하고, 유저의 상호작용을 처리하는 클래스
+/// </summary>
 public class PlayUniverseManager : MonoBehaviour
 {
     private static PlayUniverseManager instance;
@@ -20,7 +23,10 @@ public class PlayUniverseManager : MonoBehaviour
     [SerializeField] private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
-    public InGamePlayerManager InGamePlayerManager { get; private set; }
+    
+    [SerializeField]
+    private InGamePlayerManager inGamePlayerManager;
+    public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
 
     public static PlayUniverseManager Instance
@@ -50,10 +56,6 @@ public class PlayUniverseManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        InGamePlayerManager = GetComponent<InGamePlayerManager>();
-    }
 
     private void Update()
     {
@@ -84,5 +86,15 @@ public class PlayUniverseManager : MonoBehaviour
     public void FinishConversation()
     {
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
+    }
+
+    /// <summary>
+    /// 전투화면에서의 UI를 보여주는 함수, 등장인물들의 HP UI를 보여준다.
+    /// NPC의 경우, 대화를 시작했다는 가정하에 대화하고 있던 Npc의 HP UI를 보여준다.
+    /// </summary>
+    public void ShowBattleUI()
+    {
+        NpcManager.ShowNpcHpBar();
+        InGamePlayerManager.ShowPlayersHpBar();
     }
 }

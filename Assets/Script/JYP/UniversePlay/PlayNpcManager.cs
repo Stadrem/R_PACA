@@ -55,7 +55,7 @@ public class PlayNpcManager : MonoBehaviourPun
 
         var go = Instantiate(npcPrefab, npc.Position, Quaternion.identity, null);
         var play = go.GetComponent<NpcInPlay>();
-        play.Init(npc.Name);
+        play.Init(npc);
         currentNpcList.Add(play);
     }
 
@@ -165,5 +165,17 @@ public class PlayNpcManager : MonoBehaviourPun
     public void FinishConversation()
     {
         NpcChatUIManager.Hide();
+    }
+    
+    public void ShowNpcHpBar()
+    {
+        if(currentInteractNpc.hpBar != null)
+            currentInteractNpc.hpBar.gameObject.SetActive(true);
+    }
+    
+    public void HideNpcHpBar()
+    {
+        if(currentInteractNpc.hpBar != null)
+            currentInteractNpc.hpBar.gameObject.SetActive(false);
     }
 }
