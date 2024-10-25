@@ -47,7 +47,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
             Vector3 direction = (Target.transform.position + TargetPositionOffset - Camera.transform.position).normalized;
 
             // 박스캐스트 크기 (가로, 세로, 깊이)
-            Vector3 boxSize = new Vector3(1.0f, 1.0f, distance); // 직육면체의 크기
+            Vector3 boxSize = new Vector3(0.7f, 0.7f, distance); // 직육면체의 크기
 
             // 박스캐스트로 충돌 감지
             int hits = Physics.BoxCastNonAlloc // NonAllo은 결과를 저장할 배열을 미리 마련해둠
