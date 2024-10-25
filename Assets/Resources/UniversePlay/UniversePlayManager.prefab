@@ -1098,6 +1098,7 @@ MonoBehaviour:
   playNpcManager: {fileID: 2520981143703218369}
   npcChatUIManager: {fileID: 368014502475134231}
   camSettingManager: {fileID: 7755557171581210637}
+  inGamePlayerManager: {fileID: 8093603927009587201}
 --- !u!114 &6439204471733787449
 MonoBehaviour:
   m_ObjectHideFlags: 0

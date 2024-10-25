@@ -15,8 +15,7 @@ public class Background
     public void Init(BackgroundPartData data)
     {
         this.data = data;
-        var spawnPos = GameObject.Find("SpawnPoint")?.transform.position ?? Vector3.zero;
-        PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
+        PlayUniverseManager.Instance.InGamePlayerManager.SpawnPlayers();
     }
 
     public void LoadParts()
@@ -31,8 +30,6 @@ public class Background
             var portalInPlay = go.GetComponent<PortalInPlay>();
             portalInPlay.Init(portal);
         }
-        
-        
     }
     
 }
