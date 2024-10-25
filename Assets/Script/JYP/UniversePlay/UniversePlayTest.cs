@@ -91,7 +91,7 @@ namespace Script.JYP.UniversePlay
                     name = "Universe 0",
                     startBackground = backgroundList[0],
                 };
-
+                PlayUniverseManager.Instance.InGamePlayerManager.Init();
                 PlayUniverseManager.Instance.BackgroundManager.Init(universe, backgroundList);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha1))

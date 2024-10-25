@@ -527,7 +527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8391408920639088709
 RectTransform:
   m_ObjectHideFlags: 0
@@ -659,7 +659,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ncVcam: {fileID: 1125351419375732668}
   npcNameText: {fileID: 8197131101460151238}
-  hpBar: {fileID: 0}
+  hpBar: {fileID: 2799010433826999946}
+  root: {fileID: 6121150522342420716}
 --- !u!1 &8006333483107041774
 GameObject:
   m_ObjectHideFlags: 0

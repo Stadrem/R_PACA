@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class HpBarSystem : MonoBehaviour
 {
     public Image hpBar;
-    
+    public GameObject root;
     private int maxHp;
     private int currentHp;
     
@@ -12,6 +12,16 @@ public class HpBarSystem : MonoBehaviour
     {
         maxHp = hp;
         currentHp = hp;
+        HideHpBar();
+    }
+    
+    public void ShowHpBar()
+    {
+        root.gameObject.SetActive(true);
+    }
+    public void HideHpBar()
+    {
+        root.gameObject.SetActive(false);
     }
     
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+
 /// <summary>
 /// 플레이 화면에서의 전체적인 매니저
 /// 모든 매니저들을 관리하고, 유저의 상호작용을 처리하는 클래스
@@ -8,24 +9,29 @@ public class PlayUniverseManager : MonoBehaviour
 {
     private static PlayUniverseManager instance;
 
-    [SerializeField] private PlayBackgroundManager playBackgroundManager;
+    [SerializeField]
+    private PlayBackgroundManager playBackgroundManager;
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [SerializeField] private PlayNpcManager playNpcManager;
+    [SerializeField]
+    private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
-    [SerializeField] private NpcChatUIManager npcChatUIManager;
+    [SerializeField]
+    private NpcChatUIManager npcChatUIManager;
 
     public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
 
-    [SerializeField] private CamSettingStateManager camSettingManager;
+    [SerializeField]
+    private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
-    
+
     [SerializeField]
     private InGamePlayerManager inGamePlayerManager;
+
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
 
@@ -59,8 +65,14 @@ public class PlayUniverseManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            ShowBattleUI();
+        }
+
         UserInteraction();
     }
+
 
     private void UserInteraction()
     {
@@ -71,7 +83,9 @@ public class PlayUniverseManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("InPlayNPC"))
                 {
+                    
                     playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
+                    InGamePlayerManager.BlockPlayerCamera();
                     CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
                 }
                 else if (hit.collider.CompareTag("Portal"))
@@ -82,6 +96,7 @@ public class PlayUniverseManager : MonoBehaviour
             }
         }
     }
+
 
     public void FinishConversation()
     {

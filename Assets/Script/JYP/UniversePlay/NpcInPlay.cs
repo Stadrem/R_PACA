@@ -11,7 +11,7 @@ public class NpcInPlay : MonoBehaviour
     public CinemachineVirtualCamera ncVcam;
     public TMP_Text npcNameText;
     public Image hpBar;
-
+    public GameObject root;
     private int currentHp;
 
     public void Init(NpcData npcData)

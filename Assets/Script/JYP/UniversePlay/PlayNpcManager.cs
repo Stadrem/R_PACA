@@ -169,13 +169,14 @@ public class PlayNpcManager : MonoBehaviourPun
     
     public void ShowNpcHpBar()
     {
-        if(currentInteractNpc.hpBar != null)
-            currentInteractNpc.hpBar.gameObject.SetActive(true);
+        Debug.Log($"currentInterACTnPC : {currentInteractNpc.name}");
+        if(currentInteractNpc.root != null)
+            currentInteractNpc.root.SetActive(true);
     }
     
     public void HideNpcHpBar()
     {
-        if(currentInteractNpc.hpBar != null)
-            currentInteractNpc.hpBar.gameObject.SetActive(false);
+        if(currentInteractNpc.root != null)
+            currentInteractNpc.root.SetActive(false);
     }
 }
