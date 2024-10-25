@@ -85,7 +85,6 @@ public class PlayUniverseManager : MonoBehaviour
                 {
                     
                     playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
-                    InGamePlayerManager.BlockPlayerCamera();
                     CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
                 }
                 else if (hit.collider.CompareTag("Portal"))
