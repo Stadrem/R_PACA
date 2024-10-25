@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/button-base.uss?fileID=7433441132597879392&amp;guid=cd6121cddcad7164aa1b61a4724ac26c&amp;type=3#button-base" />
+    <Style src="project://database/Assets/UI/USS/selection_chips.uss?fileID=7433441132597879392&amp;guid=815b6f744a807f44ba3dc1a073b4f04c&amp;type=3#selection_chips" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" class="yellow" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+</ui:UXML>
