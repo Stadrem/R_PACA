@@ -70,7 +70,15 @@ public class InGamePlayerManager : MonoBehaviour
             hpBarSystem.ShowHpBar();
         }
     }
-
+    
+    public void HidePlayersHpBar()
+    {
+        foreach (var hpBarSystem in playerHpSystemList)
+        {
+            hpBarSystem.HideHpBar();
+        }
+    }
+    
     public void BlockPlayerCamera()
     {
         currentPlayerCameraController.isBlocked = true;

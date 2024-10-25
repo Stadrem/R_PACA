@@ -112,4 +112,10 @@ public class PlayUniverseManager : MonoBehaviour
         NpcManager.ShowNpcHpBar();
         InGamePlayerManager.ShowPlayersHpBar();
     }
+    
+    public void HideBattleUI()
+    {
+        NpcManager.HideNpcHpBar();
+        InGamePlayerManager.HidePlayersHpBar();
+    }
 }
