@@ -1129,6 +1129,7 @@ MonoBehaviour:
   turnText: {fileID: 1635983718677600812}
   ChatBubblePrefab: {fileID: 5581367309099845412, guid: b98fcc7f13392c84ca9cf21e69a99e99,
     type: 3}
+  scrollRect: {fileID: 4615098270114592087}
 --- !u!114 &7755557171581210637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1798,6 +1799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7801146386919935847}
   - component: {fileID: 7384901909624710981}
+  - component: {fileID: 7479926439626842633}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1822,7 +1824,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00012207031}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -688.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7384901909624710981
 MonoBehaviour:
@@ -1841,7 +1843,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 6
+  m_ChildAlignment: 0
   m_Spacing: 8
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
@@ -1850,3 +1852,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7479926439626842633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179210086321940634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2

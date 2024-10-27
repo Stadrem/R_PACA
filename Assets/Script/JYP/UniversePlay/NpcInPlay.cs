@@ -7,6 +7,7 @@ public class NpcInPlay : MonoBehaviour
 {
     private NpcData npcInfo;
     public string NpcName => npcInfo.Name;
+    public NpcData.ENPCType ShapeType => npcInfo.Type;
 
     public CinemachineVirtualCamera ncVcam;
     public TMP_Text npcNameText;
