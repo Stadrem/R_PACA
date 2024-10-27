@@ -48,3 +48,17 @@
     transition-property: opacity, display;
     transition-timing-function: ease, linear;
 }
+
+TextElement.unity-text-element {
+    -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
+    -unity-text-align: upper-left;
+    align-items: stretch;
+    justify-content: flex-start;
+    align-self: stretch;
+    font-size: 18px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    width: 100%;
+}
