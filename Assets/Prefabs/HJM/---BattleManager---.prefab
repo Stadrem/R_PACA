@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6579614175303806787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2764847130171947720}
+  - component: {fileID: 5523152375121240754}
+  - component: {fileID: 3231096034868636049}
+  m_Layer: 0
+  m_Name: ---BattleManager---
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2764847130171947720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579614175303806787}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -29.20416, y: -4.8436365, z: -33.240044}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5523152375121240754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579614175303806787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07764665745544d4ea5c9c8ce17f7d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - {fileID: 0}
+  battlePos:
+  - {fileID: 0}
+  agents: []
+  playerMoves: []
+  playerPrefab: {fileID: 5036315687414311693, guid: 686325c2017551c46b4f626c813e47d0,
+    type: 3}
+  npcPrefab: {fileID: 4235246903171212509, guid: 26070ef48eb0d0945b9a6412b5ce42b5,
+    type: 3}
+  npcPos: {fileID: 0}
+  npcCount: 1
+--- !u!114 &3231096034868636049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579614175303806787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a31ac62c62bc9c499ec0848b9803edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleManager: {fileID: 0}
+  players: []
+  attackButton: {fileID: 0}
+  defendButton: {fileID: 0}
+  turnCompleteButton: {fileID: 0}
+  playerSelections:
+  - {fileID: 0}
+  TurnComUI: {fileID: 0}

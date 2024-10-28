@@ -304,6 +304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Avatar
       objectReference: {fileID: 0}
+    - target: {fileID: 2798571931629060426, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4088129215073901987, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: field of view

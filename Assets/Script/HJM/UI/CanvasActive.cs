@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,5 +26,10 @@ public class CanvasActive : MonoBehaviour
     {
         if (canvasDestroyed == null) return;
         Destroy(canvasDestroyed);
+    }
+
+    public void OnClickGameScene()
+    {
+        PhotonNetwork.LoadLevel("Town");
     }
 }
