@@ -1,55 +1,79 @@
-﻿using Photon.Realtime;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Photon.Pun;
 
-public class BattleManager : MonoBehaviourPunCallbacks
+public class BattleManager : MonoBehaviour
 {
+    [Header("플레이어 관련 목록")]
     public List<GameObject> players;            // 플레이어 목록
-    public List<NavMeshAgent> agents;           // NavMesh 에이전트 목록
-    public List<PlayerMove> playerMoves;        // PlayerMove 스크립트 목록
     public List<Transform> battlePos;           // 전투 시 이동 위치
+    public List<NavMeshAgent> agents;           // NavMesh 에이전트
+    public List<PlayerMove> playerMoves;        // PlayerMove 스크립트
+    public GameObject playerPrefab;             // 플레이어 프리팹
+
+    [Header("NPC 생성 옵션")]
     public GameObject npcPrefab;                // NPC 프리팹
     public Transform npcPos;                    // NPC 생성 위치
+    public int npcCount = 1;                    // 생성할 NPC 수
 
-    private bool[] turnCompleteStatus;          // 각 플레이어의 턴 완료 여부
-    private int playerCount;                    // 플레이어 수
+    private bool[] turnComplete;                // 각 플레이어의 턴 완료 여부
+    private int playerCount = 1;                // 플레이어 수 (싱글 플레이용으로 1로 고정)
+    private int currentNpcCount = 0;            // 현재 생성된 NPC 수
 
     private void Start()
     {
-        playerCount = players.Count;
-        turnCompleteStatus = new bool[playerCount];  // 플레이어 수만큼 턴 완료 여부 저장
 
-        // 플레이어 목록에 추가되어야함
-
-        // 플레이어당 NavMeshAgent와 PlayerMove 스크립트를 할당
-        for (int i = 0; i < playerCount; i++)
+        // 플레이어 목록에 플레이어가 있다면
+        if (players.Count > 0)
         {
-            agents[i] = players[i].GetComponent<NavMeshAgent>();
-            playerMoves[i] = players[i].GetComponent<PlayerMove>();
+            // NavMeshAgent와 PlayerMove 스크립트를 할당
+            agents.Add(players[0].GetComponent<NavMeshAgent>());
+            playerMoves.Add(players[0].GetComponent<PlayerMove>());
         }
-    }
+        else
+        {
+            print("플레이어가 할당되지 않았습니다.");
+        }
 
+    }
+    
     void Update()
     {
-        // B키를 눌렀을 때 전투환경 세팅 (전투 시작 트리거 서버 통신으로 나중에 변경)
+        // B키를 눌렀을 때 전투환경 세팅
         if (Input.GetKey(KeyCode.B))
         {
-            // NPC 생성
-            Instantiate(npcPrefab, npcPos);
-
-            // 모든 플레이어를 전투 위치로 이동시키고 이동 불가 설정
-            for (int i = 0; i < playerCount; i++)
+            // 생성할 NPC의 수만큼 생성
+            if (currentNpcCount < npcCount)
             {
-                agents[i].enabled = false;                // 에이전트 비활성화
-                playerMoves[i].clickMovementEnabled = false; // 클릭 이동 비활성화
-                players[i].transform.position = battlePos[i].position;   // 전투 위치로 이동
-                players[i].transform.rotation = battlePos[i].rotation;   // 전투 회전 방향으로 회전
+                SpawnNPCs();
             }
+
+            //PlayUniverseManager.Instance.ShowBattleUI();
+            //PlayUniverseManager.Instance.FinishConversation();
+            // 플레이어 전투 위치로 이동
+            MoveToBattlePos();
         }
     }
 
-    
+    // NPC 생성
+    public void SpawnNPCs()
+    {
+        if (currentNpcCount < npcCount)
+        {
+            GameObject npc = Instantiate(npcPrefab, npcPos.position, npcPos.rotation);
+            currentNpcCount++;
+        }
+    }
+
+    // 플레이어를 전투 위치로 이동
+    public void MoveToBattlePos()
+    {
+
+        agents[0].enabled = false;
+        playerMoves[0].clickMovementEnabled = false;
+        players[0].transform.position = battlePos[0].position;
+        players[0].transform.rotation = battlePos[0].rotation;
+
+    }
 }
