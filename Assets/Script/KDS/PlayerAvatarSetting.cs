@@ -147,9 +147,16 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].material;
 
-        /*
         //손
         tempNum = 3;
+        skinnedMeshRenderer = avatarParts[tempNum].GetComponent<SkinnedMeshRenderer>();
+        skinnedMeshRenderer.enabled = false;
+        skinnedMeshRenderer.sharedMesh = null;
+        skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].mesh.sharedMesh;
+        skinnedMeshRenderer.enabled = true;
+        skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
+
+        /*
         MeshFilter meshFilter = avatarParts[tempNum].GetComponent<MeshFilter>();
         meshFilter.mesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].meshB.sharedMesh;
         MeshRenderer meshRenderer = avatarParts[tempNum].GetComponent<MeshRenderer>();
