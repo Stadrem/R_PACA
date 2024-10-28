@@ -117,7 +117,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
         // Put 요청을 위한 코루틴 실행
         StartPutAvatarInfo(pas.myAvatar);
 
-        if (notUseNetworkOn == true)
+        if (notUseNetworkOn == true || pas.notUseNetworkOn == true)
         {
             TempFakeServer.Get().myAvatar = pas.myAvatar;
         }

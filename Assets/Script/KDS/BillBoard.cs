@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BillBoard : MonoBehaviour
 {
@@ -8,8 +6,8 @@ public class BillBoard : MonoBehaviour
 
     void LateUpdate()
     {
+        if (Camera.main == null) return;
         camTransform = Camera.main.transform;
-
         transform.LookAt(transform.position + (camTransform.rotation * Vector3.forward));
     }
 }

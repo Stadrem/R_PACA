@@ -19,7 +19,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     TempFakeServer tfs;
 
-    bool notUseNetworkOn = false;
+    public bool notUseNetworkOn = false;
 
     private void Awake()
     {
@@ -46,7 +46,9 @@ public class PlayerAvatarSetting : AvatarHTTPManager
             }
             else
             {
-                myAvatar.userCode = 12;
+                notUseNetworkOn = true;
+
+                myAvatar = TempFakeServer.Get().myAvatar;
             }
         }
 

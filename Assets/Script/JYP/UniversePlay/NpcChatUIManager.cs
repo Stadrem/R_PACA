@@ -1,8 +1,11 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Photon.Pun;
+using UnityEngine.UI;
 using WebSocketSharp;
 
 public class NpcChatUIManager : MonoBehaviourPun
@@ -12,7 +15,7 @@ public class NpcChatUIManager : MonoBehaviourPun
     public RectTransform listContent;
     public TMP_Text turnText;
     public GameObject ChatBubblePrefab;
-
+    public ScrollRect scrollRect; 
     public void Start()
     {
         ChatInputField.onSubmit.AddListener(OnSubmitText);
@@ -21,7 +24,10 @@ public class NpcChatUIManager : MonoBehaviourPun
     private void OnSubmitText(string txt)
     {
         PlayUniverseManager.Instance.NpcManager.OnChatSubmit(txt);
-        AddChatBubble("누군가..", txt);
+        AddChatBubble(
+            PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name,
+            PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name + " : " + txt
+        );
         // photonView.RPC("AddChatBubble", RpcTarget.All, "누군가..", txt);
         ChatInputField.text = "";
     }
@@ -63,8 +69,15 @@ public class NpcChatUIManager : MonoBehaviourPun
             .SetText(
                 sender,
                 text,
-                Random.Range(0, 2) == 0
+                sender == PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name
             );
+        StartCoroutine(ScrollToBottom());
+    }
+    
+    private IEnumerator ScrollToBottom()
+    {
+        yield return new WaitForSeconds(0.1f);
+        scrollRect.normalizedPosition = new Vector2(0, 0);
     }
 
 

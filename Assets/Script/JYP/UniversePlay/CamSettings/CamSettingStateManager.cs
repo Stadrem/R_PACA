@@ -22,7 +22,10 @@ public class CamSettingStateManager : MonoBehaviour
 
     private void Awake()
     {
+        camSettingStates.Add(ECamSettingStates.QuarterView, new QuarterViewState());
         camSettingStates.Add(ECamSettingStates.TalkView, new TalkViewCamSetting());
+        currentState = ECamSettingStates.QuarterView;
+        currentCamSetting = camSettingStates[currentState];
     }
     
     private void Update()
