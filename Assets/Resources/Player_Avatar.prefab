@@ -225,9 +225,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7105650902117784148}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &3715872329771150271 stripped
+--- !u!95 &5218143601790029056 stripped
 Animator:
-  m_CorrespondingSourceObject: {fileID: 5840387974727758315, guid: 5e258fec91d27484294348b0594c80b7,
+  m_CorrespondingSourceObject: {fileID: 3095879687839553364, guid: 5e258fec91d27484294348b0594c80b7,
     type: 3}
   m_PrefabInstance: {fileID: 7105650902117784148}
   m_PrefabAsset: {fileID: 0}
@@ -363,7 +363,7 @@ PrefabInstance:
         type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 3715872329771150271}
+      objectReference: {fileID: 5218143601790029056}
     - target: {fileID: 8100631587066389438, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: clickableLayers.m_Bits

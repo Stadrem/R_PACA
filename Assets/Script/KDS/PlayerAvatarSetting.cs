@@ -17,7 +17,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     public MyAvatar myAvatar;
 
-    TempFakeServer tfs;
+    public TempFakeServer tfs;
 
     public bool notUseNetworkOn = false;
 
@@ -58,11 +58,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         StartPostAvatarInfo(myAvatar.userCode);
 
-        RefreshAvatar();
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-
         //백엔드 없을 시 디버그 전용. 제거해도 됨.
         if (GameObject.Find("TempFakeServer"))
         {
@@ -76,6 +71,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         {
             print("정상 접속 상황");
         }
+
+        RefreshAvatar();
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // 씬이 로드될 때마다 호출되는 함수
@@ -148,11 +147,13 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarBody].material;
 
+        /*
         //손
         tempNum = 3;
         MeshFilter meshFilter = avatarParts[tempNum].GetComponent<MeshFilter>();
         meshFilter.mesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].meshB.sharedMesh;
         MeshRenderer meshRenderer = avatarParts[tempNum].GetComponent<MeshRenderer>();
         meshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
+        */
     }
 }
