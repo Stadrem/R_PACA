@@ -3,33 +3,51 @@ using UnityEngine.UI;
 
 public class CircularSlider : MonoBehaviour
 {
-    public Image sliderImage;  // 슬라이더의 이미지
-    public float sliderValue = 0.5f;  // 초기 슬라이더 값 (0 ~ 1)
-    public float maxValue = 1.0f;  // 슬라이더의 최대값
+    public Image sliderImage;          // 슬라이더의 이미지
+    public float sliderValue = 1.0f;   // 초기 슬라이더 값 (1로 시작)
+    public float maxValue = 1.0f;      // 슬라이더의 최대값
+    public float depletionTime = 8.0f; // 슬라이더가 0이 되기까지 걸리는 시간 (8초)
 
-    private void Start()
+    private bool isDepleting = false;  // 슬라이더 감소 여부를 확인하는 변수
+
+    void Start()
     {
-        // 초기값 설정
+        isDepleting = true;
         UpdateSlider(sliderValue);
     }
 
     // 슬라이더 값을 업데이트하는 함수
+    void Update()
+    {
+        // isDepleting이 true일 때만 슬라이더 감소
+        if (isDepleting && sliderValue > 0)
+        {
+            DepleteSlider();
+        }
+    }
     public void UpdateSlider(float value)
     {
-        sliderValue = Mathf.Clamp(value, 0, maxValue);  // 슬라이더 값 제한 (0~1 사이)
-        sliderImage.fillAmount = sliderValue / maxValue;  // Image의 fillAmount를 업데이트
+        sliderValue = Mathf.Clamp(value, 0, maxValue);  // 슬라이더 값 제한
+        sliderImage.fillAmount = sliderValue / maxValue;
     }
 
-    // 테스트를 위한 함수: 키보드 입력으로 슬라이더 값을 변경
-    private void Update()
+    // 슬라이더 감소를 시작하는 함수
+    public void StartDepletion()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            UpdateSlider(sliderValue + Time.deltaTime);  // 증가
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            UpdateSlider(sliderValue - Time.deltaTime);  // 감소
-        }
+        isDepleting = true;
     }
+
+    // 슬라이더 감소를 멈추는 함수
+    public void OnClickStopSlider()
+    {
+        isDepleting = false;
+    }
+
+    // 시간 경과에 따라 슬라이더 값을 줄이는 함수
+    private void DepleteSlider()
+    {
+        float depletionRate = maxValue / depletionTime;
+        UpdateSlider(sliderValue - depletionRate * Time.deltaTime);
+    }
+
 }

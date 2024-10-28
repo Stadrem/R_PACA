@@ -23,9 +23,11 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     [Header("UI 턴 표시")]
     public TMP_Text[] playerSelections;           // 각 플레이어의 상태를 표시할 배열
+    public GameObject TurnComUI;                  // 주사위 굴리기 알림창
 
     private int currentPlayerIndex = 0;           // 현재 플레이어 인덱스
     private bool isTurnComplete = false;          // 현재 플레이어의 턴 완료 여부
+
 
 
     private void Start()
@@ -62,16 +64,14 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         Debug.Log($"플레이어 순서 {currentPlayerIndex + 1}번의 공격 선택");
         selectionValue[currentPlayerIndex] = 1;  // 선택지 값 1로 설정 (1: 공격)
-        SelectionUI(0, "1번", false);
-
+        SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", false);
     }
 
     private void OnClickDefend()
     {
         Debug.Log($"플레이어 순서 {currentPlayerIndex + 1}번의 방어 선택");
         selectionValue[currentPlayerIndex] = 2;  // 선택지 값 2로 설정 (2: 방어)
-        SelectionUI(0, "1번", false);
-
+        SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", false);
     }
 
     private void OnClickTurnComplete()
@@ -79,35 +79,32 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         Debug.Log($"플레이어 순서 {currentPlayerIndex + 1} 번이 선택 완료");
         turnComplete[currentPlayerIndex] = true;    // 현재 플레이어 턴 완료
         isTurnComplete = true;                      // 현재 플레이어의 턴을 완료로 표시
-        
 
+        // UI에 선택 완료 상태 업데이트
+        SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", true);
+
+        TurnComUI.SetActive(true);
         // 다음 플레이어로 턴 넘기기
         currentPlayerIndex++;
         if (currentPlayerIndex >= playerCount)
         {
-            // 모든 플레이어가 턴을 완료하면 턴 종료
             Debug.Log("모든 플레이어의 선택이 완료되었습니다.");
-            EndTurn();  
+            EndTurn();
         }
     }
-
 
     // 모든 플레이어가 턴을 완료했을 시
     private void EndTurn()
     {
         Debug.Log("전원 선택 완료. 전투 준비 중...");
         SendSelectionsToServer();
-        // 주사위 굴리는 부분 추가
         StartTurn();
-        SelectionUI(0, "1번", true);
     }
 
     private void SendSelectionsToServer()
     {
-        // 서버로 선택지 값과 주사위 값 전송
         for (int i = 0; i < playerCount; i++)
         {
-            // 선택 결과 출력
             Debug.Log($"플레이어 {i + 1}의 선택은: {(selectionValue[i] == 1 ? "공격" : "방어")}");
         }
     }
@@ -132,8 +129,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         return true;
     }
 
-
-    
     private void SendTurnComplete(int playerIndex, int selection)
     {
         selectionValue[playerIndex] = selection;
@@ -141,10 +136,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         Debug.Log($"플레이어 {playerIndex + 1}의 선택을 동기화했습니다: {(selection == 1 ? "공격" : "방어")}");
     }
 
-    // 해당 플레이어의 선택지 Ui 업데이트
+    // 해당 플레이어의 선택지 UI 업데이트
     private void SelectionUI(int playerIndex, string playerName, bool isComplete)
     {
-        string SelectionsText = isComplete ? $"{playerName} 선택 완료" : $"{playerName} 선택 진행 중";
-        playerSelections[playerIndex].text = SelectionsText;
+        string action = selectionValue[playerIndex] == 1 ? "<b>공격</b>" : "<b>방어</b>";
+        string selectionText = isComplete
+            ? $"{playerName} 선택 완료: {action}"
+            : $"{playerName} 선택 진행 중: {action}";
+        playerSelections[playerIndex].text = selectionText;
     }
 }

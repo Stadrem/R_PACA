@@ -36,21 +36,8 @@ public class BattleManager : MonoBehaviour
             print("플레이어가 할당되지 않았습니다.");
         }
 
-        // 플레이어 목록 초기화
-        //players = new List<GameObject>();
-
-        // 플레이어 수에 따라 배열 초기화(싱글플레이에서는 초기화하지말자)
-        //turnComplete = new bool[playerCount];
-        //agents = new List<NavMeshAgent>(playerCount);
-        //playerMoves = new List<PlayerMove>(playerCount);
-
-        // NavMeshAgent와 PlayerMove 스크립트를 할당
-
-        //agents.Add(players[0].GetComponent<NavMeshAgent>());
-        // playerMoves.Add(players[0].GetComponent<PlayerMove>());
-
     }
-
+    
     void Update()
     {
         // B키를 눌렀을 때 전투환경 세팅
@@ -61,6 +48,9 @@ public class BattleManager : MonoBehaviour
             {
                 SpawnNPCs();
             }
+
+            //PlayUniverseManager.Instance.ShowBattleUI();
+            //PlayUniverseManager.Instance.FinishConversation();
             // 플레이어 전투 위치로 이동
             MoveToBattlePos();
         }
