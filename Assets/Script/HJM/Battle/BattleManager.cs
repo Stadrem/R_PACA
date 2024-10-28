@@ -21,13 +21,24 @@ public class BattleManager : MonoBehaviour
     private int playerCount = 1;                // 플레이어 수 (싱글 플레이용으로 1로 고정)
     private int currentNpcCount = 0;            // 현재 생성된 NPC 수
 
+    public GameObject battleUI;                 // 전투UI
+
     private void Start()
     {
 
-        // 플레이어 목록에 플레이어가 있다면
+        if (players == null || players.Count == 0)
+        {
+            players = new List<GameObject>();
+        }
+        // 태그 Player 찾아서 players 리스트에 추가
+        GameObject[] playersArray = GameObject.FindGameObjectsWithTag("Player");
+        players.AddRange(playersArray);
+
+
+        
         if (players.Count > 0)
         {
-            // NavMeshAgent와 PlayerMove 스크립트를 할당
+            // NavMeshAgent와 PlayerMove 스크립트 할당
             agents.Add(players[0].GetComponent<NavMeshAgent>());
             playerMoves.Add(players[0].GetComponent<PlayerMove>());
         }
@@ -37,9 +48,23 @@ public class BattleManager : MonoBehaviour
         }
 
     }
-    
+
     void Update()
     {
+        if (players == null || players.Count == 0)
+        {
+            players = new List<GameObject>(); 
+                                              
+            GameObject[] playersArray = GameObject.FindGameObjectsWithTag("Player");
+            players.AddRange(playersArray);
+            
+            if (players.Count > 0)
+            {
+                agents.Add(players[0].GetComponent<NavMeshAgent>());
+                playerMoves.Add(players[0].GetComponent<PlayerMove>());
+            }
+        }
+
         // B키를 눌렀을 때 전투환경 세팅
         if (Input.GetKey(KeyCode.B))
         {
@@ -53,6 +78,8 @@ public class BattleManager : MonoBehaviour
             //PlayUniverseManager.Instance.FinishConversation();
             // 플레이어 전투 위치로 이동
             MoveToBattlePos();
+            battleUI.SetActive(true);
+
         }
     }
 
