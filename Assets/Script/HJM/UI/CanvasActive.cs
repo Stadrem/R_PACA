@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasActive : MonoBehaviour
 {
@@ -31,6 +32,11 @@ public class CanvasActive : MonoBehaviour
     public void OnClickHistory()
     {
         YarnUiManager.Get().EnableCanvas();
+    }
+
+    public void OnClickAvatar()
+    {
+        SceneManager.LoadScene("AvatarCreate");
     }
 
     public void OnClickGameScene()
