@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ending : MonoBehaviour
+public class Ending : MonoBehaviourPunCallbacks
 {
     //싱글톤
     public static Ending instance;
@@ -48,5 +48,12 @@ public class Ending : MonoBehaviour
     public void EnableCanvas()
     {
         gameObject.SetActive(true);
+    }
+
+    public void OnClickExitLobby()
+    {
+        PhotonNetwork.LeaveRoom();
+
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 }
