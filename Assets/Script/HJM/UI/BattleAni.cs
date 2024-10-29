@@ -6,14 +6,17 @@ public class BattleAni : MonoBehaviour
     // 싱글톤 인스턴스
     public static BattleAni instance;
 
-    public float lifetime = 2.0f;  // 턴 지속 시간
-    public GameObject guideUI;     // UI 오브젝트
+    public float lifetime;  // 턴 지속 시간
+    public GameObject guideUI;
+    public GameObject nextTurnUI;
 
     public GameObject player;
     public Animator playerAnim;
 
     public GameObject enemy;
     public Animator enemyAnim;
+
+    public CircularSlider circularSlider;
 
     private void Awake()
     {
@@ -33,6 +36,7 @@ public class BattleAni : MonoBehaviour
     {
         // Player, Enemy 오브젝트 할당
         FindPlayerAndEnemy();
+
     }
 
     void Update()
@@ -51,7 +55,7 @@ public class BattleAni : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
-                playerAnim = player.GetComponent<Animator>();
+                playerAnim = player.GetComponentInChildren<Animator>();
             }
         }
 
@@ -69,11 +73,25 @@ public class BattleAni : MonoBehaviour
     public void Turn01()
     {
         print("1턴 전투 진행 중");
-        guideUI.SetActive(true);  // 턴이 시작될 때 guideUI 활성화
-        StartCoroutine(TurnRoutine());  // 코루틴 실행
+        guideUI.SetActive(true);
+        StartCoroutine(TurnRoutine01());
+    }
+    public void Turn02()
+    {
+        print("2턴 전투 진행 중");
+        guideUI.SetActive(true);
+        StartCoroutine(TurnRoutine02());
+    }
+    public void Turn03()
+    {
+        print("3턴 전투 진행 중");
+        guideUI.SetActive(true);
+        StartCoroutine(TurnRoutine03());
     }
 
-    private IEnumerator TurnRoutine()
+
+
+    private IEnumerator TurnRoutine01()
     {
         float currentTime = 0.0f;
 
@@ -81,15 +99,65 @@ public class BattleAni : MonoBehaviour
         while (currentTime < lifetime)
         {
             currentTime += Time.deltaTime;
-            yield return null;  // 다음 프레임까지 대기
+            yield return null;
         }
 
         guideUI.SetActive(false);
         DiceRollManager.Get().DiceRoll(6, 6, true); // 1턴 공격 성공값
-        print("1턴 전투 끝");
 
-        yield return new WaitForSeconds(2.0f); // 대기
+        yield return new WaitForSeconds(2.5f);
+        enemyAnim.SetTrigger("IsDamaged");
+        print("1턴 전투 끝");
+        yield return new WaitForSeconds(1.5f);
+        nextTurnUI.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        nextTurnUI.SetActive(false);
+        circularSlider.ResetSlider();
+
+    }
+    private IEnumerator TurnRoutine02()
+    {
+        float currentTime = 0.0f;
+
+        // 지정된 lifetime 동안 대기
+        while (currentTime < lifetime)
+        {
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+
+        guideUI.SetActive(false);
+        DiceRollManager.Get().DiceRoll(1, 1, false); // 2턴 공격 실패값
+
+        yield return new WaitForSeconds(2.5f);
         enemyAnim.SetTrigger("IsAttack");
+        print("2턴 전투 끝");
+        yield return new WaitForSeconds(2.0f);
+        nextTurnUI.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        nextTurnUI.SetActive(false);
+        circularSlider.ResetSlider();
+
+    }
+    private IEnumerator TurnRoutine03()
+    {
+        float currentTime = 0.0f;
+
+        // 지정된 lifetime 동안 대기
+        while (currentTime < lifetime)
+        {
+            currentTime += Time.deltaTime;
+            yield return null;  //
+        }
+
+        guideUI.SetActive(false);
+        DiceRollManager.Get().DiceRoll(5, 4, true); // 3턴 공격 성공값
+
+        yield return new WaitForSeconds(2.5f);
+        enemyAnim.SetTrigger("IsDie");
+        print("3턴 전투 끝, 고블린 퇴치");
+        yield return new WaitForSeconds(3.5f);
+        Ending.Get().EnableCanvas();
 
     }
 }

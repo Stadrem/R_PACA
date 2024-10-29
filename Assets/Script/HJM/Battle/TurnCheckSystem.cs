@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
-using Photon.Realtime;
-using TMPro;
 
 public class TurnCheckSystem : MonoBehaviourPunCallbacks
 {
@@ -26,6 +23,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     private int currentPlayerIndex = 0;           // 현재 플레이어 인덱스
     private bool isTurnComplete = false;          // 현재 플레이어의 턴 완료 여부
+    private int turnCount = 1;                    // 현재 턴 수
 
     private void Start()
     {
@@ -40,8 +38,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         // 배열 초기화
         turnComplete = new bool[playerCount];
         selectionValue = new int[playerCount];
-
-
 
         attackButton.onClick.AddListener(OnClickAttack);
         defendButton.onClick.AddListener(OnClickDefend);
@@ -85,7 +81,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (currentPlayerIndex >= playerCount)
         {
             TurnComUI.SetActive(true);
-            BattleAni.instance.Turn01(); // 1턴 진행
             Debug.Log("모든 플레이어의 선택이 완료되었습니다.");
             EndTurn();
         }
@@ -94,17 +89,31 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private void EndTurn()
     {
         Debug.Log("전원 선택 완료. 전투 준비 중...");
-        //SendSelectionsToServer();
+
+        // 턴 수에 따라 배틀애니 호출
+        switch (turnCount)
+        {
+            case 1:
+                BattleAni.instance.Turn01(); // 1턴 진행
+                break;
+            case 2:
+                BattleAni.instance.Turn02(); // 2턴 진행
+                break;
+            case 3:
+                BattleAni.instance.Turn03(); // 3턴 진행
+                break;
+            default:
+                Debug.Log("모든 턴이 완료되었습니다.");
+                break;
+        }
+
+        // 턴 수 증가
+        turnCount++;
+
+        // 턴 초기화 및 다음 턴 준비
+        ResetTurn();
         StartTurn();
     }
-
-    //private void SendSelectionsToServer()
-    //{
-    //    for (int i = 0; i < playerCount; i++)
-    //    {
-    //        Debug.Log($"플레이어 {i + 1}의 선택은: {(selectionValue[i] == 1 ? "공격" : "방어")}");
-    //    }
-    //}
 
     private void ResetTurn()
     {

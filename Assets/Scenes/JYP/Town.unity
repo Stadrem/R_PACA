@@ -3626,10 +3626,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d918dc5bd6f26c4aa0ed2e298707d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 5
+  lifetime: 2
   guideUI: {fileID: 1970428923}
+  nextTurnUI: {fileID: 386214275}
   player: {fileID: 0}
+  playerAnim: {fileID: 0}
   enemy: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  circularSlider: {fileID: 4013254512944766261}
 --- !u!1 &378413733
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,7 +3681,6 @@ GameObject:
   - component: {fileID: 386214280}
   - component: {fileID: 386214279}
   - component: {fileID: 386214278}
-  - component: {fileID: 386214277}
   m_Layer: 5
   m_Name: Canvas_BatGuide (1)
   m_TagString: Untagged
@@ -3705,22 +3708,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &386214277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386214275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d918dc5bd6f26c4aa0ed2e298707d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 1.7
-  guideUI: {fileID: 0}
-  player: {fileID: 0}
-  enemy: {fileID: 0}
 --- !u!114 &386214278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16581,7 +16568,6 @@ GameObject:
   - component: {fileID: 1621964774}
   - component: {fileID: 1621964773}
   - component: {fileID: 1621964772}
-  - component: {fileID: 1621964771}
   m_Layer: 5
   m_Name: Canvas_BatGuide (2)
   m_TagString: Untagged
@@ -16609,22 +16595,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1621964771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621964769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d918dc5bd6f26c4aa0ed2e298707d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 2
-  guideUI: {fileID: 0}
-  player: {fileID: 0}
-  enemy: {fileID: 0}
 --- !u!114 &1621964772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22058,7 +22028,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uB2E4\uC74C \uD134\uC744 \uC9C4\uD589\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -25019,7 +24989,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3535244620977086028}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
