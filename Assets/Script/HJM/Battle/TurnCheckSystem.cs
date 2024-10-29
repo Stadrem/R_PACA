@@ -41,7 +41,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         turnComplete = new bool[playerCount];
         selectionValue = new int[playerCount];
 
-       
+
 
         attackButton.onClick.AddListener(OnClickAttack);
         defendButton.onClick.AddListener(OnClickDefend);
@@ -79,12 +79,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         // UI에 선택 완료 상태 업데이트
         SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", true);
-        TurnComUI.SetActive(true);
 
         // 다음 플레이어로 턴 넘기기
         currentPlayerIndex++;
         if (currentPlayerIndex >= playerCount)
         {
+            TurnComUI.SetActive(true);
+            BattleAni.instance.Turn01(); // 1턴 진행
             Debug.Log("모든 플레이어의 선택이 완료되었습니다.");
             EndTurn();
         }
@@ -93,17 +94,17 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private void EndTurn()
     {
         Debug.Log("전원 선택 완료. 전투 준비 중...");
-        SendSelectionsToServer();
+        //SendSelectionsToServer();
         StartTurn();
     }
 
-    private void SendSelectionsToServer()
-    {
-        for (int i = 0; i < playerCount; i++)
-        {
-            Debug.Log($"플레이어 {i + 1}의 선택은: {(selectionValue[i] == 1 ? "공격" : "방어")}");
-        }
-    }
+    //private void SendSelectionsToServer()
+    //{
+    //    for (int i = 0; i < playerCount; i++)
+    //    {
+    //        Debug.Log($"플레이어 {i + 1}의 선택은: {(selectionValue[i] == 1 ? "공격" : "방어")}");
+    //    }
+    //}
 
     private void ResetTurn()
     {
