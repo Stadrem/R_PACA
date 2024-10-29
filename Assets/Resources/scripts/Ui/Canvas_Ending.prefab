@@ -732,9 +732,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5196706703706412864}
-        m_TargetAssemblyTypeName: ConnectionMgr, Assembly-CSharp
-        m_MethodName: OnClickConnect
+      - m_Target: {fileID: 1973429470515844661}
+        m_TargetAssemblyTypeName: Ending, Assembly-CSharp
+        m_MethodName: OnClickExitLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

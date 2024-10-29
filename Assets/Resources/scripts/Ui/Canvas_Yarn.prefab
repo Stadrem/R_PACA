@@ -1312,9 +1312,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD0D0\uD5D8\uAC00: \uB9C8\uC655, \uC0AC\uCC9C\uC655, \uC708\uD130\uC194\uC838,
-    \uB2E5\uD130\n\n\uC0DD\uC131\uC77C\uC790: 24.10.10\n\n\uD50C\uB808\uC774\uD0C0\uC784:
-    00:25:10"
+  m_text: "\uD0D0\uD5D8\uAC00: \uB9C8\uC655, \uC0AC\uCC9C\uC655\n\n\uC0DD\uC131\uC77C\uC790:
+    24.10.10\n\n\uD50C\uB808\uC774\uD0C0\uC784: 00:25:10"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -2641,7 +2640,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD0D0\uD5D8\uAC00: \uBC15\uB8E8\uD53C, \uC774\uB098\uBBF8, \uAE40\uC870\uB85C,
+  m_text: "\uD0D0\uD5D8\uAC00: \uBC15\uB8E8\uD53C, \uC774\uB098\uBBF8, \uC7A5\uC870\uB85C,
     \uD55C\uC6B0\uC19D\n\n\uC0DD\uC131\uC77C\uC790: 24.10.23\n\n\uD50C\uB808\uC774\uD0C0\uC784:
     20:30:00"
   m_isRightToLeft: 0
@@ -4104,8 +4103,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD0D0\uD5D8\uAC00: \uAE40\uBCF4\uC2A4, \uAE40\uBD80\uD558, \uAE40\uCC3D\uC12D,
-    \uAE40\uC601\uAD6C\n\n\uC0DD\uC131\uC77C\uC790: 24.10.15\n\n\uD50C\uB808\uC774\uD0C0\uC784:
+  m_text: "\uD0D0\uD5D8\uAC00: \uC2E0\uCC3D\uC12D, \uBD80\uD5581, \uBD80\uD5582,
+    \uBD80\uD5583\n\n\uC0DD\uC131\uC77C\uC790: 24.10.15\n\n\uD50C\uB808\uC774\uD0C0\uC784:
     00:15:00"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
@@ -4355,7 +4354,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 464, y: 0}
-  m_SizeDelta: {x: 928, y: 1500}
+  m_SizeDelta: {x: 928, y: 2400}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &203256108169219071
 CanvasRenderer:
@@ -4386,21 +4385,39 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uC138\uACC4\uAD00 \uC81C\uBAA9: \uC774\uC138\uACC4 \uBAA8\uD5D8\uAC00\n\n\uD0D0\uD5D8\uAC00:
-    \uAE40\uB3D9\uC218, \uC7A5\uB3D9\uC218, \uBC15\uB3D9\uC218, \uCD5C\uB3D9\uC218\n\n\uC0DD\uC131
-    \uB0A0\uC9DC: 24.10.15\n\n\uD50C\uB808\uC774\uD0C0\uC784: 00:30:15\n\n\uB0B4\uC6A9:
-    \n\n\uB178\uC778 : \"\uBC18\uAC11\uB124 \uBAA8\uD5D8\uAC00\uC5EC!\"\n\n\uB178\uC778\uACFC
-    \uB9CC\uB09C \uBAA8\uD5D8\uAC00\uB4E4\uC740 \uB178\uC778\uC758 \uC758\uB8B0\uB97C
-    \uBC1B\uC544 \uB358\uC804\uC73C\uB85C \uD5A5\uD588\uC2B5\uB2C8\uB2E4.\n\n\uAE40\uB3D9\uC218:
-    \"\uB358\uC804\uC5D0 \uC218\uC0C1\uD55C\uAC8C \uC788\uB294\uC9C0 \uD0D0\uC0C9\uD558\uACA0\uC2B5\uB2C8\uB2E4.\"\n\n\uBAA8\uD5D8\uAC00\uB4E4\uC774
-    \uB358\uC804\uC744 \uD0D0\uD5D8 \uC911\uC5D0 \uCD5C\uB3D9\uC218\uB294 \uB358\uC804\uC5D0\uC11C
-    \uAE38\uC744 \uC783\uACE0 \uBBF8\uC544\uAC00 \uB418\uC5B4\uBC84\uB838\uC2B5\uB2C8\uB2E4....\n\n\uB358\uC804\uC5D0\uB294
-    \uBB34\uC12D\uAC8C \uC0DD\uAE34 \uACE0\uBE14\uB9B0\uC774 \uADF8\uB4E4\uC744 \uAE30\uB2E4\uB9AC\uACE0
-    \uC788\uC5C8\uC2B5\uB2C8\uB2E4.\n\n\uAE40\uB3D9\uC218, \uC7A5\uB3D9\uC218, \uBC15\uB3D9\uC218\uAC00
-    \uACE0\uBE14\uB9B0\uACFC \uC804\uD22C\uC5D0 \uB098\uC12D\uB2C8\uB2E4. \n\n\uCE58\uC5F4\uD55C
-    \uC804\uD22C \uB05D\uC5D0 \uACE0\uBE14\uB9B0\uC774 \uC4F0\uB7EC\uC84C\uC9C0\uB9CC,
-    \uBC15\uB3D9\uC218\uB294 \uACE0\uBE14\uB9B0 1\uB9C8\uB9AC\uC5D0\uAC8C \uC8FD\uC5C8\uC2B5\uB2C8\uB2E4.
-    \n\n\uCD5C\uB3D9\uC218\uC640 \uBC15\uB3D9\uC218\uB294 \uBAA8\uD5D8 \uB05D\uC5D0
-    \uC4F0\uB7EC\uC84C\uC9C0\uB9CC, \uB9C8\uC744\uC740 \uD3C9\uD654\uB97C \uB418\uCC3E\uC558\uC2B5\uB2C8\uB2E4."
+    \uD14C\uC2A4\uD2B8\uC720\uC8001\n\n\uC0DD\uC131 \uB0A0\uC9DC: 24.10.30\n\n\uD50C\uB808\uC774\uD0C0\uC784:
+    00:03:30\n\n\uB0B4\uC6A9: \n\n\uD14C\uC2A4\uD2B8\uC720\uC8001:\u201C\uC548\uB155\uD558\uC138\uC694.\u201C\n\r\n\uB178\uC778:\u201C\uBC18\uAC11\uB124
+    \uB0AF\uC120 \uC80A\uC740\uC774\uC5EC\u201C\r\n\uB178\uC778\uC758 \uC5BC\uAD74\uC5D0\uB294
+    \uADFC\uC2EC\uACFC \uAC71\uC815\uC774 \uAC00\uB4DD\uD569\uB2C8\uB2E4. \uB178\uC778\uC740
+    \uD50C\uB808\uC774\uC5B4\uC758 \uBAA8\uC2B5\uC744 \uAD00\uCC30\uD558\uACE0\uB294
+    \uADF8\uAC00 \uBAA8\uD5D8\uAC00\uB77C\uB294 \uC0AC\uC2E4\uC744 \uAE68\uB2EB\uC2B5\uB2C8\uB2E4.\r\n\uB178\uC778:\u201C\uB9C8\uC744\uC5D0
+    \uD070 \uC704\uD611\uC774 \uB2E5\uCCD0\uC654\uB124. \uC6B0\uB9AC\uB97C \uB3C4\uC640\uC904
+    \uC218 \uC788\uACA0\uB098.\u201D\r\n\uB178\uC778\uC740 \uD50C\uB808\uC774\uC5B4\uC758
+    \uB300\uB2F5\uC744 \uAE30\uB2E4\uB9BD\uB2C8\uB2E4.\r\n\r\n\uD14C\uC2A4\uD2B8\uC720\uC8001:\u201C\uB3C4\uC640\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4.\u201D\n\r\n\uB178\uC778:\u201C\uACE0\uB9D9\uB124
+    \uC80A\uC740\uC774.\u201C\r\n\uB178\uC778\uC740 \uACE0\uAC1C\uB97C \uC219\uC5EC
+    \uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C \uAC10\uC0AC\uC758 \uC778\uC0AC\uB97C \uC804\uD569\uB2C8\uB2E4.
+    \uB178\uC778\uC740 \uC9C0\uD321\uC774\uB85C \uB9C8\uC744\uC758 \uB05D\uC744 \uAC00\uB9AC\uD0B5\uB2C8\uB2E4.\r\n\uB178\uC778:
+    \u201C\uC800 \uACF3\uC5D0 \uBC84\uB824\uC9C4 \uB358\uC804\uC774 \uC788\uB2E4\uB124.
+    \uADF8\uACF3\uC5D0 \uBABB\uB41C \uACE0\uBE14\uB9B0 \uD558\uB098\uAC00 \uC6B0\uB9AC
+    \uB9C8\uC744\uC744 \uAD34\uB86D\uD788\uACE0\uC788\uB2E4\uB124.\u201D\r\n\uB178\uC778\uC740
+    \uC2AC\uD514\uC774 \uAC00\uB4DD\uD55C \uB208\uC73C\uB85C \uD50C\uB808\uC774\uC5B4\uB97C
+    \uC8FC\uC2DC\uD569\uB2C8\uB514. \uB178\uC778\uC740 \uC678\uBD80\uC778\uC5D0\uAC8C
+    \uB3C4\uC6C0\uC744 \uC694\uCCAD\uD574\uC57C\uD558\uB294 \uC774 \uC0C1\uD669\uC744
+    \uBD80\uB044\uB7FD\uAC8C \uC0DD\uAC01\uD558\uC9C0\uB9CC, \uC704\uAE30\uC758 \uCC98\uD55C
+    \uB9C8\uC744\uC5D0\uC11C\uB294 \uBCC4\uB2E4\uB978 \uBC29\uC548\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.\r\n\r\n\uD14C\uC2A4\uD2B8\uC720\uC8001:\u201C\uC81C\uAC00
+    \uACE0\uBE14\uB9B0\uC744 \uD1F4\uCE58\uD558\uACA0\uC2B5\uB2C8\uB2E4.\u201C \n\n\uD14C\uC2A4\uD2B8\uC720\uC8001\uC740
+    \uB358\uC804\uC744 \uD0D0\uD5D8\uD558\uB358 \uC911, \uB358\uC804 \uB05D\uC5D0\uB294
+    \uC7A0\uACA8\uC788\uB294 \uBB38\uC774 \uC788\uC5C8\uC2B5\uB2C8\uB2E4.\n\n\uD14C\uC2A4\uD2B8\uC720\uC8001:
+    \"\uC7A0\uAE34 \uBB38\uC744 \uC5F4\uC5B4\uBCF4\uACA0\uC2B5\uB2C8\uB2E4.\"\n\uD14C\uC2A4\uD2B8\uC720\uC8001\uC740
+    \uC7A0\uAE08\uD574\uC81C\uB97C \uC2DC\uB3C4\uD588\uACE0, \uC544\uC2AC\uC544\uC2AC\uD558\uAC8C
+    \uC131\uACF5\uD588\uC2B5\uB2C8\uB2E4.\n\n\uC7A0\uAE34 \uBB38\uC774 \uC5F4\uB9AC\uACE0,
+    \uB358\uC804 \uB9C8\uC9C0\uB9C9 \uBC29\uC5D0\uB294 \uBB34\uC12D\uAC8C \uC0DD\uAE34
+    \uACE0\uBE14\uB9B0\uC774 \uADF8\uB97C \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uC2B5\uB2C8\uB2E4.\n\n\uACE0\uBE14\uB9B0\uC740
+    \uC0AC\uC2E4 \uAC70\uB300\uD55C \uB9C8\uC655 \uACE0\uBE14\uB9B0\uC774\uC5C8\uC73C\uBA70,
+    \uD14C\uC2A4\uD2B8\uC720\uC8001\uC740 \uAC01\uC624\uB97C \uB2E4\uC9C0\uACE0 \uACE0\uBE14\uB9B0\uACFC
+    \uC804\uD22C\uC5D0 \uB098\uC12D\uB2C8\uB2E4.  \n\n\uCE58\uC5F4\uD55C \uC804\uD22C
+    \uB05D\uC5D0 \uACE0\uBE14\uB9B0\uC774 \uC4F0\uB7EC\uC84C\uACE0, \uB9C8\uC744\uC740
+    \uD3C9\uD654\uB97C \uB418\uCC3E\uAC8C \uB418\uC5C8\uC2B5\uB2C8\uB2E4.\n\n\uB05D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -4535,7 +4552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC81C\uBAA9: \uAE40\uAC00\uB124\uC758 \uBAA8\uD5D8"
+  m_text: "\uC81C\uBAA9: God-Chang-Sub"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -5483,7 +5500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC81C\uBAA9: \uC2E0\uB370\uB810\uB77C\uC758 \uBAA8\uD5D8"
+  m_text: "\uC81C\uBAA9: \uB4DC\uB798\uACE4 \uC2AC\uB808\uC774\uC5B4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -6058,9 +6075,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD0D0\uD5D8\uAC00: \uC2A4\uB178\uC6B0, \uC720\uB9AC\uAD6C\uB450, \uAE40\uB4DC\uC6CC\uD504,
-    \uBC15\uB4DC\uC6CC\uD504\n\n\uC0DD\uC131\uC77C\uC790: 24.10.18\n\n\uD50C\uB808\uC774\uD0C0\uC784:
-    00:12:05"
+  m_text: "\uD0D0\uD5D8\uAC00: \uB3C4\uBC14\uD0A8, \uBC84\uC11C\uCEE4, \uC6B8\uD504\uB9AD\n\n\uC0DD\uC131\uC77C\uC790:
+    24.10.18\n\n\uD50C\uB808\uC774\uD0C0\uC784: 00:12:05"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -6327,7 +6343,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3577370979393939286}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.43333334
+  m_Size: 0.27083334
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6565,7 +6581,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 928, y: 850}
+  m_SizeDelta: {x: 928, y: 1750}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3774751903999403655
 MonoBehaviour:
@@ -6774,7 +6790,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7228176730901926738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.56666666}
+  m_AnchorMin: {x: 0, y: 0.7291666}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -8878,9 +8894,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD0D0\uD5D8\uAC00: \uAE40\uB3D9\uC218, \uC7A5\uB3D9\uC218, \uBC15\uB3D9\uC218,
-    \uCD5C\uB3D9\uC218\n\n\uC0DD\uC131\uC77C\uC790: 24.10.20\n\n\uD50C\uB808\uC774\uD0C0\uC784:
-    00:30:15"
+  m_text: "\uD0D0\uD5D8\uAC00: \uD14C\uC2A4\uD2B8\uC720\uC8001\n\n\uC0DD\uC131\uC77C\uC790:
+    24.10.30\n\n\uD50C\uB808\uC774\uD0C0\uC784: 00:03:30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
@@ -9015,7 +9030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC81C\uBAA9: \uB3D9\uC218\uC758 \uBAA8\uD5D8"
+  m_text: "\uC81C\uBAA9: \uC774\uC138\uACC4 \uBAA8\uD5D8\uAC00"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7483b2c1768b8d641a5f8003456fd620, type: 2}
   m_sharedMaterial: {fileID: -7447414168169220238, guid: 7483b2c1768b8d641a5f8003456fd620,
