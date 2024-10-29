@@ -50,4 +50,10 @@ public class CircularSlider : MonoBehaviour
         UpdateSlider(sliderValue - depletionRate * Time.deltaTime);
     }
 
+    public void ResetSlider()
+    {
+        sliderValue = maxValue; // 초기화
+        UpdateSlider(sliderValue);
+    }
+
 }
