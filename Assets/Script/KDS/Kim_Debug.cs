@@ -21,5 +21,11 @@ public class Kim_Debug : MonoBehaviour
             bool result = DiceRollManager.Get().BattleDiceRoll(0);
             Debug.Log("반환된 주사위 결과: " + result);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            Ending.Get().EnableCanvas();
+            print("엔딩 발동");
+        }
     }
 }
