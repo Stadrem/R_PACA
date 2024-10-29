@@ -28,6 +28,11 @@ public class CanvasActive : MonoBehaviour
         Destroy(canvasDestroyed);
     }
 
+    public void OnClickHistory()
+    {
+        YarnUiManager.Get().EnableCanvas();
+    }
+
     public void OnClickGameScene()
     {
         PhotonNetwork.LoadLevel("Town");
