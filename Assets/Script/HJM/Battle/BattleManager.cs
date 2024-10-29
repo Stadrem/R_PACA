@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager instance;
+
     [Header("플레이어 관련 목록")]
     public List<GameObject> players;            // 플레이어 목록
     public List<Transform> battlePos;           // 전투 시 이동 위치
@@ -16,6 +18,7 @@ public class BattleManager : MonoBehaviour
     public GameObject npcPrefab;                // NPC 프리팹
     public Transform npcPos;                    // NPC 생성 위치
     public int npcCount = 1;                    // 생성할 NPC 수
+    public GameObject npc;
 
     private bool[] turnComplete;                // 각 플레이어의 턴 완료 여부
     private int playerCount = 1;                // 플레이어 수 (싱글 플레이용으로 1로 고정)
@@ -57,7 +60,8 @@ public class BattleManager : MonoBehaviour
                                               
             GameObject[] playersArray = GameObject.FindGameObjectsWithTag("Player");
             players.AddRange(playersArray);
-            
+
+
             if (players.Count > 0)
             {
                 agents.Add(players[0].GetComponent<NavMeshAgent>());
@@ -88,7 +92,7 @@ public class BattleManager : MonoBehaviour
     {
         if (currentNpcCount < npcCount)
         {
-            GameObject npc = Instantiate(npcPrefab, npcPos.position, npcPos.rotation);
+            npc = Instantiate(npcPrefab, npcPos.position, npcPos.rotation);
             currentNpcCount++;
         }
     }

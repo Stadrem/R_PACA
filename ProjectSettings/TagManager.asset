@@ -8,6 +8,7 @@ TagManager:
   - RoomNPC
   - InPlayNPC
   - Portal
+  - Enemy
   layers:
   - Default
   - TransparentFX
