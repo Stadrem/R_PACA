@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class TurnCheckSystem : MonoBehaviourPunCallbacks
 {
+    public static TurnCheckSystem instance;
+
+
     public BattleManager battleManager;
 
     [Header("플레이어 턴 관련 목록")]
@@ -19,11 +22,26 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     [Header("UI 턴 표시")]
     public TMP_Text[] playerSelections;           // 각 플레이어의 상태를 표시할 배열
+    
     public GameObject TurnComUI;                  // 주사위 굴리기 알림창
 
+
+    public int turnCount = 1;                     // 현재 턴 수
     private int currentPlayerIndex = 0;           // 현재 플레이어 인덱스
     private bool isTurnComplete = false;          // 현재 플레이어의 턴 완료 여부
-    private int turnCount = 1;                    // 현재 턴 수
+
+    private void Awake()
+    {
+        // 싱글톤 인스턴스 설정
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -109,7 +127,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         // 턴 수 증가
         turnCount++;
-
+        
         // 턴 초기화 및 다음 턴 준비
         ResetTurn();
         StartTurn();
@@ -117,6 +135,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     private void ResetTurn()
     {
+        
         for (int i = 0; i < playerCount; i++)
         {
             turnComplete[i] = false;
@@ -132,10 +151,12 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             return;
         }
 
-        string action = selectionValue[playerIndex] == 1 ? "<b>공격</b>" : "<b>방어</b>";
+        string action = selectionValue[playerIndex] == 1 ? "<color=#FF0000><b>공격</b></color>" : "<color=#0000FF><b>방어</b></color>";
         string selectionText = isComplete
             ? $"{playerName} 선택 완료: {action}"
             : $"{playerName} 선택 진행 중: {action}";
         playerSelections[playerIndex].text = selectionText;
     }
+
+    
 }
