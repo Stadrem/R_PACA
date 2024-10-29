@@ -44,7 +44,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
-            DebugPanel();
+            Kim_Debug.Get();
         }
     }
 
@@ -54,12 +54,6 @@ public class AvatarCanvasManager : AvatarHTTPManager
         TempFakeServer.Get().myAvatar = pas.myAvatar;
 
         notUseNetworkOn = true;
-    }
-
-    //백엔드 없을 시 디버그용
-    void DebugPanel()
-    {
-        debugPanel.SetActive(!debugPanel.activeSelf);
     }
 
     //AvatarPresetSettings에 설정한 모든 내용을 기반으로 UI 아이콘 자동 생성
