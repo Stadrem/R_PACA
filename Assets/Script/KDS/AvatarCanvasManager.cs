@@ -38,14 +38,8 @@ public class AvatarCanvasManager : AvatarHTTPManager
         ContentsChildSet(0);
 
         pas = playerAvatar.GetComponent<PlayerAvatarSetting>();
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            Kim_Debug.Get();
-        }
+        Kim_Debug.Get();
     }
 
     //백엔드 없을 시 디버그용
