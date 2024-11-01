@@ -20,10 +20,10 @@ namespace ViewModels
         private List<BackgroundPartInfo> backgroundParts = new();
         private Dictionary<BackgroundPartInfo, List<BackgroundPartInfo>> adjacentList = new();
         private int nextBackgroundKey = 0;
-    
+        
         private DateTime createdDate = DateTime.Today;
         // private List<string> backgrounds = new List<string>();
-        
+        private bool isRootBackgroundCreated = false;
         
         
         public string Title
@@ -129,6 +129,11 @@ namespace ViewModels
                 {
                     if (result.IsSuccess)
                     {
+                        if(!isRootBackgroundCreated)
+                        {
+                            backgroundInfo.isRoot = true;
+                            isRootBackgroundCreated = true;
+                        }
                         backgroundInfo.id = result.value.partId;
                         BackgroundParts.Add(backgroundInfo);
                         AdjacentList[backgroundInfo] = new List<BackgroundPartInfo>();
@@ -146,6 +151,7 @@ namespace ViewModels
         public void Init()
         {
             //load all data's in here
+            isRootBackgroundCreated = false;
         }
 
 

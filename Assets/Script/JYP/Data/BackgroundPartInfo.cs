@@ -7,6 +7,7 @@ public class BackgroundPartInfo
     public int universeId;
     public string description;
     public string Name;
+    public bool isRoot = false;
     public EBackgroundPartType Type;
     public List<PortalData> portalList;
     public List<NpcData> npcList;

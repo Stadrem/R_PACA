@@ -21,14 +21,15 @@ public class CreateUniverseController : MonoBehaviour
 
     private ObjectiveSelectionPopupController objectiveSelectionPopupController;
 
-    private UniverseEditViewModel viewModel;
+    private static UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
+    private void Start()
+    {
+        ViewModel.Init();
+    }
 
     private void OnEnable()
     {
-        viewModel = ViewModelManager.Instance.UniverseEditViewModel;
-
-
         var root = GetComponent<UIDocument>().rootVisualElement;
         titleInput = root.Q<TextField>("input_title");
         genreFantasySelector = root.Q<VisualElement>("selection_genreFantasy");
@@ -44,16 +45,16 @@ public class CreateUniverseController : MonoBehaviour
         objectiveSelectionPopupController.Init(popup);
 
         titleInput.RegisterValueChangedCallback(
-            e => { viewModel.Title = e.newValue; }
+            e => { ViewModel.Title = e.newValue; }
         );
-        
+
 
         genreFantasySelector.RegisterCallback<ClickEvent>(
             e =>
             {
                 if (selectedGenre == EGenreType.Fantasy) return;
                 selectedGenre = EGenreType.Fantasy;
-                viewModel.Genre = selectedGenre.ToString();
+                ViewModel.Genre = selectedGenre.ToString();
                 genreFantasySelector.AddToClassList("character-shape--selected");
             }
         );
@@ -63,6 +64,6 @@ public class CreateUniverseController : MonoBehaviour
         objectiveSettingButton.clicked += () => { objectiveSelectionPopupController.Show(); };
         backButton.clicked += () => { SceneManager.LoadScene("LobbyScene"); };
         saveButton.clicked += () => { SceneManager.LoadScene("LobbyScene"); };
-        createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
+        createdDate.text = ViewModel.CreatedDate.ToString("dd/MM/yyyy");
     }
 }
