@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using ViewModels;
 
 public class NPCSpawner : MonoBehaviour
 {

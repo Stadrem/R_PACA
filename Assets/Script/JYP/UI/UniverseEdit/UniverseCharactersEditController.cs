@@ -3,6 +3,7 @@ using System.ComponentModel;
 using UI.Universe.Edit;
 using UnityEngine;
 using UnityEngine.UIElements;
+using ViewModels;
 
 public class UniverseCharactersEditController : MonoBehaviour
 {

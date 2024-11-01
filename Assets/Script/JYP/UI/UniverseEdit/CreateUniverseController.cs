@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using ViewModels;
 
 public class CreateUniverseController : MonoBehaviour
 {
@@ -42,10 +43,17 @@ public class CreateUniverseController : MonoBehaviour
         objectiveSelectionPopupController = new ObjectiveSelectionPopupController();
         objectiveSelectionPopupController.Init(popup);
 
+        titleInput.RegisterValueChangedCallback(
+            e => { viewModel.Title = e.newValue; }
+        );
+        
+
         genreFantasySelector.RegisterCallback<ClickEvent>(
             e =>
             {
+                if (selectedGenre == EGenreType.Fantasy) return;
                 selectedGenre = EGenreType.Fantasy;
+                viewModel.Genre = selectedGenre.ToString();
                 genreFantasySelector.AddToClassList("character-shape--selected");
             }
         );
@@ -54,7 +62,7 @@ public class CreateUniverseController : MonoBehaviour
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
         objectiveSettingButton.clicked += () => { objectiveSelectionPopupController.Show(); };
         backButton.clicked += () => { SceneManager.LoadScene("LobbyScene"); };
-        saveButton.clicked += () => {SceneManager.LoadScene("LobbyScene"); };
+        saveButton.clicked += () => { SceneManager.LoadScene("LobbyScene"); };
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
     }
 }

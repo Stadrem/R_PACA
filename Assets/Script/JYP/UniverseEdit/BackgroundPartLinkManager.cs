@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Cinemachine;
 using UnityEngine;
+using ViewModels;
 
 public class BackgroundPartLinkManager : MonoBehaviour
 {
