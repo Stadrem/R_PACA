@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Data.Remote;
+using UnityEngine;
 
 namespace ViewModels
 {
@@ -17,10 +20,12 @@ namespace ViewModels
         private List<BackgroundPartInfo> backgroundParts = new();
         private Dictionary<BackgroundPartInfo, List<BackgroundPartInfo>> adjacentList = new();
         private int nextBackgroundKey = 0;
-
+    
         private DateTime createdDate = DateTime.Today;
         // private List<string> backgrounds = new List<string>();
-
+        
+        
+        
         public string Title
         {
             get => title;
@@ -58,10 +63,24 @@ namespace ViewModels
             set => SetField(ref characters, value);
         }
 
-        public void AddCharacter(CharacterInfo character)
+        public IEnumerator CreateCharacter(CharacterInfo character)
         {
-            characters.Add(character);
-            OnPropertyChanged(nameof(Characters));
+            yield return ScenarioCharacterApi.CreateScenarioAvatar(
+                character,
+                (result) =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        character.id = result.value;
+                        characters.Add(character);
+                        OnPropertyChanged(nameof(Characters));
+                    }
+                    else
+                    {
+                        Debug.LogError($"error: {result.error}");
+                    }
+                }
+            );
         }
 
         public DateTime CreatedDate
@@ -92,19 +111,34 @@ namespace ViewModels
                 .Add(from);
         }
 
-        public void AddBackgroundPart(string name, string description, EBackgroundPartType type)
+        public IEnumerator CreateBackground(string name, string description, EBackgroundPartType type)
         {
-            var newPart = new BackgroundPartInfo()
+            var backgroundInfo = new BackgroundPartInfo()
             {
                 id = nextBackgroundKey,
                 Name = name,
-                Type = type
+                Type = type,
+                description = description
             };
 
-            BackgroundParts.Add(newPart);
-            AdjacentList[newPart] = new List<BackgroundPartInfo>();
+            yield return ScenarioBackgroundApi.CreateScenarioMap(
+                backgroundInfo,
+                (result) =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        backgroundInfo.id = result.value;
+                        BackgroundParts.Add(backgroundInfo);
+                        AdjacentList[backgroundInfo] = new List<BackgroundPartInfo>();
 
-            OnPropertyChanged(nameof(BackgroundParts));
+                        OnPropertyChanged(nameof(BackgroundParts));
+                    }
+                    else
+                    {
+                        Debug.LogError($"error: {result.error}");
+                    }
+                }
+            );
         }
 
         public void Init()
@@ -136,6 +170,20 @@ namespace ViewModels
 
             characters.Remove(character);
             OnPropertyChanged(nameof(Characters));
+        }
+
+        public IEnumerator CreateUniverse(Action<ApiResult<string>> onComplete) 
+        {
+            yield return ScenarioApi.CreateUniverse(
+                Title,
+                Objective,
+                Content,
+                new List<string> {Genre},
+                Characters.Select(c => c.id).ToList(),
+                new List<string>(),
+                Tags,
+                onComplete
+            );
         }
     }
 }

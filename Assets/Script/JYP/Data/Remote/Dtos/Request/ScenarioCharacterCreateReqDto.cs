@@ -1,5 +1,5 @@
 ﻿[System.Serializable]
-public class ScenarioAvatarCreateReqDto
+public class ScenarioCharacterCreateReqDto
 {
     /// <summary>
     ///     등장인물 이름

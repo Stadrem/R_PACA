@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Data.Remote
 {
-    public class ScenarioAvatarApi
+    public class ScenarioCharacterApi
     {
         public static readonly string BaseUrl = $"{HttpManager.ServerURL}/scenario/avatar";
 
@@ -12,14 +12,14 @@ namespace Data.Remote
             Action<ApiResult<int>> onCompleted
         )
         {
-            var reqDto = new ScenarioAvatarCreateReqDto()
+            var reqDto = new ScenarioCharacterCreateReqDto()
             {
                 avatarName = characterInfo.name,
                 outfit = (int)characterInfo.shapeType,
                 isPlayable = characterInfo.isPlayable,
             };
 
-            var request = new HttpInfoWithType<int, ScenarioAvatarCreateReqDto>()
+            var request = new HttpInfoWithType<int, ScenarioCharacterCreateReqDto>()
             {
                 url = $"{BaseUrl}/create",
                 body = reqDto,

@@ -107,7 +107,7 @@ namespace UI.Universe.Edit
                 isPlayable = playableToggle.value
             };
 
-            viewModel.AddCharacter(character);
+            viewModel.CreateCharacter(character);
             ClearInputs();
             CloseSelectPopup();
         }

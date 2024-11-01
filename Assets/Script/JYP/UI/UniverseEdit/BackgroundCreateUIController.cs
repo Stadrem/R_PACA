@@ -36,7 +36,7 @@ public class BackgroundCreateUIController : MonoBehaviour
                     return;
                 }
 
-                viewModel.AddBackgroundPart(
+                viewModel.CreateBackground(
                     backgroundNameInputField.text,
                     backgroundDescriptionInputField.text,
                     selectedPartType

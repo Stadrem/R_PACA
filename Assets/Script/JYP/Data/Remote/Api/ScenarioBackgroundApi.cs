@@ -4,7 +4,7 @@ using Data.Remote.Dtos.Request;
 
 namespace Data.Remote
 {
-    public class ScenarioMapApi
+    public class ScenarioBackgroundApi
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/world";
 
