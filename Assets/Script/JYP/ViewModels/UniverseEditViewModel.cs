@@ -5,11 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Data.Remote;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 namespace ViewModels
 {
-    public class UniverseEditViewModel : INotifyPropertyChanged
+    public sealed class UniverseEditViewModel : INotifyPropertyChanged
     {
         private string title;
         private string genre;
@@ -18,14 +19,12 @@ namespace ViewModels
         private string objective = "";
         private List<CharacterInfo> characters = new();
         private List<BackgroundPartInfo> backgroundParts = new();
-        private Dictionary<BackgroundPartInfo, List<BackgroundPartInfo>> adjacentList = new();
-        private int nextBackgroundKey = 0;
-        
+        private Dictionary<BackgroundPartInfo, BackgroundPartInfo> links = new();
+
         private DateTime createdDate = DateTime.Today;
         // private List<string> backgrounds = new List<string>();
-        private bool isRootBackgroundCreated = false;
-        
-        
+
+
         public string Title
         {
             get => title;
@@ -97,46 +96,104 @@ namespace ViewModels
             set => SetField(ref backgroundParts, value);
         }
 
-        public Dictionary<BackgroundPartInfo, List<BackgroundPartInfo>> AdjacentList
+        public Dictionary<BackgroundPartInfo, BackgroundPartInfo> Links
         {
-            get => adjacentList;
-            set => SetField(ref adjacentList, value);
+            get => links;
+            set => SetField(ref links, value);
         }
 
-        public void LinkBackgroundPart(BackgroundPartInfo from, BackgroundPartInfo to)
+
+        public IEnumerator LinkBackgroundPart(int fromId, int toId, Action<ApiResult<string>> onComplete)
         {
-            if (adjacentList[from]
-                .Contains(to)) return;
-            adjacentList[from]
-                .Add(to);
-            adjacentList[to]
-                .Add(from);
+            var from = BackgroundParts.FirstOrDefault(p => p.ID == fromId);
+            var to = BackgroundParts.FirstOrDefault(p => p.ID == toId);
+
+            if (from != null && from.TowardBackground != null)
+            {
+                onComplete(ApiResult<string>.Fail(new InvalidDataException("already linked")));
+                yield break; //error! already linked
+            }
+
+            if (IsCycleExist())
+            {
+                onComplete(ApiResult<string>.Fail(new InvalidDataException("cycle exist")));
+                yield break; //error! cycle exist
+            }
+
+            var newFrom = new BackgroundPartInfo(from);
+            newFrom.TowardBackground = to;
+            yield return ScenarioBackgroundApi.UpdateScenarioBackground(
+                newFrom,
+                (result) =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        from.TowardBackground = to;
+                        Links.Add(from, to);
+                        onComplete(ApiResult<string>.Success("success"));
+                    }
+                    else
+                    {
+                        onComplete(ApiResult<string>.Fail(result.error));
+                    }
+                }
+            );
         }
 
-        public IEnumerator CreateBackground(string name, string description, EBackgroundPartType type, Action<ApiResult<string>> onComplete)
+        private bool IsCycleExist()
+        {
+            int Find(int[] parent, int v)
+            {
+                if (parent[v] == v) return v;
+                return parent[v] = Find(parent, parent[v]);
+            }
+
+            void Union(int[] parent, int u, int v)
+            {
+                parent[u] = v;
+            }
+
+            var parent = new int[BackgroundParts.Count];
+            for (int i = 0; i < parent.Length; i++)
+            {
+                parent[i] = i;
+            }
+
+            foreach (var link in Links)
+            {
+                var from = BackgroundParts.IndexOf(link.Key);
+                var to = BackgroundParts.IndexOf(link.Value);
+                if (Find(parent, from) == Find(parent, to))
+                {
+                    return true;
+                }
+
+                Union(parent, from, to);
+            }
+
+            return false;
+        }
+
+
+        public IEnumerator CreateBackground(string name, string description, EBackgroundPartType type,
+            Action<ApiResult<string>> onComplete)
         {
             var backgroundInfo = new BackgroundPartInfo()
             {
-                id = nextBackgroundKey,
+                ID = -1,
                 Name = name,
                 Type = type,
-                description = description
+                Description = description
             };
 
-            yield return ScenarioBackgroundApi.CreateScenarioMap(
+            yield return ScenarioBackgroundApi.CreateScenarioBackground(
                 backgroundInfo,
                 (result) =>
                 {
                     if (result.IsSuccess)
                     {
-                        if(!isRootBackgroundCreated)
-                        {
-                            backgroundInfo.isRoot = true;
-                            isRootBackgroundCreated = true;
-                        }
-                        backgroundInfo.id = result.value.partId;
+                        backgroundInfo.ID = result.value.partId;
                         BackgroundParts.Add(backgroundInfo);
-                        AdjacentList[backgroundInfo] = new List<BackgroundPartInfo>();
                         onComplete(ApiResult<string>.Success($"{result.value.partId}"));
                         OnPropertyChanged(nameof(BackgroundParts));
                     }
@@ -151,18 +208,17 @@ namespace ViewModels
         public void Init()
         {
             //load all data's in here
-            isRootBackgroundCreated = false;
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
@@ -180,13 +236,13 @@ namespace ViewModels
             OnPropertyChanged(nameof(Characters));
         }
 
-        public IEnumerator CreateUniverse(Action<ApiResult<string>> onComplete) 
+        public IEnumerator CreateUniverse(Action<ApiResult<string>> onComplete)
         {
             yield return ScenarioApi.CreateUniverse(
                 Title,
                 Objective,
                 Content,
-                new List<string> {Genre},
+                new List<string> { Genre },
                 Characters.Select(c => c.id).ToList(),
                 new List<string>(),
                 Tags,

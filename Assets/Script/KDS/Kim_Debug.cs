@@ -128,21 +128,21 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
                 {
                     new BackgroundPartInfo()
                     {
-                        id = 0,
+                        ID = 0,
                         Name = "Town 0",
                         Type = EBackgroundPartType.Town,
-                        universeId = 0,
-                        portalList = portalList1,
-                        npcList = npcList1,
+                        UniverseId = 0,
+                        PortalList = portalList1,
+                        NpcList = npcList1,
                     },
                     new BackgroundPartInfo()
                     {
-                        id = 1,
+                        ID = 1,
                         Name = "Dungeon 0",
                         Type = EBackgroundPartType.Dungeon,
-                        universeId = 0,
-                        portalList = portalList2,
-                        npcList = new List<NpcData>()
+                        UniverseId = 0,
+                        PortalList = portalList2,
+                        NpcList = new List<NpcData>()
                     },
                 };
 

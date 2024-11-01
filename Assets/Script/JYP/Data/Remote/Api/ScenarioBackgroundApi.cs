@@ -9,7 +9,7 @@ namespace Data.Remote
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/world";
 
-        public static IEnumerator CreateScenarioMap(
+        public static IEnumerator CreateScenarioBackground(
             BackgroundPartInfo backgroundInfo,
             Action<ApiResult<ScenarioBackgroundCreateResDto>> onCompleted
         )
@@ -30,5 +30,29 @@ namespace Data.Remote
 
             yield return HttpManager.GetInstance().Post(request);
         }
+
+        public static IEnumerator UpdateScenarioBackground(
+            BackgroundPartInfo backgroundPartInfo,
+            Action<ApiResult<ScenarioBackgroundUpdateResDto>> onCompleted
+        )
+        {
+            var reqDto = new ScenarioBackgroundUpdateReqDto()
+            {
+                partId = backgroundPartInfo.ID,
+                partName = backgroundPartInfo.Name,
+                isPortalEnable = backgroundPartInfo.TowardBackground != null,
+            };
+            
+            var request = new HttpInfoWithType<ScenarioBackgroundUpdateResDto, ScenarioBackgroundUpdateReqDto>()
+            {
+                url = $"{BaseUrl}/update",
+                body = reqDto,
+                onComplete = (result) => onCompleted(ApiResult<ScenarioBackgroundUpdateResDto>.Success(result)),
+                onError = (error) => onCompleted(ApiResult<ScenarioBackgroundUpdateResDto>.Fail(error)),
+            };
+            
+            yield return HttpManager.GetInstance().Put(request);
+        }
     }
+    
 }

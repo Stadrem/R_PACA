@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Background
 {
-    public int Id => info.id;
+    public int Id => info.ID;
 
     private BackgroundPartInfo info;
     private List<PortalInPlay> portalParts;
@@ -22,7 +22,7 @@ public class Background
     {
         if (info == null) return;
         Debug.Log($"LoadParts on {SceneManager.GetActiveScene().name} / {info.Name}");
-        var portals = info.portalList;
+        var portals = info.PortalList;
         foreach (var portal in portals)
         {
             var portalPrefab = Resources.Load<GameObject>("BackgroundPart/Portal_Play");

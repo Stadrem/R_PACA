@@ -27,7 +27,7 @@ public class PlayBackgroundManager : MonoBehaviour
         this.universeData = universe;
         this.backgroundPartDataList = universeBackgroundPartDataList;
         
-        var background = universeBackgroundPartDataList.Find(x => x.id == universe.startBackground.id);
+        var background = universeBackgroundPartDataList.Find(x => x.ID == universe.startBackground.ID);
         LoadScene(background);
     }
 
@@ -57,7 +57,7 @@ public class PlayBackgroundManager : MonoBehaviour
                 {
                     currentBackground.Init(background);
                     currentBackground.LoadParts();
-                    PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.npcList);
+                    PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
                 }
             )
         );
@@ -76,7 +76,7 @@ public class PlayBackgroundManager : MonoBehaviour
 
     public void MoveTo(int backgroundId)
     {
-        var background = backgroundPartDataList.Find(x => x.id == backgroundId);
+        var background = backgroundPartDataList.Find(x => x.ID == backgroundId);
         LoadScene(background);
     }
 }

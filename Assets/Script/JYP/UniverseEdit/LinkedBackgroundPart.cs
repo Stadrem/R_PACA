@@ -12,10 +12,12 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
         DetailView,
     }
 
-    public string backgroundPartName;
-    public EBackgroundPartType backgroundPartType;
-    public List<LinkedBackgroundPart> linkedParts;
-    public List<Portal> portals;
+    private BackgroundPartInfo backgroundPartInfo;
+
+    public int ID => backgroundPartInfo.ID;
+
+    // public List<LinkedBackgroundPart> linkedParts;
+    // public List<Portal> portals;
     public GameObject detail;
     public Transform spawnOffset;
     public GameObject linkable;
@@ -24,13 +26,12 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     public int backgroundPartId = -1;
     public TMP_Text nameText;
 
-    public void Init(string name, EBackgroundPartType type)
+    public void Init(BackgroundPartInfo background)
     {
-        backgroundPartName = name;
-        backgroundPartType = type;
-        nameText.text = name;
-        linkedParts = new List<LinkedBackgroundPart>();
-        switch (type)
+        this.backgroundPartInfo = background;
+        nameText.text = background.Name;
+        // linkedParts = new List<LinkedBackgroundPart>();
+        switch (background.Type)
         {
             case EBackgroundPartType.None:
                 break;
@@ -51,35 +52,37 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
                 dungeon.transform.localPosition = Vector3.zero;
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                throw new ArgumentOutOfRangeException();
         }
     }
 
     public void Link(ILinkable linkable)
     {
-        var backgroundPart = linkable as LinkedBackgroundPart;
-        if (backgroundPart == null) return;
-
-        if (linkedParts.Contains(backgroundPart)) return;
-        var portal = Instantiate(Resources.Load<GameObject>("BackgroundPart/Portal"), detail.transform)
-            .GetComponent<Portal>();
-        portal.transform.localPosition = Vector3.zero;
-        portal.towardPart = backgroundPart;
-        linkedParts.Add(backgroundPart);
-        portals.Add(portal);
+        return;
+        // var backgroundPart = linkable as LinkedBackgroundPart;
+        // if (backgroundPart == null) return;
+        //
+        // if (linkedParts.Contains(backgroundPart)) return;
+        // var portal = Instantiate(Resources.Load<GameObject>("BackgroundPart/Portal"), detail.transform)
+        //     .GetComponent<Portal>();
+        // portal.transform.localPosition = Vector3.zero;
+        // portal.towardPart = backgroundPart;
+        // linkedParts.Add(backgroundPart);
+        // portals.Add(portal);
     }
 
     public void UnLink(ILinkable linkable)
     {
-        var backgroundPart = linkable as LinkedBackgroundPart;
-        if (backgroundPart == null) return;
-
-        if (!linkedParts.Contains(backgroundPart)) return;
-
-        var idx = linkedParts.IndexOf(backgroundPart);
-        if (idx == -1) return;
-        linkedParts.RemoveAt(idx);
-        portals.RemoveAt(idx);
+        return;
+        // var backgroundPart = linkable as LinkedBackgroundPart;
+        // if (backgroundPart == null) return;
+        //
+        // if (!linkedParts.Contains(backgroundPart)) return;
+        //
+        // var idx = linkedParts.IndexOf(backgroundPart);
+        // if (idx == -1) return;
+        // linkedParts.RemoveAt(idx);
+        // portals.RemoveAt(idx);
     }
 
     public void ChangeViewType(EViewType newViewType)
