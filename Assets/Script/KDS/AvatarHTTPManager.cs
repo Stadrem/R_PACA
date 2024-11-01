@@ -6,9 +6,12 @@ using UnityEngine.Networking;
 using static PlayerAvatarSetting;
 using System;
 using UnityEditor.Experimental.GraphView;
+using static System.Net.WebRequestMethods;
 
 public class AvatarHTTPManager : MonoBehaviour
 {
+    string url = "http://125.132.216.190:8765";
+
     public bool CheckConnect()
     {
         return true;
@@ -23,7 +26,7 @@ public class AvatarHTTPManager : MonoBehaviour
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = $"http://125.132.216.190:8765/user/update?userCode={myAvatar.userCode}&userAvatarGender={myAvatar.userAvatarGender}&userAvatarHair={myAvatar.userAvatarHair}&userAvatarBody={myAvatar.userAvatarBody}&userAvatarSkin={myAvatar.userAvatarSkin}&userAvatarHand={myAvatar.userAvatarHand}";
+        info.url = $"{url}/user/update?userCode={myAvatar.userCode}&userAvatarGender={myAvatar.userAvatarGender}&userAvatarHair={myAvatar.userAvatarHair}&userAvatarBody={myAvatar.userAvatarBody}&userAvatarSkin={myAvatar.userAvatarSkin}&userAvatarHand={myAvatar.userAvatarHand}";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
         //info.body = JsonUtility.ToJson(postMyAvatar);
@@ -133,7 +136,7 @@ public class AvatarHTTPManager : MonoBehaviour
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = $"http://125.132.216.190:8765/user/upload?userCode={id}&userAvatarGender=0&userAvatarHair=0&userAvatarBody=0&userAvatarSkin=0&userAvatarHand=0";
+        info.url = $"{url}/user/upload?userCode={id}&userAvatarGender=0&userAvatarHair=0&userAvatarBody=0&userAvatarSkin=0&userAvatarHand=0";
 
         //델리게이트에 그냥 넣기 - 람다식 방식  - 지금 여기선 연산 단계 없음
         info.onComplete = (DownloadHandler downloadHandler) =>

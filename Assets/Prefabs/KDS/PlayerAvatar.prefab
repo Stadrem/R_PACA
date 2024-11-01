@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9210420862258190837}
   - component: {fileID: 6340439059843399461}
+  - component: {fileID: -2075273993870859117}
   m_Layer: 0
   m_Name: PlayerAvatar
   m_TagString: Untagged
@@ -57,7 +58,20 @@ MonoBehaviour:
     userAvatarBody: 0
     userAvatarSkin: 0
     userAvatarHand: 0
+  tfs: {fileID: 0}
   notUseNetworkOn: 0
+--- !u!114 &-2075273993870859117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4456483823356550926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d92a140cd083472419c5cad3b018ab49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4047814733417258422
 PrefabInstance:
   m_ObjectHideFlags: 0

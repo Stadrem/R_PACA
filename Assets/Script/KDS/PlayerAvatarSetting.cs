@@ -13,8 +13,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     PhotonView pv;
 
-    //GetMyAvatar info;
-
     public MyAvatar myAvatar;
 
     public TempFakeServer tfs;
@@ -56,20 +54,19 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     void Start()
     {
-        StartPostAvatarInfo(myAvatar.userCode);
-
-        //백엔드 없을 시 디버그 전용. 제거해도 됨.
-        if (GameObject.Find("TempFakeServer"))
+        if (myAvatar.userCode != -1)
         {
+            StartPostAvatarInfo(myAvatar.userCode);
+            print("정상 접속 상황");
+        }
+        else
+        {
+            //백엔드 없을 시 디버그 전용. 제거해도 됨.
             tfs = GameObject.Find("TempFakeServer").GetComponent<TempFakeServer>();
 
             notUseNetworkOn = true;
 
             print("백엔드 없음");
-        }
-        else
-        {
-            print("정상 접속 상황");
         }
 
         RefreshAvatar();
@@ -85,8 +82,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     void RefreshAvatar()
     {
-        //myAvatar.userCode = TempFakeServer.Get().myAvatar.userCode;
-
         //서버에서 아바타 정보 받아오기
         StartGetAvatarInfo(myAvatar.userCode, (getAvatar) =>
         {
@@ -155,12 +150,5 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].mesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
-
-        /*
-        MeshFilter meshFilter = avatarParts[tempNum].GetComponent<MeshFilter>();
-        meshFilter.mesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].meshB.sharedMesh;
-        MeshRenderer meshRenderer = avatarParts[tempNum].GetComponent<MeshRenderer>();
-        meshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
-        */
     }
 }
