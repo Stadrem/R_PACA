@@ -14,10 +14,14 @@ public class UserStatsManager : MonoBehaviour
         
         userInfo = FindObjectOfType<UserInfo>();
 
+        if (userInfo == null) return;
+        
         // 각 OnEndEdit 이벤트 추가
         healthInput.onEndEdit.AddListener(OnHealthInputEnd);
         strengthInput.onEndEdit.AddListener(OnStrengthInputEnd);
         dexterityInput.onEndEdit.AddListener(OnDexterityInputEnd);
+        
+        
     }
 
     // Health 입력이 끝났을 때 호출되는 함수
