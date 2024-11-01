@@ -10,25 +10,27 @@ public class UserInfo : MonoBehaviour
     public string userPassword;
     public string userName;
 
-    [Header("아바타 정보")]
-    public int userAvatarGender; // 성별에 따라 Body, Hair는 통채로 바뀜
-    public int userAvatarHair;
-    public int userAvatarBody;
-    public int userAvatarSkin;
-    public int userAvatarHand;
+    [Header("유저 스탯")]
+    public int userHealth; // 생명력
+    public int userStrength; // 힘
+    public int userDexterity; // 손재주
 
-
-    // 유저 정보 초기화용 함수
-    public void Initialize(string inputID, string inputPW, string inputName, int gender, int hair, int body, int skin, int hand)
+    // 유저 정보 초기화
+    public void Initialize(
+        string inputID,
+        string inputPW,
+        string inputName,
+        int health,
+        int strength,
+        int dexterity)
     {
         userID = inputID;
         userPassword = inputPW;
         userName = inputName;
 
-        userAvatarGender = gender;
-        userAvatarHair = hair;
-        userAvatarBody = body;
-        userAvatarSkin = skin;
-        userAvatarHand = hand;
+        // 유저 스탯 초기화
+        userHealth = health;
+        userStrength = strength;
+        userDexterity = dexterity;
     }
 }
