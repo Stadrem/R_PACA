@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Cinemachine;
 using UnityEngine;
+using ViewModels;
 
 public class BackgroundPartLinkManager : MonoBehaviour
 {
@@ -68,7 +69,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 var part = hit.collider.GetComponent<LinkedBackgroundPart>();
                 if (part != null)
                 {
-                    Delete(part.backgroundPartName);
+                    Delete(part.ID);
                     Destroy(part.gameObject);
                 }
             }
@@ -96,6 +97,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
             if (currentLinkable == null) return;
 
             isLinking = true;
+            print($"start linking {hit.collider.name}");
         }
 
         else
@@ -106,20 +108,36 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 var linkable = hit.collider.GetComponent<ILinkable>();
                 if (linkable != null)
                 {
-                    linkable.Link(currentLinkable);
-                    currentLinkable.Link(linkable);
+                    print($"end linking {hit.collider.name}");
+                    var from = ((LinkedBackgroundPart)currentLinkable).ID;
+                    var to = ((LinkedBackgroundPart)linkable).ID;
+                    StartCoroutine(
+                        EditViewModel.LinkBackgroundPart(
+                            from,
+                            to,
+                            result =>
+                            {
+                                if (result.IsSuccess)
+                                {
+                                    var currentObject = ((LinkedBackgroundPart)currentLinkable)?.gameObject;
+                                    if (currentObject != null)
+                                    {
+                                        CreateLine(currentObject, hit.collider.gameObject);
+                                    }
 
-                    var currentObject = (currentLinkable as LinkedBackgroundPart)?.gameObject;
-                    if (currentObject != null)
-                    {
-                        CreateLine(currentObject, hit.collider.gameObject);
-                    }
+                                    // Link((LinkedBackgroundPart)currentLinkable, (LinkedBackgroundPart)linkable);
+                                }
+                                else
+                                {
+                                    Debug.LogError(result.error);
+                                }
+                                currentLinkable = null;
+                                isLinking = false;
+                            }
+                        )
+                    );
                 }
             }
-
-
-            currentLinkable = null;
-            isLinking = false;
         }
     }
 
@@ -147,35 +165,24 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     #region public methods
 
-    public void Create(string backgroundName, EBackgroundPartType type)
+    public void Create(BackgroundPartInfo backgroundPartInfo)
     {
-        if (backgroundParts.Exists(x => x.backgroundPartName == backgroundName)) return;
-
         var go = Resources.Load<GameObject>("BackgroundPart/LinkableBackgroundPart");
         go = Instantiate(go, new Vector3(0, yAlignment, 0), Quaternion.identity);
         var part = go.GetComponent<LinkedBackgroundPart>();
-        part.Init(backgroundName, type);
+        part.Init(backgroundPartInfo);
 
         backgroundParts.Add(part);
     }
 
-    public void UpdatePart(string originalName, string backgroundName, EBackgroundPartType type)
+    public void Delete(int id)
     {
-        var backgroundPart = backgroundParts.Find(x => x.backgroundPartName == originalName);
-        if (backgroundPart == null) return;
+        var backgroundPart = backgroundParts.Find(x => x.ID == id);
 
-        backgroundPart.backgroundPartName = backgroundName;
-        backgroundPart.backgroundPartType = type;
-    }
-
-    public void Delete(string backgroundName)
-    {
-        var backgroundPart = backgroundParts.Find(x => x.backgroundPartName == backgroundName);
-
-        foreach (var part in backgroundPart.linkedParts)
-        {
-            part.linkedParts.Remove(backgroundPart);
-        }
+        // foreach (var part in backgroundPart.linkedParts)
+        // {
+        //     part.linkedParts.Remove(backgroundPart);
+        // }
 
         foreach (var line in lines.FindAll(x => x.start == backgroundPart || x.end == backgroundPart))
         {
@@ -187,16 +194,17 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     public void Link(LinkedBackgroundPart current, LinkedBackgroundPart next)
     {
-        if (current.linkedParts.Contains(next)) return;
-        current.linkedParts.Add(next);
-        next.linkedParts.Add(current);
+        return;
+        // if (current.linkedParts.Contains(next)) return;
+        // current.linkedParts.Add(next);
+        // next.linkedParts.Add(current);
     }
 
     public void Unlink(LinkedBackgroundPart current, LinkedBackgroundPart next)
     {
-        if (!current.linkedParts.Contains(next)) return;
-        current.linkedParts.Remove(next);
-        next.linkedParts.Remove(current);
+        // if (!current.linkedParts.Contains(next)) return;
+        // current.linkedParts.Remove(next);
+        // next.linkedParts.Remove(current);
     }
 
     #endregion
@@ -209,7 +217,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
         {
             foreach (var part in EditViewModel.BackgroundParts)
             {
-                if (!backgroundParts.Exists(x => x.backgroundPartName == part.Name)) Create(part.Name, part.Type);
+                if (!backgroundParts.Exists(x => x.ID == part.ID)) Create(part);
             }
         }
     }

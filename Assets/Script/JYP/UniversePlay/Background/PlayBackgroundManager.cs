@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayBackgroundManager : MonoBehaviour
 {
-    private List<BackgroundPartData> backgroundPartDataList;
+    private List<BackgroundPartInfo> backgroundPartDataList;
 
     private UniverseData universeData;
     private Background currentBackground = new Background();
@@ -22,16 +22,16 @@ public class PlayBackgroundManager : MonoBehaviour
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnEnabled");
     }
 
-    public void Init(UniverseData universe, List<BackgroundPartData> universeBackgroundPartDataList)
+    public void Init(UniverseData universe, List<BackgroundPartInfo> universeBackgroundPartDataList)
     {
         this.universeData = universe;
         this.backgroundPartDataList = universeBackgroundPartDataList;
         
-        var background = universeBackgroundPartDataList.Find(x => x.id == universe.startBackground.id);
+        var background = universeBackgroundPartDataList.Find(x => x.ID == universe.startBackground.ID);
         LoadScene(background);
     }
 
-    private void LoadScene(BackgroundPartData background)
+    private void LoadScene(BackgroundPartInfo background)
     {
         string sceneName = "";
         switch (background.Type)
@@ -57,7 +57,7 @@ public class PlayBackgroundManager : MonoBehaviour
                 {
                     currentBackground.Init(background);
                     currentBackground.LoadParts();
-                    PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.npcList);
+                    PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
                 }
             )
         );
@@ -76,7 +76,7 @@ public class PlayBackgroundManager : MonoBehaviour
 
     public void MoveTo(int backgroundId)
     {
-        var background = backgroundPartDataList.Find(x => x.id == backgroundId);
+        var background = backgroundPartDataList.Find(x => x.ID == backgroundId);
         LoadScene(background);
     }
 }

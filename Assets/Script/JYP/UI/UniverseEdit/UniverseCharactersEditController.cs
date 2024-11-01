@@ -3,6 +3,7 @@ using System.ComponentModel;
 using UI.Universe.Edit;
 using UnityEngine;
 using UnityEngine.UIElements;
+using ViewModels;
 
 public class UniverseCharactersEditController : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class UniverseCharactersEditController : MonoBehaviour
 
 
         characterCreationController = new CharacterCreationController();
-        characterCreationController.Initialize(root);
+        characterCreationController.Initialize(root,this);
 
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
 

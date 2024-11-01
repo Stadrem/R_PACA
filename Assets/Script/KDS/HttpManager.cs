@@ -30,10 +30,29 @@ public class HttpInfo
     public Action<string> onError;
 }
 
+public class HttpInfoWithType<T, R> where R : class
+{
+    // 요청할 URL
+    public string url = "";
+
+    // 전송할 데이터
+    public R body;
+
+    // 컨텐츠 타입
+    public string contentType = "application/json";
+
+    // 요청이 완료되면 호출될 델리게이트
+    public Action<T> onComplete;
+
+    // 요청 후 에러뜨면 호출될 델리게이트
+    public Action<Exception> onError;
+}
+
 public class HttpManager : MonoBehaviour
 {
-    string loginUrl = "http://125.132.216.190:12450/api/auth/login";
-    string joinUrl = "http://125.132.216.190:12450/api/auth/signup";
+    public const string ServerURL = "http://125.132.216.190:8765";
+    string loginUrl = $"{ServerURL}/api/auth/login";
+    string joinUrl = $"{ServerURL}/api/auth/signup";
 
     //싱글톤 생성
     static HttpManager instance;
@@ -75,37 +94,37 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Login(HttpInfo info)
     {
-            // GET 요청 생성
-            using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
+        // GET 요청 생성
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
+            print("로그인중...");
+            // 요청 전송 및 응답 대기
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
             {
-                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
-                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-                webRequest.downloadHandler = new DownloadHandlerBuffer();
-                webRequest.SetRequestHeader("Content-Type", info.contentType);
+                ParseUserInfo(webRequest.downloadHandler);
 
-                print("로그인중...");
-                // 요청 전송 및 응답 대기
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.result == UnityWebRequest.Result.Success)
+                //로그인 시작 함수 넣으면 됨.
+            }
+            else
+            {
+                Debug.Log("Login failed: " + webRequest.error);
+                if (webRequest.error == "HTTP/1.1 409 Conflict")
                 {
-                    ParseUserInfo(webRequest.downloadHandler);
-
-                    //로그인 시작 함수 넣으면 됨.
+                    print("비밀번호가 틀렸습니다.");
                 }
                 else
                 {
-                    Debug.Log("Login failed: " + webRequest.error);
-                    if (webRequest.error == "HTTP/1.1 409 Conflict")
-                    {
-                        print("비밀번호가 틀렸습니다.");
-                    }
-                    else
-                    {
                     print("아이디 혹은 비밀번호가 틀렸습니다.");
-                    }
                 }
             }
+        }
     }
 
     public IEnumerator Register(HttpInfo info)
@@ -126,7 +145,7 @@ public class HttpManager : MonoBehaviour
             {
                 Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
                 print("회원 가입 성공!");
-                
+
                 //로그인 화면으로 이동하면 됨.
             }
             else
@@ -167,6 +186,70 @@ public class HttpManager : MonoBehaviour
             DoneRequest(webRequest, info);
         }
     }
+    
+    public IEnumerator Put<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
+    {
+        var body = JsonUtility.ToJson(info.body);
+
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
+        {
+            print("body: " + body);
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                if (info.onComplete != null)
+                {
+                    info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
+                }
+            }
+            else
+            {
+                if (info.onError != null)
+                {
+                    info.onError(new Exception(webRequest.error));
+                }
+            }
+        }
+    }
+
+
+    public IEnumerator Post<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
+    {
+        var body = JsonUtility.ToJson(info.body);
+
+
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
+        {
+            print("body: " + body);
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                if (info.onComplete != null)
+                {
+                    info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
+                }
+            }
+            else
+            {
+                if (info.onError != null)
+                {
+                    info.onError(new Exception(webRequest.error + webRequest.downloadHandler.text));
+                }
+            }
+        }
+    }
 
     //Post : 데이터를 서버로 전송
     public IEnumerator Post(HttpInfo info)
@@ -183,7 +266,6 @@ public class HttpManager : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("successful: " + webRequest.downloadHandler.text);
-
             }
             else
             {
@@ -191,7 +273,7 @@ public class HttpManager : MonoBehaviour
         }
     }
 
-    
+
     // 요청 완료 시 호출되는 메소드
     void DoneRequest(UnityWebRequest webRequest, HttpInfo info)
     {

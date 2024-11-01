@@ -6,23 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class Background
 {
-    public int Id => data.id;
+    public int Id => info.ID;
 
-    private BackgroundPartData data;
+    private BackgroundPartInfo info;
     private List<PortalInPlay> portalParts;
     private Transform parent = null;
 
-    public void Init(BackgroundPartData data)
+    public void Init(BackgroundPartInfo info)
     {
-        this.data = data;
+        this.info = info;
         PlayUniverseManager.Instance.InGamePlayerManager.SpawnPlayers();
     }
 
     public void LoadParts()
     {
-        if (data == null) return;
-        Debug.Log($"LoadParts on {SceneManager.GetActiveScene().name} / {data.Name}");
-        var portals = data.portalList;
+        if (info == null) return;
+        Debug.Log($"LoadParts on {SceneManager.GetActiveScene().name} / {info.Name}");
+        var portals = info.PortalList;
         foreach (var portal in portals)
         {
             var portalPrefab = Resources.Load<GameObject>("BackgroundPart/Portal_Play");

@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using ViewModels;
 
 public class CreateUniverseController : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class CreateUniverseController : MonoBehaviour
     private TextField titleInput;
     private VisualElement genreFantasySelector;
     private Button charactersSettingButton;
+    private TextField descriptionInput;
     private Button backgroundSettingButton;
     private Button objectiveSettingButton;
     private Button backButton;
@@ -20,17 +23,19 @@ public class CreateUniverseController : MonoBehaviour
 
     private ObjectiveSelectionPopupController objectiveSelectionPopupController;
 
-    private UniverseEditViewModel viewModel;
+    private static UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
+    private void Start()
+    {
+        ViewModel.Init();
+    }
 
     private void OnEnable()
     {
-        viewModel = ViewModelManager.Instance.UniverseEditViewModel;
-
-
         var root = GetComponent<UIDocument>().rootVisualElement;
         titleInput = root.Q<TextField>("input_title");
         genreFantasySelector = root.Q<VisualElement>("selection_genreFantasy");
+        descriptionInput = root.Q<TextField>("input_universe");
         charactersSettingButton = root.Q<Button>("button_characters");
         backgroundSettingButton = root.Q<Button>("button_backgrounds");
         objectiveSettingButton = root.Q<Button>("button_objective");
@@ -42,10 +47,37 @@ public class CreateUniverseController : MonoBehaviour
         objectiveSelectionPopupController = new ObjectiveSelectionPopupController();
         objectiveSelectionPopupController.Init(popup);
 
+        //put data from viewModel
+        titleInput.value = ViewModel.Title;
+        tagsInput.value = string.Join(",", ViewModel.Tags);
+        descriptionInput.value = ViewModel.Content;
+        if (Enum.TryParse(ViewModel.Genre, out EGenreType genre))
+        {
+            selectedGenre = genre;
+            genreFantasySelector.AddToClassList("character-shape--selected");
+        }
+        
+        
+        
+        
+        titleInput.RegisterValueChangedCallback(
+            e => { ViewModel.Title = e.newValue; }
+        );
+        tagsInput.RegisterValueChangedCallback(
+            e => { ViewModel.Tags = e.newValue.Split(',').ToList(); }
+        );
+        descriptionInput.RegisterValueChangedCallback(
+            e => { ViewModel.Content = e.newValue; }
+        );
+        
+
+
         genreFantasySelector.RegisterCallback<ClickEvent>(
             e =>
             {
+                if (selectedGenre == EGenreType.Fantasy) return;
                 selectedGenre = EGenreType.Fantasy;
+                ViewModel.Genre = selectedGenre.ToString();
                 genreFantasySelector.AddToClassList("character-shape--selected");
             }
         );
@@ -54,7 +86,20 @@ public class CreateUniverseController : MonoBehaviour
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
         objectiveSettingButton.clicked += () => { objectiveSelectionPopupController.Show(); };
         backButton.clicked += () => { SceneManager.LoadScene("LobbyScene"); };
-        saveButton.clicked += () => {SceneManager.LoadScene("LobbyScene"); };
-        createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
+        saveButton.clicked += () =>
+        {
+            StartCoroutine(
+                ViewModel.CreateUniverse(
+                    (res) =>
+                    {
+                        if (res.IsSuccess)
+                            SceneManager.LoadScene("LobbyScene");
+                        else
+                            Debug.LogError($"error: {res.error}");
+                    }
+                )
+            );
+        };
+        createdDate.text = ViewModel.CreatedDate.ToString("dd/MM/yyyy");
     }
 }
