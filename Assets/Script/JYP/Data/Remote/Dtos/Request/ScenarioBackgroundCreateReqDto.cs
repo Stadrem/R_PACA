@@ -7,6 +7,6 @@
         /// <summary>
         /// if true, can go to next background(map)
         /// </summary>
-        public bool isPortalEnabled;
+        public bool isPortalEnable;
     }    
 }

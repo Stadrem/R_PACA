@@ -22,9 +22,9 @@ public class BackgroundCreateUIController : MonoBehaviour
     {
         viewModel = ViewModelManager.Instance.UniverseEditViewModel;
         backgroundTypeDropdown.options.Clear();
-        backgroundTypeDropdown.AddOptions(new List<string>() { "배경 선택..","마을", "던전" });
+        backgroundTypeDropdown.AddOptions(new List<string>() { "배경 선택..", "마을", "던전" });
         backgroundTypeDropdown.onValueChanged.AddListener(
-            (value) => { selectedPartType = (EBackgroundPartType)(value -1); }
+            (value) => { selectedPartType = (EBackgroundPartType)(value - 1); }
         );
 
         createButton.onClick.AddListener(
@@ -36,21 +36,38 @@ public class BackgroundCreateUIController : MonoBehaviour
                     return;
                 }
 
-                viewModel.CreateBackground(
-                    backgroundNameInputField.text,
-                    backgroundDescriptionInputField.text,
-                    selectedPartType
+                StartCoroutine(
+                    viewModel.CreateBackground(
+                        backgroundNameInputField.text,
+                        backgroundDescriptionInputField.text,
+                        selectedPartType,
+                        (res) =>
+                        {
+                            if (res.IsSuccess)
+                            {
+                                //Clear
+                                ClearUIData();
+                                gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                //todo: show error message
+                                Debug.LogError($"배경 생성 실패: {res.error}");
+                            }
+                        }
+                    )
                 );
 
-                //Clear
-                backgroundNameInputField.text = "";
-                backgroundDescriptionInputField.text = "";
-                backgroundTypeDropdown.value = 0;
-                selectedPartType = EBackgroundPartType.None;
-
-                gameObject.SetActive(false);
             }
         );
+    }
+
+    private void ClearUIData()
+    {
+        backgroundNameInputField.text = "";
+        backgroundDescriptionInputField.text = "";
+        backgroundTypeDropdown.value = 0;
+        selectedPartType = EBackgroundPartType.None;
     }
 
     private void OnDisable()

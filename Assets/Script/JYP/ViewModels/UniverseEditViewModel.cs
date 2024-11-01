@@ -113,7 +113,7 @@ namespace ViewModels
                 .Add(from);
         }
 
-        public IEnumerator CreateBackground(string name, string description, EBackgroundPartType type)
+        public IEnumerator CreateBackground(string name, string description, EBackgroundPartType type, Action<ApiResult<string>> onComplete)
         {
             var backgroundInfo = new BackgroundPartInfo()
             {
@@ -129,15 +129,15 @@ namespace ViewModels
                 {
                     if (result.IsSuccess)
                     {
-                        backgroundInfo.id = result.value;
+                        backgroundInfo.id = result.value.partId;
                         BackgroundParts.Add(backgroundInfo);
                         AdjacentList[backgroundInfo] = new List<BackgroundPartInfo>();
-
+                        onComplete(ApiResult<string>.Success($"{result.value.partId}"));
                         OnPropertyChanged(nameof(BackgroundParts));
                     }
                     else
                     {
-                        Debug.LogError($"error: {result.error}");
+                        onComplete(ApiResult<string>.Fail(result.error));
                     }
                 }
             );

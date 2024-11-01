@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Data.Remote.Dtos.Request;
+using Data.Remote.Dtos.Response;
 
 namespace Data.Remote
 {
@@ -10,22 +11,21 @@ namespace Data.Remote
 
         public static IEnumerator CreateScenarioMap(
             BackgroundPartInfo backgroundInfo,
-            Action<ApiResult<int>> onCompleted
+            Action<ApiResult<ScenarioBackgroundCreateResDto>> onCompleted
         )
         {
-            var isPortalEnabled = backgroundInfo.portalList.Count > 0;
             var reqDto = new ScenarioBackgroundCreateReqDto()
             {
                 WorldName = backgroundInfo.Name,
-                isPortalEnabled = isPortalEnabled,
+                isPortalEnable = false,
             };
 
-            var request = new HttpInfoWithType<int, ScenarioBackgroundCreateReqDto>()
+            var request = new HttpInfoWithType<ScenarioBackgroundCreateResDto, ScenarioBackgroundCreateReqDto>()
             {
                 url = $"{BaseUrl}/create",
                 body = reqDto,
-                onComplete = (result) => onCompleted(ApiResult<int>.Success(result)),
-                onError = (error) => onCompleted(ApiResult<int>.Fail(error)),
+                onComplete = (result) => onCompleted(ApiResult<ScenarioBackgroundCreateResDto>.Success(result)),
+                onError = (error) => onCompleted(ApiResult<ScenarioBackgroundCreateResDto>.Fail(error)),
             };
 
             yield return HttpManager.GetInstance().Post(request);
