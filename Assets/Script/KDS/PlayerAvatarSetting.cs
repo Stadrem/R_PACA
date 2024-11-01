@@ -61,6 +61,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         }
         else
         {
+            TempFakeServer.Get();
+
             //백엔드 없을 시 디버그 전용. 제거해도 됨.
             tfs = GameObject.Find("TempFakeServer").GetComponent<TempFakeServer>();
 

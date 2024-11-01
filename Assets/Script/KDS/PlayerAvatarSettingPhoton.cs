@@ -6,17 +6,31 @@ using UnityEngine;
 public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 {
     PlayerAvatarSetting pas;
+    PhotonView parentPhotonView; // 부모의 PhotonView 참조
 
     void Start()
     {
         pas = GetComponent<PlayerAvatarSetting>();
 
-        // 주 클라이언트에서만 userCode 값 설정 및 동기화
-        if (photonView.IsMine)
+        // 부모 오브젝트에서 PhotonView를 시도해서 얻어오고, 없으면 경고 메시지 출력
+        if (transform.parent != null && transform.parent.TryGetComponent(out parentPhotonView))
         {
-            int userCode = UserCodeMgr.Instance.UserCode;
-
-            photonView.RPC("SetUserCode", RpcTarget.AllBuffered, userCode);
+            if (parentPhotonView.IsMine)
+            {
+                if (UserCodeMgr.Instance != null)
+                {
+                    int userCode = UserCodeMgr.Instance.UserCode;
+                    parentPhotonView.RPC("SetUserCode", RpcTarget.AllBuffered, userCode);
+                }
+                else
+                {
+                    Debug.LogWarning("UserCodeMgr.Instance가 null입니다.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("부모 오브젝트에 PhotonView가 없습니다.");
         }
     }
 

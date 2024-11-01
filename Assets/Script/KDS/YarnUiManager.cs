@@ -1,12 +1,19 @@
 ﻿using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class YarnUiManager : MonoBehaviour
 {
     //싱글톤
     public static YarnUiManager instance;
+
+    public YarnHistoryGetSet yarnHistoryGetSet;
+
+    public TMP_Text text_pageNum;
+
+    int pageNum = 1;
 
     public static YarnUiManager Get()
     {
@@ -61,5 +68,32 @@ public class YarnUiManager : MonoBehaviour
     public void OnClickPage3()
     {
         page3.SetActive(true);
+    }
+
+    public void OnClickPrevious()
+    {
+        pageNum -= 1;
+
+        if (pageNum <= 0)
+        {
+            pageNum = 1;
+        }
+        else
+        {
+            yarnHistoryGetSet.GetYarnCard(pageNum);
+        }
+        PageUpadte();
+    }
+
+    public void OnClickNext()
+    {
+        pageNum += 1;
+        yarnHistoryGetSet.GetYarnCard(pageNum);
+        PageUpadte();
+    }
+
+    void PageUpadte()
+    {
+        text_pageNum.text = pageNum + " 페이지";
     }
 }
