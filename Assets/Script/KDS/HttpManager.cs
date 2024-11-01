@@ -245,7 +245,7 @@ public class HttpManager : MonoBehaviour
             {
                 if (info.onError != null)
                 {
-                    info.onError(new Exception(webRequest.error));
+                    info.onError(new Exception(webRequest.error + webRequest.downloadHandler.text));
                 }
             }
         }

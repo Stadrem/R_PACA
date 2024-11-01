@@ -15,7 +15,7 @@ namespace Data.Remote.Dtos.Request
         public string detail;
         public List<int> scenarioAvatarList;
         public List<int> worldParts;
-        public string genre;
+        public List<string> genre;
         public List<string> tags;
     }
 }

@@ -238,12 +238,69 @@ namespace ViewModels
 
         public IEnumerator CreateUniverse(Action<ApiResult<string>> onComplete)
         {
+            var sortedBackgroundParts = new List<BackgroundPartInfo>();
+
+
+            if (backgroundParts.Count > 1)
+            {
+                // find root (only "from" background not toward background)
+                var count = new Dictionary<BackgroundPartInfo, int>();
+                BackgroundPartInfo? node = null;
+                foreach (var pair in links)
+                {
+                    if (!count.ContainsKey(pair.Key))
+                    {
+                        count[pair.Key] = 0;
+                    }
+
+                    if (!count.ContainsKey(pair.Value))
+                    {
+                        count[pair.Value] = 0;
+                    }
+
+                    count[pair.Key]++;
+                    count[pair.Value]--;
+                }
+
+                foreach (var pair in count)
+                {
+                    if (pair.Value == 1)
+                    {
+                        node = pair.Key;
+                    }
+                }
+
+                if (node == null)
+                {
+                    onComplete(ApiResult<string>.Fail(new InvalidDataException("no root")));
+                    yield break;
+                }
+
+                sortedBackgroundParts.Add(node);
+                while (node!.TowardBackground != null)
+                {
+                    sortedBackgroundParts.Add(node.TowardBackground);
+                    node = node.TowardBackground;
+                }
+
+                if (sortedBackgroundParts.Count != BackgroundParts.Count)
+                {
+                    onComplete(ApiResult<string>.Fail(new InvalidDataException("not correct graph(trimmed)")));
+                    yield break;
+                }
+            }
+            else
+            {
+                sortedBackgroundParts = BackgroundParts;
+            }
+
             yield return ScenarioApi.CreateUniverse(
                 Title,
                 Objective,
                 Content,
                 new List<string> { Genre },
                 Characters.Select(c => c.id).ToList(),
+                sortedBackgroundParts,
                 new List<string>(),
                 Tags,
                 onComplete

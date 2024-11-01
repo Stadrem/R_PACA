@@ -15,6 +15,7 @@ namespace Data.Remote
             string detail,
             List<string> genre,
             List<int> scenarioAvatarList,
+            List<BackgroundPartInfo> backgroundParts,
             List<string> subQuests,
             List<string> tags,
             Action<ApiResult<string>> onCompleted
@@ -25,7 +26,8 @@ namespace Data.Remote
                 scenarioTitle = title,
                 mainQuest = mainQuest,
                 detail = detail,
-                genre = genre[0],
+                genre = genre,
+                worldParts = backgroundParts.ConvertAll(part => part.ID),
                 scenarioAvatarList = scenarioAvatarList,
                 subQuest = subQuests,
                 tags = tags,
