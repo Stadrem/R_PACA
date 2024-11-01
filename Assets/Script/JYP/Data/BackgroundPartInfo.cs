@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundPartData 
+public class BackgroundPartInfo 
 {
     public int id;
     public int universeId;

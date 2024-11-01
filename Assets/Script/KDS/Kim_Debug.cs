@@ -124,9 +124,9 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
                         Type = NpcData.ENPCType.Goblin,
                     }
                 };
-        var backgroundList = new List<BackgroundPartData>()
+        var backgroundList = new List<BackgroundPartInfo>()
                 {
-                    new BackgroundPartData()
+                    new BackgroundPartInfo()
                     {
                         id = 0,
                         Name = "Town 0",
@@ -135,7 +135,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
                         portalList = portalList1,
                         npcList = npcList1,
                     },
-                    new BackgroundPartData()
+                    new BackgroundPartInfo()
                     {
                         id = 1,
                         Name = "Dungeon 0",

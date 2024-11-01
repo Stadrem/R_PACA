@@ -14,8 +14,8 @@ namespace ViewModels
         private List<string> tags = new List<string>();
         private string objective = "";
         private List<CharacterInfo> characters = new();
-        private List<BackgroundPartData> backgroundParts = new();
-        private Dictionary<BackgroundPartData, List<BackgroundPartData>> adjacentList = new();
+        private List<BackgroundPartInfo> backgroundParts = new();
+        private Dictionary<BackgroundPartInfo, List<BackgroundPartInfo>> adjacentList = new();
         private int nextBackgroundKey = 0;
 
         private DateTime createdDate = DateTime.Today;
@@ -70,19 +70,19 @@ namespace ViewModels
             set => SetField(ref createdDate, value);
         }
 
-        public List<BackgroundPartData> BackgroundParts
+        public List<BackgroundPartInfo> BackgroundParts
         {
             get => backgroundParts;
             set => SetField(ref backgroundParts, value);
         }
 
-        public Dictionary<BackgroundPartData, List<BackgroundPartData>> AdjacentList
+        public Dictionary<BackgroundPartInfo, List<BackgroundPartInfo>> AdjacentList
         {
             get => adjacentList;
             set => SetField(ref adjacentList, value);
         }
 
-        public void LinkBackgroundPart(BackgroundPartData from, BackgroundPartData to)
+        public void LinkBackgroundPart(BackgroundPartInfo from, BackgroundPartInfo to)
         {
             if (adjacentList[from]
                 .Contains(to)) return;
@@ -94,7 +94,7 @@ namespace ViewModels
 
         public void AddBackgroundPart(string name, string description, EBackgroundPartType type)
         {
-            var newPart = new BackgroundPartData()
+            var newPart = new BackgroundPartInfo()
             {
                 id = nextBackgroundKey,
                 Name = name,
@@ -102,7 +102,7 @@ namespace ViewModels
             };
 
             BackgroundParts.Add(newPart);
-            AdjacentList[newPart] = new List<BackgroundPartData>();
+            AdjacentList[newPart] = new List<BackgroundPartInfo>();
 
             OnPropertyChanged(nameof(BackgroundParts));
         }
