@@ -63,7 +63,7 @@ namespace ViewModels
             set => SetField(ref characters, value);
         }
 
-        public IEnumerator CreateCharacter(CharacterInfo character)
+        public IEnumerator CreateCharacter(CharacterInfo character, Action<ApiResult<string>> onComplete)
         {
             yield return ScenarioCharacterApi.CreateScenarioAvatar(
                 character,
@@ -74,10 +74,12 @@ namespace ViewModels
                         character.id = result.value;
                         characters.Add(character);
                         OnPropertyChanged(nameof(Characters));
+                        onComplete(ApiResult<string>.Success("success"));
                     }
                     else
                     {
                         Debug.LogError($"error: {result.error}");
+                        onComplete(ApiResult<string>.Fail(result.error));
                     }
                 }
             );

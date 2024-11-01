@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 using UnityEngine.UIElements;
 using ViewModels;
 
@@ -7,6 +8,8 @@ namespace UI.Universe.Edit
     public class CharacterCreationController
     {
         private VisualElement root;
+
+        [CanBeNull] private MonoBehaviour context = null;
 
         private Button selectShapeButton;
         private TextField nameInput;
@@ -32,10 +35,10 @@ namespace UI.Universe.Edit
         private UniverseEditViewModel viewModel;
 
 
-        public void Initialize(VisualElement root)
+        public void Initialize(VisualElement root, MonoBehaviour contextScript)
         {
             viewModel = ViewModelManager.Instance.UniverseEditViewModel;
-
+            context = contextScript;
             this.root = root;
 
             selectShapeButton = root.Q<Button>("button_selectShapeType");
@@ -107,9 +110,23 @@ namespace UI.Universe.Edit
                 isPlayable = playableToggle.value
             };
 
-            viewModel.CreateCharacter(character);
-            ClearInputs();
-            CloseSelectPopup();
+            context?.StartCoroutine(
+                viewModel.CreateCharacter(
+                    character,
+                    result =>
+                    {
+                        if (result.IsSuccess)
+                        {
+                            ClearInputs();
+                            CloseSelectPopup();
+                        }
+                        else
+                        {
+                            // todo: show error message
+                        }
+                    }
+                )
+            );
         }
 
         private void ClearInputs()
@@ -120,7 +137,7 @@ namespace UI.Universe.Edit
             strengthInput.value = 0;
             dexterityInput.value = 0;
             playableToggle.value = false;
-            
+
             selectShapeButton.text = "외형 선택...";
             selectedShapeType = ECharacterShapeType.None;
         }

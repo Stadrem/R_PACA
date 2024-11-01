@@ -34,7 +34,7 @@ public class UniverseCharactersEditController : MonoBehaviour
 
 
         characterCreationController = new CharacterCreationController();
-        characterCreationController.Initialize(root);
+        characterCreationController.Initialize(root,this);
 
         createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
 

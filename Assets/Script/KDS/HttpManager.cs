@@ -50,9 +50,9 @@ public class HttpInfoWithType<T, R> where R : class
 
 public class HttpManager : MonoBehaviour
 {
-    public const string ServerURL = "http://125.132.216.190:12450/api";
-    string loginUrl = $"{ServerURL}/auth/login";
-    string joinUrl = $"{ServerURL}/auth/signup";
+    public const string ServerURL = "http://125.132.216.190:8765";
+    string loginUrl = $"{ServerURL}/api/auth/login";
+    string joinUrl = $"{ServerURL}/api/auth/signup";
 
     //싱글톤 생성
     static HttpManager instance;
@@ -192,8 +192,12 @@ public class HttpManager : MonoBehaviour
         var body = JsonUtility.ToJson(info.body);
 
 
-        using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, body, info.contentType))
+        using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
+            print("body: " + body);
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
 
             yield return webRequest.SendWebRequest();
