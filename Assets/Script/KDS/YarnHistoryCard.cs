@@ -22,13 +22,13 @@ public class YarnHistoryCard : MonoBehaviour
 
     GameObject parent;
 
-    YarnHistoryGetSet yarnHistoryGetSet;
+    YarnHTTPManager yarnHttpManager;
 
     private void Start()
     {
         parent = transform.parent.gameObject;
 
-        yarnHistoryGetSet = parent.GetComponent<YarnHistoryGetSet>();
+        yarnHttpManager = parent.GetComponent<YarnHTTPManager>();
 
         button = GetComponent<Button>();
     }
@@ -66,6 +66,6 @@ public class YarnHistoryCard : MonoBehaviour
 
     public void OnClickYarnPopup()
     {
-        yarnHistoryGetSet.StartGetYarnContentInfo(historyCode);
+        yarnHttpManager.StartGetYarnContentInfo(historyCode);
     }
 }

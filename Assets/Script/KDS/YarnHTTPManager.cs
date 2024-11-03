@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static HttpManager;
 
-public class YarnHistoryGetSet : MonoBehaviour
+public class YarnHTTPManager : MonoBehaviour
 {
     public GameObject yarnCardPrefab;
 
@@ -102,8 +102,8 @@ public class YarnHistoryGetSet : MonoBehaviour
         // GET 요청 생성
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Get"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            //byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            //webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
 
@@ -160,8 +160,8 @@ public class YarnHistoryGetSet : MonoBehaviour
         // GET 요청 생성
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "Get"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            //byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            //webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
 

@@ -9,7 +9,7 @@ public class YarnUiManager : MonoBehaviour
     //싱글톤
     public static YarnUiManager instance;
 
-    public YarnHistoryGetSet yarnHistoryGetSet;
+    public YarnHTTPManager yarnHttpManager;
 
     public TMP_Text text_pageNum;
 
@@ -80,7 +80,7 @@ public class YarnUiManager : MonoBehaviour
         }
         else
         {
-            yarnHistoryGetSet.GetYarnCard(pageNum);
+            yarnHttpManager.GetYarnCard(pageNum);
         }
         PageUpadte();
     }
@@ -88,7 +88,7 @@ public class YarnUiManager : MonoBehaviour
     public void OnClickNext()
     {
         pageNum += 1;
-        yarnHistoryGetSet.GetYarnCard(pageNum);
+        yarnHttpManager.GetYarnCard(pageNum);
         PageUpadte();
     }
 
