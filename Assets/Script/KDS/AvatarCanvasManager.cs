@@ -18,6 +18,8 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     public GameObject debugPanel;
 
+    Animator anim;
+
     public bool notUseNetworkOn = false;
 
     private void Awake()
@@ -40,6 +42,8 @@ public class AvatarCanvasManager : AvatarHTTPManager
         pas = playerAvatar.GetComponent<PlayerAvatarSetting>();
 
         Kim_Debug.Get();
+
+        anim = playerAvatar.GetComponentInChildren<Animator>();
     }
 
     //백엔드 없을 시 디버그용
@@ -139,7 +143,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
         print("성별 " + pas.myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
 
-        //pas.myAvatar = pas.myAvatar;
+        anim.SetTrigger("Talking");
 
         pas.ChangeAvatar();
     }
