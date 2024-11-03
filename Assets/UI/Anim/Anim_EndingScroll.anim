@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EndingScroll
+  m_Name: Anim_EndingScroll
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -31,7 +31,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 15
+        time: 18
         value: 0
         inSlope: 0
         outSlope: 0
@@ -55,17 +55,17 @@ AnimationClip:
         time: 0
         value: -427
         inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        outSlope: 260.6611
+        tangentMode: 69
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 15
-        value: 2327
-        inSlope: 0
+        time: 18
+        value: 4264.9
+        inSlope: 260.6611
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 69
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
@@ -109,7 +109,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 15
+    m_StopTime: 18
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -139,7 +139,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 15
+        time: 18
         value: 0
         inSlope: 0
         outSlope: 0
@@ -163,17 +163,17 @@ AnimationClip:
         time: 0
         value: -427
         inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        outSlope: 260.6611
+        tangentMode: 69
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 15
-        value: 2327
-        inSlope: 0
+        time: 18
+        value: 4264.9
+        inSlope: 260.6611
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 69
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334

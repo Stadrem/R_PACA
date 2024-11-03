@@ -49,11 +49,4 @@ public class Ending : MonoBehaviourPunCallbacks
     {
         gameObject.SetActive(true);
     }
-
-    public void OnClickExitLobby()
-    {
-        PhotonNetwork.LeaveRoom();
-
-        PhotonNetwork.LoadLevel("LobbyScene");
-    }
 }
