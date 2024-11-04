@@ -8,11 +8,12 @@ public class BackgroundMenuUIController : MonoBehaviour
     public TMP_Text menuButtonText;
 
     [SerializeField] private LinkedBackgroundPart linkedBackgroundPart;
-    private bool isMenuOpen = false;
+    private bool isMenuOpen= false;
 
-
-    private void Start()
+    public void OnAddLinkButtonClicked()
     {
+        CloseMenuUI();
+        BackgroundPartLinkManager.Get().StartLink(linkedBackgroundPart);
     }
 
     public void OnDetailButtonClicked()
@@ -36,7 +37,6 @@ public class BackgroundMenuUIController : MonoBehaviour
 
     private void ShowMenuUI()
     {
-        
         backgroundMenuContainer.gameObject.SetActive(true);
         isMenuOpen = true;
         menuButtonText.text = "메뉴\n닫기";
