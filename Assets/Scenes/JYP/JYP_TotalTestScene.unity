@@ -5751,7 +5751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1573187431
 Transform:
   m_ObjectHideFlags: 0
@@ -7387,6 +7387,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1573187431}
     m_Modifications:
+    - target: {fileID: 1679452958868291577, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679452958868291577, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679452958868291577, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679452958868291577, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679452958868291577, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -37.504997
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466969726327395760, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5368912820102686143, guid: 269f9d9866e484aaab2d78d7be9538bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7400,7 +7430,7 @@ PrefabInstance:
     - target: {fileID: 5368912820102686143, guid: 269f9d9866e484aaab2d78d7be9538bb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 244
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 5368912820102686143, guid: 269f9d9866e484aaab2d78d7be9538bb,
         type: 3}
@@ -7442,6 +7472,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LinkableBackgroundPart
       objectReference: {fileID: 0}
+    - target: {fileID: 9032038360258148694, guid: 269f9d9866e484aaab2d78d7be9538bb,
+        type: 3}
+      propertyPath: backgroundPartLinkManager
+      value: 
+      objectReference: {fileID: 712830963}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7458,7 +7493,7 @@ PrefabInstance:
     - target: {fileID: 3270576836489950635, guid: 85c1b4c1dbb0248ba95825fdfb1ad3d9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 3270576836489950635, guid: 85c1b4c1dbb0248ba95825fdfb1ad3d9,
         type: 3}
@@ -7468,7 +7503,7 @@ PrefabInstance:
     - target: {fileID: 3270576836489950635, guid: 85c1b4c1dbb0248ba95825fdfb1ad3d9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 228
+      value: 337
       objectReference: {fileID: 0}
     - target: {fileID: 3270576836489950635, guid: 85c1b4c1dbb0248ba95825fdfb1ad3d9,
         type: 3}

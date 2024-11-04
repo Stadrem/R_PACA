@@ -35,32 +35,9 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (isLinking) return;
-            if (!isDetailView)
-            {
-                var ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out var hit))
-                {
-                    var part = hit.collider.GetComponent<LinkedBackgroundPart>();
-                    if (part != null)
-                    {
-                        ShowBackgroundPartDetailView(part);
-                    }
-                }
-            }
-        }
-
-        else if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Link();
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!isDetailView) return;
-            ExitDetailMode();
         }
         else if (Input.GetKeyDown(KeyCode.Delete))
         {
@@ -144,10 +121,10 @@ public class BackgroundPartLinkManager : MonoBehaviour
         }
     }
 
+
     private void ShowBackgroundPartDetailView(LinkedBackgroundPart part)
     {
         backgroundEditUIController.SetDetailNpcMode();
-        isDetailView = true;
         currentPart = part;
         part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
         npcSpawner.StartSpawner(part.spawnOffset);
@@ -168,6 +145,15 @@ public class BackgroundPartLinkManager : MonoBehaviour
     }
 
     #region public methods
+
+    public void ShowDetailView(LinkedBackgroundPart startPart)
+    {
+        if (isLinking) return;
+        if (isDetailView) return;
+        isDetailView = true;
+        ShowBackgroundPartDetailView(startPart);
+    }
+
 
     public void Create(BackgroundPartInfo backgroundPartInfo)
     {
