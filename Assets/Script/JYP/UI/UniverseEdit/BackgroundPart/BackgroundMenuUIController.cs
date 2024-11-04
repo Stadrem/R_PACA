@@ -7,7 +7,6 @@ public class BackgroundMenuUIController : MonoBehaviour
     public RectTransform backgroundMenuContainer;
     public TMP_Text menuButtonText;
 
-    [SerializeField] private BackgroundPartLinkManager backgroundPartLinkManager;
     [SerializeField] private LinkedBackgroundPart linkedBackgroundPart;
     private bool isMenuOpen = false;
 
@@ -19,7 +18,7 @@ public class BackgroundMenuUIController : MonoBehaviour
     public void OnDetailButtonClicked()
     {
         CloseMenuUI();
-        backgroundPartLinkManager.ShowDetailView(linkedBackgroundPart);
+        BackgroundPartLinkManager.Get().ShowDetailView(linkedBackgroundPart);
     }
 
 

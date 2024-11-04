@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Cinemachine;
 using UnityEngine;
@@ -23,6 +24,15 @@ public class BackgroundPartLinkManager : MonoBehaviour
     [SerializeField] private BackgroundEditUIController backgroundEditUIController;
     [SerializeField] private BackgroundDetailCameraMove backgroundDetailCameraMove;
     private UniverseEditViewModel EditViewModel => ViewModelManager.Instance.UniverseEditViewModel;
+    
+    private static BackgroundPartLinkManager instance;
+    
+    public static BackgroundPartLinkManager Get() => instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
