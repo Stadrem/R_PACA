@@ -5,7 +5,6 @@ using static HttpManager;
 using UnityEngine.Networking;
 using static PlayerAvatarSetting;
 using System;
-using UnityEditor.Experimental.GraphView;
 using static System.Net.WebRequestMethods;
 
 public class AvatarHTTPManager : MonoBehaviour

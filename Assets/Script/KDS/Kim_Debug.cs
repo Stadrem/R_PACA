@@ -3,7 +3,6 @@ using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.ShaderData;
 
 public class Kim_Debug : MonoBehaviourPunCallbacks
 {
