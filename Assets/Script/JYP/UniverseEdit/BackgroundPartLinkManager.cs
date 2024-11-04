@@ -21,6 +21,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     [SerializeField] private NPCSpawner npcSpawner;
     [SerializeField] private BackgroundEditUIController backgroundEditUIController;
+    [SerializeField] private BackgroundDetailCameraMove backgroundDetailCameraMove;
     private UniverseEditViewModel EditViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
     private void Start()
@@ -61,7 +62,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
             if (!isDetailView) return;
             ExitDetailMode();
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.Delete))
         {
             var ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
@@ -78,6 +79,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     public void ExitDetailMode()
     {
+        backgroundDetailCameraMove.FinishMove();
         isDetailView = false;
         backgroundEditUIController.SetLinkMode();
         npcSpawner.FinishSpawner();
@@ -131,6 +133,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
                                 {
                                     Debug.LogError(result.error);
                                 }
+
                                 currentLinkable = null;
                                 isLinking = false;
                             }
@@ -149,6 +152,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
         part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
         npcSpawner.StartSpawner(part.spawnOffset);
         part.detailViewCamera.Priority = 10;
+        backgroundDetailCameraMove.StartMove(part.detailViewCamera);
         linkViewCamera.Priority = 0;
     }
 
