@@ -218,6 +218,35 @@ public class HttpManager : MonoBehaviour
         }
     }
 
+    public IEnumerator Delete<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
+    {
+        var body = JsonUtility.ToJson(info.body);
+        using (var webRequest = new UnityWebRequest(info.url, "DELETE"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", info.contentType); 
+            
+            yield return webRequest.SendWebRequest();
+            
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                if (info.onComplete != null)
+                {
+                    info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
+                }
+            }
+            else
+            {
+                if (info.onError != null)
+                {
+                    info.onError(new Exception(webRequest.error));
+                }
+            }
+        }
+    }
+
 
     public IEnumerator Post<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {

@@ -63,7 +63,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 var part = hit.collider.GetComponent<LinkedBackgroundPart>();
                 if (part != null)
                 {
-                    Delete(part.ID);
+                    DeleteBackground(part);
                     Destroy(part.gameObject);
                 }
             }
@@ -120,6 +120,26 @@ public class BackgroundPartLinkManager : MonoBehaviour
         );
     }
 
+    public void DeleteLink(LinkedBackgroundPart fromBackgroundPart)
+    {
+        StartCoroutine(
+            EditViewModel.UnlinkBackgroundPart(
+                fromBackgroundPart.ID,
+                result =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        var line = lines.Find(x => x.start == fromBackgroundPart || x.end == fromBackgroundPart);
+                        DeleteLine(line);
+                    }
+                    else
+                    {
+                        Debug.LogError(result.error);
+                    }
+                }
+            )
+        );
+    }
 
     private void ShowBackgroundPartDetailView(LinkedBackgroundPart part)
     {
@@ -162,21 +182,31 @@ public class BackgroundPartLinkManager : MonoBehaviour
         backgroundParts.Add(part);
     }
 
-    public void Delete(int id)
+    public void DeleteBackground(LinkedBackgroundPart part)
     {
-        var backgroundPart = backgroundParts.Find(x => x.ID == id);
-
-        // foreach (var part in backgroundPart.linkedParts)
-        // {
-        //     part.linkedParts.Remove(backgroundPart);
-        // }
-
-        foreach (var line in lines.FindAll(x => x.start == backgroundPart || x.end == backgroundPart))
+        if (backgroundParts.Exists((t) => t.ID == part.ID))
         {
-            line.DeleteLine();
-        }
+            StartCoroutine(
+                EditViewModel.DeleteBackground(
+                    part.ID,
+                    result =>
+                    {
+                        if (result.IsSuccess)
+                        {
+                            lines.FindAll(x => x.start == part || x.end == part)
+                                .ForEach(DeleteLine);
 
-        backgroundParts.Remove(backgroundPart);
+                            backgroundParts.Remove(part);
+                            Destroy(part.gameObject);
+                        }
+                        else
+                        {
+                            Debug.LogError(result.error);
+                        }
+                    }
+                )
+            );
+        }
     }
 
     public void Link(LinkedBackgroundPart current, LinkedBackgroundPart next)
@@ -211,8 +241,8 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     private void DeleteLine(LinkedLine line)
     {
-        lines.Remove(line);
         line.DeleteLine();
+        lines.Remove(line);
     }
 
     #endregion

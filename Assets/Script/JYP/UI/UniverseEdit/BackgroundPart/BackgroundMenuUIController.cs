@@ -16,10 +16,21 @@ public class BackgroundMenuUIController : MonoBehaviour
         BackgroundPartLinkManager.Get().StartLink(linkedBackgroundPart);
     }
 
+    public void OnDeleteLinkButtonClicked()
+    {
+        BackgroundPartLinkManager.Get().DeleteLink(linkedBackgroundPart);
+    }
+
     public void OnDetailButtonClicked()
     {
         CloseMenuUI();
         BackgroundPartLinkManager.Get().ShowDetailView(linkedBackgroundPart);
+    }
+
+    public void OnDeleteBackgroundButtonClicked()
+    {
+        CloseMenuUI();
+        BackgroundPartLinkManager.Get().DeleteBackground(linkedBackgroundPart);
     }
 
 

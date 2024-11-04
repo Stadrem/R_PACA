@@ -1934,7 +1934,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5076720639084602857}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9032038360258148694}
+        m_TargetAssemblyTypeName: BackgroundMenuUIController, Assembly-CSharp
+        m_MethodName: OnDeleteBackgroundButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8713219764215728621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,7 +2098,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 720202707381006799}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9032038360258148694}
+        m_TargetAssemblyTypeName: BackgroundMenuUIController, Assembly-CSharp
+        m_MethodName: OnDeleteLinkButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9155359910320542247
 GameObject:
   m_ObjectHideFlags: 0
