@@ -236,12 +236,10 @@ public class DiceRollManager : MonoBehaviour
         //나온 값 합산
         diceResult = diceResults.Sum();
 
+        titleText.text = "결과: " + "실패";
+
         //성공 실패 여부 표시
-        if (result == false)
-        {
-            titleText.text = "결과: " + "실패";
-        }
-        else
+        if (result)
         {
             titleText.text = "결과: " + "성공";
         }
