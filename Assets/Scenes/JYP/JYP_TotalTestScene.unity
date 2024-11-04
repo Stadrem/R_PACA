@@ -2769,6 +2769,7 @@ MonoBehaviour:
   linkViewCamera: {fileID: 1547818315}
   npcSpawner: {fileID: 218963731}
   backgroundEditUIController: {fileID: 359884505}
+  backgroundDetailCameraMove: {fileID: 1606105061}
 --- !u!4 &712830964
 Transform:
   m_ObjectHideFlags: 0
@@ -5857,8 +5858,6 @@ MonoBehaviour:
   zoomLerpSpeed: 25
   minZoomOrthographicSize: 4
   maxZoomOrthographicSize: 10
-  vCamera: {fileID: 0}
-  testTr: {fileID: 0}
 --- !u!1 &1662908360
 GameObject:
   m_ObjectHideFlags: 0

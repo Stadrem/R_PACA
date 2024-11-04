@@ -11,13 +11,8 @@ public class BackgroundDetailCameraMove : MonoBehaviour
     [SerializeField] private float minZoomOrthographicSize = 4.0f;
     [SerializeField] private float maxZoomOrthographicSize = 10.0f;
 
-    [SerializeField] //todo : remove editor setup and use init method
     private CinemachineVirtualCamera vCamera;
-
-    [SerializeField] private Transform testTr;
-
-
-    private Vector3 originalPos => testTr.position;
+    private Vector3 originalPos;
 
 
     private void OnDrawGizmosSelected()
@@ -29,8 +24,7 @@ public class BackgroundDetailCameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (vCamera == null) return;
-        // if (IsBlocked()) return;
+        if (IsBlocked()) return;
 
         var moveVel = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
                       (moveSpeed * Time.deltaTime);
@@ -42,6 +36,7 @@ public class BackgroundDetailCameraMove : MonoBehaviour
 
     private bool IsBlocked()
     {
+        if (vCamera == null) return true;
         var distance = Vector3.Distance(vCamera.transform.position, originalPos);
         return distance > maxMoveDistance;
     }
@@ -74,7 +69,7 @@ public class BackgroundDetailCameraMove : MonoBehaviour
     public void StartMove(CinemachineVirtualCamera virtualCamera)
     {
         vCamera = virtualCamera;
-        // originalPos = vCamera.transform.position;
+        originalPos = vCamera.transform.position;
     }
 
     public void FinishMove()
