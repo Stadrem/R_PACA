@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class DiceRollManager : MonoBehaviour
@@ -105,52 +106,51 @@ public class DiceRollManager : MonoBehaviour
 
     public bool autoPosition = true;
 
+    //성공 실패만 판별하는 탐색 전용 주사위
+    public bool SearchDiceRoll(int stat)
+    {
+        //텍스트랑 오브젝트 초기화
+        ClearValue();
+
+        //최종 결과값 초기화
+        bool result = false;
+
+        titleText.text = "결과: " + "실패";
+
+        //주사위 랜덤 값 + 보정값
+        int sumDice = DiceRandomPick() + AbilityCorrection(stat);
+
+        //최종 주사위 값 기반으로 피해량 결정
+        //6 이하는 실패
+        //7 이상은 성공
+        if (sumDice < 7) 
+        {
+            result = false;
+        }
+
+        //성공 실패 여부 표시
+        if (result)
+        {
+            titleText.text = "결과: " + "성공";
+        }
+
+        //주사위 굴리기 비주얼
+        DiceRollView();
+
+        return result;
+    }
+
     //전투 전용 주사위
     public int BattleDiceRoll(int stat)
     {
         //텍스트랑 오브젝트 초기화
-        canvas.SetActive(false);
-
         ClearValue();
 
         //최종 결과값 초기화
         int result = 0;
 
-        //1~6 무작위값
-        for(int i = 0; i < diceCount; i++)
-        {
-            diceResults.Add(Random.Range(1, 7));
-        }
-        //int diceA = Random.Range(1, 7);
-        //int diceB = Random.Range(1, 7);
-
-        //나온 값 합산
-        diceResult = diceResults.Sum();
-
-        //보정값 기본값
-        int plusDice = -2;
-
-        //함수 int값에 보정할 능력치 입력 (0~9)
-        //0~1: -2 / 2~3: -1 / 4~5: 0 / 6~7: +1 / 8이상: +2
-        if (stat == 2 || stat == 3)
-        {
-            plusDice = -1;
-        }
-        else if(stat == 4 || stat == 5)
-        {
-            plusDice = 0;
-        }
-        else if (stat == 6 || stat == 7)
-        {
-            plusDice = 1;
-        }
-        else if (stat >= 8)
-        {
-            plusDice = 2;
-        }
-
-        //주사위 값 + 보정값
-        int sumDice = diceResult + plusDice;
+        //주사위 랜덤 값 + 보정값
+        int sumDice = DiceRandomPick() + AbilityCorrection(stat);
 
         //최종 주사위 값 기반으로 피해량 결정
         //3 이하는 0%
@@ -173,8 +173,6 @@ public class DiceRollManager : MonoBehaviour
             print("200% 피해!");
         }
 
-        plusText.text = "능력치 보정: +" + plusDice;
-
         titleText.text = "결과: " + result + "공격력";
 
         //주사위 굴리기 비주얼
@@ -183,12 +181,53 @@ public class DiceRollManager : MonoBehaviour
         return result;
     }
 
+    //능력치 보정 함수
+    int AbilityCorrection(int stat)
+    {
+        //보정값 기본값
+        int plusDice = -2;
+
+        //함수 int값에 보정할 능력치 입력 (0~9)
+        //0~1: -2 / 2~3: -1 / 4~5: 0 / 6~7: +1 / 8이상: +2
+        if (stat == 2 || stat == 3)
+        {
+            plusDice = -1;
+        }
+        else if (stat == 4 || stat == 5)
+        {
+            plusDice = 0;
+        }
+        else if (stat == 6 || stat == 7)
+        {
+            plusDice = 1;
+        }
+        else if (stat >= 8)
+        {
+            plusDice = 2;
+        }
+
+        plusText.text = "능력치 보정: +" + plusDice;
+
+        return plusDice;
+    }
+
+    //주사위 값 랜덤
+    int DiceRandomPick()
+    {
+        //1~6 무작위값
+        for (int i = 0; i < diceCount; i++)
+        {
+            diceResults.Add(Random.Range(1, 7));
+        }
+
+        //나온 값 합산
+        return diceResult = diceResults.Sum();
+    }
+
     //백엔드 주사위 굴리기
     public void DiceRoll(int diceA, int diceB, bool result)
     {
         //텍스트랑 오브젝트 초기화
-        canvas.SetActive(false);
-
         ClearValue();
 
         diceResults.Add(diceA);
@@ -288,7 +327,7 @@ public class DiceRollManager : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        canvas.SetActive(false);
+        
 
         ClearValue();
 
@@ -338,7 +377,6 @@ public class DiceRollManager : MonoBehaviour
 
     void ClearValue()
     {
-
         //저장된 값 초기화
         diceResults.Clear();
         diceResult = 0;
@@ -346,5 +384,7 @@ public class DiceRollManager : MonoBehaviour
         titleText.text = " ";
         plusText.text = " ";
         diceText.text = " ";
+
+        canvas.SetActive(false);
     }
 }
