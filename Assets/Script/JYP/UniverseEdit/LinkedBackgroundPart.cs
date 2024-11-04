@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
@@ -15,6 +14,8 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     private BackgroundPartInfo backgroundPartInfo;
 
     public int ID => backgroundPartInfo.ID;
+    
+    
 
     // public List<LinkedBackgroundPart> linkedParts;
     // public List<Portal> portals;
@@ -26,6 +27,10 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
     public int backgroundPartId = -1;
     public TMP_Text nameText;
 
+    
+    
+    
+    
     public void Init(BackgroundPartInfo background)
     {
         this.backgroundPartInfo = background;

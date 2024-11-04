@@ -24,6 +24,15 @@ public class BackgroundPartLinkManager : MonoBehaviour
     [SerializeField] private BackgroundDetailCameraMove backgroundDetailCameraMove;
     private UniverseEditViewModel EditViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
+    private static BackgroundPartLinkManager instance;
+
+    public static BackgroundPartLinkManager Get() => instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         camera = Camera.main;
@@ -35,33 +44,17 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (isLinking && Input.GetMouseButtonDown(0))
         {
-            if (isLinking) return;
-            if (!isDetailView)
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit))
             {
-                var ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out var hit))
-                {
-                    var part = hit.collider.GetComponent<LinkedBackgroundPart>();
-                    if (part != null)
-                    {
-                        ShowBackgroundPartDetailView(part);
-                    }
-                }
+                var linkable = hit.collider.GetComponent<ILinkable>();
+                if (linkable == null) return;
+                FinishLink(linkable);
             }
         }
 
-        else if (Input.GetMouseButtonDown(1))
-        {
-            Link();
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!isDetailView) return;
-            ExitDetailMode();
-        }
         else if (Input.GetKeyDown(KeyCode.Delete))
         {
             var ray = camera.ScreenPointToRay(Input.mousePosition);
@@ -70,12 +63,13 @@ public class BackgroundPartLinkManager : MonoBehaviour
                 var part = hit.collider.GetComponent<LinkedBackgroundPart>();
                 if (part != null)
                 {
-                    Delete(part.ID);
+                    DeleteBackground(part);
                     Destroy(part.gameObject);
                 }
             }
         }
     }
+
 
     public void ExitDetailMode()
     {
@@ -88,66 +82,68 @@ public class BackgroundPartLinkManager : MonoBehaviour
         linkViewCamera.Priority = 20;
     }
 
-    private void Link()
+    public void StartLink(ILinkable startLinkable)
     {
-        if (!isLinking)
-        {
-            var ray = camera.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(ray, out var hit)) return;
+        if (isLinking) return;
+        isLinking = true;
+        currentLinkable = startLinkable;
+    }
 
-            currentLinkable = hit.collider.GetComponent<ILinkable>();
-            if (currentLinkable == null) return;
+    public void FinishLink(ILinkable towardLinkable)
+    {
+        if (isLinking == false) return;
 
-            isLinking = true;
-            print($"start linking {hit.collider.name}");
-        }
-
-        else
-        {
-            var ray = camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit))
-            {
-                var linkable = hit.collider.GetComponent<ILinkable>();
-                if (linkable != null)
+        var fromBackgroundPart = ((LinkedBackgroundPart)currentLinkable);
+        var destBackgroundPart = ((LinkedBackgroundPart)towardLinkable);
+        if (!destBackgroundPart) return;
+        var from = fromBackgroundPart.ID;
+        var to = destBackgroundPart.ID;
+        StartCoroutine(
+            EditViewModel.LinkBackgroundPart(
+                from,
+                to,
+                result =>
                 {
-                    print($"end linking {hit.collider.name}");
-                    var from = ((LinkedBackgroundPart)currentLinkable).ID;
-                    var to = ((LinkedBackgroundPart)linkable).ID;
-                    StartCoroutine(
-                        EditViewModel.LinkBackgroundPart(
-                            from,
-                            to,
-                            result =>
-                            {
-                                if (result.IsSuccess)
-                                {
-                                    var currentObject = ((LinkedBackgroundPart)currentLinkable)?.gameObject;
-                                    if (currentObject != null)
-                                    {
-                                        CreateLine(currentObject, hit.collider.gameObject);
-                                    }
+                    if (result.IsSuccess)
+                    {
+                        CreateLine(fromBackgroundPart, destBackgroundPart);
+                    }
+                    else
+                    {
+                        Debug.LogError(result.error);
+                    }
 
-                                    // Link((LinkedBackgroundPart)currentLinkable, (LinkedBackgroundPart)linkable);
-                                }
-                                else
-                                {
-                                    Debug.LogError(result.error);
-                                }
-
-                                currentLinkable = null;
-                                isLinking = false;
-                            }
-                        )
-                    );
+                    currentLinkable = null;
+                    isLinking = false;
                 }
-            }
-        }
+            )
+        );
+    }
+
+    public void DeleteLink(LinkedBackgroundPart fromBackgroundPart)
+    {
+        StartCoroutine(
+            EditViewModel.UnlinkBackgroundPart(
+                fromBackgroundPart.ID,
+                result =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        var line = lines.Find(x => x.start == fromBackgroundPart || x.end == fromBackgroundPart);
+                        DeleteLine(line);
+                    }
+                    else
+                    {
+                        Debug.LogError(result.error);
+                    }
+                }
+            )
+        );
     }
 
     private void ShowBackgroundPartDetailView(LinkedBackgroundPart part)
     {
         backgroundEditUIController.SetDetailNpcMode();
-        isDetailView = true;
         currentPart = part;
         part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
         npcSpawner.StartSpawner(part.spawnOffset);
@@ -156,18 +152,25 @@ public class BackgroundPartLinkManager : MonoBehaviour
         linkViewCamera.Priority = 0;
     }
 
-    private void CreateLine(GameObject obj1, GameObject obj2)
+    private void CreateLine(LinkedBackgroundPart from, LinkedBackgroundPart to)
     {
         var line = new GameObject("Line");
         line.layer = LayerMask.NameToLayer("Line");
         var linkedLine = line.AddComponent<LinkedLine>();
-        var part1 = obj1.GetComponent<LinkedBackgroundPart>();
-        var part2 = obj2.GetComponent<LinkedBackgroundPart>();
-        linkedLine.Init(part1, part2);
+        linkedLine.Init(from, to);
         lines.Add(linkedLine);
     }
 
     #region public methods
+
+    public void ShowDetailView(LinkedBackgroundPart startPart)
+    {
+        if (isLinking) return;
+        if (isDetailView) return;
+        isDetailView = true;
+        ShowBackgroundPartDetailView(startPart);
+    }
+
 
     public void Create(BackgroundPartInfo backgroundPartInfo)
     {
@@ -179,21 +182,31 @@ public class BackgroundPartLinkManager : MonoBehaviour
         backgroundParts.Add(part);
     }
 
-    public void Delete(int id)
+    public void DeleteBackground(LinkedBackgroundPart part)
     {
-        var backgroundPart = backgroundParts.Find(x => x.ID == id);
-
-        // foreach (var part in backgroundPart.linkedParts)
-        // {
-        //     part.linkedParts.Remove(backgroundPart);
-        // }
-
-        foreach (var line in lines.FindAll(x => x.start == backgroundPart || x.end == backgroundPart))
+        if (backgroundParts.Exists((t) => t.ID == part.ID))
         {
-            line.DeleteLine();
-        }
+            StartCoroutine(
+                EditViewModel.DeleteBackground(
+                    part.ID,
+                    result =>
+                    {
+                        if (result.IsSuccess)
+                        {
+                            lines.FindAll(x => x.start == part || x.end == part)
+                                .ForEach(DeleteLine);
 
-        backgroundParts.Remove(backgroundPart);
+                            backgroundParts.Remove(part);
+                            Destroy(part.gameObject);
+                        }
+                        else
+                        {
+                            Debug.LogError(result.error);
+                        }
+                    }
+                )
+            );
+        }
     }
 
     public void Link(LinkedBackgroundPart current, LinkedBackgroundPart next)
@@ -228,8 +241,8 @@ public class BackgroundPartLinkManager : MonoBehaviour
 
     private void DeleteLine(LinkedLine line)
     {
-        lines.Remove(line);
         line.DeleteLine();
+        lines.Remove(line);
     }
 
     #endregion

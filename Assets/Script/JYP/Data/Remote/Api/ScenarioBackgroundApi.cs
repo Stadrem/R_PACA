@@ -5,7 +5,7 @@ using Data.Remote.Dtos.Response;
 
 namespace Data.Remote
 {
-    public class ScenarioBackgroundApi
+    public static class ScenarioBackgroundApi
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/world";
 
@@ -52,6 +52,27 @@ namespace Data.Remote
             };
             
             yield return HttpManager.GetInstance().Put(request);
+        }
+
+        public static IEnumerator DeleteScenarioBackground(
+            int backgroundPartId,
+            Action<ApiResult> onCompleted
+        )
+        {
+            var reqDto = new ScenarioBackgroundDeleteReqDto()
+            {
+                worldId = backgroundPartId,
+            };
+            
+            var request = new HttpInfoWithType<string, ScenarioBackgroundDeleteReqDto>()
+            {
+                url = $"{BaseUrl}/delete",
+                body = reqDto,
+                onComplete = (result) => onCompleted(ApiResult.Success()),
+                onError = (error) => onCompleted(ApiResult.Fail(error)),
+            };
+            
+            yield return HttpManager.GetInstance().Delete(request);
         }
     }
     

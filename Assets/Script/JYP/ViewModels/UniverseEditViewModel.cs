@@ -140,6 +140,39 @@ namespace ViewModels
             );
         }
 
+        public IEnumerator UnlinkBackgroundPart(int fromId, Action<ApiResult<string>> onComplete)
+        {
+            var from = BackgroundParts.FirstOrDefault(p => p.ID == fromId);
+            if (from == null)
+            {
+                onComplete(ApiResult<string>.Fail(new InvalidDataException("not found")));
+                yield break;
+            }
+
+            var newFrom = new BackgroundPartInfo(from)
+            {
+                TowardBackground = null
+            };
+
+            yield return ScenarioBackgroundApi.UpdateScenarioBackground(
+                newFrom,
+                (result) =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        from.TowardBackground = null;
+                        Links.Remove(from);
+                        onComplete(ApiResult<string>.Success("success"));
+                    }
+                    else
+                    {
+                        onComplete(ApiResult<string>.Fail(result.error));
+                    }
+                }
+            );
+        }
+
+
         private bool IsCycleExist()
         {
             int Find(int[] parent, int v)
@@ -204,6 +237,57 @@ namespace ViewModels
                 }
             );
         }
+
+
+        public IEnumerator DeleteBackground(int backgroundId, Action<ApiResult> onComplete)
+        {
+            var background = BackgroundParts.FirstOrDefault(b => b.ID == backgroundId);
+            if (background == null)
+            {
+                onComplete(ApiResult.Fail(new InvalidDataException("not found")));
+                yield break;
+            }
+
+            // if something toward this background, unlink it
+            if (Links.ContainsValue(background))
+            {
+                var fromId = Links.First(pair => pair.Value == background).Key.ID;
+
+
+                bool isFinished = false;
+                yield return UnlinkBackgroundPart(
+                    fromId,
+                    (result) =>
+                    {
+                        isFinished = true;
+                        if (result.IsFail)
+                        {
+                            onComplete(ApiResult.Fail(result.error));
+                        }
+                    }
+                );
+                yield return new WaitUntil(() => isFinished);
+            }
+
+
+            yield return ScenarioBackgroundApi.DeleteScenarioBackground(
+                backgroundId,
+                (result) =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        BackgroundParts.Remove(background);
+                        onComplete(ApiResult.Success());
+                        OnPropertyChanged(nameof(BackgroundParts));
+                    }
+                    else
+                    {
+                        onComplete(ApiResult.Fail(result.error));
+                    }
+                }
+            );
+        }
+
 
         public void Init()
         {
