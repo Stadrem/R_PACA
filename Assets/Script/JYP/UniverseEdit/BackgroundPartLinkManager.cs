@@ -61,7 +61,7 @@ public class BackgroundPartLinkManager : MonoBehaviour
             if (!isDetailView) return;
             ExitDetailMode();
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.Delete))
         {
             var ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
