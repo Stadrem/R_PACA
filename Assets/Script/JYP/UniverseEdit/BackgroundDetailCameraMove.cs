@@ -24,7 +24,7 @@ public class BackgroundDetailCameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsBlocked()) return;
+        if (vCamera == null) return;
 
         var moveVel = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
                       (moveSpeed * Time.deltaTime);
@@ -34,16 +34,12 @@ public class BackgroundDetailCameraMove : MonoBehaviour
         Zoom(zoomVelocity);
     }
 
-    private bool IsBlocked()
-    {
-        if (vCamera == null) return true;
-        var distance = Vector3.Distance(vCamera.transform.position, originalPos);
-        return distance > maxMoveDistance;
-    }
-
     private void Move(Vector3 moveVel)
     {
         var movePos = vCamera.transform.position + moveVel * (moveSpeed * Time.deltaTime);
+        var distance = Vector3.Distance(movePos, originalPos);
+        if (distance > maxMoveDistance) return;
+
         vCamera.transform.position = Vector3.Lerp(vCamera.transform.position, movePos, Time.deltaTime * moveLerpSpeed);
     }
 
