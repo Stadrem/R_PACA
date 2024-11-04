@@ -58,7 +58,7 @@ public class DiceRollManager : MonoBehaviour
 
         diceSound = GetComponent<AudioSource>();
 
-        ClearText();
+      ClearValue();
     }
 
     //주사위 프리팹
@@ -100,22 +100,38 @@ public class DiceRollManager : MonoBehaviour
 
     public Transform createPoint;
 
+    //기본 공격력 값
     int baseAttack = 6;
 
     public bool autoPosition = true;
 
+    //전투 전용 주사위
     public int BattleDiceRoll(int stat)
     {
+        //텍스트랑 오브젝트 초기화
         canvas.SetActive(false);
 
-        ClearText();
+        ClearValue();
 
+        //최종 결과값 초기화
         int result = 0;
 
-        int diceA = Random.Range(1, 7);
-        int diceB = Random.Range(1, 7);
+        //1~6 무작위값
+        for(int i = 0; i < diceCount; i++)
+        {
+            diceResults.Add(Random.Range(1, 7));
+        }
+        //int diceA = Random.Range(1, 7);
+        //int diceB = Random.Range(1, 7);
+
+        //나온 값 합산
+        diceResult = diceResults.Sum();
+
+        //보정값 기본값
         int plusDice = -2;
 
+        //함수 int값에 보정할 능력치 입력 (0~9)
+        //0~1: -2 / 2~3: -1 / 4~5: 0 / 6~7: +1 / 8이상: +2
         if (stat == 2 || stat == 3)
         {
             plusDice = -1;
@@ -128,49 +144,60 @@ public class DiceRollManager : MonoBehaviour
         {
             plusDice = 1;
         }
-        else if (stat == 8 || stat == 9)
+        else if (stat >= 8)
         {
             plusDice = 2;
         }
 
-        int sumDice = diceA + diceB + plusDice;
+        //주사위 값 + 보정값
+        int sumDice = diceResult + plusDice;
 
-        if(sumDice <= 3)
-        {
-            result = baseAttack * 0;
-            print(diceA + " " + diceB + "0% 피해!");
-        }
-        else if (sumDice >= 4 && sumDice <= 6)
+        //최종 주사위 값 기반으로 피해량 결정
+        //3 이하는 0%
+        //4~6은 50 %
+        //7~11은 100 %
+        //12 이상은 200 %
+        if (sumDice >= 4 && sumDice <= 6)
         {
             result = (int)(baseAttack * 0.5f);
-            print(diceA + " " + diceB + "50% 피해!");
+            print("50% 피해!");
         }
         else if (sumDice >= 7 && sumDice <= 11)
         {
             result = baseAttack;
-            print(diceA + " " + diceB + "100% 피해!");
+            print("100% 피해!");
         }
         else if (sumDice >= 12)
         {
             result = baseAttack * 2;
-            print(diceA + " " + diceB + "200% 피해!");
+            print("200% 피해!");
         }
 
         plusText.text = "능력치 보정: +" + plusDice;
 
         titleText.text = "결과: " + result + "공격력";
 
-        DiceRollView(diceA, diceB);
+        //주사위 굴리기 비주얼
+        DiceRollView();
 
         return result;
     }
 
+    //백엔드 주사위 굴리기
     public void DiceRoll(int diceA, int diceB, bool result)
     {
+        //텍스트랑 오브젝트 초기화
         canvas.SetActive(false);
 
-        ClearText();
+        ClearValue();
 
+        diceResults.Add(diceA);
+        diceResults.Add(diceB);
+
+        //나온 값 합산
+        diceResult = diceResults.Sum();
+
+        //성공 실패 여부 표시
         if (result == false)
         {
             titleText.text = "결과: " + "실패";
@@ -180,18 +207,20 @@ public class DiceRollManager : MonoBehaviour
             titleText.text = "결과: " + "성공";
         }
 
-        DiceRollView(diceA, diceB);
+        //주사위 굴리기 비주얼
+        DiceRollView();
     }
 
 
     //int 값으로 반환
-    public void DiceRollView(int diceA, int diceB) 
+    public void DiceRollView() 
     {
         // 카메라 중심에서 레이캐스트 발사
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
         RaycastHit hit; // 충돌 정보를 저장할 변수
 
+        //오토 포지션 체크 되어있으면, 카메라 위치 변경때마다 위치 갱신, 아니라면, 첫 위치 그대로 생성
         if (autoPosition)
         {
             // 레이캐스트가 충돌했는지 확인
@@ -210,10 +239,6 @@ public class DiceRollManager : MonoBehaviour
             }
         }
 
-        //저장된 값 초기화
-        diceResults.Clear();
-        diceResult = 0;
-
         //주사위 오브젝트풀 활성화
         for (int i = 0; i < diceCount; i++)
         {
@@ -224,22 +249,17 @@ public class DiceRollManager : MonoBehaviour
 
             //회전 값 무작위
             diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
-
-            //주사위 1개당 주사위 값 생성
-            //diceResults.Add(Random.Range(1,7));
         }
-
-        diceResults.Add(diceA);
-        diceResults.Add(diceB);
 
         diceSound.Play();
 
-        //나온 값 합산
-        diceResult = diceResults.Sum();
-
-        print(diceResults.Count + "D" +diceResult);
         
-        if(coroutine != null)
+
+        print(diceCount + "D" + diceResult);
+
+        diceText.text = diceCount + "D" + diceResult;
+
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
         }
@@ -256,8 +276,6 @@ public class DiceRollManager : MonoBehaviour
         // 주사위가 굴러가는 시간을 기다림
         yield return new WaitForSeconds(rollDuration);
 
-        diceText.text = diceResults.Count + "D" + diceResult;
-
         canvas.SetActive(true);
 
         // 주사위의 결과에 맞게 회전 설정
@@ -272,7 +290,7 @@ public class DiceRollManager : MonoBehaviour
 
         canvas.SetActive(false);
 
-        ClearText();
+        ClearValue();
 
         for (int j = 0; j < diceCount; j++)
         {
@@ -318,8 +336,13 @@ public class DiceRollManager : MonoBehaviour
         rb.MoveRotation(finalRotation);
     }
 
-    void ClearText()
+    void ClearValue()
     {
+
+        //저장된 값 초기화
+        diceResults.Clear();
+        diceResult = 0;
+
         titleText.text = " ";
         plusText.text = " ";
         diceText.text = " ";
