@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Realtime;
+using System;
 
 public class EndingUiManger : MonoBehaviour
 {
@@ -11,7 +13,6 @@ public class EndingUiManger : MonoBehaviour
     public TMP_Text text_user;
     public TMP_Text text_background;
     public TMP_Text text_ch;
-    public TMP_Text text_survivor;
     public TMP_Text text_defeatMonster;
     public TMP_Text text_time;
     public TMP_Text text_goalA;
@@ -31,7 +32,6 @@ public class EndingUiManger : MonoBehaviour
         text_user.text = c;
         text_background.text = d;
         text_ch.text = e;
-        text_survivor.text = f;
         text_defeatMonster.text = g;
         text_time.text = h;
         text_goalA.text = i;

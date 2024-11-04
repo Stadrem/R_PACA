@@ -78,7 +78,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
 
     public void OnClickBattleDice()
     {
-        DiceRollManager.Get().BattleDiceRoll(5);
+        DiceRollManager.Get().BattleDiceRoll(9);
     }
 
     public void OnClickEnding()

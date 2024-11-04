@@ -57,6 +57,8 @@ public class DiceRollManager : MonoBehaviour
         }
 
         diceSound = GetComponent<AudioSource>();
+
+        ClearText();
     }
 
     //주사위 프리팹
@@ -98,9 +100,17 @@ public class DiceRollManager : MonoBehaviour
 
     public Transform createPoint;
 
-    public bool BattleDiceRoll(int stat)
+    int baseAttack = 6;
+
+    public bool autoPosition = true;
+
+    public int BattleDiceRoll(int stat)
     {
-        bool result = false;
+        canvas.SetActive(false);
+
+        ClearText();
+
+        int result = 0;
 
         int diceA = Random.Range(1, 7);
         int diceB = Random.Range(1, 7);
@@ -125,46 +135,79 @@ public class DiceRollManager : MonoBehaviour
 
         int sumDice = diceA + diceB + plusDice;
 
-        if(sumDice >= 6)
+        if(sumDice <= 3)
         {
-            result = true;
-            print(diceA + " " + diceB + "판정 성공!");
+            result = baseAttack * 0;
+            print(diceA + " " + diceB + "0% 피해!");
         }
-        else
+        else if (sumDice >= 4 && sumDice <= 6)
         {
-            print(diceA + " " + diceB + "판정 실패!");
+            result = (int)(baseAttack * 0.5f);
+            print(diceA + " " + diceB + "50% 피해!");
+        }
+        else if (sumDice >= 7 && sumDice <= 11)
+        {
+            result = baseAttack;
+            print(diceA + " " + diceB + "100% 피해!");
+        }
+        else if (sumDice >= 12)
+        {
+            result = baseAttack * 2;
+            print(diceA + " " + diceB + "200% 피해!");
         }
 
-        plusText.text = "능력치 보정: " + plusDice;
+        plusText.text = "능력치 보정: +" + plusDice;
 
-        DiceRoll(diceA, diceB, result);
+        titleText.text = "결과: " + result + "공격력";
+
+        DiceRollView(diceA, diceB);
 
         return result;
     }
 
-    //int 값으로 반환
-    public void DiceRoll(int diceA, int diceB, bool decide) 
+    public void DiceRoll(int diceA, int diceB, bool result)
     {
-        string decideText = "실패";
+        canvas.SetActive(false);
 
+        ClearText();
+
+        if (result == false)
+        {
+            titleText.text = "결과: " + "실패";
+        }
+        else
+        {
+            titleText.text = "결과: " + "성공";
+        }
+
+        DiceRollView(diceA, diceB);
+    }
+
+
+    //int 값으로 반환
+    public void DiceRollView(int diceA, int diceB) 
+    {
         // 카메라 중심에서 레이캐스트 발사
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
         RaycastHit hit; // 충돌 정보를 저장할 변수
 
-        // 레이캐스트가 충돌했는지 확인
-        if (Physics.Raycast(ray, out hit, maxRayDistance, layerMask))
+        if (autoPosition)
         {
-            // 충돌 지점의 월드 좌표
-            Vector3 hitPoint = hit.point;
+            // 레이캐스트가 충돌했는지 확인
+            if (Physics.Raycast(ray, out hit, maxRayDistance, layerMask))
+            {
+                // 충돌 지점의 월드 좌표
+                Vector3 hitPoint = hit.point;
 
-            transform.position = new Vector3(hitPoint.x, hitPoint.y + 0.5f, hitPoint.z);
-        }
-        else
-        {
-            // 레이캐스트가 아무 오브젝트와도 충돌하지 않았을 때
-            transform.position = new Vector3(0, 0, 0);
-            print("없음");
+                transform.position = new Vector3(hitPoint.x, hitPoint.y + 0.5f, hitPoint.z);
+            }
+            else
+            {
+                // 레이캐스트가 아무 오브젝트와도 충돌하지 않았을 때
+                transform.position = new Vector3(0, 0, 0);
+                print("없음");
+            }
         }
 
         //저장된 값 초기화
@@ -194,13 +237,6 @@ public class DiceRollManager : MonoBehaviour
         //나온 값 합산
         diceResult = diceResults.Sum();
 
-        if (decide)
-        {
-            decideText = "성공";
-        }
-
-        titleText.text = "결과: " + decideText;
-
         print(diceResults.Count + "D" +diceResult);
         
         if(coroutine != null)
@@ -212,9 +248,6 @@ public class DiceRollManager : MonoBehaviour
 
         // 주사위가 굴러가는 동안 회전 값 설정
         StartCoroutine(coroutine);
-
-        //int 값 반환
-        //return diceResult;
     }
 
     // 코루틴으로 주사위 회전값 설정 (일정 시간 후)
@@ -239,8 +272,7 @@ public class DiceRollManager : MonoBehaviour
 
         canvas.SetActive(false);
 
-        plusText.text = " ";
-        diceText.text = " ";
+        ClearText();
 
         for (int j = 0; j < diceCount; j++)
         {
@@ -284,5 +316,12 @@ public class DiceRollManager : MonoBehaviour
 
         // 주사위의 최종 위치와 회전 설정
         rb.MoveRotation(finalRotation);
+    }
+
+    void ClearText()
+    {
+        titleText.text = " ";
+        plusText.text = " ";
+        diceText.text = " ";
     }
 }
