@@ -14,9 +14,8 @@ public class SignupManager : MonoBehaviour
     // 회원가입 성공 안내 UI
     public GameObject signupSuccessUI;
 
-    void Start()
+    private void Start()
     {
-
     }
 
     // 회원가입 버튼 클릭 시 호출되는 함수
@@ -62,11 +61,11 @@ public class SignupManager : MonoBehaviour
                 // 회원가입 성공 UI 활성화
                 signupSuccessUI.SetActive(true);
 
-                // 1초 대기 후 AvatarCreate 씬으로 전환
+                // 1초 대기 후 로그인 시도
                 yield return new WaitForSeconds(1f);
 
-                // AvatarCreate 씬으로 이동
-                SceneManager.LoadScene("AvatarCreate");
+                // 동일한 ID와 PW로 로그인 시도
+                StartCoroutine(LoginRequest(userId, password));
             }
             else
             {
@@ -74,5 +73,46 @@ public class SignupManager : MonoBehaviour
                 Debug.LogError("응답 본문: " + request.downloadHandler.text); // 추가 디버깅
             }
         }
+    }
+
+    // 서버로 로그인 요청을 보내는 함수
+    private IEnumerator LoginRequest(string userId, string password)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("userId", userId);
+        form.AddField("password", password);
+
+        using (UnityWebRequest request = UnityWebRequest.Post("http://125.132.216.190:8765/login", form))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("로그인 성공: " + request.downloadHandler.text);
+
+                // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환
+                LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
+
+                // UserManager 싱글톤에 userCode 저장
+                UserCodeMgr.Instance.SetUserCode(response.userCode); // int형으로 저장
+
+                // 1초 대기 후 AvatarCreate 씬으로 이동
+                yield return new WaitForSeconds(1f);
+                SceneManager.LoadScene("AvatarCreate"); // 아바타 생성 씬으로 이동
+            }
+            else
+            {
+                Debug.LogError("로그인 실패: " + request.error);
+                Debug.LogError("응답 본문: " + request.downloadHandler.text);
+            }
+        }
+    }
+
+    // 서버 응답을 처리하기 위한 클래스
+    [System.Serializable]
+    public class LoginResponse
+    {
+        // 서버의 응답에서 userCode를 저장
+        public int userCode;
     }
 }

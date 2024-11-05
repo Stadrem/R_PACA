@@ -5,9 +5,8 @@ using UnityEngine;
 public class UserInfo : MonoBehaviour
 {
     [Header("유저 회원정보")]
-    // 로그인 시 유저 ID, PW, 닉네임
+    // 로그인 시 유저 ID, 닉네임
     public string userID;
-    public string userPassword;
     public string userName;
 
     [Header("유저 스탯")]
@@ -18,14 +17,12 @@ public class UserInfo : MonoBehaviour
     // 유저 정보 초기화
     public void Initialize(
         string inputID,
-        string inputPW,
         string inputName,
         int health,
         int strength,
         int dexterity)
     {
         userID = inputID;
-        userPassword = inputPW;
         userName = inputName;
 
         // 유저 스탯 초기화
