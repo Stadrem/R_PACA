@@ -97,6 +97,12 @@ public class PlayUniverseManager : MonoBehaviour
         }
     }
 
+    public void LoadScene()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.LoadLevel("Town");
+    }
+
 
     public void FinishConversation()
     {

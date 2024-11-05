@@ -107,6 +107,9 @@ namespace Script.JYP.UniversePlay
 
         public void OnClickTest()
         {
+            PlayUniverseManager.Instance.LoadScene();
+            return;
+            
             var portalList1 = new List<PortalData>()
                 {
                     new PortalData()
