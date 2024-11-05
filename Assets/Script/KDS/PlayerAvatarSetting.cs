@@ -15,7 +15,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     public MyAvatar myAvatar;
 
-    public TempFakeServer tfs;
+    public TempFakeServer tempFakeServer;
 
     public bool notUseNetworkOn = false;
 
@@ -54,6 +54,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     void Start()
     {
+        if (notUseNetworkOn)
+        {
+            myAvatar = TempFakeServer.Get().myAvatar;
+        }
+
         if (myAvatar.userCode != -1)
         {
             StartPostAvatarInfo(myAvatar.userCode);
@@ -64,7 +69,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
             TempFakeServer.Get();
 
             //백엔드 없을 시 디버그 전용. 제거해도 됨.
-            tfs = GameObject.Find("TempFakeServer").GetComponent<TempFakeServer>();
+            tempFakeServer = GameObject.Find("TempFakeServer").GetComponent<TempFakeServer>();
 
             notUseNetworkOn = true;
 
