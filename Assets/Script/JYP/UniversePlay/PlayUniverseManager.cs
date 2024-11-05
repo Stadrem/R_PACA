@@ -1,5 +1,4 @@
-﻿using System;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 using UniversePlay;
 
@@ -9,32 +8,46 @@ using UniversePlay;
 /// </summary>
 public class PlayUniverseManager : MonoBehaviour
 {
-    private static PlayUniverseManager instance = null;
+    private static PlayUniverseManager instance;
 
-    [SerializeField] private PlayBackgroundManager playBackgroundManager;
+    [SerializeField]
+    private PlayBackgroundManager playBackgroundManager;
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [SerializeField] private PlayNpcManager playNpcManager;
+    [SerializeField]
+    private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
-    [SerializeField] private NpcChatUIManager npcChatUIManager;
+    [SerializeField]
+    private NpcChatUIManager npcChatUIManager;
 
     public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
 
-    [SerializeField] private CamSettingStateManager camSettingManager;
+    [SerializeField]
+    private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
 
-    [SerializeField] private InGamePlayerManager inGamePlayerManager;
+    [SerializeField]
+    private InGamePlayerManager inGamePlayerManager;
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
 
     public static PlayUniverseManager Instance
     {
-        get => instance;
+        get
+        {
+            if (instance == null)
+            {
+                var universePrefab = Resources.Load<GameObject>("UniversePlay/UniversePlayManager");
+                var go = Instantiate(universePrefab);
+            }
+
+            return instance;
+        }
     }
 
     private void Awake()
@@ -42,13 +55,13 @@ public class PlayUniverseManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
 
 
     private void Update()
@@ -71,6 +84,7 @@ public class PlayUniverseManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("InPlayNPC"))
                 {
+                    
                     playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
                     CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
                 }
@@ -104,7 +118,6 @@ public class PlayUniverseManager : MonoBehaviour
         NpcManager.ShowNpcHpBar();
         InGamePlayerManager.ShowPlayersHpBar();
     }
-
     /// <summary>
     /// 전투화면에서의 UI를 숨기는 함수, 등장인물들의 HP UI를 숨긴다.
     /// </summary>

@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayBackgroundManager : MonoBehaviourPunCallbacks
+public class PlayBackgroundManager : MonoBehaviourPun
 {
     private List<BackgroundPartInfo> backgroundPartDataList;
 
@@ -17,7 +17,7 @@ public class PlayBackgroundManager : MonoBehaviourPunCallbacks
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager Start");
     }
 
-    public override void OnEnable()
+    private void OnEnable()
     {
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnEnabled");
     }
