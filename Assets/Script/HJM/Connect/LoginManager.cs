@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using TMPro;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,12 +9,20 @@ public class LoginManager : MonoBehaviour
     public TMP_InputField userIdField;
     public TMP_InputField passwordField;
 
-    public ConnectionMgr connection;
+    private ConnectionMgr connection;
+
+    private void Start()
+    {
+        // ConnectionMgr 컴포넌트를 찾습니다.
+        connection = GetComponent<ConnectionMgr>();
+    }
+
     public void OnClickLogin()
     {
         string userId = userIdField.text;
         string password = passwordField.text;
 
+        // 필드 확인
         if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(password))
         {
             Debug.LogError("아이디와 비밀번호를 모두 입력해야 합니다.");
@@ -23,9 +30,8 @@ public class LoginManager : MonoBehaviour
         }
 
         Debug.Log("UserID 입력값: " + userId);
-        connection = GetComponent<ConnectionMgr>();
         StartCoroutine(LoginRequest(userId, password));
-        Debug.Log("로그인 시도" + userId);
+        Debug.Log("로그인 시도: " + userId);
     }
 
     private IEnumerator LoginRequest(string userId, string password)
@@ -45,13 +51,17 @@ public class LoginManager : MonoBehaviour
                 // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
 
-                // UserManager 싱글톤에 userCode 저장
-                UserCodeMgr.Instance.SetUserCode(response.userCode); // int형으로 저장
+                // UserCodeMgr에 userCode 저장
+                UserCodeMgr.Instance.SetUserCode(response.userCode); // userCode 저장
 
-                // ConnectionMgr가 null이 아니라면
-                if (connection != null)
+                // 연결이 되어 있다면 마스터 서버에 연결
+                if (PhotonNetwork.IsConnected)
                 {
-                    connection.OnClickConnect(); // 마스터 서버에 연결
+                    Debug.Log("이미 Photon 서버에 연결되어 있습니다.");
+                }
+                else
+                {
+                    connection.OnClickConnect(); // 서버에 연결
                 }
             }
             else
@@ -66,7 +76,6 @@ public class LoginManager : MonoBehaviour
     [System.Serializable]
     public class LoginResponse
     {
-        // 서버의 응답에서 userCode를 저장
-        public int userCode;
+        public int userCode; // 서버의 응답에서 userCode를 저장
     }
 }
