@@ -1,9 +1,10 @@
 ﻿using Cinemachine;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NpcInPlay : MonoBehaviour
+public class NpcInPlay : MonoBehaviourPun
 {
     private NpcInfo npcInfo;
     public string NpcName => npcInfo.Name;
@@ -14,7 +15,7 @@ public class NpcInPlay : MonoBehaviour
     public Image hpBar;
     public GameObject root;
     private int currentHp;
-
+    
     public void Init(NpcInfo npcInfo)
     {
         this.npcInfo = npcInfo;
@@ -32,5 +33,4 @@ public class NpcInPlay : MonoBehaviour
         currentHp = Mathf.Max(0, currentHp);
         hpBar.fillAmount = (float)currentHp / npcInfo.Hp;
     }
-
 }

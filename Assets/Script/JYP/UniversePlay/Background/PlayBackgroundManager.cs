@@ -33,6 +33,8 @@ public class PlayBackgroundManager : MonoBehaviourPun
 
     private void LoadScene(BackgroundPartInfo background)
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        
         string sceneName = "";
         switch (background.Type)
         {

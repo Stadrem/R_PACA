@@ -46,7 +46,12 @@ namespace UniversePlay
         {
             currentInteractNpc = npc;
             turnSystem.InitTurn();
-            // photonView.RPC("InitPlay", RpcTarget.All);
+            StartCoroutine(TurnBasedConversation());
+        }
+        
+        [PunRPC]
+        private void InitPlay()
+        {
             StartCoroutine(TurnBasedConversation());
         }
 
