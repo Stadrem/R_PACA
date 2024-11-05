@@ -51,8 +51,11 @@ public class LoginManager : MonoBehaviour
                 // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
 
-                // UserCodeMgr에 userCode 저장
-                UserCodeMgr.Instance.SetUserCode(response.userCode); // userCode 저장
+                // userCode 저장
+                UserCodeMgr.Instance.SetUserCode(response.userCode);
+
+                // 추가 정보 요청
+                StartCoroutine(GetUserInfo(response.userCode));
 
                 // 연결이 되어 있다면 마스터 서버에 연결
                 if (PhotonNetwork.IsConnected)
@@ -72,10 +75,43 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    // 서버 응답을 처리하기 위한 클래스
+    private IEnumerator GetUserInfo(int userCode)
+    {
+        string url = "http://125.132.216.190:8765/user/detail?userCode=" + userCode;
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("유저 정보 가져오기 성공: " + request.downloadHandler.text);
+
+                // 서버에서 받은 JSON 응답을 UserInfoResponse 클래스로 변환
+                UserInfoResponse response = JsonUtility.FromJson<UserInfoResponse>(request.downloadHandler.text);
+
+                // UserCodeMgr에 userID와 nickname 저장
+                UserCodeMgr.Instance.SetUserInfo(response.userId, response.nickname);
+            }
+            else
+            {
+                Debug.LogError("유저 정보 가져오기 실패: " + request.error);
+            }
+        }
+    }
+
+    // 로그인 응답을 처리하기 위한 클래스
     [System.Serializable]
     public class LoginResponse
     {
         public int userCode; // 서버의 응답에서 userCode를 저장
+    }
+
+    // 유저 정보 응답을 처리하기 위한 클래스
+    [System.Serializable]
+    public class UserInfoResponse
+    {
+        public string userId;   // 유저의 ID
+        public string nickname; // 유저의 닉네임
     }
 }

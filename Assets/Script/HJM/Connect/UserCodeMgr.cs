@@ -7,12 +7,14 @@ public class UserCodeMgr : MonoBehaviour
     // 싱글톤 인스턴스
     public static UserCodeMgr Instance { get; private set; }
 
-    // 저장할 userCode
+    // 저장할 userCode, userID, nickname
     public int UserCode;
+    public string UserID;
+    public string Nickname;
 
     private void Awake()
     {
-        // 싱글톤 인스턴스가 이미 존재한다면 파괴
+        // 싱글톤
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -20,7 +22,7 @@ public class UserCodeMgr : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 다른 씬에서도 파괴되지 않음
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -29,5 +31,13 @@ public class UserCodeMgr : MonoBehaviour
     {
         UserCode = code;
         Debug.Log("UserCode " + UserCode + "가 저장되었습니다.");
+    }
+
+    // userID와 nickname을 설정하는 함수
+    public void SetUserInfo(string userId, string nickname)
+    {
+        UserID = userId;
+        Nickname = nickname;
+        Debug.Log($"UserID: {UserID}, Nickname: {Nickname}가 저장되었습니다.");
     }
 }
