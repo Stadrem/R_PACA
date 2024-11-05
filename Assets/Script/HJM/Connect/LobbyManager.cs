@@ -22,6 +22,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // RPC 보내는 빈도 설정
         PhotonNetwork.SendRate = 60;
+
         // OnPhotonSerializeView 보내고 받고 하는 빈도 설정
         PhotonNetwork.SerializationRate = 60;
 
