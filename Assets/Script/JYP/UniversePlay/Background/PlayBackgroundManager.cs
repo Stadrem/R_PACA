@@ -26,7 +26,7 @@ public class PlayBackgroundManager : MonoBehaviour
     {
         this.universeData = universe;
         this.backgroundPartDataList = universeBackgroundPartDataList;
-        
+
         var background = universeBackgroundPartDataList.Find(x => x.ID == universe.startBackground.ID);
         LoadScene(background);
     }
@@ -40,11 +40,11 @@ public class PlayBackgroundManager : MonoBehaviour
                 break;
             case EBackgroundPartType.Town:
                 sceneName = "Town";
-                SceneManager.LoadScene("Town");
+                PhotonNetwork.LoadLevel("Town");
                 break;
             case EBackgroundPartType.Dungeon:
                 sceneName = "Dungeon";
-                SceneManager.LoadScene("Dungeon");
+                PhotonNetwork.LoadLevel("Dungeon");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
