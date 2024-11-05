@@ -35,7 +35,6 @@ public class PlayBackgroundManager : MonoBehaviourPun
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         
-        
         string sceneName = "";
         switch (background.Type)
         {
@@ -43,7 +42,6 @@ public class PlayBackgroundManager : MonoBehaviourPun
                 break;
             case EBackgroundPartType.Town:
                 sceneName = "Town";
-                
                 PhotonNetwork.LoadLevel("Town");
                 break;
             case EBackgroundPartType.Dungeon:
