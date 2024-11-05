@@ -477,7 +477,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userIdField: {fileID: 615766654}
   passwordField: {fileID: 1012217314}
-  connection: {fileID: 135535810}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,6 +1052,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserCode: 0
+  UserID: 
+  Nickname: 
 --- !u!4 &396877230
 Transform:
   m_ObjectHideFlags: 0

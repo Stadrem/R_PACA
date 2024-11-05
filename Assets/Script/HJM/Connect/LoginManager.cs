@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using static HttpManager;
 
 public class LoginManager : MonoBehaviour
 {
@@ -92,6 +93,8 @@ public class LoginManager : MonoBehaviour
 
                 // UserCodeMgr에 userID와 nickname 저장
                 UserCodeMgr.Instance.SetUserInfo(response.userId, response.nickname);
+                // Photon의 NickName을 갱신
+                PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
             }
             else
             {

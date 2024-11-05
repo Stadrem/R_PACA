@@ -70,9 +70,9 @@ public class ChatManager : MonoBehaviourPun
         // 만약에 s 의 길이가 0 이면 함수를 나가자.
         if (s.Length == 0) return;
 
-        // 채팅 내용을 NickName : 채팅 내용
-        // "<color=#ffffff> 원하는 내용 </color>"
-        string nick = "<color=#" + ColorUtility.ToHtmlStringRGB(nickNameColor) + ">" + PhotonNetwork.NickName + "</color>";
+        // 닉네임 색상 랜덤하게 설정
+        Color randomNickNameColor = Random.ColorHSV();
+        string nick = "<color=#" + ColorUtility.ToHtmlStringRGB(randomNickNameColor) + ">" + PhotonNetwork.NickName + "</color>";
         string chat = nick + " : " + s;
 
         // AddChat Rpc 함수 호출
