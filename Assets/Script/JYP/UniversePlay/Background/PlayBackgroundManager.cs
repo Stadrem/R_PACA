@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayBackgroundManager : MonoBehaviour
+public class PlayBackgroundManager : MonoBehaviourPun
 {
     private List<BackgroundPartInfo> backgroundPartDataList;
 
