@@ -6,8 +6,11 @@ using System.Runtime.CompilerServices;
 public class UniversePlayViewModel : INotifyPropertyChanged
 {
     #region Properties
+
+    private List<NpcInfo> currentMapNpcList = new();
+
     #endregion
-    
+
     #region INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
