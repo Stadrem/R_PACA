@@ -1,5 +1,9 @@
-﻿using Photon.Pun;
+﻿using System;
+using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
+using UniversePlay;
+using ViewModels;
 
 /// <summary>
 /// 플레이 화면에서의 전체적인 매니저
@@ -9,32 +13,28 @@ public class PlayUniverseManager : MonoBehaviour
 {
     private static PlayUniverseManager instance;
 
-    [SerializeField]
-    private PlayBackgroundManager playBackgroundManager;
+    [SerializeField] private PlayBackgroundManager playBackgroundManager;
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [SerializeField]
-    private PlayNpcManager playNpcManager;
+    [SerializeField] private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
-    [SerializeField]
-    private NpcChatUIManager npcChatUIManager;
+    [SerializeField] private NpcChatUIManager npcChatUIManager;
 
     public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
 
-    [SerializeField]
-    private CamSettingStateManager camSettingManager;
+    [SerializeField] private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
 
-    [SerializeField]
-    private InGamePlayerManager inGamePlayerManager;
+    [SerializeField] private InGamePlayerManager inGamePlayerManager;
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
-
+    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
+    
     public static PlayUniverseManager Instance
     {
         get
@@ -62,6 +62,11 @@ public class PlayUniverseManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        ViewModel.LoadUniverseData();
+    }
 
     private void Update()
     {
@@ -83,7 +88,6 @@ public class PlayUniverseManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("InPlayNPC"))
                 {
-                    
                     playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
                     CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
                 }
@@ -111,6 +115,7 @@ public class PlayUniverseManager : MonoBehaviour
         NpcManager.ShowNpcHpBar();
         InGamePlayerManager.ShowPlayersHpBar();
     }
+
     /// <summary>
     /// 전투화면에서의 UI를 숨기는 함수, 등장인물들의 HP UI를 숨긴다.
     /// </summary>
@@ -118,5 +123,11 @@ public class PlayUniverseManager : MonoBehaviour
     {
         NpcManager.HideNpcHpBar();
         InGamePlayerManager.HidePlayersHpBar();
+    }
+
+    public void StartPlay()
+    {
+        if(PhotonNetwork.IsMasterClient)
+            playBackgroundManager.Init();
     }
 }

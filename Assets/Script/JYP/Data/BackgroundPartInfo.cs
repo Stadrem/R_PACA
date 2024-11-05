@@ -11,7 +11,7 @@ public sealed class BackgroundPartInfo
     public EBackgroundPartType Type;
     public BackgroundPartInfo TowardBackground = null;
     public List<PortalData> PortalList;
-    public List<NpcData> NpcList;
+    public List<NpcInfo> NpcList;
 
     public BackgroundPartInfo()
     {

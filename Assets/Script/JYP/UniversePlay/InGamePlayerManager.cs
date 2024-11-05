@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UniversePlay;
 
 public class InGamePlayerManager : MonoBehaviour
 {
@@ -9,15 +9,11 @@ public class InGamePlayerManager : MonoBehaviour
     private List<HpBarSystem> playerHpSystemList = new List<HpBarSystem>();
     private List<CharacterInfo> characterInfoList = new List<CharacterInfo>();
 
-    [SerializeField]
-    private List<TestUser> userList = new List<TestUser>();
+    [SerializeField] private List<TestUser> userList = new List<TestUser>();
 
     private CameraController currentPlayerCameraController;
 
-    private void Start()
-    {
-
-    }
+    public int PlayerCount => userList.Count;
 
     public List<TestUser> UserList => userList;
     public TestUser myInfo;
@@ -25,12 +21,10 @@ public class InGamePlayerManager : MonoBehaviour
 
     public void Init()
     {
-
-        
         //todo : Get Data When Server Ready
         characterInfoList = new List<CharacterInfo>()
         {
-            new CharacterInfo()
+            new()
             {
                 description = "",
                 hitPoints = 10,
@@ -61,6 +55,7 @@ public class InGamePlayerManager : MonoBehaviour
         var hpBarSystem = go.GetComponent<HpBarSystem>();
         hpBarSystem.Init(characterInfo.hitPoints);
         playerHpSystemList.Add(hpBarSystem);
+        PlayUniverseManager.Instance.NpcManager.selectorChat = go.GetComponent<ISelectorChat>();
     }
 
     public void ShowPlayersHpBar()
@@ -70,7 +65,7 @@ public class InGamePlayerManager : MonoBehaviour
             hpBarSystem.ShowHpBar();
         }
     }
-    
+
     public void HidePlayersHpBar()
     {
         foreach (var hpBarSystem in playerHpSystemList)
@@ -78,12 +73,12 @@ public class InGamePlayerManager : MonoBehaviour
             hpBarSystem.HideHpBar();
         }
     }
-    
+
     public void BlockPlayerCamera()
     {
         currentPlayerCameraController.isBlocked = true;
     }
-    
+
     public void UnblockPlayerCamera()
     {
         currentPlayerCameraController.isBlocked = false;
