@@ -65,6 +65,7 @@ public class SignupManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
 
                 // 동일한 ID와 PW로 로그인 시도
+                // 먼저 로그인 요청을 보내고, 그 결과에 따라 UserCode를 설정합니다.
                 StartCoroutine(LoginRequest(userId, password));
             }
             else
@@ -92,9 +93,6 @@ public class SignupManager : MonoBehaviour
 
                 // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
-
-                // UserManager 싱글톤에 userCode 저장
-                UserCodeMgr.Instance.SetUserCode(response.userCode); // int형으로 저장
 
                 // 1초 대기 후 AvatarCreate 씬으로 이동
                 yield return new WaitForSeconds(1f);

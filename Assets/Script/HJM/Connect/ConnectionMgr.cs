@@ -28,7 +28,7 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
     public void JoinLobby()
     {
         // 닉네임 설정
-        PhotonNetwork.NickName = "플레이어"; // 유저코드에서 닉네임 정보 받아와서 변경
+        PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
         // 기본 Lobby 입장
         PhotonNetwork.JoinLobby();
     }

@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     [Header("플레이어 관련 목록")]
     public List<GameObject> players = new List<GameObject>();  // 플레이어 목록
-    public List<UserInfo> playerStats = new List<UserInfo>();  // 플레이어 스탯 정보 목록
+    public List<UserStats> playerStats = new List<UserStats>();  // 플레이어 스탯 정보 목록
     public List<Transform> battlePos;                          // 전투 시 이동 위치
     public List<NavMeshAgent> agents = new List<NavMeshAgent>();
     public List<PlayerMove> playerMoves = new List<PlayerMove>();
@@ -49,7 +49,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     // 플레이어 초기화 함수
     private void InitializePlayers()
     {
-        var playerObjects = GameObject.FindObjectsOfType<UserInfo>();
+        var playerObjects = GameObject.FindObjectsOfType<UserStats>();
         foreach (var playerObj in playerObjects)
         {
             var playerGameObject = playerObj.gameObject;

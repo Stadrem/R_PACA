@@ -3,7 +3,7 @@ using TMPro;
 
 public class UserStatsManager : MonoBehaviour
 {
-    public UserInfo userInfo;
+    public UserStats UserStats;
 
     public TMP_InputField healthInput;
     public TMP_InputField strengthInput;
@@ -11,10 +11,10 @@ public class UserStatsManager : MonoBehaviour
 
     void Start()
     {
-        
-        userInfo = FindObjectOfType<UserInfo>();
 
-        if (userInfo == null) return;
+        UserStats = FindObjectOfType<UserStats>();
+
+        if (UserStats == null) return;
         
         // 각 OnEndEdit 이벤트 추가
         healthInput.onEndEdit.AddListener(OnHealthInputEnd);
@@ -29,7 +29,7 @@ public class UserStatsManager : MonoBehaviour
     {
         if (int.TryParse(input, out int health))
         {
-            userInfo.userHealth = health;
+            UserStats.userHealth = health;
         }
         else
         {
@@ -42,7 +42,7 @@ public class UserStatsManager : MonoBehaviour
     {
         if (int.TryParse(input, out int strength))
         {
-            userInfo.userStrength = strength;
+            UserStats.userStrength = strength;
         }
         else
         {
@@ -55,7 +55,7 @@ public class UserStatsManager : MonoBehaviour
     {
         if (int.TryParse(input, out int dexterity))
         {
-            userInfo.userDexterity = dexterity;
+            UserStats.userDexterity = dexterity;
         }
         else
         {
