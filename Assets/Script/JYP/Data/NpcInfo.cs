@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NpcData : ICharacterData
+public class NpcInfo : ICharacterData
 {
     public enum ENPCType
     {

@@ -1,20 +1,31 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ViewModels;
 
-public class PlayBackgroundManager : MonoBehaviour
+public class PlayBackgroundManager : MonoBehaviourPun
 {
     private List<BackgroundPartInfo> backgroundPartDataList;
 
-    private UniverseData universeData;
     private Background currentBackground = new Background();
+    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager Start");
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        var background =
+            ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
+        currentBackground.Init(background);
+        currentBackground.LoadParts();
+        PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
     }
 
     private void OnEnable()
@@ -22,17 +33,17 @@ public class PlayBackgroundManager : MonoBehaviour
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnEnabled");
     }
 
-    public void Init(UniverseData universe, List<BackgroundPartInfo> universeBackgroundPartDataList)
+    public void Init()
     {
-        this.universeData = universe;
-        this.backgroundPartDataList = universeBackgroundPartDataList;
-        
-        var background = universeBackgroundPartDataList.Find(x => x.ID == universe.startBackground.ID);
+        var background = ViewModel.UniverseData.backgroundPartDataList.First();
         LoadScene(background);
     }
 
+
     private void LoadScene(BackgroundPartInfo background)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         string sceneName = "";
         switch (background.Type)
         {
@@ -40,38 +51,17 @@ public class PlayBackgroundManager : MonoBehaviour
                 break;
             case EBackgroundPartType.Town:
                 sceneName = "Town";
-                SceneManager.LoadScene("Town");
+                PhotonNetwork.LoadLevel("Town");
                 break;
             case EBackgroundPartType.Dungeon:
                 sceneName = "Dungeon";
-                SceneManager.LoadScene("Dungeon");
+                PhotonNetwork.LoadLevel("Dungeon");
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
-        StartCoroutine(
-            ActionOnLoaded(
-                sceneName,
-                () =>
-                {
-                    currentBackground.Init(background);
-                    currentBackground.LoadParts();
-                    PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
-                }
-            )
-        );
-    }
-
-    private IEnumerator ActionOnLoaded(string sceneName, Action callback)
-    {
-        yield return new WaitUntil(
-            () => SceneManager.GetActiveScene()
-                      .name
-                  == sceneName
-        );
-        Debug.Log($"{sceneName} is loaded");
-        callback?.Invoke();
+        ViewModel.CurrentBackgroundId = background.ID;
     }
 
     public void MoveTo(int backgroundId)

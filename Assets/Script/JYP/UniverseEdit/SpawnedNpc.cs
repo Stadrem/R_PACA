@@ -1,44 +1,47 @@
 ﻿using System;
 using UnityEngine;
 
-public class SpawnedNpc : MonoBehaviour, IDraggable
+namespace UniverseEdit
 {
-    public bool IsDraggable => true;
-    public NPCSpawner npcSpawner;
-    public int characterId { get; set; } = -1;
-    private Vector3 startPos = Vector3.zero;
-
-    public void StartDrag()
+    public class SpawnedNpc : MonoBehaviour, IDraggable
     {
-        startPos = transform.position;
-    }
+        public bool IsDraggable => true;
+        public NpcSpawner npcSpawner;
+        public int characterId { get; set; } = -1;
+        private Vector3 startPos = Vector3.zero;
 
-    public void Dragging(Vector3 position)
-    {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit, float.MaxValue, 1 << LayerMask.NameToLayer("DetailGround")))
+        public void StartDrag()
         {
-            transform.position = position;
+            startPos = transform.position;
         }
-    }
 
-    public void StopDrag()
-    {
-        // check ray cast for UI or detail ground
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (RectTransformUtility.RectangleContainsScreenPoint(
-                npcSpawner.npcListTransform,
-                Input.mousePosition
-            ))
+        public void Dragging(Vector3 position)
         {
-            npcSpawner.ReturnToUi(characterId);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit, float.MaxValue, 1 << LayerMask.NameToLayer("DetailGround")))
+            {
+                transform.position = position;
+            }
         }
-        else if (Physics.Raycast(ray, out var hit, float.MaxValue, 1 << LayerMask.NameToLayer("DetailGround")))
+
+        public void StopDrag()
         {
-        }
-        else
-        {
-            transform.position = startPos;
+            // check ray cast for UI or detail ground
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (RectTransformUtility.RectangleContainsScreenPoint(
+                    npcSpawner.npcListTransform,
+                    Input.mousePosition
+                ))
+            {
+                npcSpawner.ReturnToUi(characterId);
+            }
+            else if (Physics.Raycast(ray, out var hit, float.MaxValue, 1 << LayerMask.NameToLayer("DetailGround")))
+            {
+            }
+            else
+            {
+                transform.position = startPos;
+            }
         }
     }
 }

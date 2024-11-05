@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TurnSystem : MonoBehaviour
 {
-    public int Turn { get; private set; }
+    private int Turn { get; set; }
 
     private int currentTurnCharacterId;
     
-    public void NextTurn(int id)
+    public int GetNextTurn()
     {
-        Turn++;
+        return ++Turn;
     }
 
     public void InitTurn()

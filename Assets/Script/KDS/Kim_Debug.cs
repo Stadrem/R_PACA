@@ -3,7 +3,6 @@ using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.ShaderData;
 
 public class Kim_Debug : MonoBehaviourPunCallbacks
 {
@@ -95,6 +94,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
 
     public void OnClickTest()
     {
+        return; // JYP: 변경하고 감
         var portalList1 = new List<PortalData>()
                 {
                     new PortalData()
@@ -113,20 +113,20 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
                     },
                 };
 
-        var npcList1 = new List<NpcData>()
+        var npcList1 = new List<NpcInfo>()
                 {
-                    new NpcData()
+                    new NpcInfo()
                     {
                         Name = "마을사람 1",
                         Position = new Vector3(58.8600006f,9.57999992f,65.8899994f),
-                        Type = NpcData.ENPCType.Human,
+                        Type = NpcInfo.ENPCType.Human,
                     },
 
-                    new NpcData()
+                    new NpcInfo()
                     {
                         Name = "고블린 1",
                         Position = new Vector3(62.4500008f,9.45199966f,66.5199966f),
-                        Type = NpcData.ENPCType.Goblin,
+                        Type = NpcInfo.ENPCType.Goblin,
                     }
                 };
         var backgroundList = new List<BackgroundPartInfo>()
@@ -147,7 +147,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
                         Type = EBackgroundPartType.Dungeon,
                         UniverseId = 0,
                         PortalList = portalList2,
-                        NpcList = new List<NpcData>()
+                        NpcList = new List<NpcInfo>()
                     },
                 };
 
@@ -155,10 +155,10 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
         {
             id = 0,
             name = "Universe 0",
-            startBackground = backgroundList[0],
+            backgroundPartDataList = backgroundList,
         };
         PlayUniverseManager.Instance.InGamePlayerManager.Init();
-        PlayUniverseManager.Instance.BackgroundManager.Init(universe, backgroundList);
+        PlayUniverseManager.Instance.BackgroundManager.Init();
     }
 }
 

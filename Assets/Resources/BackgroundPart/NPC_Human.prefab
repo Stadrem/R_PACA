@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 8735166532051228324}
   - component: {fileID: 4869136767452314487}
   - component: {fileID: 4333170638348329709}
+  - component: {fileID: 4834088985533956360}
   m_Layer: 0
   m_Name: NPC_Human
   m_TagString: InPlayNPC
@@ -150,6 +151,28 @@ MonoBehaviour:
   npcNameText: {fileID: 8882312199454200995}
   hpBar: {fileID: 1466609699633398110}
   root: {fileID: 2270900911125300892}
+--- !u!114 &4834088985533956360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207442756505664821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2270900911125300892
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,6 +49,9 @@ MonoBehaviour:
   - SpawnNPCs
   - AddChat
   - SetUserCode
+  - RPC_AddOption
+  - RPC_NpcResponse
+  - RPC_Select
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

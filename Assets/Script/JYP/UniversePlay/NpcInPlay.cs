@@ -1,25 +1,26 @@
 ﻿using Cinemachine;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NpcInPlay : MonoBehaviour
+public class NpcInPlay : MonoBehaviourPun
 {
-    private NpcData npcInfo;
+    private NpcInfo npcInfo;
     public string NpcName => npcInfo.Name;
-    public NpcData.ENPCType ShapeType => npcInfo.Type;
+    public NpcInfo.ENPCType ShapeType => npcInfo.Type;
 
     public CinemachineVirtualCamera ncVcam;
     public TMP_Text npcNameText;
     public Image hpBar;
     public GameObject root;
     private int currentHp;
-
-    public void Init(NpcData npcData)
+    
+    public void Init(NpcInfo npcInfo)
     {
-        npcInfo = npcData;
-        npcNameText.text = npcData.Name;
-        currentHp = npcData.Hp;
+        this.npcInfo = npcInfo;
+        npcNameText.text = npcInfo.Name;
+        currentHp = npcInfo.Hp;
     }
 
     /// <summary>
@@ -32,5 +33,4 @@ public class NpcInPlay : MonoBehaviour
         currentHp = Mathf.Max(0, currentHp);
         hpBar.fillAmount = (float)currentHp / npcInfo.Hp;
     }
-
 }
