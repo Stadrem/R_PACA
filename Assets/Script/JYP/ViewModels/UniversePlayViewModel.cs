@@ -13,7 +13,8 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
     private List<NpcInfo> currentMapNpcList = new();
     private List<ChatLog> chatLogs = new();
     private int npcChatSelectedIndex = -1;
-
+    private UniverseData universeData;
+    private int currentBackgroundId = -1;
     #endregion
 
     #region INotifyPropertyChanged
@@ -40,7 +41,18 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         get => npcChatSelectedIndex;
         set => SetField(ref npcChatSelectedIndex, value);
     }
-
+    
+    public UniverseData UniverseData
+    {
+        get => universeData;
+        set => SetField(ref universeData, value);
+    }
+    
+    public int CurrentBackgroundId
+    {
+        get => currentBackgroundId;
+        set => SetField(ref currentBackgroundId, value);
+    }
 
     public IEnumerator TalkNpc(string sender, string message, Action<ApiResult<NpcChatResponseDto>> callback)
     {
@@ -59,5 +71,73 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
                 }
             )
         );
+    }
+
+    public void LoadUniverseData() //todo 아직 더미 데이터
+    {
+        var portalList1 = new List<PortalData>()
+        {
+            new PortalData()
+            {
+                position = new Vector3(58.4300003f, 9.30700016f, 51.8300018f),
+                targetBackgroundId = 1,
+            },
+        };
+
+        var portalList2 = new List<PortalData>()
+        {
+            new PortalData()
+            {
+                position = Vector3.zero,
+                targetBackgroundId = 0,
+            },
+        };
+
+        var npcList1 = new List<NpcInfo>()
+        {
+            new NpcInfo()
+            {
+                Name = "마을사람 1",
+                Position = new Vector3(58.8600006f, 9.57999992f, 65.8899994f),
+                Type = NpcInfo.ENPCType.Human,
+            },
+
+            new NpcInfo()
+            {
+                Name = "고블린 1",
+                Position = new Vector3(62.4500008f, 9.45199966f, 66.5199966f),
+                Type = NpcInfo.ENPCType.Goblin,
+            }
+        };
+        var backgroundList = new List<BackgroundPartInfo>()
+        {
+            new BackgroundPartInfo()
+            {
+                ID = 0,
+                Name = "Town 0",
+                Type = EBackgroundPartType.Town,
+                UniverseId = 0,
+                PortalList = portalList1,
+                NpcList = npcList1,
+            },
+            new BackgroundPartInfo()
+            {
+                ID = 1,
+                Name = "Dungeon 0",
+                Type = EBackgroundPartType.Dungeon,
+                UniverseId = 0,
+                PortalList = portalList2,
+                NpcList = new List<NpcInfo>()
+            },
+        };
+
+        var universe = new UniverseData()
+        {
+            id = 0,
+            name = "Universe 0",
+            backgroundPartDataList = backgroundList
+        };
+        
+        universeData = universe;
     }
 }

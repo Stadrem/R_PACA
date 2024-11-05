@@ -94,6 +94,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
 
     public void OnClickTest()
     {
+        return; // JYP: 변경하고 감
         var portalList1 = new List<PortalData>()
                 {
                     new PortalData()
@@ -154,10 +155,10 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
         {
             id = 0,
             name = "Universe 0",
-            startBackground = backgroundList[0],
+            backgroundPartDataList = backgroundList,
         };
         PlayUniverseManager.Instance.InGamePlayerManager.Init();
-        PlayUniverseManager.Instance.BackgroundManager.Init(universe, backgroundList);
+        PlayUniverseManager.Instance.BackgroundManager.Init();
     }
 }
 

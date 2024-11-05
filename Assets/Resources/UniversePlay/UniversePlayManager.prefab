@@ -1297,6 +1297,7 @@ GameObject:
   - component: {fileID: 7755557171581210637}
   - component: {fileID: 2520981143703218369}
   - component: {fileID: 8093603927009587201}
+  - component: {fileID: 229696206782861016}
   m_Layer: 0
   m_Name: UniversePlayManager
   m_TagString: Untagged
@@ -1413,6 +1414,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc4d8d4112b703742949eff574788fff, type: 2}
   - {fileID: 11400000, guid: cc3e02a1658ffde4d81115aa3beb9fe0, type: 2}
   myInfo: {fileID: 11400000, guid: 588d0acb66b689d43b0e0aa9a6bbef2d, type: 2}
+--- !u!114 &229696206782861016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5135566642832308513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6780912333984409980
 GameObject:
   m_ObjectHideFlags: 0

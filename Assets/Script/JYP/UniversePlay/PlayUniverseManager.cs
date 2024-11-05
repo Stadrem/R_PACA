@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UniversePlay;
+using ViewModels;
 
 /// <summary>
 /// 플레이 화면에서의 전체적인 매니저
@@ -31,7 +33,8 @@ public class PlayUniverseManager : MonoBehaviour
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
-
+    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
+    
     public static PlayUniverseManager Instance
     {
         get
@@ -62,8 +65,8 @@ public class PlayUniverseManager : MonoBehaviour
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        ViewModel.LoadUniverseData();
     }
-
 
     private void Update()
     {
@@ -120,5 +123,11 @@ public class PlayUniverseManager : MonoBehaviour
     {
         NpcManager.HideNpcHpBar();
         InGamePlayerManager.HidePlayersHpBar();
+    }
+
+    public void StartPlay()
+    {
+        if(PhotonNetwork.IsMasterClient)
+            playBackgroundManager.Init();
     }
 }
