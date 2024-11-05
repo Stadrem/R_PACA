@@ -15,6 +15,7 @@ namespace JYP
             {
                 // 마스터 서버에 접속 시도
                 Debug.Log("마스터 서버에 접속을 시도했습니다.");
+                PhotonNetwork.AutomaticallySyncScene = true;
                 PhotonNetwork.ConnectUsingSettings();
             }
         }
@@ -41,7 +42,6 @@ namespace JYP
             base.OnJoinedLobby();
             Debug.Log("로비서버 입장 완료했습니다.");
             JoinOrCreatLobbyRoom();
-
         }
 
         // Room을 참여하자. 만약에 해당 Room이 없으면 Room을 만든다.
@@ -63,7 +63,6 @@ namespace JYP
         {
             base.OnCreatedRoom();
             Debug.Log("로비룸 생성 완료했습니다.");
-
         }
 
         // 로비룸에 입장 성공 했을 때 호출되는 함수
