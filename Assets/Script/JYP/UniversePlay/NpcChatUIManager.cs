@@ -1,36 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Photon.Pun;
 using UnityEngine.UI;
 using WebSocketSharp;
 
-public class NpcChatUIManager : MonoBehaviourPun
+public class NpcChatUIManager : MonoBehaviour
 {
     public Canvas chatCanvas;
     public TMP_InputField ChatInputField;
     public RectTransform listContent;
     public TMP_Text turnText;
     public GameObject ChatBubblePrefab;
-    public ScrollRect scrollRect; 
-    public void Start()
-    {
-        ChatInputField.onSubmit.AddListener(OnSubmitText);
-    }
+    public ScrollRect scrollRect;
 
-    private void OnSubmitText(string txt)
-    {
-        PlayUniverseManager.Instance.NpcManager.OnChatSubmit(txt);
-        AddChatBubble(
-            PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name,
-            PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name + " : " + txt
-        );
-        // photonView.RPC("AddChatBubble", RpcTarget.All, "누군가..", txt);
-        ChatInputField.text = "";
-    }
+    [Header("Chat Options")] 
+    public RectTransform optionsContainer;
+    public GameObject selectorEntryPrefab;
+    public List<NpcChatSelectorEntryController> selectorEntries;
+
 
     public void SetTurnText(int turn, string text)
     {
@@ -54,15 +43,7 @@ public class NpcChatUIManager : MonoBehaviourPun
         chatCanvas.gameObject.SetActive(false);
     }
 
-    public void RPC_AddChatBubble(string sender, string text)
-    {
-        AddChatBubble(sender, text);
-        return;
-        photonView.RPC("AddChatBubble", RpcTarget.All, sender, text);
-    }
-
-    [PunRPC]
-    private void AddChatBubble(string sender, string text)
+    public void AddChatBubble(string sender, string text)
     {
         GameObject chatBubble = Instantiate(ChatBubblePrefab, listContent);
         chatBubble.GetComponent<NpcChatItem>()
@@ -73,7 +54,7 @@ public class NpcChatUIManager : MonoBehaviourPun
             );
         StartCoroutine(ScrollToBottom());
     }
-    
+
     private IEnumerator ScrollToBottom()
     {
         yield return new WaitForSeconds(0.1f);
@@ -84,5 +65,21 @@ public class NpcChatUIManager : MonoBehaviourPun
     public void SetChattable(bool chattable)
     {
         ChatInputField.interactable = chattable;
+    }
+
+
+    public void ShowChatOptions(Dictionary<string, string> options)
+    {
+        if (!optionsContainer.gameObject.activeSelf)
+            optionsContainer.gameObject.SetActive(true);
+
+        // create
+        foreach (var option in options)
+        {
+            GameObject selectorEntry = Instantiate(selectorEntryPrefab, optionsContainer);
+            var optionText = $"{option.Key} : {option.Value}";
+            selectorEntry.GetComponent<NpcChatSelectorEntryController>().SetText(optionText);
+            selectorEntries.Add(selectorEntry.GetComponent<NpcChatSelectorEntryController>());
+        }
     }
 }

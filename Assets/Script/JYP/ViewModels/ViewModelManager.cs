@@ -9,9 +9,9 @@ namespace ViewModels
         public static ViewModelManager Instance => instance ??= new ViewModelManager();
 
         private UniverseEditViewModel universeEditViewModel = null;
-
+        private UniversePlayViewModel universePlayViewModel = null;
         public UniverseEditViewModel UniverseEditViewModel => universeEditViewModel ??= new UniverseEditViewModel();
-
+        public UniversePlayViewModel UniversePlayViewModel => universePlayViewModel ??= new UniversePlayViewModel();
         public void Reset()
         {
             universeEditViewModel = null;
