@@ -24,13 +24,13 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
                 }
                 else
                 {
-                    Debug.LogWarning("UserCodeMgr.Instance가 null입니다.");
+                    //Debug.LogWarning("UserCodeMgr.Instance가 null입니다.");
                 }
             }
         }
         else
         {
-            Debug.LogWarning("부모 오브젝트에 PhotonView가 없습니다.");
+            Debug.LogWarning("부모 오브젝트에 PhotonView가 없음. 아바타 생성씬이면 정상이지만, 그렇지 않다면 문제가 생겼을지도?");
         }
     }
 
