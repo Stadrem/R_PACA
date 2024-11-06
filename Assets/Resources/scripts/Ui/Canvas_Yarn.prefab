@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3000336425642734318}
+      - m_Target: {fileID: 1312030098644795289}
         m_TargetAssemblyTypeName: BtnCloseAction, Assembly-CSharp
         m_MethodName: OnClickClose
         m_Mode: 1
@@ -2179,7 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf4cc6438ff90a4481f46d0aa802054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yarnHistoryGetSet: {fileID: 8358383883979903021}
+  yarnHttpManager: {fileID: 8358383883979903021}
   text_pageNum: {fileID: 807073354195941066}
   page2: {fileID: 1654349208200358879}
   page3: {fileID: 999186908600935115}

@@ -117,7 +117,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
         {
             connectionMgr.OnClickConnect();
         }
-        else if (!PhotonNetwork.InLobby)
+        else
         {
             connectionMgr.JoinLobby();
         }
