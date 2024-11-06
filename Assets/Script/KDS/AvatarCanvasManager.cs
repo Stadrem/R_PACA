@@ -15,9 +15,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     PlayerAvatarSetting pas;
 
-    public ConnectionMgr cm;
-
-    public GameObject debugPanel;
+    public ConnectionMgr connectionMgr;
 
     Animator anim;
 
@@ -117,11 +115,11 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
         if (!PhotonNetwork.IsConnected)
         {
-            cm.OnClickConnect();
+            connectionMgr.OnClickConnect();
         }
-        else
+        else if (!PhotonNetwork.InLobby)
         {
-            cm.OnJoinedLobby();
+            connectionMgr.JoinLobby();
         }
     }
 
