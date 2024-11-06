@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -114,7 +115,14 @@ public class AvatarCanvasManager : AvatarHTTPManager
             TempFakeServer.Get().myAvatar = pas.myAvatar;
         }
 
-        cm.OnClickConnect();
+        if (!PhotonNetwork.IsConnected)
+        {
+            cm.OnClickConnect();
+        }
+        else
+        {
+            cm.OnJoinedLobby();
+        }
     }
 
     //public MyAvatar myAvatar;

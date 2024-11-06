@@ -94,6 +94,8 @@ public class SignupManager : MonoBehaviour
                 // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
 
+                UserCodeMgr.Instance.UserCode = response.userCode;
+
                 // 1초 대기 후 AvatarCreate 씬으로 이동
                 yield return new WaitForSeconds(1f);
                 SceneManager.LoadScene("AvatarCreate"); // 아바타 생성 씬으로 이동
