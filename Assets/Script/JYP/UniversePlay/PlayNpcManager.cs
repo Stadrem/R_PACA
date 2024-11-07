@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
+using Unity.VisualScripting;
 using UnityEngine;
 using ViewModels;
 
 namespace UniversePlay
 {
-    public class PlayNpcManager : MonoBehaviour
+    public class PlayNpcManager : MonoBehaviourPun
     {
         // private List<NpcInfo> currentBackgroundNPCList = new();
-        private readonly List<NpcInPlay> currentNpcList = new();
+
+        [SerializeField] private List<NpcInPlay> currentNpcList = new();
 
         public CinemachineVirtualCamera CurrentNpcVcam => currentInteractNpc.ncVcam;
         private NpcInPlay currentInteractNpc;
@@ -22,38 +26,37 @@ namespace UniversePlay
         private static InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
         private int currentPlayerId = -1;
 
-        public ISelectorChat selectorChat;
+        public ISelectorChat selectorChat => PlayUniverseManager.Instance.SelectorChat;
 
         private readonly NpcSpawner spawner = new NpcSpawner();
 
 
         public void LoadNpcList(List<NpcInfo> npcList)
         {
+            if (!photonView.IsMine) return;
+
             if (currentNpcList.Count > 0)
             {
                 currentNpcList.ForEach(Destroy);
                 currentNpcList.Clear();
             }
 
+
             foreach (var info in npcList)
             {
-                spawner.Spawn(info);
+                spawner.PunSpawn(info);
             }
         }
 
 
-        public void InteractNpc(NpcInPlay npc)
+        public void InteractNpc(int npcId)
         {
-            currentInteractNpc = npc;
+            var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
+            currentInteractNpc = npcInfo;
             turnSystem.InitTurn();
             StartCoroutine(TurnBasedConversation());
         }
-        
-        [PunRPC]
-        private void InitPlay()
-        {
-            StartCoroutine(TurnBasedConversation());
-        }
+
 
         public void OnSubmitChatClicked()
         {
@@ -65,9 +68,12 @@ namespace UniversePlay
                     return;
                 }
 
-                if (ViewModel.NpcChatSelectedIndex == selectorChat.OptionCount)
+                if (ViewModel.NpcChatSelectedIndex == 0)
                 {
-                    selectorChat.Select("Master", NpcChatUIManager.ChatInputField.text);
+                    selectorChat.Select(
+                        PlayerManager.CurrentPlayerInfo.name,
+                        NpcChatUIManager.ChatInputField.text
+                    );
                 }
                 else
                 {
@@ -84,21 +90,38 @@ namespace UniversePlay
             }
         }
 
+        public void FinishPlayerTurn()
+        {
+            //clear data
+            photonView.RPC(nameof(RPC_FinishTurn), RpcTarget.All);
+        }
+
+        private void RPC_FinishTurn()
+        {
+            ViewModel.NpcChatSelectedIndex = -1;
+            selectorChat.ClearOptions();
+            NpcChatUIManager.ClearChatOptions();
+            NpcChatUIManager.SetChattable(false);
+        }
 
         private IEnumerator ConversationWithNpc_Master()
         {
-            yield return new WaitUntil(() => selectorChat.OptionCount >= PlayerManager.PlayerCount);
+            print("기다림 시작");
+            yield return new WaitUntil(() => selectorChat.OptionCount >= PlayerManager.PlayerCount - 1);
+            print("기다림 끝");
             NpcChatUIManager.SetChattable(true);
             selectorChat.ShowSelectors();
         }
 
         private IEnumerator ConversationWithNpc_Other()
         {
-            yield return new WaitUntil(() => selectorChat.OptionCount > PlayerManager.PlayerCount);
+            NpcChatUIManager.SetChattable(true);
+            yield return new WaitUntil(() => selectorChat.OptionCount >= PlayerManager.PlayerCount - 1);
         }
 
         public void NextTurn()
         {
+            selectorChat.ClearOptions();
             StartCoroutine(TurnBasedConversation());
         }
 
@@ -107,6 +130,8 @@ namespace UniversePlay
             StartTurn();
             if (PhotonNetwork.IsMasterClient)
             {
+                Debug.Log($"마스터 대화 시작");
+                Debug.Log($"Clear Options");
                 yield return ConversationWithNpc_Master();
             }
             else
@@ -141,6 +166,11 @@ namespace UniversePlay
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
+        }
+
+        public void AddNpc(NpcInPlay npcInPlay)
+        {
+            currentNpcList.Add(npcInPlay);
         }
     }
 }

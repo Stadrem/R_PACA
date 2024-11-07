@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ViewModels;
 using WebSocketSharp;
 
 public class NpcChatUIManager : MonoBehaviour
@@ -14,9 +15,10 @@ public class NpcChatUIManager : MonoBehaviour
     public TMP_Text turnText;
     public GameObject ChatBubblePrefab;
     public ScrollRect scrollRect;
+    public ToggleGroup selectorToggleGroup;
 
-    [Header("Chat Options")] 
-    public RectTransform optionsContainer;
+
+    [Header("Chat Options")] public RectTransform optionsContainer;
     public GameObject selectorEntryPrefab;
     public List<NpcChatSelectorEntryController> selectorEntries;
 
@@ -50,8 +52,9 @@ public class NpcChatUIManager : MonoBehaviour
             .SetText(
                 sender,
                 text,
-                sender == PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name
+                sender == PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.name
             );
+        Canvas.ForceUpdateCanvases();
         StartCoroutine(ScrollToBottom());
     }
 
@@ -68,18 +71,58 @@ public class NpcChatUIManager : MonoBehaviour
     }
 
 
-    public void ShowChatOptions(Dictionary<string, string> options)
+    public void ClearChatOptions()
+    {
+        selectorEntries.Clear();
+        while (optionsContainer.childCount > 0)
+        {
+            Destroy(optionsContainer.GetChild(0).gameObject);
+        }
+    }
+
+    public void ShowChatOptions(List<KeyValuePair<string, string>> options)
     {
         if (!optionsContainer.gameObject.activeSelf)
             optionsContainer.gameObject.SetActive(true);
 
+        foreach (var entry in selectorEntries)
+        {
+            Destroy(entry.gameObject);
+        }
+
+        selectorEntries.Clear();
+        selectorToggleGroup.SetAllTogglesOff();
+
         // create
         foreach (var option in options)
         {
+            var idx = options.IndexOf(option);
             GameObject selectorEntry = Instantiate(selectorEntryPrefab, optionsContainer);
             var optionText = $"{option.Key} : {option.Value}";
-            selectorEntry.GetComponent<NpcChatSelectorEntryController>().SetText(optionText);
+            var controller = selectorEntry.GetComponent<NpcChatSelectorEntryController>();
+            controller.BindData(idx, optionText);
+            selectorToggleGroup.RegisterToggle(controller.toggle);
+            controller.SetOnValueChanged(OnToggleValueChanged);
+
             selectorEntries.Add(selectorEntry.GetComponent<NpcChatSelectorEntryController>());
+        }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(optionsContainer);
+        Canvas.ForceUpdateCanvases();
+    }
+
+    public void OnToggleValueChanged(int index, bool isOn)
+    {
+        print($"index: {index}, isOn: {isOn}");
+        if (!isOn) return;
+
+        ViewModelManager.Instance.UniversePlayViewModel.NpcChatSelectedIndex = index;
+
+
+        for (int i = 0; i < selectorToggleGroup.ActiveToggles().Count(); i++)
+        {
+            if (i == index) continue;
+            selectorToggleGroup.ActiveToggles().ElementAt(i).SetIsOnWithoutNotify(false);
         }
     }
 }

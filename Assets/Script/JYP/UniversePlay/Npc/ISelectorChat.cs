@@ -30,5 +30,7 @@
         /// <param name="sender">말하는 사람(마스터)</param>
         /// <param name="option">선택지 대사/액션</param>
         void Select(string sender, string option);
+
+        void ClearOptions();
     }
 }
