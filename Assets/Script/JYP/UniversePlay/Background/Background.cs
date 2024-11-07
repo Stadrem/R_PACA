@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,11 +9,12 @@ public class Background
     private BackgroundPartInfo info;
     private List<PortalInPlay> portalParts;
     private Transform parent = null;
-
+    
+    private static InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
     public void Init(BackgroundPartInfo info)
     {
         this.info = info;
-        PlayUniverseManager.Instance.InGamePlayerManager.SpawnPlayers();
+        PlayerManager.SpawnPlayers();
     }
 
     public void LoadParts()
