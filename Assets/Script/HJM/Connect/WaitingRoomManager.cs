@@ -57,8 +57,6 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         Debug.Log($"생성! {position}");
         // 포톤 인스턴스 생성
         GameObject playerAvatar = PhotonNetwork.Instantiate("Player_Avatar", position, Quaternion.Euler(0, 180, 0));
-
-        // 추가적인 초기화 코드 필요 시 여기에 추가
     }
 
 
