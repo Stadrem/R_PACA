@@ -3786,7 +3786,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378093770}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d918dc5bd6f26c4aa0ed2e298707d83, type: 3}
   m_Name: 
@@ -7299,6 +7299,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583232404600190879, guid: 686325c2017551c46b4f626c813e47d0,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8908912952223865329, guid: 686325c2017551c46b4f626c813e47d0,
         type: 3}
@@ -24588,18 +24593,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
+  playerStats: []
   battlePos:
   - {fileID: 2098810429}
   agents: []
   playerMoves: []
-  playerPrefab: {fileID: 5036315687414311693, guid: 686325c2017551c46b4f626c813e47d0,
-    type: 3}
-  npcPrefab: {fileID: 2389740261151551814, guid: 393a8b58363c0e34c965ca97fa9cd071,
-    type: 3}
-  npcPos: {fileID: 1683507855}
-  npcCount: 1
-  npc: {fileID: 0}
   battleUI: {fileID: 3535244620977086028}
+  profileUI: {fileID: 6255085196350749319, guid: 9f5dab9058b46824799696c855c5e8c2,
+    type: 3}
 --- !u!114 &5525024717357217103
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -51,12 +51,7 @@ public class NickNameCanvas : MonoBehaviourPunCallbacks
             if (targetPlayer == PhotonNetwork.LocalPlayer)
             {
                 nicknameText.text = updatedNickname; // 로컬 플레이어 닉네임 업데이트
-            }
-            else
-            {
-                // 다른 플레이어의 닉네임을 보여주는 추가 로직 작성
                 Debug.Log($"Player {targetPlayer.ActorNumber} 닉네임: {updatedNickname}");
-                // UI로 표시하는 로직 추가 가능
             }
         }
     }

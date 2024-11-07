@@ -16,14 +16,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public List<NavMeshAgent> agents = new List<NavMeshAgent>();
     public List<PlayerMove> playerMoves = new List<PlayerMove>();
 
-    [Header("NPC 생성 옵션")]
-    public GameObject npcPrefab;
-    public Transform npcPos;
-    public int npcCount = 1;
-    private int currentNpcCount = 0;
-    public GameObject npc;
 
     public GameObject battleUI;
+    public GameObject profileUI;
 
     private void Awake()
     {
@@ -75,23 +70,22 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKey(KeyCode.B))
         {
-            if (currentNpcCount < npcCount)
-            {
-                SpawnNPCs();
-            }
-
             MoveToBattlePos();
             battleUI.SetActive(true);
+            ProfileSet();
         }
     }
 
-    // NPC 생성
-    public void SpawnNPCs()
+    // 프로필UI 생성
+    public void ProfileSet()
     {
-        if (currentNpcCount < npcCount)
+        if (players.Count > 0)
         {
-            npc = PhotonNetwork.Instantiate(npcPrefab.name, npcPos.position, npcPos.rotation);
-            currentNpcCount++;
+            for (int i = 0; i < players.Count; i++)
+            {
+                GameObject profile = PhotonNetwork.Instantiate(profileUI.name, profileUI.transform.position, Quaternion.identity);
+                profile.transform.SetParent(battleUI.transform, false);
+            }
         }
     }
 
