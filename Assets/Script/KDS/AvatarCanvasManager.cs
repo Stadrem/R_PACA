@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,9 +15,7 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     PlayerAvatarSetting pas;
 
-    public ConnectionMgr cm;
-
-    public GameObject debugPanel;
+    public ConnectionMgr connectionMgr;
 
     Animator anim;
 
@@ -114,7 +113,14 @@ public class AvatarCanvasManager : AvatarHTTPManager
             TempFakeServer.Get().myAvatar = pas.myAvatar;
         }
 
-        cm.OnClickConnect();
+        if (!PhotonNetwork.IsConnected)
+        {
+            connectionMgr.OnClickConnect();
+        }
+        else
+        {
+            connectionMgr.JoinLobby();
+        }
     }
 
     //public MyAvatar myAvatar;

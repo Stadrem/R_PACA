@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Kim_Debug : MonoBehaviourPunCallbacks
 {
+    //종합 디버그 시스템. [`] 키 누르면 튀어나옴
+    //Get()만 호출해도 알아서 생성됨.
+    
     //싱글톤
     public static Kim_Debug instance;
 
@@ -50,13 +53,13 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
 
     public GameObject debugPanel;
 
-    //백엔드 없을 시 디버그용
+    //패널 활성화
     void DebugPanel()
     {
         debugPanel.SetActive(!debugPanel.activeSelf);
     }
 
-    // Update is called once per frame
+    // [`] 누르면 패널 활성화됨
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
@@ -65,26 +68,31 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
         }
     }
 
+    //아바타 정보 주고받을 임시 서버 오브젝트 생성
     public void OnClickNotNetwork()
     {
         TempFakeServer.Get();
     }
 
+    //일상 주사위 굴리기
     public void OnClickDice()
     {
         DiceRollManager.Get().SearchDiceRoll(9);
     }
 
+    //전투 주사위 굴리기
     public void OnClickBattleDice()
     {
         DiceRollManager.Get().BattleDiceRoll(9);
     }
 
+    //엔딩 팝업
     public void OnClickEnding()
     {
         Ending.Get().EnableCanvas();
     }
 
+    //로비로 강제로 돌아가기
     public void OnClickLobby()
     {
         PhotonNetwork.LeaveRoom();
@@ -92,73 +100,9 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("LobbyScene");
     }
 
-    public void OnClickTest()
+    //모험담 팝업
+    public void OnClickYarnHistroy()
     {
-        return; // JYP: 변경하고 감
-        var portalList1 = new List<PortalData>()
-                {
-                    new PortalData()
-                    {
-                        position = new Vector3(58.4300003f,9.30700016f,51.8300018f),
-                        targetBackgroundId = 1,
-                    },
-                };
-
-        var portalList2 = new List<PortalData>()
-                {
-                    new PortalData()
-                    {
-                        position = Vector3.zero,
-                        targetBackgroundId = 0,
-                    },
-                };
-
-        var npcList1 = new List<NpcInfo>()
-                {
-                    new NpcInfo()
-                    {
-                        Name = "마을사람 1",
-                        Position = new Vector3(58.8600006f,9.57999992f,65.8899994f),
-                        Type = NpcInfo.ENPCType.Human,
-                    },
-
-                    new NpcInfo()
-                    {
-                        Name = "고블린 1",
-                        Position = new Vector3(62.4500008f,9.45199966f,66.5199966f),
-                        Type = NpcInfo.ENPCType.Goblin,
-                    }
-                };
-        var backgroundList = new List<BackgroundPartInfo>()
-                {
-                    new BackgroundPartInfo()
-                    {
-                        ID = 0,
-                        Name = "Town 0",
-                        Type = EBackgroundPartType.Town,
-                        UniverseId = 0,
-                        PortalList = portalList1,
-                        NpcList = npcList1,
-                    },
-                    new BackgroundPartInfo()
-                    {
-                        ID = 1,
-                        Name = "Dungeon 0",
-                        Type = EBackgroundPartType.Dungeon,
-                        UniverseId = 0,
-                        PortalList = portalList2,
-                        NpcList = new List<NpcInfo>()
-                    },
-                };
-
-        var universe = new UniverseData()
-        {
-            id = 0,
-            name = "Universe 0",
-            backgroundPartDataList = backgroundList,
-        };
-        PlayUniverseManager.Instance.InGamePlayerManager.Init();
-        PlayUniverseManager.Instance.BackgroundManager.Init();
+        YarnUiManager.Get().EnableCanvas();
     }
 }
-
