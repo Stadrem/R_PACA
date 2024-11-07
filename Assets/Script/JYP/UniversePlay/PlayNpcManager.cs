@@ -101,7 +101,9 @@ namespace UniversePlay
             ViewModel.NpcChatSelectedIndex = -1;
             selectorChat.ClearOptions();
             NpcChatUIManager.ClearChatOptions();
+            NpcChatUIManager.HideChatOptions();
             NpcChatUIManager.SetChattable(false);
+            
         }
 
         private IEnumerator ConversationWithNpc_Master()
@@ -163,19 +165,11 @@ namespace UniversePlay
 
         public void FinishConversation()
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                photonView.RPC(nameof(Pun_FinishConversation), RpcTarget.All);
-            }
-        }
-        
-        [PunRPC]
-        private void Pun_FinishConversation()
-        {
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
         }
+        
 
         public void AddNpc(NpcInPlay npcInPlay)
         {

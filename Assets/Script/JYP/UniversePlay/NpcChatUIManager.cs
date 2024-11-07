@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
@@ -7,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ViewModels;
-using UniversePlay;
 using WebSocketSharp;
 
 public class NpcChatUIManager : MonoBehaviour
@@ -34,7 +32,7 @@ public class NpcChatUIManager : MonoBehaviour
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PlayUniverseManager.Instance.NpcManager.FinishConversation();
+                    PlayUniverseManager.Instance.FinishConversation();
                 }
             }
         );
@@ -96,7 +94,15 @@ public class NpcChatUIManager : MonoBehaviour
             Destroy(optionsContainer.GetChild(0).gameObject);
         }
     }
-
+    
+    public void HideChatOptions()
+    {
+        if (optionsContainer.gameObject.activeSelf)
+            optionsContainer.gameObject.SetActive(false);
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(optionsContainer);
+    }
+    
     public void ShowChatOptions(List<KeyValuePair<string, string>> options)
     {
         if (!optionsContainer.gameObject.activeSelf)
