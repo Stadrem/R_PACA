@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 {
-    public PlayerAvatarSetting pas;
+    PlayerAvatarSetting pas;
     //PhotonView photonView; // 부모의 PhotonView 참조
+
+    private void Awake()
+    {
+        pas = GetComponentInChildren<PlayerAvatarSetting>();
+    }
 
     void Start()
     {
