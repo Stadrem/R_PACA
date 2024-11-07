@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 001_ManTool_TX
-    second: {fileID: 2100000, guid: 1cf8dc230e8062d4e8c260acf7b2117c, type: 2}
+    second: {fileID: 2100000, guid: f197d7880a5fe3344b085a734ce28304, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
