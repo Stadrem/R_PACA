@@ -17,6 +17,11 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // get game manager
+                var t = PlayUniverseManager.Instance;
+            }
             CreatePlayerAvatar();
             PlayerManager.AddPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
 

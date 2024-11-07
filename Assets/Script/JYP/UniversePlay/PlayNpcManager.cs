@@ -7,7 +7,7 @@ using ViewModels;
 
 namespace UniversePlay
 {
-    public class PlayNpcManager : MonoBehaviour
+    public class PlayNpcManager : MonoBehaviourPun
     {
         // private List<NpcInfo> currentBackgroundNPCList = new();
         private readonly List<NpcInPlay> currentNpcList = new();
@@ -29,6 +29,8 @@ namespace UniversePlay
 
         public void LoadNpcList(List<NpcInfo> npcList)
         {
+            if (!photonView.IsMine) return;
+            
             if (currentNpcList.Count > 0)
             {
                 currentNpcList.ForEach(Destroy);
@@ -37,7 +39,7 @@ namespace UniversePlay
 
             foreach (var info in npcList)
             {
-                spawner.Spawn(info);
+                spawner.PunSpawn(info);
             }
         }
 

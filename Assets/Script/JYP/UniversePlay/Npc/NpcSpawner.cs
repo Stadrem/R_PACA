@@ -1,34 +1,45 @@
 ﻿using System;
+using Photon.Pun;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 
 namespace UniversePlay
 {
     public class NpcSpawner
     {
-        public NpcInPlay Spawn(NpcInfo npc)
+        public NpcInPlay PunSpawn(NpcInfo npc)
         {
-            GameObject npcPrefab;
+            GameObject npcObject;
             switch (npc.Type)
             {
                 case NpcInfo.ENPCType.None:
                     return null;
                 case NpcInfo.ENPCType.Human:
-                    npcPrefab = Resources.Load<GameObject>("BackgroundPart/NPC_Human");
+                    npcObject = PhotonNetwork.Instantiate(
+                        "BackgroundPart/NPC_Human",
+                        npc.Position,
+                        Quaternion.identity
+                    );
                     break;
                 case NpcInfo.ENPCType.Goblin:
-                    npcPrefab = Resources.Load<GameObject>("BackgroundPart/NPC_Goblin");
+                    npcObject = PhotonNetwork.Instantiate(
+                        "BackgroundPart/NPC_Goblin",
+                        npc.Position,
+                        Quaternion.identity
+                    );
                     break;
                 case NpcInfo.ENPCType.Elf:
-                    npcPrefab = Resources.Load<GameObject>("BackgroundPart/NPC_Elf");
+                    npcObject = PhotonNetwork.Instantiate(
+                        "BackgroundPart/NPC_Elf",
+                        npc.Position,
+                        Quaternion.identity
+                    );
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            var go = Object.Instantiate(npcPrefab, npc.Position, Quaternion.identity, null);
-            var play = go.GetComponent<NpcInPlay>();
+            var play = npcObject.GetComponent<NpcInPlay>();
             play.Init(npc);
             return play;
         }

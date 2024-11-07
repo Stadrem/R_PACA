@@ -15,8 +15,7 @@ public class NpcChatUIManager : MonoBehaviour
     public GameObject ChatBubblePrefab;
     public ScrollRect scrollRect;
 
-    [Header("Chat Options")] 
-    public RectTransform optionsContainer;
+    [Header("Chat Options")] public RectTransform optionsContainer;
     public GameObject selectorEntryPrefab;
     public List<NpcChatSelectorEntryController> selectorEntries;
 
@@ -50,7 +49,7 @@ public class NpcChatUIManager : MonoBehaviour
             .SetText(
                 sender,
                 text,
-                sender == PlayUniverseManager.Instance.InGamePlayerManager.MyInfo.name
+                sender == PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.name
             );
         StartCoroutine(ScrollToBottom());
     }

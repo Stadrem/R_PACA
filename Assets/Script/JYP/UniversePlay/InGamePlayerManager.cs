@@ -13,19 +13,18 @@ public class InGamePlayerManager : MonoBehaviour
         public int strength;
         public int dexterity;
     }
+    
 
     private Vector3 spawnPos;
     private List<HpBarSystem> playerHpSystemList = new List<HpBarSystem>();
     private readonly List<PlayerInfo> characterInfoList = new();
 
+    public PlayerInfo CurrentPlayerInfo => characterInfoList[0];
 
     private List<PlayerInfo> playerList = new List<PlayerInfo>();
     private CameraController currentPlayerCameraController;
 
     public int PlayerCount => playerList.Count;
-
-    public TestUser myInfo;
-    public TestUser MyInfo => myInfo;
 
     public void Init()
     {

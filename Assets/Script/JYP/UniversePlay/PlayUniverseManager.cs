@@ -34,15 +34,18 @@ public class PlayUniverseManager : MonoBehaviour
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
-    
+
     public static PlayUniverseManager Instance
     {
         get
         {
             if (instance == null)
             {
-                var universePrefab = Resources.Load<GameObject>("UniversePlay/UniversePlayManager");
-                var go = Instantiate(universePrefab);
+                var go = PhotonNetwork.Instantiate(
+                    "UniversePlay/UniversePlayManager",
+                    Vector3.zero,
+                    Quaternion.identity
+                );
             }
 
             return instance;
@@ -127,7 +130,7 @@ public class PlayUniverseManager : MonoBehaviour
 
     public void StartPlay()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
             playBackgroundManager.Init();
     }
 }
