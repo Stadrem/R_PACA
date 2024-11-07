@@ -134,6 +134,7 @@ public class InGamePlayerManager : MonoBehaviour
         var playerInfo = characterInfoList[0];
 
         SpawnPlayer(playerInfo);
+        currentPlayerCameraController = Camera.main?.GetComponent<CameraController>();
     }
 
     public void SpawnPlayer(PlayerInfo playerInfo)
