@@ -871,13 +871,14 @@ GameObject:
   - component: {fileID: 4724249676566656702}
   - component: {fileID: 7149083817385075809}
   - component: {fileID: 5049941625678606183}
+  - component: {fileID: 4527943977542979639}
   m_Layer: 5
   m_Name: Panel_Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3649915847376877603
 RectTransform:
   m_ObjectHideFlags: 0
@@ -975,6 +976,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &4527943977542979639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230274550184582061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &2244612389945098020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1184,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3686537582697921899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2520981143703218369}
+        m_TargetAssemblyTypeName: UniversePlay.PlayNpcManager, Assembly-CSharp
+        m_MethodName: OnSubmitChatClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3664458988873494726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,6 +1324,7 @@ GameObject:
   - component: {fileID: 2520981143703218369}
   - component: {fileID: 8093603927009587201}
   - component: {fileID: 229696206782861016}
+  - component: {fileID: 1679314124423005616}
   m_Layer: 0
   m_Name: UniversePlayManager
   m_TagString: Untagged
@@ -1338,6 +1365,7 @@ MonoBehaviour:
   npcChatUIManager: {fileID: 368014502475134231}
   camSettingManager: {fileID: 7755557171581210637}
   inGamePlayerManager: {fileID: 8093603927009587201}
+  selectorChat: {fileID: 1679314124423005616}
 --- !u!114 &6439204471733787449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,6 +1397,7 @@ MonoBehaviour:
   ChatBubblePrefab: {fileID: 5581367309099845412, guid: b98fcc7f13392c84ca9cf21e69a99e99,
     type: 3}
   scrollRect: {fileID: 4615098270114592087}
+  selectorToggleGroup: {fileID: 4527943977542979639}
   optionsContainer: {fileID: 3649915847376877603}
   selectorEntryPrefab: {fileID: 2556498836836542175, guid: b310da95a53db4f0da755239920d3c9b,
     type: 3}
@@ -1397,6 +1426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e80a6f5c2c43658cfb7aa1072d47f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentNpcList: []
 --- !u!114 &8093603927009587201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1409,11 +1439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83baaed2a524c26a0fc4dd1e1a1df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userList:
-  - {fileID: 11400000, guid: 588d0acb66b689d43b0e0aa9a6bbef2d, type: 2}
-  - {fileID: 11400000, guid: bc4d8d4112b703742949eff574788fff, type: 2}
-  - {fileID: 11400000, guid: cc3e02a1658ffde4d81115aa3beb9fe0, type: 2}
-  myInfo: {fileID: 11400000, guid: 588d0acb66b689d43b0e0aa9a6bbef2d, type: 2}
 --- !u!114 &229696206782861016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1436,6 +1461,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1679314124423005616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5135566642832308513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d187878fd39342fbbfe74c9d1dcdfb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6780912333984409980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,7 +1601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &888228634348265679
 RectTransform:
   m_ObjectHideFlags: 0

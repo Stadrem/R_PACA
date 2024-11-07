@@ -9,7 +9,7 @@ using ViewModels;
 /// 플레이 화면에서의 전체적인 매니저
 /// 모든 매니저들을 관리하고, 유저의 상호작용을 처리하는 클래스
 /// </summary>
-public class PlayUniverseManager : MonoBehaviour
+public class PlayUniverseManager : MonoBehaviourPun
 {
     private static PlayUniverseManager instance;
 
@@ -33,21 +33,14 @@ public class PlayUniverseManager : MonoBehaviour
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
-    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
+    [SerializeField]
+    private PunSelectorChat selectorChat;
     
-    public static PlayUniverseManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                var universePrefab = Resources.Load<GameObject>("UniversePlay/UniversePlayManager");
-                var go = Instantiate(universePrefab);
-            }
+    public ISelectorChat SelectorChat => selectorChat;
 
-            return instance;
-        }
-    }
+    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
+
+    public static PlayUniverseManager Instance => instance;
 
     private void Awake()
     {
@@ -88,8 +81,7 @@ public class PlayUniverseManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("InPlayNPC"))
                 {
-                    playNpcManager.InteractNpc(hit.collider.GetComponent<NpcInPlay>());
-                    CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
+                    NpcInteract(hit);
                 }
                 else if (hit.collider.CompareTag("Portal"))
                 {
@@ -101,7 +93,28 @@ public class PlayUniverseManager : MonoBehaviour
     }
 
 
+    private void NpcInteract(RaycastHit hit)
+    {
+        var npc = hit.collider.GetComponent<NpcInPlay>();
+        if (npc == null) return;
+        photonView.RPC(nameof(NpcInteract), RpcTarget.All, npc.NpcId);
+    }
+
+    [PunRPC]
+    private void NpcInteract(int npcId)
+    {
+        playNpcManager.InteractNpc(npcId);
+        CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
+    }
+
+
     public void FinishConversation()
+    {
+        photonView.RPC(nameof(FinishConversationRpc), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void FinishConversationRpc()
     {
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
     }
@@ -127,7 +140,22 @@ public class PlayUniverseManager : MonoBehaviour
 
     public void StartPlay()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
             playBackgroundManager.Init();
+    }
+
+    public static void Create()
+    {
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+            instance = null;
+        }
+
+        var go = PhotonNetwork.Instantiate(
+            "UniversePlay/UniversePlayManager",
+            Vector3.zero,
+            Quaternion.identity
+        );
     }
 }

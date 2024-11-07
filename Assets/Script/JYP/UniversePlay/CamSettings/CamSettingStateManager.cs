@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Photon.Pun;
 using UnityEngine;
 
-public class CamSettingStateManager : MonoBehaviour
+public class CamSettingStateManager : MonoBehaviourPun
 {
     public enum ECamSettingStates
     {
@@ -14,9 +15,8 @@ public class CamSettingStateManager : MonoBehaviour
     }
 
     private Dictionary<ECamSettingStates, ICamSettingState> camSettingStates = new();
-    
-    [CanBeNull]
-    private ICamSettingState currentCamSetting = null;
+
+    [CanBeNull] private ICamSettingState currentCamSetting = null;
 
     private ECamSettingStates currentState = ECamSettingStates.None;
 
@@ -27,7 +27,7 @@ public class CamSettingStateManager : MonoBehaviour
         currentState = ECamSettingStates.QuarterView;
         currentCamSetting = camSettingStates[currentState];
     }
-    
+
     private void Update()
     {
         currentCamSetting?.OnUpdate();
