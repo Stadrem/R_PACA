@@ -41,6 +41,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
                     PlayerManager.AddPlayer(playerID.ToString(), player.NickName, 100, 10, 10);
                 }
             }
+            
         }
     }
 

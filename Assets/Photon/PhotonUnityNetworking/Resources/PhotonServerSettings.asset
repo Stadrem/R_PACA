@@ -55,6 +55,7 @@ MonoBehaviour:
   - Pun_TransitState
   - FinishConversationRpc
   - NpcInteract
+  - RPC_ApplyChatBubble
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

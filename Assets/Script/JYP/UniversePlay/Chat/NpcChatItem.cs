@@ -11,7 +11,7 @@ public class NpcChatItem : MonoBehaviour
     public void SetText(string sender, string text, bool isPlayer)
     {
         string color = isPlayer ? ColorUtility.ToHtmlStringRGB(playerColor) : ColorUtility.ToHtmlStringRGB(npcColor);
-        text = $"<color=#{color}>{text}</color>";
+        text = $"<color=#{color}>{sender}: {text}</color>";
         chatText.text = text;
     }
 }

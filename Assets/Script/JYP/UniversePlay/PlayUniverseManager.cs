@@ -33,6 +33,11 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
+    [SerializeField]
+    private PunSelectorChat selectorChat;
+    
+    public ISelectorChat SelectorChat => selectorChat;
+
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     public static PlayUniverseManager Instance => instance;

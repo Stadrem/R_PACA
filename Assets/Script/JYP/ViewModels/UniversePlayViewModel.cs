@@ -58,14 +58,12 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
     {
         // todo : send message thru API
         yield return new WaitForSeconds(0.5f);
-        chatLogs.Add(new ChatLog { talker = sender, message = message });
-        chatLogs.Add(new ChatLog { talker = sender, message = "Hello!" });
         callback(
             ApiResult<NpcChatResponseDto>.Success(
                 new NpcChatResponseDto()
                 {
-                    sender = sender,
-                    message = message,
+                    sender = "NPC",
+                    message = "응답이오~",
                     isBattle = false,
                     isQuestAchieved = false
                 }

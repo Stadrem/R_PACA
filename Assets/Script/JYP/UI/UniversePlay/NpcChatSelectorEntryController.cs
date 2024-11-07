@@ -5,42 +5,20 @@ using UnityEngine.UI;
 
 public class NpcChatSelectorEntryController : MonoBehaviour
 {
-    public Color baseColor;
-    public Color selectedColor;
-
-    public Color baseTextColor;
-    public Color selectedTextColor;
-
     public Image background;
     public TMP_Text contentText;
+    public Toggle toggle;
 
-    private bool isSelected = false;
+    public int Index { get; private set; }
 
-    public bool IsSelected
+    public void BindData(int index, string text)
     {
-        get => isSelected;
-        set
-        {
-            if (value == isSelected) return;
-            isSelected = value;
-            if (value) Select();
-            else Unselect();
-        }
+        Index = index;
+        contentText.text = text;
     }
 
-    public void SetText(string text)
+    public void SetOnValueChanged(Action<int, bool> onValueChanged)
     {
-    }
-
-    private void Unselect()
-    {
-        background.color = baseColor;
-        contentText.color = baseTextColor;
-    }
-
-    private void Select()
-    {
-        background.color = selectedColor;
-        contentText.color = selectedTextColor;
+        toggle.onValueChanged.AddListener((t) => onValueChanged(Index, t));
     }
 }
