@@ -54,6 +54,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 자리의 인덱스를 기반으로 위치 설정
         Vector3 position = GetSeatPosition(playerIndex);
 
+        Debug.Log($"생성! {position}");
         // 포톤 인스턴스 생성
         GameObject playerAvatar = PhotonNetwork.Instantiate("Player_Avatar", position, Quaternion.Euler(0, 180, 0));
     }

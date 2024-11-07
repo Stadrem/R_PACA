@@ -14,6 +14,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Debug.Log($"생성!");
         // 플레이어를 생성 (현재 로비룸에 함께 접속해 있는 유저들에게도 보이게 동기화)
         PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
         // 리소스 폴더내에서 / 경로 설정하고 폴더 파도 됨
