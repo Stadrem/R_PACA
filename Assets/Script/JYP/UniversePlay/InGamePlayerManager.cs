@@ -141,6 +141,7 @@ public class InGamePlayerManager : MonoBehaviour
     {
         var go = PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
         var hpBarSystem = go.GetComponent<HpBarSystem>();
+        go.GetComponent<UserStats>().Initialize(playerInfo.hitPoints, playerInfo.strength, playerInfo.dexterity);
         hpBarSystem.Init(playerInfo.hitPoints);
         playerHpSystemList.Add(hpBarSystem);
         PlayUniverseManager.Instance.NpcManager.selectorChat = go.GetComponent<ISelectorChat>();
