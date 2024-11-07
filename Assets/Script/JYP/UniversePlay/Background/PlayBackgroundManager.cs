@@ -21,6 +21,8 @@ public class PlayBackgroundManager : MonoBehaviourPun
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnSceneLoaded");
+        if(arg0.name == "WaitingScene") return;
         var background =
             ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
         currentBackground.Init(background);

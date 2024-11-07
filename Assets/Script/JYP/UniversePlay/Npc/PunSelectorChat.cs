@@ -52,9 +52,9 @@ namespace UniversePlay
         {
             var sender = options.ElementAt(index).Key;
             var option = options.ElementAt(index).Value;
-            
+
             NpcManager.FinishPlayerTurn();
-            
+
             photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, sender, option);
             StartCoroutine(
                 ViewModel.TalkNpc(
@@ -115,9 +115,7 @@ namespace UniversePlay
         [PunRPC]
         private void RPC_ApplyChatBubble(string sender, string option)
         {
-            
-            ChatUIManager.AddChatBubble(sender, option);
-            
+            ChatUIManager.AddChatBubble(sender, option, true);
         }
 
         [PunRPC]
@@ -134,7 +132,7 @@ namespace UniversePlay
             }
             else // just chat
             {
-                ChatUIManager.AddChatBubble(sender, message);
+                ChatUIManager.AddChatBubble(sender, message, false);
                 NpcManager.NextTurn();
             }
         }

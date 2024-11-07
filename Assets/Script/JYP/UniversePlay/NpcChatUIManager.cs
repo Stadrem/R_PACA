@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ViewModels;
+using UniversePlay;
 using WebSocketSharp;
 
 public class NpcChatUIManager : MonoBehaviour
@@ -16,12 +19,26 @@ public class NpcChatUIManager : MonoBehaviour
     public GameObject ChatBubblePrefab;
     public ScrollRect scrollRect;
     public ToggleGroup selectorToggleGroup;
+    public Button finishButton;
 
 
     [Header("Chat Options")] public RectTransform optionsContainer;
     public GameObject selectorEntryPrefab;
     public List<NpcChatSelectorEntryController> selectorEntries;
 
+
+    private void Start()
+    {
+        finishButton.onClick.AddListener(
+            () =>
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PlayUniverseManager.Instance.NpcManager.FinishConversation();
+                }
+            }
+        );
+    }
 
     public void SetTurnText(int turn, string text)
     {
@@ -45,14 +62,14 @@ public class NpcChatUIManager : MonoBehaviour
         chatCanvas.gameObject.SetActive(false);
     }
 
-    public void AddChatBubble(string sender, string text)
+    public void AddChatBubble(string sender, string text, bool isPlayer)
     {
         GameObject chatBubble = Instantiate(ChatBubblePrefab, listContent);
         chatBubble.GetComponent<NpcChatItem>()
             .SetText(
                 sender,
                 text,
-                sender == PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.name
+                isPlayer
             );
         Canvas.ForceUpdateCanvases();
         StartCoroutine(ScrollToBottom());
