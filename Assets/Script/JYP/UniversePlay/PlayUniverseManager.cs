@@ -33,9 +33,8 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
-    [SerializeField]
-    private PunSelectorChat selectorChat;
-    
+    [SerializeField] private PunSelectorChat selectorChat;
+
     public ISelectorChat SelectorChat => selectorChat;
 
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -110,12 +109,14 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public void FinishConversation()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         photonView.RPC(nameof(FinishConversationRpc), RpcTarget.All);
     }
 
     [PunRPC]
     public void FinishConversationRpc()
     {
+        NpcManager.FinishConversation();
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
     }
 

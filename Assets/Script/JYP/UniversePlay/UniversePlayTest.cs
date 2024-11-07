@@ -10,26 +10,17 @@ namespace Script.JYP.UniversePlay
         {
             var instance = PlayUniverseManager.Instance;
         }
-        
-        
+
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                PlayUniverseManager.Instance.FinishConversation();
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-            }
-            else TestingByKey();
+            TestingByKey();
         }
 
         #region Test
 
         private void TestingByKey()
         {
-            
         }
 
 
