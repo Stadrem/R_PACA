@@ -152,6 +152,7 @@ public class InGamePlayerManager : MonoBehaviour
 
     public void SpawnPlayer(PlayerInfo playerInfo)
     {
+        Debug.Log($"생성!!");
         var go = PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
         var hpBarSystem = go.GetComponent<HpBarSystem>();
         go.GetComponent<UserStats>().Initialize(playerInfo.hitPoints, playerInfo.strength, playerInfo.dexterity);

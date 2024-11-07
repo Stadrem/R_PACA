@@ -163,6 +163,15 @@ namespace UniversePlay
 
         public void FinishConversation()
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC(nameof(Pun_FinishConversation), RpcTarget.All);
+            }
+        }
+        
+        [PunRPC]
+        private void Pun_FinishConversation()
+        {
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
