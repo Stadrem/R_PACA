@@ -1397,6 +1397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e80a6f5c2c43658cfb7aa1072d47f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentNpcList: []
 --- !u!114 &8093603927009587201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1409,11 +1410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83baaed2a524c26a0fc4dd1e1a1df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userList:
-  - {fileID: 11400000, guid: 588d0acb66b689d43b0e0aa9a6bbef2d, type: 2}
-  - {fileID: 11400000, guid: bc4d8d4112b703742949eff574788fff, type: 2}
-  - {fileID: 11400000, guid: cc3e02a1658ffde4d81115aa3beb9fe0, type: 2}
-  myInfo: {fileID: 11400000, guid: 588d0acb66b689d43b0e0aa9a6bbef2d, type: 2}
 --- !u!114 &229696206782861016
 MonoBehaviour:
   m_ObjectHideFlags: 0

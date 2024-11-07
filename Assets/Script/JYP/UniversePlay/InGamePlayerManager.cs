@@ -51,6 +51,20 @@ public class InGamePlayerManager : MonoBehaviour
             }
         );
     }
+    
+    public void AddCurrentPlayer(string playerId, string payerName, int hitPoints, int strength, int dexterity)
+    {
+        playerList.Insert(0,
+            new PlayerInfo
+            {
+                id = playerId,
+                name = payerName,
+                hitPoints = hitPoints,
+                strength = strength,
+                dexterity = dexterity
+            }
+        );
+    }
 
     /// <summary>
     /// "playerId"을 가진 플레이어의 정보를 업데이트하는 함수

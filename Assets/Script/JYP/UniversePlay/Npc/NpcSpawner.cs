@@ -18,21 +18,27 @@ namespace UniversePlay
                     npcObject = PhotonNetwork.Instantiate(
                         "BackgroundPart/NPC_Human",
                         npc.Position,
-                        Quaternion.identity
+                        Quaternion.identity,
+                        group: 0,
+                        data: new object[] {npc.Id}
                     );
                     break;
                 case NpcInfo.ENPCType.Goblin:
                     npcObject = PhotonNetwork.Instantiate(
                         "BackgroundPart/NPC_Goblin",
                         npc.Position,
-                        Quaternion.identity
+                        Quaternion.identity,
+                        group: 0,
+                        data: new object[] {npc.Id}
                     );
                     break;
                 case NpcInfo.ENPCType.Elf:
                     npcObject = PhotonNetwork.Instantiate(
                         "BackgroundPart/NPC_Elf",
                         npc.Position,
-                        Quaternion.identity
+                        Quaternion.identity,
+                        group: 0,
+                        data: new object[] {npc.Id}
                     );
                     break;
                 default:

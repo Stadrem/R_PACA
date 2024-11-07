@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -11,8 +12,8 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     private static UserCodeMgr UserCodeMgr => UserCodeMgr.Instance;
 
     // 시나리오 플레이를 위한 플레이어 매니저
-    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
-
+    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance?.InGamePlayerManager;
+    private bool currentPlayerAdded = false;
     private void Start()
     {
         if (PhotonNetwork.IsConnected)
@@ -20,11 +21,19 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsMasterClient)
             {
                 // get game manager
-                var t = PlayUniverseManager.Instance;
+                PlayUniverseManager.Create();
             }
-            CreatePlayerAvatar();
-            PlayerManager.AddPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
 
+            CreatePlayerAvatar();
+        }
+    }
+
+    private void Update()
+    {
+        if (PlayerManager != null && !currentPlayerAdded)
+        {
+            PlayerManager.AddCurrentPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
+            currentPlayerAdded = true;
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 if (player.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))

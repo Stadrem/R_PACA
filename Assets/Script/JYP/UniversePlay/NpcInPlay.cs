@@ -1,13 +1,17 @@
-﻿using Cinemachine;
+﻿using System;
+using System.Linq;
+using Cinemachine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ViewModels;
 
-public class NpcInPlay : MonoBehaviourPun
+public class NpcInPlay : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     private NpcInfo npcInfo;
     public string NpcName => npcInfo.Name;
+    public int NpcId => npcInfo.Id;
     public NpcInfo.ENPCType ShapeType => npcInfo.Type;
 
     public CinemachineVirtualCamera ncVcam;
@@ -15,7 +19,8 @@ public class NpcInPlay : MonoBehaviourPun
     public Image hpBar;
     public GameObject root;
     private int currentHp;
-    
+
+
     public void Init(NpcInfo npcInfo)
     {
         this.npcInfo = npcInfo;
@@ -32,5 +37,15 @@ public class NpcInPlay : MonoBehaviourPun
         currentHp -= damage;
         currentHp = Mathf.Max(0, currentHp);
         hpBar.fillAmount = (float)currentHp / npcInfo.Hp;
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        var id = Convert.ToInt32(info.photonView.InstantiationData[0]);
+        PlayUniverseManager.Instance.NpcManager.AddNpc(this);
+        var npc = ViewModelManager.Instance.UniversePlayViewModel.UniverseData.backgroundPartDataList
+            .SelectMany((t) => t.NpcList).First(t => t.Id == id);
+
+        Init(npc);
     }
 }

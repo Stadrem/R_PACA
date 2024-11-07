@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
+using Unity.VisualScripting;
 using UnityEngine;
 using ViewModels;
 
@@ -10,7 +13,9 @@ namespace UniversePlay
     public class PlayNpcManager : MonoBehaviourPun
     {
         // private List<NpcInfo> currentBackgroundNPCList = new();
-        private readonly List<NpcInPlay> currentNpcList = new();
+
+        [SerializeField]
+        private List<NpcInPlay> currentNpcList = new();
 
         public CinemachineVirtualCamera CurrentNpcVcam => currentInteractNpc.ncVcam;
         private NpcInPlay currentInteractNpc;
@@ -37,6 +42,7 @@ namespace UniversePlay
                 currentNpcList.Clear();
             }
 
+            
             foreach (var info in npcList)
             {
                 spawner.PunSpawn(info);
@@ -44,9 +50,10 @@ namespace UniversePlay
         }
 
 
-        public void InteractNpc(NpcInPlay npc)
+        public void InteractNpc(int npcId)
         {
-            currentInteractNpc = npc;
+            var npcInfo =currentNpcList.First(t => t.NpcId == npcId);
+            currentInteractNpc = npcInfo;
             turnSystem.InitTurn();
             StartCoroutine(TurnBasedConversation());
         }
@@ -143,6 +150,11 @@ namespace UniversePlay
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
+        }
+
+        public void AddNpc(NpcInPlay npcInPlay)
+        {
+            currentNpcList.Add(npcInPlay);
         }
     }
 }
