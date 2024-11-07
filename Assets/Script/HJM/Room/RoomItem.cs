@@ -54,6 +54,12 @@ public class RoomItem : MonoBehaviourPunCallbacks
     // 방에 참여하는 함수
     private void JoinRoom(string roomName)
     {
+        var properties = new ExitGames.Client.Photon.Hashtable
+        {
+            { PunPropertyNames.PropPlayerId, UserCodeMgr.Instance.UserID }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+
         PhotonNetwork.JoinRoom(roomName); // Photon API를 사용하여 방에 참여
     }
 

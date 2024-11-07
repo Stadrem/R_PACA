@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using TMPro;
 
 public class UserStatsManager : MonoBehaviour
@@ -8,6 +9,8 @@ public class UserStatsManager : MonoBehaviour
     public TMP_InputField healthInput;
     public TMP_InputField strengthInput;
     public TMP_InputField dexterityInput;
+
+    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int health))
         {
             UserStats.userHealth = health;
+            PlayerManager.UpdatePLayerHitPoint(UserCodeMgr.Instance.Nickname, health);
         }
         else
         {
