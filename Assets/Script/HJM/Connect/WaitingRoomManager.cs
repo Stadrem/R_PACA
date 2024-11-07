@@ -1,17 +1,32 @@
-﻿using Photon.Pun;
+﻿using System.Collections.Generic;
+using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class WaitingRoomManager : MonoBehaviourPunCallbacks
 {
     public List<Transform> seatPositions; // 자리 위치 트랜스폼 리스트
+
+
+    private static UserCodeMgr UserCodeMgr => UserCodeMgr.Instance;
+
+    // 시나리오 플레이를 위한 플레이어 매니저
+    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
 
     private void Start()
     {
         if (PhotonNetwork.IsConnected)
         {
             CreatePlayerAvatar();
+            PlayerManager.AddPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
+
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                if (player.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
+                {
+                    PlayerManager.AddPlayer(playerID.ToString(), player.NickName, 100, 10, 10);
+                }
+            }
         }
     }
 
@@ -30,13 +45,14 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 추가적인 초기화 코드 필요 시 여기에 추가
     }
 
-    
+
     private Vector3 GetSeatPosition(int index)
     {
         if (index >= 0 && index < seatPositions.Count)
         {
             return seatPositions[index].position; // 위치 변환
         }
+
         return Vector3.zero;
     }
 
@@ -44,7 +60,23 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         // 새로운 플레이어가 들어왔을 때 좌석을 조정합니다.
-        AdjustSeats();
+        if (newPlayer.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
+        {
+            AdjustSeats();
+            PlayerManager.AddPlayer(playerID.ToString(), newPlayer.NickName, 100, 10, 10);
+        }
+    }
+
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+
+        if (otherPlayer.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
+        {
+            AdjustSeats();
+            PlayerManager.DeletePlayer(playerID.ToString());
+        }
     }
 
     // 좌석 조정
@@ -55,7 +87,6 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             Player player = PhotonNetwork.CurrentRoom.Players[i + 1];
             // 각 플레이어 아바타의 위치를 설정
             Vector3 position = GetSeatPosition(i);
-            
         }
     }
 }
