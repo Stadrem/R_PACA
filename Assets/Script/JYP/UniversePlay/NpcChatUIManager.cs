@@ -130,6 +130,11 @@ public class NpcChatUIManager : MonoBehaviour
             selectorEntries.Add(selectorEntry.GetComponent<NpcChatSelectorEntryController>());
         }
 
+        if (options.Count == 1)
+        {
+            selectorEntries[0].toggle.isOn = true;
+        }
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(optionsContainer);
         Canvas.ForceUpdateCanvases();
     }
