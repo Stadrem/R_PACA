@@ -102,16 +102,16 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         {
             new NpcInfo()
             {
-                Name = "마을사람 1",
-                Position = new Vector3(58.8600006f, 9.57999992f, 65.8899994f),
-                Type = NpcInfo.ENpcType.Human,
+                name = "마을사람 1",
+                position = new Vector3(58.8600006f, 9.57999992f, 65.8899994f),
+                npcShapeType = NpcInfo.ENpcType.Human,
             },
 
             new NpcInfo()
             {
-                Name = "고블린 1",
-                Position = new Vector3(62.4500008f, 9.45199966f, 66.5199966f),
-                Type = NpcInfo.ENpcType.Goblin,
+                name = "고블린 1",
+                position = new Vector3(62.4500008f, 9.45199966f, 66.5199966f),
+                npcShapeType = NpcInfo.ENpcType.Goblin,
             }
         };
         var backgroundList = new List<BackgroundPartInfo>()

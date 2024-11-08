@@ -18,9 +18,9 @@ namespace UniverseEdit
 
         private List<DraggableNpcUIController> npcEntries = new List<DraggableNpcUIController>();
         private Dictionary<CharacterInfo, GameObject> spawnedNpcs = new Dictionary<CharacterInfo, GameObject>();
-        private int currentBackgroundPartId = -1;
         private Transform npcPositionOffset;
-
+        
+        public int currentBackgroundPartId = -1;
         private void Start()
         {
             viewModel = ViewModelManager.Instance.UniverseEditViewModel;
@@ -52,6 +52,7 @@ namespace UniverseEdit
             }
         }
 
+        
         public void Init()
         {
             ClearNpcList();
@@ -75,8 +76,9 @@ namespace UniverseEdit
             spawnedNpcs.Clear();
         }
 
-        public void StartSpawner(Transform npcOffset)
+        public void StartSpawner(Transform npcOffset, int backgroundId)
         {
+            currentBackgroundPartId = backgroundId;
             npcPositionOffset = npcOffset;
             root.gameObject.SetActive(true);
         }

@@ -15,7 +15,6 @@ namespace UniverseEdit
 
         private LinkedBackgroundPart currentPart;
         private ILinkable currentLinkable;
-
         private bool isDetailView = false;
         private List<LinkedLine> lines = new List<LinkedLine>();
         private Camera camera;
@@ -148,7 +147,7 @@ namespace UniverseEdit
             backgroundEditUIController.SetDetailNpcMode();
             currentPart = part;
             part.ChangeViewType(LinkedBackgroundPart.EViewType.DetailView);
-            npcSpawner.StartSpawner(part.spawnOffset);
+            npcSpawner.StartSpawner(part.spawnOffset, part.ID);
             part.detailViewCamera.Priority = 10;
             backgroundDetailCameraMove.StartMove(part.detailViewCamera);
             linkViewCamera.Priority = 0;
