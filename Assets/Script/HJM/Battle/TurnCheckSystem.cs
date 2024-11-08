@@ -1,38 +1,38 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class TurnCheckSystem : MonoBehaviourPunCallbacks
 {
     public static TurnCheckSystem instance;
 
-
     public BattleManager battleManager;
+    public PlayerBatList playerBatList;
+    //public CircularSlider circularSlider;
 
     [Header("플레이어 턴 관련 목록")]
-    private int playerCount;                      // 플레이어 수
-    private bool[] turnComplete;                  // 각 플레이어의 턴 완료 여부
-    private int[] selectionValue;                 // 각 플레이어의 선택지 값 (0: 미선택, 1: 공격, 2: 방어)
+    private int playerCount;
+    private bool[] turnComplete;
+    private int[] selectionValue;
 
     [Header("UI 선택지")]
-    public Button attackButton;                   // 공격 버튼
-    public Button defendButton;                   // 방어 버튼
-    public Button turnCompleteButton;             // 턴 완료 버튼
+    public Button attackButton;
+    public Button defendButton;
+    public Button turnCompleteButton;
 
     [Header("UI 턴 표시")]
-    public TMP_Text[] playerSelections;           // 각 플레이어의 상태를 표시할 배열
-    
-    public GameObject TurnComUI;                  // 주사위 굴리기 알림창
+    public TMP_Text[] playerSelections;
 
-
-    public int turnCount = 1;                     // 현재 턴 수
-    private int currentPlayerIndex = 0;           // 현재 플레이어 인덱스
-    private bool isTurnComplete = false;          // 현재 플레이어의 턴 완료 여부
+    public GameObject TurnComUI;
+    public int turnCount = 1;
+    private int currentPlayerIndex = 0;
+    private bool isTurnComplete = false;
 
     private void Awake()
     {
-        // 싱글톤 인스턴스 설정
         if (instance == null)
         {
             instance = this;
@@ -46,14 +46,16 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private void Start()
     {
         battleManager = GetComponent<BattleManager>();
-        if (battleManager == null)
-        {
-            Debug.LogError("BattleManager가 할당되지 않았습니다.");
-            return;
-        }
-        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        playerBatList = GetComponent<PlayerBatList>();
+        //circularSlider = GetComponentInChildren<CircularSlider>();
 
-        // 배열 초기화
+        if (PhotonNetwork.InRoom)
+        {
+            playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+            
+        }
+
+        playerBatList.GetBattlePlayers().Sort((a, b) => b.dexterity.CompareTo(a.dexterity));  // 속도 내림차순 정렬
         turnComplete = new bool[playerCount];
         selectionValue = new int[playerCount];
 
@@ -73,69 +75,60 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     private void OnClickAttack()
     {
-        Debug.Log($"플레이어 순서 {currentPlayerIndex + 1}번의 공격 선택");
-        selectionValue[currentPlayerIndex] = 1;  // 선택지 값 1로 설정 (1: 공격)
-        SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", false);
+        int sortedIndex = GetSortedPlayerIndex();
+        selectionValue[sortedIndex] = 1;
+        photonView.RPC("SelectionUI", RpcTarget.All, sortedIndex, $"플레이어 {playerBatList.GetBattlePlayers()[sortedIndex].nickname}", false);
     }
 
     private void OnClickDefend()
     {
-        Debug.Log($"플레이어 순서 {currentPlayerIndex + 1}번의 방어 선택");
-        selectionValue[currentPlayerIndex] = 2;  // 선택지 값 2로 설정 (2: 방어)
-        SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", false);
+        int sortedIndex = GetSortedPlayerIndex();
+        selectionValue[sortedIndex] = 2;
+        photonView.RPC("SelectionUI", RpcTarget.All, sortedIndex, $"플레이어 {playerBatList.GetBattlePlayers()[sortedIndex].nickname}", false);
     }
 
     private void OnClickTurnComplete()
     {
-        Debug.Log($"플레이어 순서 {currentPlayerIndex + 1} 번이 선택 완료");
-        turnComplete[currentPlayerIndex] = true;
+        int sortedIndex = GetSortedPlayerIndex();
+        turnComplete[sortedIndex] = true;
         isTurnComplete = true;
+        photonView.RPC("SelectionUI", RpcTarget.All, sortedIndex, $"플레이어 {playerBatList.GetBattlePlayers()[sortedIndex].nickname}", true);
 
-        // UI에 선택 완료 상태 업데이트
-        SelectionUI(currentPlayerIndex, $"플레이어 {currentPlayerIndex + 1}", true);
+        photonView.RPC("CheckAllPlayersTurnComplete", RpcTarget.MasterClient);
+    }
 
-        // 다음 플레이어로 턴 넘기기
-        currentPlayerIndex++;
-        if (currentPlayerIndex >= playerCount)
+    [PunRPC]
+    private void CheckAllPlayersTurnComplete()
+    {
+        bool allPlayersTurnComplete = true;
+        for (int i = 0; i < playerCount; i++)
         {
-            TurnComUI.SetActive(true);
-            Debug.Log("모든 플레이어의 선택이 완료되었습니다.");
-            EndTurn();
+            if (!turnComplete[i])
+            {
+                allPlayersTurnComplete = false;
+                break;
+            }
+        }
+
+        if (allPlayersTurnComplete)
+        {
+            photonView.RPC("EndTurn", RpcTarget.All);
         }
     }
 
+    [PunRPC]
     private void EndTurn()
     {
-        Debug.Log("전원 선택 완료. 전투 준비 중...");
-
-        // 턴 수에 따라 배틀애니 호출
-        switch (turnCount)
-        {
-            case 1:
-                BattleAni.instance.Turn01(); // 1턴 진행
-                break;
-            case 2:
-                BattleAni.instance.Turn02(); // 2턴 진행
-                break;
-            case 3:
-                BattleAni.instance.Turn03(); // 3턴 진행
-                break;
-            default:
-                Debug.Log("모든 턴이 완료되었습니다.");
-                break;
-        }
-
-        // 턴 수 증가
-        turnCount++;
         
-        // 턴 초기화 및 다음 턴 준비
+        print("턴이 완료 되었습니다.");
+
+        turnCount++;
         ResetTurn();
         StartTurn();
     }
 
     private void ResetTurn()
     {
-        
         for (int i = 0; i < playerCount; i++)
         {
             turnComplete[i] = false;
@@ -143,13 +136,14 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     private void SelectionUI(int playerIndex, string playerName, bool isComplete)
     {
-        if (playerIndex < 0 || playerIndex >= playerSelections.Length)
-        {
-            Debug.LogError($"플레이어 인덱스 {playerIndex}가 playerSelections 배열 범위를 벗어났습니다.");
-            return;
-        }
+        //if (playerIndex < 0 || playerIndex >= playerSelections.Length)
+        //{
+        //    Debug.LogError($"플레이어 인덱스 {playerIndex}가 playerSelections 배열 범위를 벗어났습니다.");
+        //    return;
+        //}
 
         string action = selectionValue[playerIndex] == 1 ? "<color=#FF0000><b>공격</b></color>" : "<color=#0000FF><b>방어</b></color>";
         string selectionText = isComplete
@@ -158,5 +152,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         playerSelections[playerIndex].text = selectionText;
     }
 
-    
+    private int GetSortedPlayerIndex()
+    {
+        return playerBatList.GetBattlePlayers().FindIndex(p => p.nickname == PhotonNetwork.LocalPlayer.NickName);
+    }
 }

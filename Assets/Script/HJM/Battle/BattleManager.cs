@@ -62,16 +62,22 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            
-            for (int i = 0; i < players.Count; i++)
-            {
-                photonView.RPC("MoveToBattlePos", RpcTarget.All, i);
-            }
-            photonView.RPC("ProfileSet", RpcTarget.All);
-            battleUI.SetActive(true);
+            photonView.RPC("OnBattleStart", RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    void OnBattleStart()
+    {
+        
+        for (int i = 0; i < players.Count; i++)
+        {
+            photonView.RPC("MoveToBattlePos", RpcTarget.All, i);
+        }
+        photonView.RPC("ProfileSet", RpcTarget.All);
+        battleUI.SetActive(true);
     }
 
     [PunRPC]
@@ -83,13 +89,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             for (int i = 0; i < players.Count; i++)
             {
-                GameObject profile = PhotonNetwork.Instantiate(profileUI.name, startPosition, Quaternion.identity);
+                GameObject profile = Instantiate(profileUI, startPosition, Quaternion.identity); // PhotonNetwork.Instantiate 제거
                 profile.transform.SetParent(battleUI.transform, false);
                 startPosition.x += 400;
             }
         }
     }
-    // 같은 위치로 가버림..... 포톤이란 뭘까
+
     [PunRPC]
     void MoveToBattlePos(int playerIndex)
     {
