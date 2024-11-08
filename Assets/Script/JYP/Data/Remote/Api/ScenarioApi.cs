@@ -50,10 +50,10 @@ namespace Data.Remote
             Action<ApiResult<List<ScenarioListItemResponseDto>>> onCompleted
         )
         {
-            var request = new HttpInfoWithType<List<ScenarioListItemResponseDto>, string>()
+            var request = new HttpInfoWithType<ScenarioListResponseDto, string>()
             {
                 url = $"{BaseUrl}/list",
-                onComplete = (result) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result)),
+                onComplete = (result) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result.data)),
                 onError = (error) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Fail(error)),
             };
 

@@ -11220,6 +11220,7 @@ MonoBehaviour:
   scrollContainer: {fileID: 397780605}
   scenarioEntryPrefab: {fileID: 6151380902154591382, guid: efb83d810ff314dd58a055ca4bbb076b,
     type: 3}
+  roomCreatePopupCanvasActive: {fileID: 6922957366869279996}
 --- !u!114 &2385942314720772810
 MonoBehaviour:
   m_ObjectHideFlags: 0

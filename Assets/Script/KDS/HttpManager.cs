@@ -190,7 +190,22 @@ public class HttpManager : MonoBehaviour
             {
                 if (info.onComplete != null)
                 {
-                    info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
+                    //todo api 괜찮아 지면 지우기
+                    var txt = webRequest.downloadHandler.text;
+                    
+                    txt = txt.Trim();
+                    if (!txt.StartsWith('{'))
+                    {
+                        //json 형식 씌우기
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append("{ \"data\":");
+                        sb.Append(txt);
+                        sb.Append("}");
+                        print(sb.ToString());
+                        txt = sb.ToString();
+                    }
+                    
+                    info.onComplete(JsonUtility.FromJson<TRes>(txt));
                 }
             }
             else

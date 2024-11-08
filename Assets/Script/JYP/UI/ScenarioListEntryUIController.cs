@@ -15,7 +15,7 @@ public class ScenarioListEntryUIController : MonoBehaviour
     private int id;
 
 
-    public Action OnClickCreateButton
+    public Action OnClickSelectButton
     {
         set { createButton.onClick.AddListener(() => value()); }
     }
