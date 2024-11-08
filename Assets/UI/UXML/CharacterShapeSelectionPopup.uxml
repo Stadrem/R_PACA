@@ -1,13 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/USS/base.uss?fileID=7433441132597879392&amp;guid=ed2135ebda179b04e8d23b5eade416a3&amp;type=3#base" />
-    <ui:VisualElement name="Container_ShapeSelectPopup" style="flex-grow: 0; position: absolute; flex-shrink: 0; width: 300px; height: 200px; left: auto; top: auto; background-color: rgb(230, 230, 230);">
-        <ui:ScrollView mode="Vertical" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-around;">
+    <ui:VisualElement name="Container_ShapeSelectPopup" style="flex-grow: 0; position: absolute; flex-shrink: 0; width: 300px; height: 250px; left: auto; top: auto; background-color: rgb(230, 230, 230);">
+        <ui:ScrollView mode="Vertical" horizontal-page-size="-1" vertical-scroller-visibility="Auto" horizontal-scroller-visibility="Hidden" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-around; align-self: auto;">
             <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; justify-content: space-around; flex-wrap: wrap;">
-                <ui:VisualElement name="selection_goblin" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 100%; background-color: rgb(255, 166, 41); justify-content: space-around; align-self: flex-start; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;">
+                <ui:VisualElement name="selection_goblin" style="flex-grow: 0; flex-shrink: 0; width: 100px; height: 60px; background-color: rgb(255, 166, 41); justify-content: space-around; align-self: flex-start; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; margin-top: 20px; margin-right: 20px; margin-bottom: 10px; margin-left: 20px;">
                     <ui:Label tabindex="-1" text="고블린" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; font-size: 24px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="selection_human" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 60px; background-color: rgb(255, 166, 41); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; justify-content: space-around; align-self: flex-start;">
+                <ui:VisualElement name="selection_human" style="flex-grow: 0; flex-shrink: 0; width: 100px; height: 60px; background-color: rgb(255, 166, 41); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; justify-content: space-around; align-self: flex-start; margin-top: 20px; margin-right: 20px; margin-bottom: 10px; margin-left: 20px;">
                     <ui:Label tabindex="-1" text="인간" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; font-size: 24px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="selection_elf" style="flex-grow: 0; flex-shrink: 0; width: 100px; height: 60px; background-color: rgb(255, 166, 41); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; justify-content: space-around; align-self: flex-start; margin-top: 10px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px;">
+                    <ui:Label tabindex="-1" text="엘프" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; font-size: 24px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="selection_golem" style="flex-grow: 0; flex-shrink: 0; width: 100px; height: 60px; background-color: rgb(255, 166, 41); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; justify-content: space-around; align-self: flex-start; margin-top: 10px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px;">
+                    <ui:Label tabindex="-1" text="골렘" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; font-size: 24px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:ScrollView>

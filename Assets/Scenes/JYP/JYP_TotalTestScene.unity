@@ -1128,6 +1128,8 @@ MonoBehaviour:
   npcPrefabs:
   - {fileID: 2389740261151551814, guid: a0f76cf139fb74ffe85e83d1f10014f5, type: 3}
   - {fileID: 2389740261151551814, guid: 3ef53dde4ddbb49c4bca5d959c2e3b89, type: 3}
+  - {fileID: 1709414301000549324, guid: 5fd311f176e03284ab99d32fec5316b3, type: 3}
+  - {fileID: 8753619234690991416, guid: 6e60bc6ba77714157b9624d473c12127, type: 3}
   npcUIEntryPrefab: {fileID: 5719417202312447579, guid: f426d01e49a6d9042a9b8f9607fb3011,
     type: 3}
 --- !u!1 &223715000
