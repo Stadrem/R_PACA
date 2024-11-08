@@ -19,6 +19,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     public bool notUseNetworkOn = false;
 
+    public GameObject ownerCrown;
+
     private void Awake()
     {
         // 현재 씬의 이름을 가져옴
@@ -161,5 +163,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].mesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
+    }
+
+    public void ShowOwnerCrown()
+    {
+        ownerCrown.SetActive(true);
     }
 }

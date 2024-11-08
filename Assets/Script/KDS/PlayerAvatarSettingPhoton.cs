@@ -27,9 +27,12 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
             {
                 Debug.LogWarning("UserCodeMgr.Instance가 null입니당.");
             }
-        }
-        else
-        {
+
+            // 방장인지 확인 후, 방장일 경우 SetOwnerIcon을 실행
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SetOwnerIcon", RpcTarget.AllBuffered);
+            }
         }
     }
 
@@ -41,5 +44,11 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 
         // userCode 설정 후, 아바타 정보 불러오기 시작
         pas.StartPostAvatarInfo(value);
+    }
+
+    [PunRPC]
+    public void SetOwnerIcon()
+    {
+        pas.ShowOwnerCrown();
     }
 }
