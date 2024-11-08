@@ -19,7 +19,10 @@ namespace Data.Remote
             {
                 avatarName = characterInfo.name,
                 outfit = (int)characterInfo.shapeType,
-                isPlayable = characterInfo.isPlayable,
+                isPlayable = false,
+                health = characterInfo.hitPoints,
+                strength = characterInfo.strength,
+                dex = characterInfo.dexterity,
                 worldId = -1,
             };
 

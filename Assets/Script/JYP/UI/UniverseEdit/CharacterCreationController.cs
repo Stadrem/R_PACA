@@ -135,6 +135,7 @@ namespace UI.Universe.Edit
                 isPlayable = playableToggle.value
             };
 
+            Debug.Log($"hp: {character.hitPoints}, str: {character.strength}, dex: {character.dexterity}");
             context?.StartCoroutine(
                 viewModel.CreateCharacter(
                     character,
