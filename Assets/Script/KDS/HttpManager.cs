@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -27,6 +29,9 @@ public class HttpInfoWithType<T, R> where R : class
 {
     // 요청할 URL
     public string url = "";
+
+
+    public Dictionary<string, string> parameters = new Dictionary<string, string>();
 
     // 전송할 데이터
     public R body;
@@ -180,19 +185,30 @@ public class HttpManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Get<TRes,TR>(HttpInfoWithType<TRes, TR> info) where TR : class
+    public IEnumerator Get<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
+        if (info.parameters != null)
+        {
+            var url = new UriBuilder(info.url)
+            {
+                Query = string.Join("&", info.parameters.Select(x => $"{x.Key}={x.Value}"))
+            };
+
+            info.url = url.ToString();
+        }
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
         {
             yield return webRequest.SendWebRequest();
 
+            Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 if (info.onComplete != null)
                 {
                     //todo api 괜찮아 지면 지우기
                     var txt = webRequest.downloadHandler.text;
-                    
+                    Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
                     txt = txt.Trim();
                     if (!txt.StartsWith('{'))
                     {
@@ -204,7 +220,7 @@ public class HttpManager : MonoBehaviour
                         print(sb.ToString());
                         txt = sb.ToString();
                     }
-                    
+
                     info.onComplete(JsonUtility.FromJson<TRes>(txt));
                 }
             }
@@ -212,6 +228,7 @@ public class HttpManager : MonoBehaviour
             {
                 if (info.onError != null)
                 {
+                    Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
                     info.onError(new Exception(webRequest.error));
                 }
             }
