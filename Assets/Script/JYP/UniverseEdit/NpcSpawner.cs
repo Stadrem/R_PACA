@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
@@ -95,20 +97,134 @@ namespace UniverseEdit
             script.npcSpawner = this;
             spawnedNpcs.Add(character, npc);
             npcEntries.Remove(npcEntries.FirstOrDefault(e => e.CharacterInfo.id == character.id));
+
+            AttachNpc(
+                character,
+                npc.transform.localPosition,
+                (res) =>
+                {
+                    if (res.IsFail)
+                    {
+                        Debug.LogError(res.error);
+                    }
+                }
+            );
         }
 
         public void ReturnToUi(int characterId)
         {
             var character = viewModel.Characters.FirstOrDefault(c => c.id == characterId);
-            if (spawnedNpcs[character] == null) return;
+            if (character == null) return;
 
-            Destroy(spawnedNpcs[character]);
-            spawnedNpcs.Remove(character);
+            DetachNpc(
+                character,
+                (res) =>
+                {
+                    if (res.IsSuccess)
+                    {
+                        if (spawnedNpcs[character] == null) return;
 
-            var entry = Instantiate(npcUIEntryPrefab, npcListTransform)
-                .GetComponent<DraggableNpcUIController>();
-            entry.Init(character, SpawnNpc);
-            npcEntries.Add(entry);
+                        Destroy(spawnedNpcs[character]);
+                        spawnedNpcs.Remove(character);
+
+                        var entry = Instantiate(npcUIEntryPrefab, npcListTransform)
+                            .GetComponent<DraggableNpcUIController>();
+                        entry.Init(character, SpawnNpc);
+                        npcEntries.Add(entry);
+                    }
+                    else
+                    {
+                        Debug.LogError(res.error);
+                    }
+                }
+            );
+        }
+
+
+        public void DetachNpc(CharacterInfo characterInfo, Action<ApiResult> callback)
+        {
+            var newCharacter = new CharacterInfo(characterInfo)
+            {
+                backgroundPartId = -1
+            };
+
+            StartCoroutine(
+                UpdateNpcState(
+                    newCharacter,
+                    callback
+                )
+            );
+        }
+
+        public void AttachNpc(CharacterInfo characterInfo, Vector3 position, Action<ApiResult<CharacterInfo>> callback)
+        {
+            var newCharacter = new CharacterInfo(characterInfo)
+            {
+                backgroundPartId = currentBackgroundPartId,
+                position = position
+            };
+
+            StartCoroutine(
+                UpdateNpcState(
+                    newCharacter,
+                    (res) =>
+                    {
+                        if (res.IsSuccess)
+                        {
+                            callback(ApiResult<CharacterInfo>.Success(newCharacter));
+                        }
+                        else
+                        {
+                            callback(ApiResult<CharacterInfo>.Fail(res.error));
+                        }
+                    }
+                )
+            );
+        }
+
+        public void UpdateNpcPosition(int characterId, Vector3 position, Action<ApiResult<CharacterInfo>> callback)
+        {
+            var character = viewModel.Characters.FirstOrDefault(c => c.id == characterId);
+            if (character == null)
+            {
+                return;
+            }
+
+            UpdateNpcPosition(character, position, callback);
+        }
+
+        public void UpdateNpcPosition(CharacterInfo characterInfo, Vector3 position,
+            Action<ApiResult<CharacterInfo>> callback)
+        {
+            var newCharacter = new CharacterInfo(characterInfo)
+            {
+                position = position
+            };
+
+            StartCoroutine(
+                UpdateNpcState(
+                    newCharacter,
+                    (res) =>
+                    {
+                        if (res.IsSuccess)
+                        {
+                            callback(ApiResult<CharacterInfo>.Success(newCharacter));
+                        }
+                        else
+                        {
+                            callback(ApiResult<CharacterInfo>.Fail(res.error));
+                        }
+                    }
+                )
+            );
+        }
+
+        private IEnumerator UpdateNpcState(CharacterInfo characterInfo, Action<ApiResult> callback)
+        {
+            yield return viewModel.UpdateCharacter(
+                characterInfo,
+                callback
+            );
         }
     }
 }
