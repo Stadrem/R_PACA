@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data.Remote.Dtos;
 using Data.Remote.Dtos.Request;
 using Data.Remote.Dtos.Response;
 using Unity.VisualScripting;
@@ -55,6 +56,22 @@ namespace Data.Remote
                 url = $"{BaseUrl}/list",
                 onComplete = (result) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result.data)),
                 onError = (error) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Get(request);
+        }
+
+        public static IEnumerator GetScenario(int scenarioId, Action<ApiResult<UniverseData>> onComplete)
+        {
+            var request = new HttpInfoWithType<ScenarioResDto, ScenarioGetReqDto>()
+            {
+                body = new ScenarioGetReqDto()
+                {
+                    scenarioCode = scenarioId
+                },
+                url = $"{BaseUrl}/{scenarioId}",
+                onComplete = (result) => onComplete(ApiResult<UniverseData>.Success(result.ToUniverse())),
+                onError = (error) => onComplete(ApiResult<UniverseData>.Fail(error)),
             };
 
             yield return HttpManager.GetInstance().Get(request);
