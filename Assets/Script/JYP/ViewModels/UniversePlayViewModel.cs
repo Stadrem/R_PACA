@@ -136,19 +136,16 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
             },
         };
 
-        var universe = new UniverseData()
-        {
-            id = 0,
-            name = "Universe 0",
-            backgroundPartDataList = backgroundList
-        };
-
         yield return ScenarioApi.GetScenario(
             universeId,
             (result) =>
             {
                 if (result.IsSuccess)
                 {
+                    if(result.value.backgroundPartDataList.Count == 0) // for test 
+                    {
+                        result.value.backgroundPartDataList = backgroundList;
+                    }
                     UniverseData = result.value;
                 }
             }

@@ -40,6 +40,9 @@ namespace Data.Remote.Dtos
         private static List<BackgroundPartInfo> ToBackgroundPartInfo(int universeId, List<ScenarioWorldPartResDto> dtos,
             List<ScenarioAvatarResDto> avatars)
         {
+            if(dtos.Count == 0)
+                return new List<BackgroundPartInfo>();
+            
             var result = new BackgroundPartInfo[dtos.Count];
             dtos.Reverse();
             BackgroundPartInfo previous = null;

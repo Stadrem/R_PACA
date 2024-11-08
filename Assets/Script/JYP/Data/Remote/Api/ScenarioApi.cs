@@ -62,13 +62,15 @@ namespace Data.Remote
 
         public static IEnumerator GetScenario(int scenarioId, Action<ApiResult<UniverseData>> onComplete)
         {
+            //add parameter
+            var param = new Dictionary<string, string>()
+            {
+                { "scenarioCode", scenarioId.ToString() }
+            };
             var request = new HttpInfoWithType<ScenarioResDto, ScenarioGetReqDto>()
             {
-                body = new ScenarioGetReqDto()
-                {
-                    scenarioCode = scenarioId
-                },
-                url = $"{BaseUrl}/{scenarioId}",
+                parameters = param,
+                url = $"{BaseUrl}/detail?scenarioCode={scenarioId}",
                 onComplete = (result) => onComplete(ApiResult<UniverseData>.Success(result.ToUniverse())),
                 onError = (error) => onComplete(ApiResult<UniverseData>.Fail(error)),
             };
