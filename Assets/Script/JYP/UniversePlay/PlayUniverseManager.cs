@@ -13,27 +13,33 @@ public class PlayUniverseManager : MonoBehaviourPun
 {
     private static PlayUniverseManager instance;
 
-    [SerializeField] private PlayBackgroundManager playBackgroundManager;
+    [SerializeField]
+    private PlayBackgroundManager playBackgroundManager;
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
-    [SerializeField] private PlayNpcManager playNpcManager;
+    [SerializeField]
+    private PlayNpcManager playNpcManager;
 
     public PlayNpcManager NpcManager => playNpcManager;
 
-    [SerializeField] private NpcChatUIManager npcChatUIManager;
+    [SerializeField]
+    private NpcChatUIManager npcChatUIManager;
 
     public NpcChatUIManager NpcChatUIManager => npcChatUIManager;
 
-    [SerializeField] private CamSettingStateManager camSettingManager;
+    [SerializeField]
+    private CamSettingStateManager camSettingManager;
 
     public CamSettingStateManager CamSettingManager => camSettingManager;
 
-    [SerializeField] private InGamePlayerManager inGamePlayerManager;
+    [SerializeField]
+    private InGamePlayerManager inGamePlayerManager;
 
     public InGamePlayerManager InGamePlayerManager => inGamePlayerManager;
 
-    [SerializeField] private PunSelectorChat selectorChat;
+    [SerializeField]
+    private PunSelectorChat selectorChat;
 
     public ISelectorChat SelectorChat => selectorChat;
 
@@ -56,8 +62,9 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     private void Start()
     {
+        var code = Convert.ToInt32(PhotonNetwork.CurrentRoom.CustomProperties[PunPropertyNames.Room.ScenarioCode]);
         PhotonNetwork.AutomaticallySyncScene = true;
-        ViewModel.LoadUniverseData();
+        StartCoroutine(ViewModel.LoadUniverseData(code));
     }
 
     private void Update()

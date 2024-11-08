@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
+[System.Serializable]
 public sealed class BackgroundPartInfo 
 {
     public int ID;
