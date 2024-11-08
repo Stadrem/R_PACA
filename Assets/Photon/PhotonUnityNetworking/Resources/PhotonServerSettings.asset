@@ -59,6 +59,8 @@ MonoBehaviour:
   - Pun_FinishConversation
   - RegisterPlayerStats
   - RegisterPlayer
+  - MoveToBattlePos
+  - ProfileSet
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

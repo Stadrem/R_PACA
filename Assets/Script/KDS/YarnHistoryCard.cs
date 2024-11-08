@@ -33,6 +33,7 @@ public class YarnHistoryCard : MonoBehaviour
         button = GetComponent<Button>();
     }
 
+    //웹에서 내용 불러오는 중
     public void Refresh()
     {
         ui_notFound.SetActive(false);
@@ -41,6 +42,7 @@ public class YarnHistoryCard : MonoBehaviour
 
     public void HistroyInfoSetup(string title, string date, string user, string time, int code)
     {
+        //네트워크 연결 실패
         if (code == -1)
         {
             text_Title.text = "";
@@ -50,7 +52,18 @@ public class YarnHistoryCard : MonoBehaviour
             ui_notFound.SetActive(true);
             ui_loading.SetActive(false);
             button.interactable = false;
+
+            //시연 전용
+            text_Title.text = "제목: 이세계 모험가";
+            text_Date.text = "생성일자: 24.11.14";
+            text_Time.text = "플레이타임: 00:05:00";
+            text_User.text = "참여자: 유저1, 유저2, 유저3, 유저4";
+            historyCode = -2;
+            ui_notFound.SetActive(false);
+            ui_loading.SetActive(false);
+            button.interactable = true;
         }
+        //네트워크 연결 성공
         else
         {
             text_Title.text = "제목: " + title;
@@ -64,8 +77,16 @@ public class YarnHistoryCard : MonoBehaviour
         }
     }
 
+    //클릭 시 모험담 내용 팝업
     public void OnClickYarnPopup()
     {
-        yarnHttpManager.StartGetYarnContentInfo(historyCode);
+        if(historyCode == -2)
+        {
+            yarnHttpManager.SimpleTest();
+        }
+        else
+        {
+            yarnHttpManager.StartGetYarnContentInfo(historyCode);
+        }
     }
 }
