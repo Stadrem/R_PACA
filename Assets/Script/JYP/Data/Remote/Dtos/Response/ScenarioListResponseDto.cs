@@ -7,7 +7,7 @@ namespace Data.Remote.Dtos.Response
     [System.Serializable]
     public class ScenarioListResponseDto
     {
-        public List<ScenarioListItemResponseDto> data;
+        public List<ScenarioListItemResponseDto> scenarios;
     }
 
     [System.Serializable]

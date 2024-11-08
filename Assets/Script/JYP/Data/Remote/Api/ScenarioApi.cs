@@ -53,7 +53,8 @@ namespace Data.Remote
             var request = new HttpInfoWithType<ScenarioListResponseDto, string>()
             {
                 url = $"{BaseUrl}/list",
-                onComplete = (result) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result.data)),
+                onComplete = (result) =>
+                    onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result.scenarios)),
                 onError = (error) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Fail(error)),
             };
 

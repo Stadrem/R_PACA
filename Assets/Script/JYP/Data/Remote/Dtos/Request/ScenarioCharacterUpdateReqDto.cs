@@ -1,6 +1,7 @@
 ﻿[System.Serializable]
-public class ScenarioCharacterCreateReqDto
+public class ScenarioCharacterUpdateReqDto
 {
+    public int scenarioAvatarId;
     /// <summary>
     ///     등장인물 이름
     /// </summary>
@@ -16,11 +17,11 @@ public class ScenarioCharacterCreateReqDto
     /// </summary>
     public bool isPlayable;
 
-    public int health = 0;
+    public int health;
 
-    public int strength  =0 ;
+    public int strength;
 
-    public int dex = 0;
+    public int dex;
 
     public float axisX;
 

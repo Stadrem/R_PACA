@@ -20,7 +20,7 @@ namespace Data.Remote.Dtos
         {
             return new NpcInfo()
             {
-                Id = dto.avatarCode,
+                Id = dto.scenarioAvatarId,
                 Name = dto.avatarName,
             };
         }

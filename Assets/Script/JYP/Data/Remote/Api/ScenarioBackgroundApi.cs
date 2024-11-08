@@ -18,6 +18,7 @@ namespace Data.Remote
             {
                 WorldName = backgroundInfo.Name,
                 isPortalEnable = false,
+                towardWorldPartId = -1
             };
 
             var request = new HttpInfoWithType<ScenarioBackgroundCreateResDto, ScenarioBackgroundCreateReqDto>()
@@ -41,8 +42,9 @@ namespace Data.Remote
                 partId = backgroundPartInfo.ID,
                 partName = backgroundPartInfo.Name,
                 isPortalEnable = backgroundPartInfo.TowardBackground != null,
+                towardWorldPartId = backgroundPartInfo.TowardBackground?.ID ?? -1
             };
-            
+
             var request = new HttpInfoWithType<ScenarioBackgroundUpdateResDto, ScenarioBackgroundUpdateReqDto>()
             {
                 url = $"{BaseUrl}/update",
@@ -50,7 +52,7 @@ namespace Data.Remote
                 onComplete = (result) => onCompleted(ApiResult<ScenarioBackgroundUpdateResDto>.Success(result)),
                 onError = (error) => onCompleted(ApiResult<ScenarioBackgroundUpdateResDto>.Fail(error)),
             };
-            
+
             yield return HttpManager.GetInstance().Put(request);
         }
 
@@ -63,7 +65,7 @@ namespace Data.Remote
             {
                 worldId = backgroundPartId,
             };
-            
+
             var request = new HttpInfoWithType<string, ScenarioBackgroundDeleteReqDto>()
             {
                 url = $"{BaseUrl}/delete",
@@ -71,9 +73,8 @@ namespace Data.Remote
                 onComplete = (result) => onCompleted(ApiResult.Success()),
                 onError = (error) => onCompleted(ApiResult.Fail(error)),
             };
-            
+
             yield return HttpManager.GetInstance().Delete(request);
         }
     }
-    
 }

@@ -9,5 +9,6 @@ namespace Data.Remote.Dtos.Request
         public int partId;
         public string partName;
         public bool isPortalEnable;
+        public int towardWorldPartId;
     }
 }
