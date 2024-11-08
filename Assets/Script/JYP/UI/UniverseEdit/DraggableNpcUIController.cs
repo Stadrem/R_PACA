@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UniverseEdit;
+using ViewModels;
 
 public class DraggableNpcUIController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -13,10 +15,13 @@ public class DraggableNpcUIController : MonoBehaviour, IBeginDragHandler, IDragH
     private CanvasGroup canvasGroup;
     private Canvas canvas;
     private Vector2 originalPosition;
-
+    
+    
     private Action<CharacterInfo, Vector3> onDroppedInGround;
     private CharacterInfo characterInfo;
     public CharacterInfo CharacterInfo => characterInfo;
+    
+    private UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -68,4 +73,5 @@ public class DraggableNpcUIController : MonoBehaviour, IBeginDragHandler, IDragH
             rectTransform.anchoredPosition = originalPosition;
         }
     }
+
 }

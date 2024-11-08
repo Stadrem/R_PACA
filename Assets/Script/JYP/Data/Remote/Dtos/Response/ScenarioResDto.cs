@@ -30,6 +30,7 @@ namespace Data.Remote.Dtos.Response
         public float axisX;
         public float axisY;
         public float axisZ;
+        public float rotation;
         public int worldId;
     }
 

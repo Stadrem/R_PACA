@@ -10,9 +10,9 @@ using ViewModels;
 public class NpcInPlay : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     private NpcInfo npcInfo;
-    public string NpcName => npcInfo.Name;
-    public int NpcId => npcInfo.Id;
-    public NpcInfo.ENpcType ShapeType => npcInfo.Type;
+    public string NpcName => npcInfo.name;
+    public int NpcId => npcInfo.id;
+    public NpcInfo.ENpcType ShapeNpcShapeType => npcInfo.npcShapeType;
 
     public CinemachineVirtualCamera ncVcam;
     public TMP_Text npcNameText;
@@ -24,8 +24,9 @@ public class NpcInPlay : MonoBehaviourPun, IPunInstantiateMagicCallback
     public void Init(NpcInfo npcInfo)
     {
         this.npcInfo = npcInfo;
-        npcNameText.text = npcInfo.Name;
-        currentHp = npcInfo.Hp;
+        npcNameText.text = npcInfo.name;
+        currentHp = npcInfo.hitPoints;
+        transform.localPosition = npcInfo.position;
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ public class NpcInPlay : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
         currentHp -= damage;
         currentHp = Mathf.Max(0, currentHp);
-        hpBar.fillAmount = (float)currentHp / npcInfo.Hp;
+        hpBar.fillAmount = (float)currentHp / npcInfo.hitPoints;
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -44,8 +45,8 @@ public class NpcInPlay : MonoBehaviourPun, IPunInstantiateMagicCallback
         var id = Convert.ToInt32(info.photonView.InstantiationData[0]);
         PlayUniverseManager.Instance.NpcManager.AddNpc(this);
         var npc = ViewModelManager.Instance.UniversePlayViewModel.UniverseData.backgroundPartDataList
-            .SelectMany((t) => t.NpcList).First(t => t.Id == id);
-
+            .SelectMany((t) => t.NpcList).First(t => t.id == id);
+        
         Init(npc);
     }
 }

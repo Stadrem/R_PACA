@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
@@ -6,6 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using ViewModels;
 
 namespace UniversePlay
@@ -14,7 +16,9 @@ namespace UniversePlay
     {
         // private List<NpcInfo> currentBackgroundNPCList = new();
 
-        [SerializeField] private List<NpcInPlay> currentNpcList = new();
+        public Transform NpcSpawnOffset { get; private set; }
+        
+        private List<NpcInPlay> currentNpcList = new();
 
         public CinemachineVirtualCamera CurrentNpcVcam => currentInteractNpc.ncVcam;
         private NpcInPlay currentInteractNpc;
@@ -31,6 +35,18 @@ namespace UniversePlay
         private readonly NpcSpawner spawner = new NpcSpawner();
 
 
+        private void Start()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == "WaitingScene") return;
+            var go = GameObject.Find("NpcSpawnOffset");
+            NpcSpawnOffset = go?.transform;
+        }
+
         public void LoadNpcList(List<NpcInfo> npcList)
         {
             if (!photonView.IsMine) return;
@@ -44,7 +60,9 @@ namespace UniversePlay
 
             foreach (var info in npcList)
             {
-                spawner.PunSpawn(info);
+                var npc = spawner.PunSpawn(info);
+                
+                currentNpcList.Add(npc);
             }
         }
 
@@ -173,6 +191,7 @@ namespace UniversePlay
 
         public void AddNpc(NpcInPlay npcInPlay)
         {
+            npcInPlay.transform.SetParent(NpcSpawnOffset);
             currentNpcList.Add(npcInPlay);
         }
     }

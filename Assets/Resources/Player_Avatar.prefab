@@ -550,7 +550,7 @@ PrefabInstance:
     - target: {fileID: 8100631587066389438, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: clickableLayers.m_Bits
-      value: 1048576
+      value: 5242880
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3226658914930203315, guid: 2c867f7b3cea5d94e9520299e3a25948, type: 3}

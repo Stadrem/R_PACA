@@ -16,45 +16,45 @@ namespace UniversePlay
             const string backgroundPartNpcGolem = "BackgroundPart/NPC_Golem";
             
             GameObject npcObject;
-            switch (npc.Type)
+            switch (npc.npcShapeType)
             {
                 case NpcInfo.ENpcType.None:
                     return null;
                 case NpcInfo.ENpcType.Human:
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcHuman,
-                        npc.Position,
+                        Vector3.zero,
                         Quaternion.identity,
                         group: 0,
-                        data: new object[] {npc.Id}
+                        data: new object[] {npc.id}
                     );
                     break;
                 case NpcInfo.ENpcType.Goblin:
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcGoblin,
-                        npc.Position,
+                        Vector3.zero,
                         Quaternion.identity,
                         group: 0,
-                        data: new object[] {npc.Id}
+                        data: new object[] {npc.id}
                     );
                     break;
                 case NpcInfo.ENpcType.Elf:
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcElf,
-                        npc.Position,
+                        Vector3.zero,
                         Quaternion.identity,
                         group: 0,
-                        data: new object[] {npc.Id}
+                        data: new object[] {npc.id}
                     );
                     break;
                 
                 case NpcInfo.ENpcType.Golem:
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcGolem,
-                        npc.Position,
+                        Vector3.zero,
                         Quaternion.identity,
                         group: 0,
-                        data: new object[] {npc.Id}
+                        data: new object[] {npc.id}
                     );
                     break;
                 

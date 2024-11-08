@@ -41,22 +41,20 @@ namespace Data.Remote
 
         public static IEnumerator UpdateScenarioAvatar(
             CharacterInfo characterInfo,
-            int worldId,
-            Vector3 position,
-            float yRotation,
             Action<ApiResult> onCompleted
         )
         {
             var reqDto = new ScenarioCharacterUpdateReqDto()
             {
+                scenarioAvatarId = characterInfo.id,
                 avatarName = characterInfo.name,
                 outfit = (int)characterInfo.shapeType,
                 isPlayable = characterInfo.isPlayable,
-                worldId = worldId,
-                axisX = position.x,
-                axisY = position.y,
-                axisZ = position.z,
-                rotation = yRotation,
+                worldId = characterInfo.backgroundPartId,
+                axisX = characterInfo.position.x,
+                axisY = characterInfo.position.y,
+                axisZ = characterInfo.position.z,
+                rotation = characterInfo.yRotation,
             };
 
             var request = new HttpInfoWithType<ScenarioCharacterUpdateResDto, ScenarioCharacterUpdateReqDto>()

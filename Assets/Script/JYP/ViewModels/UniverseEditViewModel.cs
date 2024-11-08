@@ -389,5 +389,13 @@ namespace ViewModels
                 onComplete
             );
         }
+
+        public IEnumerator UpdateCharacter(CharacterInfo characterInfo, Action<ApiResult> onComplete)
+        {
+            yield return ScenarioCharacterApi.UpdateScenarioAvatar(
+                characterInfo,
+                onComplete
+            );
+        }
     }
 }

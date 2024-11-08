@@ -20,8 +20,15 @@ namespace Data.Remote.Dtos
         {
             return new NpcInfo()
             {
-                Id = dto.scenarioAvatarId,
-                Name = dto.avatarName,
+                id = dto.scenarioAvatarId,
+                name = dto.avatarName,
+                npcShapeType = (NpcInfo.ENpcType)dto.outfit,
+                hitPoints = dto.health,
+                strength = dto.strength,
+                dexterity = dto.dex,
+                backgroundPartId = dto.worldId,
+                position = new UnityEngine.Vector3(dto.axisX, dto.axisY, dto.axisZ),
+                yRotation = dto.rotation,
             };
         }
 
@@ -40,9 +47,9 @@ namespace Data.Remote.Dtos
         private static List<BackgroundPartInfo> ToBackgroundPartInfo(int universeId, List<ScenarioWorldPartResDto> dtos,
             List<ScenarioAvatarResDto> avatars)
         {
-            if(dtos.Count == 0)
+            if (dtos.Count == 0)
                 return new List<BackgroundPartInfo>();
-            
+
             var result = new BackgroundPartInfo[dtos.Count];
             dtos.Reverse();
             BackgroundPartInfo previous = null;
@@ -62,16 +69,19 @@ namespace Data.Remote.Dtos
             backgroundParts.First().IsRoot = true;
 
 
-            //todo: 배치된 맵 확인, 현재는 테스트를 위해 일단 첫번째에 넣는다
-
-            backgroundParts.First().NpcList = avatars
-                .Select((t) => t.ToNpcInfo())
-                .ToList();
-
+            avatars.GroupBy(
+                (avatar) => avatar.worldId
+            ).Where((t) => t.Key != -1)
+                .ToList()
+                .ForEach((t) =>
+                {
+                    var part = backgroundParts.First((part) => part.ID == t.Key);
+                    part.NpcList = t.Select((avatar) => avatar.ToNpcInfo()).ToList();
+                });
 
             return backgroundParts;
         }
-        
+
         public static CharacterInfo ToCharacterInfo(this ScenarioCharacterUpdateResDto dto)
         {
             return new CharacterInfo()
