@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data.Remote.Dtos.Request;
+using Data.Remote.Dtos.Response;
+using Unity.VisualScripting;
 
 namespace Data.Remote
 {
@@ -42,6 +44,20 @@ namespace Data.Remote
             };
 
             yield return HttpManager.GetInstance().Post(request);
+        }
+
+        public static IEnumerator GetScenarioList(
+            Action<ApiResult<List<ScenarioListItemResponseDto>>> onCompleted
+        )
+        {
+            var request = new HttpInfoWithType<List<ScenarioListItemResponseDto>, string>()
+            {
+                url = $"{BaseUrl}/list",
+                onComplete = (result) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result)),
+                onError = (error) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Get(request);
         }
     }
 }
