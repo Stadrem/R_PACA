@@ -62,7 +62,7 @@ namespace ViewModels
             set => SetField(ref characters, value);
         }
 
-        public IEnumerator CreateCharacter(CharacterInfo character, Action<ApiResult<string>> onComplete)
+        public IEnumerator CreateCharacter(CharacterInfo character, Action<ApiResult<CharacterInfo>> onComplete)
         {
             yield return ScenarioCharacterApi.CreateScenarioAvatar(
                 character,
@@ -70,15 +70,14 @@ namespace ViewModels
                 {
                     if (result.IsSuccess)
                     {
-                        character.id = result.value;
-                        characters.Add(character);
+                        characters.Add(result.value);
                         OnPropertyChanged(nameof(Characters));
-                        onComplete(ApiResult<string>.Success("success"));
+                        onComplete(result);
                     }
                     else
                     {
                         Debug.LogError($"error: {result.error}");
-                        onComplete(ApiResult<string>.Fail(result.error));
+                        onComplete(ApiResult<CharacterInfo>.Fail(result.error));
                     }
                 }
             );
@@ -387,6 +386,14 @@ namespace ViewModels
                 sortedBackgroundParts,
                 new List<string>(),
                 Tags,
+                onComplete
+            );
+        }
+
+        public IEnumerator UpdateCharacter(CharacterInfo characterInfo, Action<ApiResult> onComplete)
+        {
+            yield return ScenarioCharacterApi.UpdateScenarioAvatar(
+                characterInfo,
                 onComplete
             );
         }

@@ -1,23 +1,27 @@
 ﻿using UnityEngine;
 
-public class NpcInfo : ICharacterData
+[System.Serializable]
+public class NpcInfo
 {
-    public enum ENPCType
+    public enum ENpcType
     {
         None = -1,
         Human,
         Goblin,
         Elf,
+        Golem,
     }
-    
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public int Hp { get; set; }
-    public int Strength { get; set; }
-    public int Dexterity { get; set; }
 
-    public int BackgroundPartId = -1;
-    public Vector3 Position = Vector3.zero;
-    public ENPCType Type = ENPCType.None;
+    public int id;
+    public string name;
+    public string description ;
+    public int hitPoints ;
+    public int strength ;
+    public int dexterity ;
+
+    public int backgroundPartId = -1;
+    public Vector3 position = Vector3.zero;
+    public ENpcType npcShapeType = ENpcType.None;
+    public float yRotation = 0;
+    
 }

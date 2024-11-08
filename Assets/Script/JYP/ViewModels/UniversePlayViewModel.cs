@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Data.Remote;
 using Script.JYP.UniversePlay.Chat;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
     private int npcChatSelectedIndex = -1;
     private UniverseData universeData;
     private int currentBackgroundId = -1;
+
     #endregion
 
     #region INotifyPropertyChanged
@@ -41,13 +43,13 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         get => npcChatSelectedIndex;
         set => SetField(ref npcChatSelectedIndex, value);
     }
-    
+
     public UniverseData UniverseData
     {
         get => universeData;
         set => SetField(ref universeData, value);
     }
-    
+
     public int CurrentBackgroundId
     {
         get => currentBackgroundId;
@@ -71,7 +73,12 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         );
     }
 
-    public void LoadUniverseData() //todo 아직 더미 데이터
+    /// <summary>
+    /// 플레이할 세계관(시나리오)의 데이터를 불러온다
+    /// </summary>
+    /// <param name="universeId">불러올 데이터의 키값, scenarioId</param>
+    /// <returns></returns>
+    public IEnumerator LoadUniverseData(int universeId) //todo 아직 더미 데이터
     {
         var portalList1 = new List<PortalData>()
         {
@@ -95,16 +102,16 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         {
             new NpcInfo()
             {
-                Name = "마을사람 1",
-                Position = new Vector3(58.8600006f, 9.57999992f, 65.8899994f),
-                Type = NpcInfo.ENPCType.Human,
+                name = "마을사람 1",
+                position = new Vector3(58.8600006f, 9.57999992f, 65.8899994f),
+                npcShapeType = NpcInfo.ENpcType.Human,
             },
 
             new NpcInfo()
             {
-                Name = "고블린 1",
-                Position = new Vector3(62.4500008f, 9.45199966f, 66.5199966f),
-                Type = NpcInfo.ENPCType.Goblin,
+                name = "고블린 1",
+                position = new Vector3(62.4500008f, 9.45199966f, 66.5199966f),
+                npcShapeType = NpcInfo.ENpcType.Goblin,
             }
         };
         var backgroundList = new List<BackgroundPartInfo>()
@@ -129,13 +136,19 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
             },
         };
 
-        var universe = new UniverseData()
-        {
-            id = 0,
-            name = "Universe 0",
-            backgroundPartDataList = backgroundList
-        };
-        
-        universeData = universe;
+        yield return ScenarioApi.GetScenario(
+            universeId,
+            (result) =>
+            {
+                if (result.IsSuccess)
+                {
+                    if(result.value.backgroundPartDataList.Count == 0) // for test 
+                    {
+                        result.value.backgroundPartDataList = backgroundList;
+                    }
+                    UniverseData = result.value;
+                }
+            }
+        );
     }
 }

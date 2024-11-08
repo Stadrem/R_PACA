@@ -56,7 +56,7 @@ public class RoomItem : MonoBehaviourPunCallbacks
     {
         var properties = new ExitGames.Client.Photon.Hashtable
         {
-            { PunPropertyNames.PropPlayerId, UserCodeMgr.Instance.UserID }
+            { PunPropertyNames.Player.PlayerId, UserCodeMgr.Instance.UserID }
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
 

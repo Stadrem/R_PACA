@@ -36,7 +36,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             currentPlayerAdded = true;
             foreach (var player in PhotonNetwork.PlayerList)
             {
-                if (player.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
+                if (player.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
                 {
                     PlayerManager.AddPlayer(playerID.ToString(), player.NickName, 100, 10, 10);
                 }
@@ -74,7 +74,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         // 새로운 플레이어가 들어왔을 때 좌석을 조정합니다.
-        if (newPlayer.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
+        if (newPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
         {
             AdjustSeats();
             PlayerManager.AddPlayer(playerID.ToString(), newPlayer.NickName, 100, 10, 10);
@@ -86,7 +86,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
 
-        if (otherPlayer.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
+        if (otherPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
         {
             AdjustSeats();
             PlayerManager.DeletePlayer(playerID.ToString());

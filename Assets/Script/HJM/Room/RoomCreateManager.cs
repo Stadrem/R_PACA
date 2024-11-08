@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
@@ -10,12 +11,19 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     public TMP_InputField inputMaxPlayer;
     public Button btnCreate;
     //public Button btnJoin;
-
+    
     private string roomName;
     private byte maxPlayers;
 
+    /// <summary>
+    /// 시나리오 리스트 UI 컨트롤러, 방 생성할 때 나오는 시나리오 선택창에 대한 컨트롤러
+    /// </summary>
+    [SerializeField]
+    private ScenarioListUIController scenarioListUIController;
+
     void Start()
     {
+        
         // inputRoomName 의 내용이 변경될 때 호출되는 함수 등록
         inputRoomName.onValueChanged.AddListener(OnValueChangedRoomName);
         // inputMaxPlayer 의 내용이 변경될 때 호출되는 함수 등록
@@ -23,9 +31,12 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
 
         //btnJoin.onClick.AddListener(OnClickJoinRoom); // 방 참여 버튼 클릭 이벤트 등록
         //btnJoin.interactable = false; // 초기 상태에서 비활성화
+        
+        scenarioListUIController.Init();
     }
 
     #region 방이름과 최대인원의 값이 있을 때만 방생성 버튼 활성화
+
     void OnValueChangedRoomName(string roomName)
     {
         btnCreate.interactable = roomName.Length > 0 && inputMaxPlayer.text.Length > 0;
@@ -43,16 +54,30 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     {
         //btnJoin.interactable = inputRoomName.text.Length > 0;
     }
-    #endregion   
+
+    #endregion
 
     // 방 생성 버튼을 눌렀을 때 호출 되는 함수
     public void OnClickCreateRoom()
     {
+        var selectedScenario = scenarioListUIController.GetSelectedScenario();
+        if (selectedScenario == null)
+        {
+            Debug.LogError("시나리오를 선택해주세요.");
+            return;
+        }
+        
+        // 방 옵션 추가
+        var option = new Hashtable
+        {
+            { PunPropertyNames.Room.ScenarioCode, selectedScenario.scenarioCode },
+            { PunPropertyNames.Room.ScenarioTitle, selectedScenario.scenarioTitle }
+        };
+
         roomName = inputRoomName.text;
         maxPlayers = byte.Parse(inputMaxPlayer.text);
 
-        CreateRoom();
-
+        CreateRoom(option);
     }
 
     //// 방에서 나갔을 때 호출되는 콜백
@@ -69,10 +94,15 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     //}
 
     // 옵션으로 방을 생성
-    void CreateRoom()
+    void CreateRoom(
+        Hashtable customRoomProperties = null
+    )
     {
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers };
-
+        RoomOptions options = new RoomOptions
+        {
+            MaxPlayers = maxPlayers,
+            CustomRoomProperties = customRoomProperties,
+        };
         if (!PhotonNetwork.CreateRoom(roomName, options))
         {
             Debug.LogError("방 생성에 실패했습니다.");
@@ -93,6 +123,4 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
         base.OnCreateRoomFailed(returnCode, message);
         Debug.LogError("방 생성 실패: " + message);
     }
-
-   
 }

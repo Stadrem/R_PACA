@@ -35,5 +35,5 @@
             <ui:Button text="추가" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button_AddCharacter" style="flex-shrink: 1; -unity-text-align: middle-center; background-color: rgb(13, 153, 255); color: rgb(255, 255, 255); width: 100px; align-self: flex-end; padding-top: 1%; padding-bottom: 2%; font-size: 22px;" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:Instance template="CharacterShapeSelectionPopup" name="selection_popup" class="shape-selection-popup--hide" style="transition-duration: 2s; position: absolute; left: 260px; height: -49px; top: 12px; width: -164px;" />
+    <ui:Instance template="CharacterShapeSelectionPopup" name="selection_popup" class="shape-selection-popup--hide" style="transition-duration: 0.3s, 0.3s; position: absolute; left: 400px; height: -49px; top: 20px; width: -164px;" />
 </ui:UXML>

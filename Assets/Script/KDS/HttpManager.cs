@@ -1,14 +1,10 @@
-﻿using JetBrains.Annotations;
-using Photon.Pun;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using TMPro;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
 // HttpInfo 클래스 선언: HTTP 요청 관련 정보를 담는 클래스
 public class HttpInfo
@@ -33,6 +29,9 @@ public class HttpInfoWithType<T, R> where R : class
 {
     // 요청할 URL
     public string url = "";
+
+
+    public Dictionary<string, string> parameters = new Dictionary<string, string>();
 
     // 전송할 데이터
     public R body;
@@ -96,7 +95,7 @@ public class HttpManager : MonoBehaviour
         // GET 요청 생성
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(info.body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
@@ -130,7 +129,7 @@ public class HttpManager : MonoBehaviour
     {
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(info.body);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(info.body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
@@ -185,7 +184,44 @@ public class HttpManager : MonoBehaviour
             DoneRequest(webRequest, info);
         }
     }
-    
+
+    public IEnumerator Get<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
+    {
+        if (info.parameters != null)
+        {
+            var url = new UriBuilder(info.url)
+            {
+                Query = string.Join("&", info.parameters.Select(x => $"{x.Key}={x.Value}"))
+            };
+
+            info.url = url.ToString();
+        }
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                if (info.onComplete != null)
+                {
+                    //todo api 괜찮아 지면 지우기
+                    var txt = webRequest.downloadHandler.text;
+                    Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+                    info.onComplete(JsonUtility.FromJson<TRes>(txt));
+                }
+            }
+            else
+            {
+                if (info.onError != null)
+                {
+                    Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+                    info.onError(new Exception(webRequest.error));
+                }
+            }
+        }
+    }
+
     public IEnumerator Put<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
         var body = JsonUtility.ToJson(info.body);
@@ -193,7 +229,7 @@ public class HttpManager : MonoBehaviour
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
         {
             print("body: " + body);
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
@@ -209,6 +245,7 @@ public class HttpManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
                 if (info.onError != null)
                 {
                     info.onError(new Exception(webRequest.error));
@@ -222,15 +259,17 @@ public class HttpManager : MonoBehaviour
         var body = JsonUtility.ToJson(info.body);
         using (var webRequest = new UnityWebRequest(info.url, "DELETE"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", info.contentType); 
-            
+            webRequest.SetRequestHeader("Content-Type", info.contentType);
+
             yield return webRequest.SendWebRequest();
-            
+
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
+                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+
                 if (info.onComplete != null)
                 {
                     info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
@@ -255,7 +294,7 @@ public class HttpManager : MonoBehaviour
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
             print("body: " + body);
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
@@ -271,6 +310,8 @@ public class HttpManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+
                 if (info.onError != null)
                 {
                     info.onError(new Exception(webRequest.error + webRequest.downloadHandler.text));
@@ -322,14 +363,14 @@ public class HttpManager : MonoBehaviour
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct Response
     {
         public string userId;
         public string userName;
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct AccountSet
     {
         public bool success;
@@ -347,7 +388,7 @@ public class HttpManager : MonoBehaviour
     }
 
     // 회원 가입시 보낼 정보
-    [System.Serializable]
+    [Serializable]
     public struct UserInfo
     {
         public string userId;
@@ -356,7 +397,7 @@ public class HttpManager : MonoBehaviour
     }
 
     //로그인 시 보낼 정보
-    [System.Serializable]
+    [Serializable]
     public struct UserAccount
     {
         public string userId;

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data.Remote.Dtos;
 using Data.Remote.Dtos.Request;
+using Data.Remote.Dtos.Response;
 
 namespace Data.Remote
 {
@@ -42,6 +44,39 @@ namespace Data.Remote
             };
 
             yield return HttpManager.GetInstance().Post(request);
+        }
+
+        public static IEnumerator GetScenarioList(
+            Action<ApiResult<List<ScenarioListItemResponseDto>>> onCompleted
+        )
+        {
+            var request = new HttpInfoWithType<ScenarioListResponseDto, string>()
+            {
+                url = $"{BaseUrl}/list",
+                onComplete = (result) =>
+                    onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Success(result.scenarios)),
+                onError = (error) => onCompleted(ApiResult<List<ScenarioListItemResponseDto>>.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Get(request);
+        }
+
+        public static IEnumerator GetScenario(int scenarioId, Action<ApiResult<UniverseData>> onComplete)
+        {
+            //add parameter
+            var param = new Dictionary<string, string>()
+            {
+                { "scenarioCode", scenarioId.ToString() }
+            };
+            var request = new HttpInfoWithType<ScenarioResDto, ScenarioGetReqDto>()
+            {
+                parameters = param,
+                url = $"{BaseUrl}/detail?scenarioCode={scenarioId}",
+                onComplete = (result) => onComplete(ApiResult<UniverseData>.Success(result.ToUniverse())),
+                onError = (error) => onComplete(ApiResult<UniverseData>.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Get(request);
         }
     }
 }

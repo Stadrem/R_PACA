@@ -575,6 +575,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8583232404600190879, guid: 686325c2017551c46b4f626c813e47d0,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8908912952223865329, guid: 686325c2017551c46b4f626c813e47d0,
         type: 3}
       propertyPath: sceneViewId
@@ -5154,6 +5159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPop: {fileID: 8235258193887115113}
   canvasExit: {fileID: 292420857399828367}
+  canvasDestroyed: {fileID: 0}
 --- !u!114 &2451201582949895476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6557,6 +6563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPop: {fileID: 0}
   canvasExit: {fileID: 7556877627710115559}
+  canvasDestroyed: {fileID: 0}
 --- !u!114 &4085108265436168262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6693,7 +6700,6 @@ MonoBehaviour:
   roomListContent: {fileID: 7221973642435129455}
   roomItemPrefab: {fileID: 7890699342921094519, guid: 9576d85e31468ee46aa2b01b8e84de21,
     type: 3}
-  cam: {fileID: 71031883}
 --- !u!1 &4286774549423906114
 GameObject:
   m_ObjectHideFlags: 0
@@ -7641,6 +7647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPop: {fileID: 8704106409337655750}
   canvasExit: {fileID: 8235258193887115113}
+  canvasDestroyed: {fileID: 0}
 --- !u!224 &5141616285183387389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8541,7 +8548,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7935457460736437369}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9991979
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10319,6 +10326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPop: {fileID: 0}
   canvasExit: {fileID: 8704106409337655750}
+  canvasDestroyed: {fileID: 0}
 --- !u!1 &7432156960687656399
 GameObject:
   m_ObjectHideFlags: 0
@@ -10818,7 +10826,6 @@ MonoBehaviour:
   inputRoomName: {fileID: 1332522335452604274}
   inputMaxPlayer: {fileID: 6673944021164028415}
   btnCreate: {fileID: 7714585631826386419}
-  btnJoin: {fileID: 0}
 --- !u!114 &7809986336132894810
 MonoBehaviour:
   m_ObjectHideFlags: 0

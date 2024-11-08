@@ -37,6 +37,15 @@ namespace UniverseEdit
             }
             else if (Physics.Raycast(ray, out var hit, float.MaxValue, 1 << LayerMask.NameToLayer("DetailGround")))
             {
+                npcSpawner.UpdateNpcPosition(
+                    characterId,
+                    hit.point,
+                    (res) =>
+                    {
+                        if (res.IsFail)
+                            transform.position = startPos;
+                    }
+                );
             }
             else
             {
