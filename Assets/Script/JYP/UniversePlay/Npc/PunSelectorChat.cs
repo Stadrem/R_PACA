@@ -15,7 +15,7 @@ namespace UniversePlay
         //todo : user info
 
 
-        private Dictionary<string, string> options = new();
+        private readonly List<KeyValuePair<string, string>> options = new();
 
 
         public int OptionCount => options.Count;
@@ -32,18 +32,19 @@ namespace UniversePlay
 
         public void AddOption(string option)
         {
-            photonView.RPC("RPC_AddOption", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName, option);
+            photonView.RPC(nameof(RPC_AddOption), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName, option);
         }
 
         [PunRPC]
         private void RPC_AddOption(string nickname, string option)
         {
-            options.Add(nickname, option);
+            options.Add(new KeyValuePair<string, string>(nickname, option));
         }
 
 
         public void ShowSelectors()
         {
+            options.Insert(0, new KeyValuePair<string, string>("", "직접 입력"));
             ChatUIManager.ShowChatOptions(options);
         }
 
@@ -52,7 +53,9 @@ namespace UniversePlay
             var sender = options.ElementAt(index).Key;
             var option = options.ElementAt(index).Value;
 
-            photonView.RPC(nameof(RPC_Select), RpcTarget.MasterClient, sender, option);
+            NpcManager.FinishPlayerTurn();
+
+            photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, sender, option);
             StartCoroutine(
                 ViewModel.TalkNpc(
                     sender,
@@ -60,7 +63,17 @@ namespace UniversePlay
                     (res) =>
                     {
                         if (res.IsSuccess)
-                            photonView.RPC(nameof(RPC_NpcResponse), RpcTarget.All, res.value);
+                        {
+                            var resVal = res.value;
+                            photonView.RPC(
+                                nameof(RPC_NpcResponse),
+                                RpcTarget.All,
+                                resVal.sender,
+                                resVal.message,
+                                resVal.isBattle,
+                                resVal.isQuestAchieved
+                            );
+                        }
                     }
                 )
             );
@@ -68,13 +81,15 @@ namespace UniversePlay
 
         public void Select(string sender, string option)
         {
-            photonView.RPC(nameof(RPC_Select), RpcTarget.MasterClient, sender, option);
+            Debug.Log($"NPC한테 보냅니다");
+            photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.MasterClient, sender, option);
             StartCoroutine(
                 ViewModel.TalkNpc(
                     sender,
                     option,
                     (res) =>
                     {
+                        Debug.Log($"받았습니다 {res.value}");
                         if (res.IsSuccess)
                         {
                             var val = res.value;
@@ -92,10 +107,15 @@ namespace UniversePlay
             );
         }
 
-        [PunRPC]
-        private void RPC_Select(string sender, string option)
+        public void ClearOptions()
         {
-            ChatUIManager.AddChatBubble(sender, option);
+            options.Clear();
+        }
+
+        [PunRPC]
+        private void RPC_ApplyChatBubble(string sender, string option)
+        {
+            ChatUIManager.AddChatBubble(sender, option, true);
         }
 
         [PunRPC]
@@ -112,7 +132,7 @@ namespace UniversePlay
             }
             else // just chat
             {
-                ChatUIManager.AddChatBubble(sender, message);
+                ChatUIManager.AddChatBubble(sender, message, false);
                 NpcManager.NextTurn();
             }
         }

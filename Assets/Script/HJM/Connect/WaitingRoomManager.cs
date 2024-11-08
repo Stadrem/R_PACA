@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -11,15 +12,28 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     private static UserCodeMgr UserCodeMgr => UserCodeMgr.Instance;
 
     // 시나리오 플레이를 위한 플레이어 매니저
-    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
-
+    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance?.InGamePlayerManager;
+    private bool currentPlayerAdded = false;
     private void Start()
     {
         if (PhotonNetwork.IsConnected)
         {
-            CreatePlayerAvatar();
-            PlayerManager.AddPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // get game manager
+                PlayUniverseManager.Create();
+            }
 
+            CreatePlayerAvatar();
+        }
+    }
+
+    private void Update()
+    {
+        if (PlayerManager != null && !currentPlayerAdded)
+        {
+            PlayerManager.AddCurrentPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
+            currentPlayerAdded = true;
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 if (player.CustomProperties.TryGetValue(PunPropertyNames.PropPlayerId, out object playerID))
@@ -27,6 +41,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
                     PlayerManager.AddPlayer(playerID.ToString(), player.NickName, 100, 10, 10);
                 }
             }
+            
         }
     }
 
@@ -39,10 +54,9 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         // 자리의 인덱스를 기반으로 위치 설정
         Vector3 position = GetSeatPosition(playerIndex);
 
+        Debug.Log($"생성! {position}");
         // 포톤 인스턴스 생성
         GameObject playerAvatar = PhotonNetwork.Instantiate("Player_Avatar", position, Quaternion.Euler(0, 180, 0));
-
-        // 추가적인 초기화 코드 필요 시 여기에 추가
     }
 
 

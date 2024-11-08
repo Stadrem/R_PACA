@@ -6,31 +6,33 @@ using UnityEngine;
 public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 {
     PlayerAvatarSetting pas;
-    PhotonView parentPhotonView; // 부모의 PhotonView 참조
+    //PhotonView photonView; // 부모의 PhotonView 참조
+
+    private void Awake()
+    {
+        pas = GetComponentInChildren<PlayerAvatarSetting>();
+    }
 
     void Start()
     {
-        pas = GetComponent<PlayerAvatarSetting>();
-
         // 부모 오브젝트에서 PhotonView를 시도해서 얻어오고, 없으면 경고 메시지 출력
-        if (transform.parent != null && transform.parent.TryGetComponent(out parentPhotonView))
+        if (photonView.IsMine)
         {
-            if (parentPhotonView.IsMine)
+            if (UserCodeMgr.Instance != null)
             {
-                if (UserCodeMgr.Instance != null)
-                {
-                    int userCode = UserCodeMgr.Instance.UserCode;
-                    parentPhotonView.RPC("SetUserCode", RpcTarget.AllBuffered, userCode);
-                }
-                else
-                {
-                    Debug.LogWarning("UserCodeMgr.Instance가 null입니당.");
-                }
+                int userCode = UserCodeMgr.Instance.UserCode;
+                photonView.RPC("SetUserCode", RpcTarget.AllBuffered, userCode);
             }
-        }
-        else
-        {
-            Debug.Log("부모 오브젝트에 PhotonView가 없음. 현재 [아바타 생성씬, 로비]라면 무시해도 되는 에러입니당. 그렇지 않다면 문제가 생겼을지도? ");
+            else
+            {
+                Debug.LogWarning("UserCodeMgr.Instance가 null입니당.");
+            }
+
+            // 방장인지 확인 후, 방장일 경우 SetOwnerIcon을 실행
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SetOwnerIcon", RpcTarget.AllBuffered);
+            }
         }
     }
 
@@ -42,5 +44,11 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 
         // userCode 설정 후, 아바타 정보 불러오기 시작
         pas.StartPostAvatarInfo(value);
+    }
+
+    [PunRPC]
+    public void SetOwnerIcon()
+    {
+        pas.ShowOwnerCrown();
     }
 }

@@ -54,7 +54,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     public GameObject debugPanel;
 
     //패널 활성화
-    void DebugPanel()
+    public void DebugPanel()
     {
         debugPanel.SetActive(!debugPanel.activeSelf);
     }

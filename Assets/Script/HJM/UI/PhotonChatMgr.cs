@@ -27,7 +27,6 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
     {
         // 채팅내용을 작성하고 엔터를 쳤을때 호출되는 함수 등록
         inputChat.onSubmit.AddListener(OnSubmit);
-        print("11111111");
 
         Connect();
     }
@@ -51,7 +50,6 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
 
     void Connect()
     {
-        print("11111111");
 
         // 포톤 설정을 가져오자
         AppSettings photonSettings = PhotonNetwork.PhotonServerSettings.AppSettings;
@@ -84,7 +82,7 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
         if (s.Length == 0) return;
 
         // 귓속말인 판단
-        // /w 아이디 메시지 (/w 김현진 안녕하세요 반갑습니다.)
+        // /w 아이디 메시지 (/w 닉네임 안녕하세요 반갑습니다.)
         string [] splitChat = s.Split(" ", 3);
         
         if (splitChat[0] == "/w")

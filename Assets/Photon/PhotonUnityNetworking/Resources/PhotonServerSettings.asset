@@ -52,6 +52,16 @@ MonoBehaviour:
   - RPC_AddOption
   - RPC_NpcResponse
   - RPC_Select
+  - Pun_TransitState
+  - FinishConversationRpc
+  - NpcInteract
+  - RPC_ApplyChatBubble
+  - Pun_FinishConversation
+  - RegisterPlayerStats
+  - RegisterPlayer
+  - MoveToBattlePos
+  - ProfileSet
+  - SetOwnerIcon
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
