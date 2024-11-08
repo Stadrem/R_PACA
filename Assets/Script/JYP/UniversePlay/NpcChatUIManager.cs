@@ -126,7 +126,7 @@ public class NpcChatUIManager : MonoBehaviour
             controller.BindData(idx, optionText);
             selectorToggleGroup.RegisterToggle(controller.toggle);
             controller.SetOnValueChanged(OnToggleValueChanged);
-
+            
             selectorEntries.Add(selectorEntry.GetComponent<NpcChatSelectorEntryController>());
         }
 
