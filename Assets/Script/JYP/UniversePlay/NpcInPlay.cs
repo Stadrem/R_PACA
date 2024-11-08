@@ -12,7 +12,7 @@ public class NpcInPlay : MonoBehaviourPun, IPunInstantiateMagicCallback
     private NpcInfo npcInfo;
     public string NpcName => npcInfo.Name;
     public int NpcId => npcInfo.Id;
-    public NpcInfo.ENPCType ShapeType => npcInfo.Type;
+    public NpcInfo.ENpcType ShapeType => npcInfo.Type;
 
     public CinemachineVirtualCamera ncVcam;
     public TMP_Text npcNameText;

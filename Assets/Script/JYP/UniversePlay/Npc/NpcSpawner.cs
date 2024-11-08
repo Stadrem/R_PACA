@@ -9,38 +9,55 @@ namespace UniversePlay
     {
         public NpcInPlay PunSpawn(NpcInfo npc)
         {
+            
+            const string backgroundPartNpcHuman = "BackgroundPart/NPC_Human";
+            const string backgroundPartNpcGoblin = "BackgroundPart/NPC_Goblin";
+            const string backgroundPartNpcElf = "BackgroundPart/NPC_Elf";
+            const string backgroundPartNpcGolem = "BackgroundPart/NPC_Golem";
+            
             GameObject npcObject;
             switch (npc.Type)
             {
-                case NpcInfo.ENPCType.None:
+                case NpcInfo.ENpcType.None:
                     return null;
-                case NpcInfo.ENPCType.Human:
+                case NpcInfo.ENpcType.Human:
                     npcObject = PhotonNetwork.Instantiate(
-                        "BackgroundPart/NPC_Human",
+                        backgroundPartNpcHuman,
                         npc.Position,
                         Quaternion.identity,
                         group: 0,
                         data: new object[] {npc.Id}
                     );
                     break;
-                case NpcInfo.ENPCType.Goblin:
+                case NpcInfo.ENpcType.Goblin:
                     npcObject = PhotonNetwork.Instantiate(
-                        "BackgroundPart/NPC_Goblin",
+                        backgroundPartNpcGoblin,
                         npc.Position,
                         Quaternion.identity,
                         group: 0,
                         data: new object[] {npc.Id}
                     );
                     break;
-                case NpcInfo.ENPCType.Elf:
+                case NpcInfo.ENpcType.Elf:
                     npcObject = PhotonNetwork.Instantiate(
-                        "BackgroundPart/NPC_Elf",
+                        backgroundPartNpcElf,
                         npc.Position,
                         Quaternion.identity,
                         group: 0,
                         data: new object[] {npc.Id}
                     );
                     break;
+                
+                case NpcInfo.ENpcType.Golem:
+                    npcObject = PhotonNetwork.Instantiate(
+                        backgroundPartNpcGolem,
+                        npc.Position,
+                        Quaternion.identity,
+                        group: 0,
+                        data: new object[] {npc.Id}
+                    );
+                    break;
+                
                 default:
                     throw new ArgumentOutOfRangeException();
             }
