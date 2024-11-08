@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Data.Remote.Dtos;
 using Data.Remote.Dtos.Response;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Data.Remote
 
         public static IEnumerator CreateScenarioAvatar(
             CharacterInfo characterInfo,
-            Action<ApiResult<int>> onCompleted
+            Action<ApiResult<CharacterInfo>> onCompleted
         )
         {
             var reqDto = new ScenarioCharacterCreateReqDto()
@@ -22,12 +23,12 @@ namespace Data.Remote
                 worldId = -1,
             };
 
-            var request = new HttpInfoWithType<int, ScenarioCharacterCreateReqDto>()
+            var request = new HttpInfoWithType<ScenarioCharacterUpdateResDto, ScenarioCharacterCreateReqDto>()
             {
                 url = $"{BaseUrl}/create",
                 body = reqDto,
-                onComplete = (result) => onCompleted(ApiResult<int>.Success(result)),
-                onError = (error) => onCompleted(ApiResult<int>.Fail(error)),
+                onComplete = (result) => { onCompleted(ApiResult<CharacterInfo>.Success(result.ToCharacterInfo())); },
+                onError = (error) => onCompleted(ApiResult<CharacterInfo>.Fail(error)),
             };
 
 
@@ -62,10 +63,10 @@ namespace Data.Remote
                 onComplete = (result) => onCompleted(ApiResult.Success()),
                 onError = (error) => onCompleted(ApiResult.Fail(error)),
             };
-            
+
             yield return HttpManager.GetInstance().Put(request);
         }
-        
+
         public static IEnumerator DeleteScenarioAvatar(
             int scenarioAvatarId,
             Action<ApiResult> onCompleted
@@ -83,7 +84,7 @@ namespace Data.Remote
                 onComplete = (result) => onCompleted(ApiResult.Success()),
                 onError = (error) => onCompleted(ApiResult.Fail(error)),
             };
-            
+
             yield return HttpManager.GetInstance().Delete(request);
         }
     }

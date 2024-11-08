@@ -1,4 +1,6 @@
-﻿public class CharacterInfo
+﻿using UnityEngine;
+
+public class CharacterInfo
 {
     public int id;
     public string name;
@@ -8,4 +10,7 @@
     public int strength;
     public int dexterity;
     public bool isPlayable;
+
+    public Vector3 position;
+    public float yRotation;
 }
