@@ -3,12 +3,13 @@
 [System.Serializable]
 public class NpcInfo : ICharacterData
 {
-    public enum ENPCType
+    public enum ENpcType
     {
         None = -1,
         Human,
         Goblin,
         Elf,
+        Golem,
     }
     
     public int Id { get; set; }
@@ -20,5 +21,5 @@ public class NpcInfo : ICharacterData
 
     public int BackgroundPartId = -1;
     public Vector3 Position = Vector3.zero;
-    public ENPCType Type = ENPCType.None;
+    public ENpcType Type = ENpcType.None;
 }

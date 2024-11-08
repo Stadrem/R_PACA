@@ -2,7 +2,7 @@
 {
     public int id;
     public string name;
-    public ECharacterShapeType shapeType;
+    public NpcInfo.ENpcType shapeType;
     public string description;
     public int hitPoints;
     public int strength;

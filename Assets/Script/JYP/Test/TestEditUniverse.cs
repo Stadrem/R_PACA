@@ -29,7 +29,7 @@ public class TestEditUniverse : MonoBehaviour
                     {
                         id = 2,
                         name = "Test2",
-                        shapeType = ECharacterShapeType.Goblin,
+                        shapeType = NpcInfo.ENpcType.Goblin,
                         isPlayable = false,
                     },
 
@@ -37,7 +37,7 @@ public class TestEditUniverse : MonoBehaviour
                     {
                         id = 3,
                         name = "Test3",
-                        shapeType = ECharacterShapeType.Human,
+                        shapeType  = NpcInfo.ENpcType.Human,
                         isPlayable = false,
                     },
                 };

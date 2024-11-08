@@ -9,7 +9,8 @@ namespace UI.Universe.Edit
     {
         private VisualElement root;
 
-        [CanBeNull] private MonoBehaviour context = null;
+        [CanBeNull]
+        private MonoBehaviour context = null;
 
         private Button selectShapeButton;
         private TextField nameInput;
@@ -25,11 +26,15 @@ namespace UI.Universe.Edit
         private VisualTreeAsset selectionItemTemplate;
         private ScrollView selectionListScrollView;
         private Button popupConfirmButton;
+        
         private VisualElement goblinSelectionItem;
         private VisualElement humanSelectionItem;
+        private VisualElement elfSelectionItem;
+        private VisualElement golemSelectionItem;
+        
         private bool isPopupOpen = false;
 
-        private ECharacterShapeType selectedShapeType = ECharacterShapeType.None;
+        private NpcInfo.ENpcType selectedShapeType = NpcInfo.ENpcType.None;
 
         //
         private UniverseEditViewModel viewModel;
@@ -53,13 +58,15 @@ namespace UI.Universe.Edit
             popupConfirmButton = popup.Q<Button>("button_selectionConfirm");
             goblinSelectionItem = popup.Q<VisualElement>("selection_goblin");
             humanSelectionItem = popup.Q<VisualElement>("selection_human");
+            elfSelectionItem = popup.Q<VisualElement>("selection_elf");
+            golemSelectionItem = popup.Q<VisualElement>("selection_golem");
 
             goblinSelectionItem.RegisterCallback<ClickEvent>(
                 e =>
                 {
                     Debug.Log($"goblin selected");
                     selectShapeButton.text = "외형: 고블린";
-                    selectedShapeType = ECharacterShapeType.Goblin;
+                    selectedShapeType = NpcInfo.ENpcType.Goblin;
                     goblinSelectionItem.AddToClassList("character-shape--selected");
                     humanSelectionItem.RemoveFromClassList("character-shape--selected");
                 }
@@ -70,11 +77,29 @@ namespace UI.Universe.Edit
                 {
                     Debug.Log($"human selected");
                     selectShapeButton.text = "외형: 인간";
-                    selectedShapeType = ECharacterShapeType.Human;
+                    selectedShapeType = NpcInfo.ENpcType.Human;
                     humanSelectionItem.AddToClassList("character-shape--selected");
                     goblinSelectionItem.RemoveFromClassList("character-shape--selected");
                 }
             );
+            
+            elfSelectionItem.RegisterCallback<ClickEvent>(
+                e =>
+                {
+                    Debug.Log($"elf selected");
+                    selectShapeButton.text = "외형: 엘프";
+                    selectedShapeType = NpcInfo.ENpcType.Elf;
+                    elfSelectionItem.AddToClassList("character-shape--selected");
+                });
+            
+            golemSelectionItem.RegisterCallback<ClickEvent>(
+                e =>
+                {
+                    Debug.Log($"golem selected");
+                    selectShapeButton.text = "외형: 골렘";
+                    selectedShapeType = NpcInfo.ENpcType.Golem;
+                    golemSelectionItem.AddToClassList("character-shape--selected");
+                });
 
             selectShapeButton.clicked += OpenSelectPopup;
             addButton.clicked += OnAddButtonClicked;
@@ -97,7 +122,7 @@ namespace UI.Universe.Edit
 
         private void OnAddButtonClicked()
         {
-            if (selectedShapeType == ECharacterShapeType.None) return;
+            if (selectedShapeType == NpcInfo.ENpcType.None) return;
 
             var character = new CharacterInfo
             {
@@ -139,7 +164,7 @@ namespace UI.Universe.Edit
             playableToggle.value = false;
 
             selectShapeButton.text = "외형 선택...";
-            selectedShapeType = ECharacterShapeType.None;
+            selectedShapeType = NpcInfo.ENpcType.None;
         }
     }
 }
