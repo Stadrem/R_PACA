@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Remote.Dtos.Response;
 
 namespace Data.Remote.Dtos.Response
 {
@@ -8,5 +9,6 @@ namespace Data.Remote.Dtos.Response
         public int partId;
         public string partName;
         public bool isPortalEnable;
+        public int towardWorldPartId;
     }
 }

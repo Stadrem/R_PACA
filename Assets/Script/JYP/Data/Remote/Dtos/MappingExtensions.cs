@@ -20,7 +20,7 @@ namespace Data.Remote.Dtos
         {
             return new NpcInfo()
             {
-                Id = dto.avatarCode,
+                Id = dto.scenarioAvatarId,
                 Name = dto.avatarName,
             };
         }
@@ -70,6 +70,22 @@ namespace Data.Remote.Dtos
 
 
             return backgroundParts;
+        }
+        
+        public static CharacterInfo ToCharacterInfo(this ScenarioCharacterUpdateResDto dto)
+        {
+            return new CharacterInfo()
+            {
+                id = dto.scenarioAvatarId,
+                name = dto.avatarName,
+                shapeType = (NpcInfo.ENpcType)dto.outfit,
+                isPlayable = dto.isPlayable,
+                hitPoints = dto.health,
+                strength = dto.strength,
+                dexterity = dto.dex,
+                position = new UnityEngine.Vector3(dto.axisX, dto.axisY, dto.axisZ),
+                yRotation = dto.rotation,
+            };
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Data.Remote.Dtos.Response
 {
-    [System.Serializable]
+    [Serializable]
     public class ScenarioResDto
     {
         public int scenarioCode;
@@ -16,31 +17,40 @@ namespace Data.Remote.Dtos.Response
         public List<TagResDto> tags;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class ScenarioAvatarResDto
     {
-        public int avatarCode;
+        public int scenarioAvatarId;
         public string avatarName;
-        public string avatarImage;
+        public int outfit;
+        public bool isPlayable;
+        public int health;
+        public int strength;
+        public int dex;
+        public float axisX;
+        public float axisY;
+        public float axisZ;
+        public int worldId;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class ScenarioWorldPartResDto
     {
         public int partId;
         public string partName;
         public string isPortalEnable;
+        public int towardWorldPartId;
     }
 
 
-    [System.Serializable]
+    [Serializable]
     public class GenreResDto
     {
         public int genreCode;
         public string genreName;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class TagResDto
     {
         public int tagCode;

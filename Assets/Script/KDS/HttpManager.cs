@@ -201,7 +201,6 @@ public class HttpManager : MonoBehaviour
         {
             yield return webRequest.SendWebRequest();
 
-            Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 if (info.onComplete != null)
@@ -209,18 +208,6 @@ public class HttpManager : MonoBehaviour
                     //todo api 괜찮아 지면 지우기
                     var txt = webRequest.downloadHandler.text;
                     Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
-                    txt = txt.Trim();
-                    if (!txt.StartsWith('{'))
-                    {
-                        //json 형식 씌우기
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append("{ \"data\":");
-                        sb.Append(txt);
-                        sb.Append("}");
-                        print(sb.ToString());
-                        txt = sb.ToString();
-                    }
-
                     info.onComplete(JsonUtility.FromJson<TRes>(txt));
                 }
             }
@@ -258,6 +245,7 @@ public class HttpManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
                 if (info.onError != null)
                 {
                     info.onError(new Exception(webRequest.error));
@@ -280,6 +268,8 @@ public class HttpManager : MonoBehaviour
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
+                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+
                 if (info.onComplete != null)
                 {
                     info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
@@ -320,6 +310,8 @@ public class HttpManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+
                 if (info.onError != null)
                 {
                     info.onError(new Exception(webRequest.error + webRequest.downloadHandler.text));
