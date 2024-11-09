@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Alert : MonoBehaviour
 {
+    //알림창 기능. 알아서 프리팹 가져옴.
     //싱글톤
     public static Alert instance;
 
@@ -33,8 +34,10 @@ public class Alert : MonoBehaviour
         return instance;
     }
 
+    //감추고 표시할 캔버스
     public GameObject alertCanvas;
 
+    //변경할 텍스트 내용
     public TMP_Text alertText;
 
     //코루틴 변수
@@ -54,6 +57,7 @@ public class Alert : MonoBehaviour
         }
     }
 
+    //텍스트와 시간 포함 된 오버로딩 1
     public void Set(string text, float time)
     {
         TextSetUp(text);
@@ -63,6 +67,7 @@ public class Alert : MonoBehaviour
         StartCoroutine(coroutine);
     }
 
+    //텍스트만 넣는 오버로딩 2
     public void Set(string text)
     {
         TextSetUp(text);
@@ -72,6 +77,7 @@ public class Alert : MonoBehaviour
         StartCoroutine(coroutine);
     }
 
+    //초기화 겸 텍스트 넣기
     void TextSetUp(string text)
     {
         //초기화
@@ -88,6 +94,7 @@ public class Alert : MonoBehaviour
         alertText.text = text;
     }
 
+    //코루틴
     IEnumerator alertStart(float time)
     {
         alertCanvas.SetActive(true);
