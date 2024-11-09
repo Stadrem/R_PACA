@@ -26,6 +26,8 @@ public class LoginManager : MonoBehaviour
         // 필드 확인
         if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(password))
         {
+            Alert.Get().Set("아이디와 비밀번호를 모두 입력해야 합니다.");
+
             Debug.LogError("아이디와 비밀번호를 모두 입력해야 합니다.");
             return;
         }
@@ -33,6 +35,8 @@ public class LoginManager : MonoBehaviour
         Debug.Log("UserID 입력값: " + userId);
         StartCoroutine(LoginRequest(userId, password));
         Debug.Log("로그인 시도: " + userId);
+
+        Alert.Get().Set("로그인 시도 중...");
     }
 
     private IEnumerator LoginRequest(string userId, string password)
@@ -47,6 +51,7 @@ public class LoginManager : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
+                Alert.Get().Set("로그인 성공");
                 Debug.Log("로그인 성공: " + request.downloadHandler.text);
 
                 // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환

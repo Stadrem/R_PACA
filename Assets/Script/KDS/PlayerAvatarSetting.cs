@@ -21,6 +21,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     public GameObject ownerCrown;
 
+    public GameObject avatarLoading;
+
     private void Awake()
     {
         // 현재 씬의 이름을 가져옴
@@ -63,7 +65,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
         if (myAvatar.userCode != -1)
         {
-            StartPostAvatarInfo(myAvatar.userCode);
+            //StartPostAvatarInfo(myAvatar.userCode);
             print("정상 접속 상황");
         }
         else
@@ -91,8 +93,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     }
     */
 
-    void RefreshAvatar()
+    public void RefreshAvatar()
     {
+        avatarLoading.SetActive(true);
+
         //서버에서 아바타 정보 받아오기
         StartGetAvatarInfo(myAvatar.userCode, (getAvatar) =>
         {
@@ -105,10 +109,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         if (notUseNetworkOn)
         {
             myAvatar = TempFakeServer.Get().myAvatar;
-        }
 
-        // 씬 로드 후 실행할 함수 호출
-        ChangeAvatar();
+            // 씬 로드 후 실행할 함수 호출
+            ChangeAvatar();
+        }
     }
 
     /*
@@ -163,6 +167,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         skinnedMeshRenderer.sharedMesh = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].mesh.sharedMesh;
         skinnedMeshRenderer.enabled = true;
         skinnedMeshRenderer.material = AvatarPresetSettings.Get().genderParts[myAvatar.userAvatarGender].avatarParts[tempNum].avatarItems[myAvatar.userAvatarHand].material;
+
+        avatarLoading.SetActive(false);
     }
 
     public void ShowOwnerCrown()

@@ -125,6 +125,11 @@ public class AvatarHTTPManager : MonoBehaviour
             else
             {
                 Debug.Log("failed: " + webRequest.error);
+
+                if (webRequest.error.Contains("400"))
+                {
+                    StartPostAvatarInfo(id);
+                }
             }
         }
     }

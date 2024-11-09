@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class SignupManager : MonoBehaviour
+public class SignupManager : AvatarHTTPManager
 {
     // InputField로 입력받는 값
     public TMP_InputField userIdField;
@@ -63,6 +64,9 @@ public class SignupManager : MonoBehaviour
 
                 // 1초 대기 후 로그인 시도
                 yield return new WaitForSeconds(1f);
+
+                //아바타 0,0,0,0 기본 데이터 포스트
+                StartPostAvatarInfo(Convert.ToInt32(userId));
 
                 // 동일한 ID와 PW로 로그인 시도
                 // 먼저 로그인 요청을 보내고, 그 결과에 따라 UserCode를 설정합니다.

@@ -43,7 +43,7 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
         pas.myAvatar.userCode = value;
 
         // userCode 설정 후, 아바타 정보 불러오기 시작
-        pas.StartPostAvatarInfo(value);
+        pas.RefreshAvatar();
     }
 
     [PunRPC]

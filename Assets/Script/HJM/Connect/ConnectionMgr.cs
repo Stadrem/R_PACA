@@ -11,6 +11,7 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
 {
     public void OnClickConnect()
     {
+        Alert.Get().Set("로비 입장 시도 중");
         // 마스터 서버에 접속 시도
         Debug.Log("마스터 서버에 접속을 시도했습니다.");
         PhotonNetwork.ConnectUsingSettings();
@@ -27,6 +28,7 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
 
     public void JoinLobby()
     {
+        Alert.Get().Set("환영합니다.");
         // 닉네임 설정
         PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
         // 기본 Lobby 입장
