@@ -90,6 +90,13 @@ MonoBehaviour:
         meshB: {fileID: 0}
         material: {fileID: 2100000, guid: c1e7e53dfbba88640913d256b4baef70, type: 2}
         sprite: {fileID: 21300000, guid: 711e68af702682645b57330b105ffe9a, type: 3}
+      - name: 
+        mesh: {fileID: 6359306412377837685, guid: c2f03dc1a8c2af64e8d727fa7be2881e,
+          type: 3}
+        subMesh: {fileID: 0}
+        meshB: {fileID: 0}
+        material: {fileID: 2100000, guid: 449d2619810900c46878a7c090fd7e36, type: 2}
+        sprite: {fileID: 21300000, guid: 52646d82ced18af458d1ca63906161fb, type: 3}
     - avatarItems:
       - name: 
         mesh: {fileID: 7031619941473011051, guid: 1a27c2de3481f8442a9ef3fe7893781b,
@@ -107,6 +114,14 @@ MonoBehaviour:
         meshB: {fileID: 0}
         material: {fileID: 2100000, guid: 810fe1854aa71454fb07025049758228, type: 2}
         sprite: {fileID: 21300000, guid: 1f49ba3b0e7e6814caac75cb05465670, type: 3}
+      - name: 
+        mesh: {fileID: -902970526940520364, guid: c2f03dc1a8c2af64e8d727fa7be2881e,
+          type: 3}
+        subMesh: {fileID: 8821354912451272874, guid: c2f03dc1a8c2af64e8d727fa7be2881e,
+          type: 3}
+        meshB: {fileID: 0}
+        material: {fileID: 2100000, guid: 5b52caf1a2e3ae9438267d60bc4f6012, type: 2}
+        sprite: {fileID: 21300000, guid: 27f5261642219fa41a6e7f2c27988d61, type: 3}
     - avatarItems:
       - name: 
         mesh: {fileID: 7031619941473011051, guid: 1a27c2de3481f8442a9ef3fe7893781b,
