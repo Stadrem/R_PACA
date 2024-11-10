@@ -7,8 +7,6 @@ using ViewModels;
 
 public class CreateUniverseController : MonoBehaviour
 {
-    public VisualTreeAsset objectiveItemTemplate;
-
     private TextField titleInput;
     private VisualElement genreFantasySelector;
     private Button charactersSettingButton;
@@ -17,9 +15,9 @@ public class CreateUniverseController : MonoBehaviour
     private Button objectiveSettingButton;
     private Button backButton;
     private Button saveButton;
-    private TextField tagsInput;
+    // private TextField tagsInput;
     private EGenreType selectedGenre = EGenreType.None;
-    private Label createdDate;
+    // private Label createdDate;
 
     private ObjectiveSelectionPopupController objectiveSelectionPopupController;
 
@@ -39,17 +37,17 @@ public class CreateUniverseController : MonoBehaviour
         charactersSettingButton = root.Q<Button>("button_characters");
         backgroundSettingButton = root.Q<Button>("button_backgrounds");
         objectiveSettingButton = root.Q<Button>("button_objective");
-        backButton = root.Q<Button>("button_close");
-        saveButton = root.Q<Button>("button_save");
-        tagsInput = root.Q<TextField>("input_tags");
-        createdDate = root.Q<Label>("label_createdDate");
-        var popup = root.Q<TemplateContainer>("selectionPopup");
+        backButton = root.Q<Button>("Button_close");
+        saveButton = root.Q<Button>("Button_save");
+        // tagsInput = root.Q<TextField>("input_tags");
+        // createdDate = root.Q<Label>("label_createdDate");
+        var popup = root.Q<TemplateContainer>("ObjectiveSelectionPopup");
         objectiveSelectionPopupController = new ObjectiveSelectionPopupController();
         objectiveSelectionPopupController.Init(popup);
 
         //put data from viewModel
         titleInput.value = ViewModel.Title;
-        tagsInput.value = string.Join(",", ViewModel.Tags);
+        // tagsInput.value = string.Join(",", ViewModel.Tags);
         descriptionInput.value = ViewModel.Content;
         if (Enum.TryParse(ViewModel.Genre, out EGenreType genre))
         {
@@ -63,9 +61,9 @@ public class CreateUniverseController : MonoBehaviour
         titleInput.RegisterValueChangedCallback(
             e => { ViewModel.Title = e.newValue; }
         );
-        tagsInput.RegisterValueChangedCallback(
-            e => { ViewModel.Tags = e.newValue.Split(',').ToList(); }
-        );
+        // tagsInput.RegisterValueChangedCallback(
+        //     e => { ViewModel.Tags = e.newValue.Split(',').ToList(); }
+        // );
         descriptionInput.RegisterValueChangedCallback(
             e => { ViewModel.Content = e.newValue; }
         );
@@ -100,6 +98,6 @@ public class CreateUniverseController : MonoBehaviour
                 )
             );
         };
-        createdDate.text = ViewModel.CreatedDate.ToString("dd/MM/yyyy");
+        // createdDate.text = ViewModel.CreatedDate.ToString("dd/MM/yyyy");
     }
 }

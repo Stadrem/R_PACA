@@ -1,27 +1,3 @@
-.unity-text-element {
-    -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
-    -unity-text-align: middle-center;
-    align-items: stretch;
-    justify-content: flex-start;
-    align-self: stretch;
-    font-size: 18px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
-}
-
-.unity-base-text-field {
-    -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
-}
-
-.unity-text-field {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.unity-base-field--no-label {
-}
-
 .character-shape--selected {
     border-left-color: rgb(255, 249, 0);
     border-right-color: rgb(255, 249, 0);
@@ -43,22 +19,8 @@
 .objective-selection--hided {
     opacity: 0;
     display: none;
-    transition-duration: 1s, 0s;
+    transition-duration: 0.1s, 0s;
     transition-delay: 0s, 1s;
     transition-property: opacity, display;
     transition-timing-function: ease, linear;
-}
-
-TextElement.unity-text-element {
-    -unity-font-definition: resource('Fonts/LINESeedKR-Rg SDF');
-    -unity-text-align: upper-left;
-    align-items: stretch;
-    justify-content: flex-start;
-    align-self: stretch;
-    font-size: 18px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
-    width: 100%;
 }

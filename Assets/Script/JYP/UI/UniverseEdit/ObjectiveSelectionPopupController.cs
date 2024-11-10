@@ -28,8 +28,8 @@ public class ObjectiveSelectionPopupController
         selectionDemonKing = root.Q<VisualElement>("selection_objectiveDemonKing");
         confirm = root.Q<Button>("button_objectiveConfirm");
 
-        selectionCollectSword.Q<Label>().text = objectiveStrings[0];
-        selectionDemonKing.Q<Label>().text = objectiveStrings[1];
+        // selectionCollectSword.Q<Label>().text = objectiveStrings[0];
+        // selectionDemonKing.Q<Label>().text = objectiveStrings[1];
 
         selectionCollectSword.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.CollectSword));
         selectionDemonKing.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.DefeatDemonKing));
