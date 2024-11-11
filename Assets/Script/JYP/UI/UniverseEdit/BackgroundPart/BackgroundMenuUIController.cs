@@ -6,7 +6,6 @@ using UniverseEdit;
 public class BackgroundMenuUIController : MonoBehaviour
 {
     public RectTransform backgroundMenuContainer;
-    public TMP_Text menuButtonText;
 
     [SerializeField] private LinkedBackgroundPart linkedBackgroundPart;
     private bool isMenuOpen= false;
@@ -51,13 +50,11 @@ public class BackgroundMenuUIController : MonoBehaviour
     {
         backgroundMenuContainer.gameObject.SetActive(true);
         isMenuOpen = true;
-        menuButtonText.text = "메뉴\n닫기";
     }
 
     private void CloseMenuUI()
     {
         backgroundMenuContainer.gameObject.SetActive(false);
         isMenuOpen = false;
-        menuButtonText.text = "메뉴\n열기";
     }
 }

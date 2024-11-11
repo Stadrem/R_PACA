@@ -1,5 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UniverseEdit;
 using ViewModels;
@@ -8,10 +7,9 @@ public class BackgroundEditUIController : MonoBehaviour
 {
     public GameObject root;
     public BackgroundCreateUIController backgroundCreateUIController;
-
+    public RectTransform backgroundLinkMenuContainer;
     public Button createButton;
     public Button backButton;
-    public TMP_Text headerText;
     public BackgroundPartLinkManager backgroundPartLinkManager;
     private UniverseEditViewModel viewModel;
 
@@ -47,7 +45,7 @@ public class BackgroundEditUIController : MonoBehaviour
             () => { backgroundPartLinkManager.ExitDetailMode(); }
         );
         createButton.gameObject.SetActive(false);
-        headerText.text = "NPC 배치";
+        backgroundLinkMenuContainer.gameObject.SetActive(false);
     }
 
     public void SetLinkMode()
@@ -57,6 +55,6 @@ public class BackgroundEditUIController : MonoBehaviour
             () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); }
         );
         createButton.gameObject.SetActive(true);
-        headerText.text = "배경 설정";
+        backgroundLinkMenuContainer.gameObject.SetActive(true);
     }
 }

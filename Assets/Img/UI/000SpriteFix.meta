@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Fonts/Pretendard-Bold SDF.asset.meta
+guid: b12decf8d856b400595e424e411bc14c
+NativeFormatImporter:
+========
 guid: e297a4760a2d934408f54a5a606fb320
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> main:Assets/Img/UI/000SpriteFix.meta
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

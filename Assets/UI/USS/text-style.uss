@@ -1,0 +1,22 @@
+.unity-text-element {
+    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+}
+
+.h1 {
+    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+    font-size: 48px;
+    -unity-font-style: normal;
+}
+
+.bold {
+    -unity-font-definition: resource('Fonts/Pretendard-Bold SDF');
+}
+
+.medium {
+    font-size: 36px;
+    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+}
+
+.small {
+    font-size: 24px;
+}
