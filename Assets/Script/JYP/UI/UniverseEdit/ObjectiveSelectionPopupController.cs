@@ -33,7 +33,7 @@ public class ObjectiveSelectionPopupController
 
         selectionCollectSword.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.CollectSword));
         selectionDemonKing.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.DefeatDemonKing));
-        confirm.clicked += () => { Hide(); }s;
+        confirm.clicked += () => { Hide(); };
     }
 
     public void Hide()
