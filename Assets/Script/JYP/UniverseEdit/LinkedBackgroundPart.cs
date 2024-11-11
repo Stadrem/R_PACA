@@ -19,6 +19,8 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
 
     // public List<LinkedBackgroundPart> linkedParts;
     // public List<Portal> portals;
+    public Sprite[] typeSprites;
+    public SpriteRenderer spriteRendererType;
     public GameObject detail;
     public Transform spawnOffset;
     public GameObject linkable;
@@ -42,10 +44,12 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
             case EBackgroundPartType.Town:
                 var townPreset = Resources.Load<GameObject>("BackgroundPart/TownDetailPreset");
                 var go = Instantiate(townPreset, detail.transform);
-                detailViewCamera.transform.position = go.transform.Find("DetailViewCamPos")
+                detailViewCamera.transform.position = go.transform
+                    .Find("DetailViewCamPos")
                     .transform.position;
                 spawnOffset = go.transform.Find("SpawnOffset");
                 go.transform.localPosition = Vector3.zero;
+                spriteRendererType.sprite = typeSprites[(int)EBackgroundPartType.Town];
                 break;
             case EBackgroundPartType.Dungeon:
                 var dungeonPreset = Resources.Load<GameObject>("BackgroundPart/DungeonDetailPreset");
@@ -54,6 +58,7 @@ public class LinkedBackgroundPart : MonoBehaviour, ILinkable, IDraggable
                     .transform.position;
                 spawnOffset = dungeon.transform.Find("SpawnOffset");
                 dungeon.transform.localPosition = Vector3.zero;
+                spriteRendererType.sprite = typeSprites[(int)EBackgroundPartType.Dungeon];
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -1,0 +1,29 @@
+TextInput {
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    text-overflow: clip;
+}
+
+TextInput TextElement {
+    -unity-text-align: upper-left;
+    text-overflow: clip;
+    white-space: normal;
+    width: 100%;
+}
+
+IntegerField IntegerInput {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    -unity-text-align: upper-center;
+}
+
+IntegerField {
+    background-color: rgba(0, 0, 0, 0);
+}

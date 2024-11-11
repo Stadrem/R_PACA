@@ -15,7 +15,10 @@ namespace ViewModels
         private string title;
         private string genre;
         private string content;
-        private List<string> tags = new List<string>();
+        private List<string> tags = new List<string>()
+        {
+            "태그"
+        };
         private string objective = "";
         private List<CharacterInfo> characters = new();
         private List<BackgroundPartInfo> backgroundParts = new();

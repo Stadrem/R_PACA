@@ -16,7 +16,6 @@ namespace UI.Universe.Edit
         private Label strengthLabel;
         private Label dexLabel;
         private Button deleteButton;
-        private Toggle playableToggle;
 
 
         public void Initialize(VisualElement root)
@@ -33,7 +32,6 @@ namespace UI.Universe.Edit
             strengthLabel = root.Q<Label>("lbl_characterStrength");
             dexLabel = root.Q<Label>("lbl_characterDex");
             deleteButton = root.Q<Button>("button_RemoveCharacter");
-            playableToggle = root.Q<Toggle>("Toggle_playable");
 
             shapeTypeLabel.text = item.shapeType.ToString();
             nameLabel.text = item.name;
@@ -42,9 +40,6 @@ namespace UI.Universe.Edit
             strengthLabel.text = item.strength.ToString();
             dexLabel.text = item.dexterity.ToString();
             deleteButton.clicked += () => onDeleteButtonClicked(item.id);
-            playableToggle.focusable = false;
-            if(playableToggle == null) Debug.Log($"error: playableToggle is null");
-            playableToggle.value = item.isPlayable;
         }
     }
 }

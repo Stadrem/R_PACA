@@ -42,6 +42,7 @@ namespace UI.Universe.Edit
         private void CreateCharacterView(CharacterInfo character)
         {
             var characterItem = characterEntryTemplate.CloneTree();
+            
             characterItem.style.height = Length.Percent(100);
             characterItem.style.width = 480;
 

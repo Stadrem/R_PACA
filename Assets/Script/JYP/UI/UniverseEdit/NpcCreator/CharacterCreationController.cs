@@ -18,7 +18,6 @@ namespace UI.Universe.Edit
         private IntegerField hitPointsInput;
         private IntegerField strengthInput;
         private IntegerField dexterityInput;
-        private Toggle playableToggle;
         private Button addButton;
 
         // popup
@@ -52,7 +51,6 @@ namespace UI.Universe.Edit
             hitPointsInput = root.Q<IntegerField>("input_hp");
             strengthInput = root.Q<IntegerField>("input_strength");
             dexterityInput = root.Q<IntegerField>("input_dex");
-            playableToggle = root.Q<Toggle>("Toggle_playable");
             addButton = root.Q<Button>("button_AddCharacter");
             popup = root.Q<TemplateContainer>("selection_popup");
             popupConfirmButton = popup.Q<Button>("button_selectionConfirm");
@@ -124,6 +122,7 @@ namespace UI.Universe.Edit
         {
             if (selectedShapeType == NpcInfo.ENpcType.None) return;
 
+
             var character = new CharacterInfo
             {
                 shapeType = selectedShapeType,
@@ -132,7 +131,7 @@ namespace UI.Universe.Edit
                 hitPoints = hitPointsInput.value,
                 strength = strengthInput.value,
                 dexterity = dexterityInput.value,
-                isPlayable = playableToggle.value
+                isPlayable = false
             };
 
             Debug.Log($"hp: {character.hitPoints}, str: {character.strength}, dex: {character.dexterity}");
@@ -162,9 +161,7 @@ namespace UI.Universe.Edit
             hitPointsInput.value = 0;
             strengthInput.value = 0;
             dexterityInput.value = 0;
-            playableToggle.value = false;
-
-            selectShapeButton.text = "외형 선택...";
+            selectShapeButton.text = "외형 선택하기";
             selectedShapeType = NpcInfo.ENpcType.None;
         }
     }
