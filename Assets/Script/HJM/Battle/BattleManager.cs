@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
@@ -15,8 +16,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public List<NavMeshAgent> agents = new List<NavMeshAgent>();
     public List<PlayerMove> playerMoves = new List<PlayerMove>();
 
+    public List<GameObject> profiles;
+
     public GameObject battleUI;
     public GameObject profileUI;
+
+    //public bool isMyTurnAction = false;
+
+    public PlayerBatList playerBatList;
 
     private void Awake()
     {
@@ -30,69 +37,88 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private IEnumerator Start()
+    void Start()
     {
-        yield return new WaitForSeconds(1f);
-        InitializePlayers();
+
     }
 
     void Update()
     {
-        if (TurnCheckSystem.Instance.isMyTurn && Input.GetKeyDown(KeyCode.Space))
-        {
-            PerformAction();
-        }
+        //if (TurnCheckSystem.Instance.isMyTurn && isMyTurnAction == true)
+        //{
+        //    PerformAction();
+        //}
 
         if (Input.GetKeyDown(KeyCode.B))
         {
             photonView.RPC("OnBattleStart", RpcTarget.All);
         }
-    }
 
-    private void PerformAction()
-    {
-        Debug.Log("턴 선택 행동 ~~ 끝");
-
-        TurnCheckSystem.Instance.EndTurn();
-    }
-    private void InitializePlayers()
-    {
-        GameObject[] playerGameObjects = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject playerGameObject in playerGameObjects)
+        if (players.Count != PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            if (!players.Contains(playerGameObject))
-            {
-                players.Add(playerGameObject);
-
-                var playerStatsComponent = playerGameObject.GetComponent<UserStats>();
-                if (playerStatsComponent != null)
-                {
-                    playerStats.Add(playerStatsComponent);
-                }
-
-                var agent = playerGameObject.GetComponent<NavMeshAgent>();
-                if (agent != null) agents.Add(agent);
-
-                var playerMove = playerGameObject.GetComponent<PlayerMove>();
-                if (playerMove != null) playerMoves.Add(playerMove);
-            }
+            InitializePlayers();
         }
     }
 
+    //private void PerformAction()
+    //{
+    //    Debug.Log("턴 선택 행동 ~~");
+    //    isMyTurnAction = false;
+    //    Debug.Log("턴 선택 행동 끝");
+
+    //    TurnCheckSystem.Instance.EndTurn();
+    //}
+    private void InitializePlayers()
+    {
+        GameObject[] playerGameObjects = GameObject.FindGameObjectsWithTag("Player");
+        //print("플레이어 오브젝트 수 : " + playerGameObjects.Length.ToString());
+        GameObject[] Playerss = new GameObject[playerGameObjects.Length];
+
+        List<UserStats> tempPlayerStats = new List<UserStats>();
+        List<NavMeshAgent> tempAgents = new List<NavMeshAgent>();
+        List<PlayerMove> tempPlayerMoves = new List<PlayerMove>();
+
+        for (int i = 0; i < playerGameObjects.Length; i++)
+        {
+            PhotonView pv = playerGameObjects[i].GetComponent<PhotonView>();
+            int playerindex = pv.ViewID / 1000;
+            //print(playerindex);
+
+            // 플레이어 게임 오브젝트 리스트에 추가
+            Playerss[playerindex - 1] = playerGameObjects[i];
+
+            // 컴포넌트들 가져오기
+            UserStats stats = playerGameObjects[i].GetComponent<UserStats>();  // UserStats 컴포넌트
+            NavMeshAgent agent = playerGameObjects[i].GetComponent<NavMeshAgent>();  // NavMeshAgent 컴포넌트
+            PlayerMove playerMove = playerGameObjects[i].GetComponent<PlayerMove>();  // PlayerMove 컴포넌트
+
+            tempPlayerStats.Add(stats);
+            tempAgents.Add(agent);
+            tempPlayerMoves.Add(playerMove);
+        }
+
+        
+        players = Playerss.ToList();
+        playerStats = tempPlayerStats;
+        agents = tempAgents;
+        playerMoves = tempPlayerMoves;
+    }
 
     [PunRPC]
     void OnBattleStart()
     {
-        
         for (int i = 0; i < players.Count; i++)
         {
             photonView.RPC("MoveToBattlePos", RpcTarget.All, i);
         }
-        photonView.RPC("ProfileSet", RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("ProfileSet", RpcTarget.All);
+        }
         battleUI.SetActive(true);
     }
 
-    [PunRPC]
+    [PunRPC] // 프로필 UI 생성
     void ProfileSet()
     {
         if (players.Count > 0)
@@ -101,9 +127,17 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             for (int i = 0; i < players.Count; i++)
             {
-                GameObject profile = Instantiate(profileUI, startPosition, Quaternion.identity); // PhotonNetwork.Instantiate 제거
+                GameObject profile = Instantiate(profileUI, startPosition, Quaternion.identity);
                 profile.transform.SetParent(battleUI.transform, false);
                 startPosition.x += 400; // 간격
+
+                profiles.Add(profile);
+
+                ProfileSet profileSet = profile.GetComponent<ProfileSet>();
+                profileSet.NicknameSet(playerBatList.battlePlayers[i].nickname);
+                profileSet.HpBarInit(playerBatList.battlePlayers[i].health);
+                profileSet.SetSelectImage(0); // 선택안함
+                TurnCheckSystem.Instance.profiles = profiles;
             }
         }
     }
@@ -113,10 +147,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         if (playerIndex < players.Count && playerIndex < battlePos.Count)
         {
-            agents[playerIndex].enabled = false;
-            playerMoves[playerIndex].clickMovementEnabled = false;
-            players[playerIndex].transform.position = battlePos[playerIndex].position;
-            players[playerIndex].transform.rotation = battlePos[playerIndex].rotation;
+            if (playerIndex >= 0 && playerIndex < players.Count && playerIndex < battlePos.Count)
+            {
+                agents[playerIndex].enabled = false;
+                playerMoves[playerIndex].clickMovementEnabled = false;
+                players[playerIndex].transform.position = battlePos[playerIndex].position;
+                players[playerIndex].transform.rotation = battlePos[playerIndex].rotation;
+            }
+
         }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerBatInfo
 {
-    public GameObject gameObject;
     public string nickname;
     public int health;
     public int strength;
@@ -23,7 +22,7 @@ public class PlayerBatInfo
 public class PlayerBatList : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private List<PlayerBatInfo> battlePlayers;
+    public List<PlayerBatInfo> battlePlayers;
 
     private void Awake()
     {

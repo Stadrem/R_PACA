@@ -14,7 +14,8 @@ public class CircularSlider : MonoBehaviour
 
     void Start()
     {
-        UpdateSlider(sliderValue);
+        //UpdateSlider(sliderValue);
+        //battleManager = battleMgr.GetComponent<BattleManager>();
     }
 
     
@@ -28,7 +29,7 @@ public class CircularSlider : MonoBehaviour
     }
     public void UpdateSlider(float value)
     {
-        sliderValue = Mathf.Clamp(value, 0, maxValue);  // 슬라이더 값 제한
+        sliderValue = Mathf.Clamp(value, 0, maxValue);
         sliderImage.fillAmount = sliderValue / maxValue;
     }
 
@@ -42,6 +43,7 @@ public class CircularSlider : MonoBehaviour
     public void OnClickStopSlider()
     {
         isDepleting = false;
+        TurnCheckSystem.Instance.isMyTurnAction = true;
     }
 
     // 시간 경과에 따라 슬라이더 값을 줄이는 함수

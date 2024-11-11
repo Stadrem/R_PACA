@@ -2907,7 +2907,7 @@ Transform:
   m_GameObject: {fileID: 300615469}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7452517, z: -0, w: 0.66678333}
-  m_LocalPosition: {x: 25.3, y: 5.797879, z: 22.296682}
+  m_LocalPosition: {x: 24.746, y: 5.71, z: 22.245}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23503,14 +23503,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a31ac62c62bc9c499ec0848b9803edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
-  attackButton: {fileID: 6630820814320672581}
-  defendButton: {fileID: 5236698382697017752}
-  turnCompleteButton: {fileID: 1567873636865664315}
-  playerSelections:
-  - {fileID: 6249095791616357098}
-  TurnComUI: {fileID: 1970428923}
-  turnCount: 1
+  currentTurnIndex: 0
+  totalPlayers: 0
+  isMyTurn: 0
+  attackBtn: {fileID: 6630820814320672581}
+  defenseBtn: {fileID: 5236698382697017752}
+  turnCompBtn: {fileID: 1567873636865664315}
+  turnSilder: {fileID: 2204691358192352121}
+  profiles: []
 --- !u!224 &3277921941532077664
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23708,8 +23708,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 760.7, y: -238}
-  m_SizeDelta: {x: 160, y: 150}
+  m_AnchoredPosition: {x: 710, y: -210}
+  m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3700524812887330852
 MonoBehaviour:
@@ -23731,12 +23731,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f7cdb3fae5bb6844d91664a47c82ea91, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd293dc32f4aaf94e8274f2fac2cdf89, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.75
+  m_FillAmount: 0.788
   m_FillClockwise: 1
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
@@ -24219,9 +24219,12 @@ MonoBehaviour:
   - {fileID: 300615470}
   agents: []
   playerMoves: []
+  profiles: []
   battleUI: {fileID: 3535244620977086028}
   profileUI: {fileID: 6255085196350749319, guid: 9f5dab9058b46824799696c855c5e8c2,
     type: 3}
+  isMyTurnAction: 0
+  playerBatList: {fileID: 6579614174890131882}
 --- !u!114 &5525024717357217103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24630,8 +24633,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 611, y: -352.2}
-  m_SizeDelta: {x: 160, y: 150}
+  m_AnchoredPosition: {x: 570, y: -350}
+  m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6630820814320672581
 MonoBehaviour:

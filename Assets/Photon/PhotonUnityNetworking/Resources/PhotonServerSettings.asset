@@ -69,6 +69,10 @@ MonoBehaviour:
   - OnPlayerTurnComplete
   - UpdateTurn
   - BeginTurn
+  - UpdateSelectImage
+  - SetupProfiles
+  - SyncPlayersList
+  - ReceiveSortedPlayers
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
