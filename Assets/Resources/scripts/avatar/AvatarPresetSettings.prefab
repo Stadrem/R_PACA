@@ -75,6 +75,20 @@ MonoBehaviour:
         meshB: {fileID: 0}
         material: {fileID: 2100000, guid: ef48b9ce0e16e6f43b3540db962b37c7, type: 2}
         sprite: {fileID: 21300000, guid: b422a0ec5b6be2f4f8bf77fe17dc0c3e, type: 3}
+      - name: 
+        mesh: {fileID: -4035312639936941182, guid: 1a27c2de3481f8442a9ef3fe7893781b,
+          type: 3}
+        subMesh: {fileID: 0}
+        meshB: {fileID: 0}
+        material: {fileID: 2100000, guid: 731881ac8b3b20244b58cd16b828ad75, type: 2}
+        sprite: {fileID: 21300000, guid: e1633ebc68abc02449eb1886706f3a04, type: 3}
+      - name: 
+        mesh: {fileID: -4035312639936941182, guid: 1a27c2de3481f8442a9ef3fe7893781b,
+          type: 3}
+        subMesh: {fileID: 0}
+        meshB: {fileID: 0}
+        material: {fileID: 2100000, guid: a7fb2fa18db69684ebbf8076a14a1ef4, type: 2}
+        sprite: {fileID: 21300000, guid: d6409b3e5e526f7478b36a34dde82e52, type: 3}
     - avatarItems:
       - name: 
         mesh: {fileID: -6309047224303346143, guid: 1a27c2de3481f8442a9ef3fe7893781b,
