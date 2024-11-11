@@ -16,11 +16,17 @@ public class YarnHistoryCard : MonoBehaviour
     public GameObject ui_notFound;
     public GameObject ui_loading;
 
+    public TMP_Text text_Like;
+
+    public Button btn_Like;
+
     string url = "";
 
     Button button;
 
     GameObject parent;
+
+    int like = 0;
 
     YarnHTTPManager yarnHttpManager;
 
@@ -88,5 +94,14 @@ public class YarnHistoryCard : MonoBehaviour
         {
             yarnHttpManager.StartGetYarnContentInfo(historyCode);
         }
+    }
+
+    public void OnClickLike()
+    {
+        like++;
+
+        text_Like.text = like.ToString();
+
+        btn_Like.interactable = false;
     }
 }
