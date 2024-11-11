@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerBatInfo
 {
+    public GameObject gameObject;
     public string nickname;
     public int health;
     public int strength;

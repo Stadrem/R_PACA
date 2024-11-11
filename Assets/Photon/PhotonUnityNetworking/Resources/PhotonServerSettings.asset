@@ -59,6 +59,16 @@ MonoBehaviour:
   - Pun_FinishConversation
   - RegisterPlayerStats
   - RegisterPlayer
+  - MoveToBattlePos
+  - ProfileSet
+  - CheckAllPlayersTurnComplete
+  - EndTurn
+  - OnBattleStart
+  - OnNewTurnRound
+  - OnPlayerAction
+  - OnPlayerTurnComplete
+  - UpdateTurn
+  - BeginTurn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

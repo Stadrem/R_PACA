@@ -36,6 +36,25 @@ public class BattleManager : MonoBehaviourPunCallbacks
         InitializePlayers();
     }
 
+    void Update()
+    {
+        if (TurnCheckSystem.Instance.isMyTurn && Input.GetKeyDown(KeyCode.Space))
+        {
+            PerformAction();
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            photonView.RPC("OnBattleStart", RpcTarget.All);
+        }
+    }
+
+    private void PerformAction()
+    {
+        Debug.Log("턴 선택 행동 ~~ 끝");
+
+        TurnCheckSystem.Instance.EndTurn();
+    }
     private void InitializePlayers()
     {
         GameObject[] playerGameObjects = GameObject.FindGameObjectsWithTag("Player");
@@ -60,13 +79,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            photonView.RPC("OnBattleStart", RpcTarget.All);
-        }
-    }
 
     [PunRPC]
     void OnBattleStart()
@@ -91,7 +103,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 GameObject profile = Instantiate(profileUI, startPosition, Quaternion.identity); // PhotonNetwork.Instantiate 제거
                 profile.transform.SetParent(battleUI.transform, false);
-                startPosition.x += 400;
+                startPosition.x += 400; // 간격
             }
         }
     }
