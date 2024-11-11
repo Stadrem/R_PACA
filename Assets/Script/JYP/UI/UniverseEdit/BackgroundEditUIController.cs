@@ -7,7 +7,7 @@ public class BackgroundEditUIController : MonoBehaviour
 {
     public GameObject root;
     public BackgroundCreateUIController backgroundCreateUIController;
-
+    public RectTransform backgroundLinkMenuContainer;
     public Button createButton;
     public Button backButton;
     public BackgroundPartLinkManager backgroundPartLinkManager;
@@ -45,6 +45,7 @@ public class BackgroundEditUIController : MonoBehaviour
             () => { backgroundPartLinkManager.ExitDetailMode(); }
         );
         createButton.gameObject.SetActive(false);
+        backgroundLinkMenuContainer.gameObject.SetActive(false);
     }
 
     public void SetLinkMode()
@@ -54,5 +55,6 @@ public class BackgroundEditUIController : MonoBehaviour
             () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); }
         );
         createButton.gameObject.SetActive(true);
+        backgroundLinkMenuContainer.gameObject.SetActive(true);
     }
 }
