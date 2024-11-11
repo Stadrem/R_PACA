@@ -2,28 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using TMPro;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
     public static BattleManager Instance { get; private set; }
 
-    [Header("플레이어 관련 목록")]
+    [Header("플레이어 리스트")]
     public List<GameObject> players = new List<GameObject>();  // 플레이어 목록
     public List<UserStats> playerStats = new List<UserStats>();  // 플레이어 스탯 정보 목록
     public List<Transform> battlePos;                          // 전투 시 이동 위치
     public List<NavMeshAgent> agents = new List<NavMeshAgent>();
     public List<PlayerMove> playerMoves = new List<PlayerMove>();
+    public List<Animator> playerAnims = new List<Animator>();
 
     public List<GameObject> profiles;
+    public PlayerBatList playerBatList;
 
+    [Header("UI 표시")]
     public GameObject battleUI;
     public GameObject profileUI;
+    public GameObject nextTurnUI;
+    public TMP_Text currentTurnTXT;
 
-    //public bool isMyTurnAction = false;
 
-    public PlayerBatList playerBatList;
+    [Header("적 NPC")]
+    public GameObject enemy;
+    public Animator enemyAnim;
+    public Slider enemyHPBar;
+
+    private int turnCount = 1;
 
     private void Awake()
     {
@@ -37,18 +48,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
-        //if (TurnCheckSystem.Instance.isMyTurn && isMyTurnAction == true)
-        //{
-        //    PerformAction();
-        //}
-
         if (Input.GetKeyDown(KeyCode.B))
         {
             photonView.RPC("OnBattleStart", RpcTarget.All);
@@ -60,14 +61,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //private void PerformAction()
-    //{
-    //    Debug.Log("턴 선택 행동 ~~");
-    //    isMyTurnAction = false;
-    //    Debug.Log("턴 선택 행동 끝");
-
-    //    TurnCheckSystem.Instance.EndTurn();
-    //}
     private void InitializePlayers()
     {
         GameObject[] playerGameObjects = GameObject.FindGameObjectsWithTag("Player");
@@ -77,6 +70,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         List<UserStats> tempPlayerStats = new List<UserStats>();
         List<NavMeshAgent> tempAgents = new List<NavMeshAgent>();
         List<PlayerMove> tempPlayerMoves = new List<PlayerMove>();
+        List<Animator> tempPlayerAnims = new List<Animator>();
 
         for (int i = 0; i < playerGameObjects.Length; i++)
         {
@@ -88,20 +82,23 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Playerss[playerindex - 1] = playerGameObjects[i];
 
             // 컴포넌트들 가져오기
-            UserStats stats = playerGameObjects[i].GetComponent<UserStats>();  // UserStats 컴포넌트
-            NavMeshAgent agent = playerGameObjects[i].GetComponent<NavMeshAgent>();  // NavMeshAgent 컴포넌트
-            PlayerMove playerMove = playerGameObjects[i].GetComponent<PlayerMove>();  // PlayerMove 컴포넌트
+            UserStats stats = playerGameObjects[i].GetComponent<UserStats>();
+            NavMeshAgent agent = playerGameObjects[i].GetComponent<NavMeshAgent>();
+            PlayerMove playerMove = playerGameObjects[i].GetComponent<PlayerMove>();
+            Animator playerAnim = playerGameObjects[i].GetComponent<Animator>();
 
             tempPlayerStats.Add(stats);
             tempAgents.Add(agent);
             tempPlayerMoves.Add(playerMove);
+            tempPlayerAnims.Add(playerAnim);
         }
 
-        
+
         players = Playerss.ToList();
         playerStats = tempPlayerStats;
         agents = tempAgents;
         playerMoves = tempPlayerMoves;
+        playerAnims = tempPlayerAnims;
     }
 
     [PunRPC]
@@ -156,5 +153,98 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
 
         }
+    }
+
+    // ------------------------- 전투 시작 초기 세팅 --------------------------
+
+
+    // ------------------------- 전투 결과 세팅 -------------------------------
+
+    // 주사위 공격 성공
+    [PunRPC]
+    public void DiceAttackSuccess(int damage)
+    {
+        //enemyAnim.SetTrigger("Hit");
+        //playerAnim.SetTrigger("Attack");
+        UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
+        ShowBattleUI("공격 성공!"); // 공격 성공 UI
+        NextTurn();
+    }
+
+    // 주사위 공격 실패
+    [PunRPC]
+    public void DiceAttackFail()
+    {
+        //enemyAnim.SetTrigger("Defense");
+        //playerAnim.SetTrigger("Attack");
+        ShowBattleUI("공격 실패"); // 공격 실패 UI
+        NextTurn();
+    }
+
+    // 주사위 방어 성공
+    [PunRPC]
+    public void DiceDefenseSuccess(int damage)
+    {
+        //enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
+        //playerAnim.SetTrigger("Defense"); // 플레이어 Defense 트리거
+        profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
+        ShowBattleUI("방어 성공!"); // 방어 성공 UI
+        NextTurn();
+    }
+
+    // 주사위 방어 실패
+    [PunRPC]
+    public void DiceDefenseFail(int damage)
+    {
+        //enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
+        //playerAnim.SetTrigger("Hit"); // 플레이어 Hit 트리거
+        profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
+        ShowBattleUI("방어 실패"); // 방어 실패 UI
+        NextTurn();
+    }
+
+    private void UpdateEnemyHealth(int damage)
+    {
+        enemyHPBar.value = Mathf.Max(enemyHPBar.value - damage, 0); // 적 체력 감소
+    }
+
+    private void ShowBattleUI(string message)
+    {
+        currentTurnTXT.text = message;
+        nextTurnUI.SetActive(true); // 다음턴 UI 표시
+    }
+
+    private void NextTurn()
+    {
+        turnCount++;
+        currentTurnTXT.text = "턴 수: " + turnCount;
+        StartCoroutine(HideNextTurnUI());
+    }
+
+    private IEnumerator HideNextTurnUI()
+    {
+        yield return new WaitForSeconds(2f);
+        nextTurnUI.SetActive(false);
+    }
+
+    // 포톤으로 호출
+    public void OnAttackSuccess(int damage)
+    {
+        photonView.RPC("DiceAttackSuccess", RpcTarget.All, damage);
+    }
+
+    public void OnAttackFail()
+    {
+        photonView.RPC("DiceAttackFail", RpcTarget.All);
+    }
+
+    public void OnDefenseSuccess(int damage)
+    {
+        photonView.RPC("DiceDefenseSuccess", RpcTarget.All, damage);
+    }
+
+    public void OnDefenseFail(int damage)
+    {
+        photonView.RPC("DiceDefenseFail", RpcTarget.All, damage);
     }
 }

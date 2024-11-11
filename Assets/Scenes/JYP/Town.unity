@@ -3771,62 +3771,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 376791177}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &378093770
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 378093771}
-  - component: {fileID: 378093772}
-  m_Layer: 0
-  m_Name: Battle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &378093771
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378093770}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &378093772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378093770}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d918dc5bd6f26c4aa0ed2e298707d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 2
-  guideUI: {fileID: 1970428923}
-  nextTurnUI: {fileID: 386214275}
-  player: {fileID: 0}
-  playerAnim: {fileID: 0}
-  enemy: {fileID: 0}
-  enemyAnim: {fileID: 0}
-  playerHPBar: {fileID: 0}
-  enemyHPBar: {fileID: 196456219}
-  circularSlider: {fileID: 4013254512944766261}
-  currentTurnTXT: {fileID: 7475469846293951798}
-  selectTurnTXT: {fileID: 6249095791616357098}
 --- !u!1 &378413733
 GameObject:
   m_ObjectHideFlags: 0
@@ -3888,8 +3832,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386214275}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11.080015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3899,7 +3843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 9.73472, y: 1.6145456}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &386214278
@@ -17035,8 +16979,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621964769}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11.080015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17045,7 +16989,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 9.73472, y: 1.6145456}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1621964772
@@ -21113,8 +21057,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970428923}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11.080015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21124,7 +21068,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 9.73472, y: 1.6145456}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!1001 &1985027031
@@ -23510,6 +23454,7 @@ MonoBehaviour:
   defenseBtn: {fileID: 5236698382697017752}
   turnCompBtn: {fileID: 1567873636865664315}
   turnSilder: {fileID: 2204691358192352121}
+  isMyTurnAction: 0
   profiles: []
 --- !u!224 &3277921941532077664
 RectTransform:
@@ -24219,12 +24164,17 @@ MonoBehaviour:
   - {fileID: 300615470}
   agents: []
   playerMoves: []
+  playerAnims: []
   profiles: []
+  playerBatList: {fileID: 6579614174890131882}
   battleUI: {fileID: 3535244620977086028}
   profileUI: {fileID: 6255085196350749319, guid: 9f5dab9058b46824799696c855c5e8c2,
     type: 3}
-  isMyTurnAction: 0
-  playerBatList: {fileID: 6579614174890131882}
+  nextTurnUI: {fileID: 0}
+  currentTurnTXT: {fileID: 6249095791616357098}
+  enemy: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  enemyHPBar: {fileID: 196456219}
 --- !u!114 &5525024717357217103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24570,10 +24520,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2764847129821189154}
+  - component: {fileID: 6579614174890131883}
   - component: {fileID: 5523152374125612120}
   - component: {fileID: 3231096035831744379}
   - component: {fileID: 6579614174890131882}
-  - component: {fileID: 6579614174890131883}
+  - component: {fileID: 6579614174890131884}
   m_Layer: 0
   m_Name: ---BattleManager---
   m_TagString: Untagged
@@ -24616,6 +24567,18 @@ MonoBehaviour:
   sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6579614174890131884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579614174890131881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d918dc5bd6f26c4aa0ed2e298707d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6597995059182042887
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25034,5 +24997,4 @@ SceneRoots:
   - {fileID: 556502604}
   - {fileID: 893296159}
   - {fileID: 2764847129821189154}
-  - {fileID: 378093771}
   - {fileID: 1552878380}

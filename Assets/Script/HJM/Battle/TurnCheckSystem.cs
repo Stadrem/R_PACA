@@ -80,8 +80,9 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private IEnumerator WaitAndEndTurn()
     {
         yield return new WaitForSeconds(5f);
-        // 턴 종료
-        EndTurn();
+        // 안내창을 띄우자 . . . 나중에 좀 인터렉션을 넣을까
+
+        EndTurn(); // 턴 종료(다른 플레이어에게 턴 넘어감)
     }
 
     void StartGame()
