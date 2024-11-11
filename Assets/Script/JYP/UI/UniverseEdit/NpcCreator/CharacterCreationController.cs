@@ -161,7 +161,7 @@ namespace UI.Universe.Edit
             hitPointsInput.value = 0;
             strengthInput.value = 0;
             dexterityInput.value = 0;
-            selectShapeButton.text = "외형 선택...";
+            selectShapeButton.text = "외형 선택하기";
             selectedShapeType = NpcInfo.ENpcType.None;
         }
     }
