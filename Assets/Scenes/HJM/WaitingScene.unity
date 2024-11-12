@@ -1060,7 +1060,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 3, y: -80}
-  m_SizeDelta: {x: 139, y: 68}
+  m_SizeDelta: {x: 125, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &947709711
 MonoBehaviour:
@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6eb8a29273a41b14b924a003b422f189, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 278f1c9ff82771341b6afe50141b8f51, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2614,6 +2614,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WatingBackground
       objectReference: {fileID: 0}
+    - target: {fileID: 122189558006203129, guid: 57d5769808f7e164f8b93ab51f651f68,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6403716227300445329, guid: 57d5769808f7e164f8b93ab51f651f68,
         type: 3}
       propertyPath: m_NavMeshData
@@ -2802,6 +2807,21 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3117221024171349875, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117221024171349875, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117221024171349875, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5765919392330287306, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -2810,7 +2830,7 @@ PrefabInstance:
     - target: {fileID: 5765919392330287306, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000017166138
+      value: 0.000009775162
       objectReference: {fileID: 0}
     - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
@@ -2820,11 +2840,6 @@ PrefabInstance:
     - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
-        type: 3}
-      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
