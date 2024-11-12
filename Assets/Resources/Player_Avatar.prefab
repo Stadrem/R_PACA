@@ -719,12 +719,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   Target: {fileID: 8118551246393993903}
   Camera: {fileID: 6596053729836791780}
-  FadedAlpha: 0.33
+  FadedAlpha: 0.25
   RetainShadows: 1
-  FadeSpeed: 1
+  FadeSpeed: 3
   objectsBlockingView: []
 --- !u!114 &6570342562724181210
 MonoBehaviour:
