@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7682184837623353440
 Transform:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ PrefabInstance:
     - target: {fileID: 2042228655733135424, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2798571931629060426, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
@@ -490,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 4117738259484743770, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 4117738259484743770, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
@@ -719,12 +719,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   Target: {fileID: 8118551246393993903}
   Camera: {fileID: 6596053729836791780}
-  FadedAlpha: 0.33
+  FadedAlpha: 0.25
   RetainShadows: 1
-  FadeSpeed: 1
+  FadeSpeed: 3
   objectsBlockingView: []
 --- !u!114 &6570342562724181210
 MonoBehaviour:

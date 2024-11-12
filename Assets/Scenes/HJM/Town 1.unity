@@ -23785,6 +23785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  playerBatList: {fileID: 0}
   attackButton: {fileID: 6630820814320672581}
   defendButton: {fileID: 5236698382697017752}
   turnCompleteButton: {fileID: 1567873636865664315}

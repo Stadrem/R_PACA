@@ -167,6 +167,11 @@ public class FadeObjectBlockingObject : MonoBehaviour
         // FadingObject의 모든 머티리얼에 대해 투명도 관련 설정을 적용
         foreach (Material material in FadingObject.Materials)
         {
+            if (material.shader.name != "Universal Render Pipeline/Lit")
+            {
+                material.shader = Shader.Find("Universal Render Pipeline/Lit");
+            }
+
             material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha); // 소스 블렌드 설정
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcColor); // 대상 블렌드 설정
             material.SetInt("_ZWrite", 0); // Z 쓰기 비활성화

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 public class CharacterInfo
 {
@@ -19,7 +20,22 @@ public class CharacterInfo
     public CharacterInfo()
     {
     }
-    
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void CopyFrom(CharacterInfo ci)
+    {
+        this.id = ci.id;
+        this.backgroundPartId = ci.backgroundPartId;
+        this.name = ci.name;
+        this.shapeType = ci.shapeType;
+        this.description = ci.description;
+        this.hitPoints = ci.hitPoints;
+        this.strength = ci.strength;
+        this.dexterity = ci.dexterity;
+        this.isPlayable = ci.isPlayable;
+        this.position = ci.position;
+        this.yRotation = ci.yRotation;
+    }
     public CharacterInfo(CharacterInfo ci)
     {
         id = ci.id;

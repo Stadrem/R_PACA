@@ -62,6 +62,13 @@ MonoBehaviour:
   - MoveToBattlePos
   - ProfileSet
   - SetOwnerIcon
+  - BeginTurn
+  - DiceAttackFail
+  - DiceAttackSuccess
+  - DiceDefenseFail
+  - DiceDefenseSuccess
+  - OnBattleStart
+  - UpdateSelectImage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

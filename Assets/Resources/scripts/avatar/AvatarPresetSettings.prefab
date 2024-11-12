@@ -89,6 +89,13 @@ MonoBehaviour:
         meshB: {fileID: 0}
         material: {fileID: 2100000, guid: a7fb2fa18db69684ebbf8076a14a1ef4, type: 2}
         sprite: {fileID: 21300000, guid: d6409b3e5e526f7478b36a34dde82e52, type: 3}
+      - name: 
+        mesh: {fileID: -4035312639936941182, guid: 1a27c2de3481f8442a9ef3fe7893781b,
+          type: 3}
+        subMesh: {fileID: 0}
+        meshB: {fileID: 0}
+        material: {fileID: 2100000, guid: cdac4aac0726b8c42a733a204720a746, type: 2}
+        sprite: {fileID: 21300000, guid: 444e476df7e00fd4e9307e43c1a52aaf, type: 3}
     - avatarItems:
       - name: 
         mesh: {fileID: -6309047224303346143, guid: 1a27c2de3481f8442a9ef3fe7893781b,
