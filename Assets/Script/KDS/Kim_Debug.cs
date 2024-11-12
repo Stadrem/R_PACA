@@ -105,4 +105,24 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     {
         YarnUiManager.Get().EnableCanvas();
     }
+
+    public int sfxNum = 0;
+
+    public void OnClickSFXTest()
+    {
+        SoundManager.Get().PlaySFX(sfxNum);
+    }
+
+    public int bgmNum = 0;
+
+    public void OnClickBGMTest()
+    {
+        SoundManager.Get().PlayBGM(bgmNum);
+    }
+
+    public void OnClickESC()
+    {
+        EscUiManager.Get().EnableCanvas();
+        print("누름");
+    }
 }

@@ -21,6 +21,8 @@ public class EscUiManager : MonoBehaviour
                 GameObject newInstance = Instantiate(prefabToInstantiate);
                 instance = newInstance.GetComponent<EscUiManager>();
 
+                newInstance.SetActive(false);
+
                 if (instance == null)
                 {
                     return null;
@@ -49,6 +51,12 @@ public class EscUiManager : MonoBehaviour
     public Slider bgmSlider;
     public Slider sfxSlider;
 
+    private void Start()
+    {
+        bgmSlider.value = SoundManager.Get().bgmVolume;
+        sfxSlider.value = SoundManager.Get().sfxVolume;
+    }
+
     public void EnableCanvas()
     {
         gameObject.SetActive(true);
@@ -57,5 +65,15 @@ public class EscUiManager : MonoBehaviour
     public void OnClickGameExit()
     {
         Application.Quit();
+    }
+
+    public void BGMSliderMove()
+    {
+        SoundManager.Get().bgmVolume = bgmSlider.value;
+    }
+
+    public void SFXSliderMove()
+    {
+        SoundManager.Get().sfxVolume = sfxSlider.value;
     }
 }
