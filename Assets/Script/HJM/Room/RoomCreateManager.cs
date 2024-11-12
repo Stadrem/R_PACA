@@ -113,7 +113,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
         Debug.Log("방이 성공적으로 생성되었습니다.");
-
+        
         // 대기실 씬으로 전환
         PhotonNetwork.LoadLevel("WaitingScene");
     }

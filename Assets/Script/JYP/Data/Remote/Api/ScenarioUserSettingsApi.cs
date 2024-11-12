@@ -10,9 +10,9 @@ namespace Data.Remote.Api
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/scenario/user";
 
-        public static IEnumerator UploadUserSettings(UniverseUserSettings userSettings, Action<ApiResult> onCompleted)
+        public static IEnumerator UploadUserSettings(UniversePlayerSettings playerSettings, Action<ApiResult> onCompleted)
         {
-            var reqDto = userSettings.ToSecenarioUserUploadDto();
+            var reqDto = playerSettings.ToSecenarioUserUploadDto();
 
             var request = new HttpInfoWithType<string, ScenarioUserUploadReqDto>()
             {
@@ -26,7 +26,7 @@ namespace Data.Remote.Api
         }
 
         public static IEnumerator GetUserSettings(int userCode, int universeId,
-            Action<ApiResult<UniverseUserSettings>> onCompleted)
+            Action<ApiResult<UniversePlayerSettings>> onCompleted)
         {
             var reqDto = new ScenarioUserGetReqDto()
             {
@@ -40,9 +40,9 @@ namespace Data.Remote.Api
                 body = reqDto,
                 onComplete = (result) =>
                 {
-                    onCompleted(ApiResult<UniverseUserSettings>.Success(result.ToUniverseUserSettings()));
+                    onCompleted(ApiResult<UniversePlayerSettings>.Success(result.ToUniverseUserSettings()));
                 },
-                onError = (error) => onCompleted(ApiResult<UniverseUserSettings>.Fail(error)),
+                onError = (error) => onCompleted(ApiResult<UniversePlayerSettings>.Fail(error)),
             };
 
             yield return HttpManager.GetInstance().Post(request);

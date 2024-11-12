@@ -52,13 +52,13 @@ namespace UniversePlay
         {
             var sender = options.ElementAt(index).Key;
             var option = options.ElementAt(index).Value;
-
+            var roomNumber = PlayUniverseManager.Instance.roomNumber;
             NpcManager.FinishPlayerTurn();
 
             photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, sender, option);
             StartCoroutine(
                 ViewModel.TalkNpc(
-                    sender,
+                    roomNumber,
                     option,
                     (res) =>
                     {
@@ -81,11 +81,12 @@ namespace UniversePlay
 
         public void Select(string sender, string option)
         {
+            var roomNumber = PlayUniverseManager.Instance.roomNumber;
             Debug.Log($"NPC한테 보냅니다");
-            photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.MasterClient, sender, option);
+            photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, sender, option);
             StartCoroutine(
                 ViewModel.TalkNpc(
-                    sender,
+                    roomNumber,
                     option,
                     (res) =>
                     {

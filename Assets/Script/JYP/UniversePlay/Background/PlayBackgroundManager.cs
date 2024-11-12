@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Photon.Pun;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class PlayBackgroundManager : MonoBehaviourPun
     private List<BackgroundPartInfo> backgroundPartDataList;
 
     private Background currentBackground = new Background();
+    
+    public string CurrentBackgroundName => currentBackground.Name;
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     private void Start()
@@ -29,6 +32,8 @@ public class PlayBackgroundManager : MonoBehaviourPun
         currentBackground.LoadParts();
         PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
     }
+    
+    
 
     private void OnEnable()
     {
@@ -46,7 +51,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        string sceneName = "";
+        var sceneName = "";
         switch (background.Type)
         {
             case EBackgroundPartType.None:

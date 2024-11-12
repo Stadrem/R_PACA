@@ -16,9 +16,9 @@ namespace Data.Remote.Dtos.Response
 
     public static class ScenarioUserResponseDtoExtensions
     {
-        public static UniverseUserSettings ToUniverseUserSettings(this ScenarioUserResponseDto dto)
+        public static UniversePlayerSettings ToUniverseUserSettings(this ScenarioUserResponseDto dto)
         {
-            return new UniverseUserSettings(
+            return new UniversePlayerSettings(
                 dto.scenarioCode,
                 dto.userCode,
                 new CharacterStats(dto.health, dto.strength, dto.dex)

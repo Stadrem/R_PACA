@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 using UniversePlay;
 using ViewModels;
@@ -47,6 +50,9 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public static PlayUniverseManager Instance => instance;
 
+
+    public int roomNumber;
+
     private void Awake()
     {
         if (instance == null)
@@ -64,7 +70,26 @@ public class PlayUniverseManager : MonoBehaviourPun
     {
         var code = Convert.ToInt32(PhotonNetwork.CurrentRoom.CustomProperties[PunPropertyNames.Room.ScenarioCode]);
         PhotonNetwork.AutomaticallySyncScene = true;
+        ViewModel.PropertyChanged += OnPropertyChange;
         StartCoroutine(ViewModel.LoadUniverseData(code));
+    }
+
+    private void OnPropertyChange(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ViewModel.UniverseData))
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+            roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
+            var codeList = InGamePlayerManager.playerList
+                .Select((t) => t.code)
+                .ToList();
+            StartCoroutine(
+                ViewModel.StartRoom(
+                    roomNumber,
+                    codeList
+                )
+            );
+        }
     }
 
     private void Update()

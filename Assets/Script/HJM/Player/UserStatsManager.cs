@@ -14,17 +14,14 @@ public class UserStatsManager : MonoBehaviour
 
     void Start()
     {
-
         UserStats = FindObjectOfType<UserStats>();
 
         if (UserStats == null) return;
-        
+
         // 각 OnEndEdit 이벤트 추가
         healthInput.onEndEdit.AddListener(OnHealthInputEnd);
         strengthInput.onEndEdit.AddListener(OnStrengthInputEnd);
         dexterityInput.onEndEdit.AddListener(OnDexterityInputEnd);
-        
-        
     }
 
     // Health 입력이 끝났을 때 호출되는 함수
@@ -33,7 +30,11 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int health))
         {
             UserStats.userHealth = health;
-            PlayerManager.UpdatePLayerHitPoint(UserCodeMgr.Instance.Nickname, health);
+            PlayerManager.UpdatePlayerHitPoint(
+                UserCodeMgr.Instance.UserCode,
+                UserCodeMgr.Instance.UserID,
+                health
+            );
         }
         else
         {
@@ -47,6 +48,11 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int strength))
         {
             UserStats.userStrength = strength;
+            PlayerManager.UpdatePlayerStrength(
+                UserCodeMgr.Instance.UserCode,
+                UserCodeMgr.Instance.UserID,
+                strength
+            );
         }
         else
         {
@@ -60,6 +66,11 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int dexterity))
         {
             UserStats.userDexterity = dexterity;
+            PlayerManager.UpdatePlayerDexterity(
+                UserCodeMgr.Instance.UserCode,
+                UserCodeMgr.Instance.UserID,
+                dexterity
+            );
         }
         else
         {
