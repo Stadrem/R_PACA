@@ -161,7 +161,12 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
             {
                 if (result.IsSuccess)
                 {
+                    callback(ApiResult.Success());
                     Debug.Log("Room Started");
+                }
+                else
+                {
+                    callback(ApiResult.Fail(result.error));
                 }
             }
         );

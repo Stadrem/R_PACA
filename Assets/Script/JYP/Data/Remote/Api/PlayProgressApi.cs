@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Data.Models.Universe.Battle;
 using Data.Models.Universe.Dice;
 using Data.Remote.Dtos.Request;
 using Data.Remote.Dtos.Response;
@@ -87,6 +88,21 @@ namespace Data.Remote.Api
             var request = new HttpInfoWithType<string, PlayProgressEndReqDto>()
             {
                 url = $"{BaseUrl}/end",
+                body = reqDto,
+                onComplete = (result) => { onComplete(ApiResult.Success()); },
+                onError = (error) => onComplete(ApiResult.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Post(request);
+        }
+
+        public static IEnumerator SendBattleResult(BattleResult battleResult, Action<ApiResult> onComplete)
+        {
+            var reqDto = battleResult.ToDto();
+
+            var request = new HttpInfoWithType<string, PlayProgressBattleResultReqDto>()
+            {
+                url = $"{BaseUrl}/battle",
                 body = reqDto,
                 onComplete = (result) => { onComplete(ApiResult.Success()); },
                 onError = (error) => onComplete(ApiResult.Fail(error)),
