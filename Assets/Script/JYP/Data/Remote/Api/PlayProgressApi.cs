@@ -4,7 +4,6 @@ using Data.Remote.Dtos.Request;
 
 namespace Data.Remote.Api
 {
-    [System.Serializable]
     public class PlayProgressApi
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/progress";
