@@ -22,7 +22,7 @@ public class PlayerBatInfo
 public class PlayerBatList : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private List<PlayerBatInfo> battlePlayers;
+    public List<PlayerBatInfo> battlePlayers;
 
     private void Awake()
     {

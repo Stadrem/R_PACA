@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class CircularSlider : MonoBehaviour
 {
+    public static CircularSlider instance;
+    
     public Image sliderImage;          // 슬라이더의 이미지
     public float sliderValue = 1.0f;   // 초기 슬라이더 값 (1로 시작)
     public float maxValue = 1.0f;      // 슬라이더의 최대값
@@ -12,11 +14,11 @@ public class CircularSlider : MonoBehaviour
 
     void Start()
     {
-        isDepleting = true;
-        UpdateSlider(sliderValue);
+        //UpdateSlider(sliderValue);
+        //battleManager = battleMgr.GetComponent<BattleManager>();
     }
 
-    // 슬라이더 값을 업데이트하는 함수
+    
     void Update()
     {
         // isDepleting이 true일 때만 슬라이더 감소
@@ -27,20 +29,21 @@ public class CircularSlider : MonoBehaviour
     }
     public void UpdateSlider(float value)
     {
-        sliderValue = Mathf.Clamp(value, 0, maxValue);  // 슬라이더 값 제한
+        sliderValue = Mathf.Clamp(value, 0, maxValue);
         sliderImage.fillAmount = sliderValue / maxValue;
     }
 
-    // 슬라이더 감소를 시작하는 함수
+    // 슬라이더 감소 시작
     public void StartDepletion()
     {
         isDepleting = true;
     }
 
-    // 슬라이더 감소를 멈추는 함수
+    // 슬라이더 감소 중지
     public void OnClickStopSlider()
     {
         isDepleting = false;
+        TurnCheckSystem.Instance.isMyTurnAction = true;
     }
 
     // 시간 경과에 따라 슬라이더 값을 줄이는 함수
