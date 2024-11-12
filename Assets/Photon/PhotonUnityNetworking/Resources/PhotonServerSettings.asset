@@ -69,6 +69,8 @@ MonoBehaviour:
   - DiceDefenseSuccess
   - OnBattleStart
   - UpdateSelectImage
+  - RPC_FinishConversation
+  - RPC_ToNextTurn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
