@@ -29,5 +29,21 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
+
+        public static IEnumerator FinishRoom(int roomNum, Action<ApiResult> onCompleted)
+        {
+            var reqDto = roomNum.ToPlayRoomEndReqDto();
+
+
+            var request = new HttpInfoWithType<string, PlayRoomEndReqDto>()
+            {
+                url = $"{BaseUrl}/end",
+                body = reqDto,
+                onComplete = (result) => { onCompleted(ApiResult.Success()); },
+                onError = (error) => onCompleted(ApiResult.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Get(request);
+        }
     }
 }

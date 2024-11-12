@@ -6,6 +6,5 @@
         public int roomNum;
         public int diceFst;
         public int diceSnd;
-
     }
 }
