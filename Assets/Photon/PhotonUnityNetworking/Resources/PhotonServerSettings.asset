@@ -73,6 +73,10 @@ MonoBehaviour:
   - SetupProfiles
   - SyncPlayersList
   - ReceiveSortedPlayers
+  - DiceAttackFail
+  - DiceAttackSuccess
+  - DiceDefenseFail
+  - DiceDefenseSuccess
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
