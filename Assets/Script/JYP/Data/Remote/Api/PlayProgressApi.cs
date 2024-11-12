@@ -4,6 +4,9 @@ using Data.Remote.Dtos.Request;
 
 namespace Data.Remote.Api
 {
+    /// <summary>
+    /// 생성된 게임방 내부에서 NPC와 대화를 주고받을 때 발생하는 이벤트들에 대한
+    /// </summary>
     public class PlayProgressApi
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/progress";
@@ -28,5 +31,26 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
+
+        public static IEnumerator SendChat(int roomNumber, string userChat, Action<ApiResult> onComplete)
+        {
+            var reqDto = new PlayProgressSendReqDto()
+            {
+                roomNum = roomNumber,
+                userChat = userChat,
+            };
+
+            var request = new HttpInfoWithType<string, PlayProgressSendReqDto>()        //todo: response check
+
+            {
+                url = $"{BaseUrl}/send",
+                body = reqDto,
+                onComplete = (result) => { onComplete(ApiResult.Success()); },
+                onError = (error) => onComplete(ApiResult.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Post(request);
+        }
+        
     }
 }
