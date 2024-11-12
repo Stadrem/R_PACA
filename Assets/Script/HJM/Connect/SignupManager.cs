@@ -65,9 +65,6 @@ public class SignupManager : AvatarHTTPManager
                 // 1초 대기 후 로그인 시도
                 yield return new WaitForSeconds(1f);
 
-                //아바타 0,0,0,0 기본 데이터 포스트
-                StartPostAvatarInfo(Convert.ToInt32(userId));
-
                 // 동일한 ID와 PW로 로그인 시도
                 // 먼저 로그인 요청을 보내고, 그 결과에 따라 UserCode를 설정합니다.
                 StartCoroutine(LoginRequest(userId, password));
@@ -97,6 +94,9 @@ public class SignupManager : AvatarHTTPManager
 
                 // 서버에서 받은 JSON 응답을 LoginResponse 클래스로 변환
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
+
+                //아바타 0,0,0,0 기본 데이터 포스트
+                StartPostAvatarInfo(response.userCode);
 
                 UserCodeMgr.Instance.UserCode = response.userCode;
 
