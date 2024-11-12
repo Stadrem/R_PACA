@@ -41,7 +41,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
                     PlayerManager.AddPlayer(playerID.ToString(), player.NickName, 100, 10, 10);
                 }
             }
-            
+
         }
     }
 
@@ -53,11 +53,17 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
 
         // 자리의 인덱스를 기반으로 위치 설정
         Vector3 position = GetSeatPosition(playerIndex);
+        print(playerIndex);
+        print(position);
 
         Debug.Log($"생성! {position}");
         // 포톤 인스턴스 생성
         GameObject playerAvatar = PhotonNetwork.Instantiate("Player_Avatar", position, Quaternion.Euler(0, 180, 0));
+        print(11111111111111);
+
         playerAvatar.name = "Player_Avatar_" + PhotonNetwork.NickName;
+        print(11111111111111);
+
     }
 
 
@@ -65,6 +71,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         if (index >= 0 && index < seatPositions.Count)
         {
+            print(11111111111111);
             return seatPositions[index].position; // 위치 변환
         }
 
@@ -78,6 +85,8 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         if (newPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
         {
             AdjustSeats();
+            print(11111111111111);
+
             PlayerManager.AddPlayer(playerID.ToString(), newPlayer.NickName, 100, 10, 10);
         }
     }
@@ -102,6 +111,8 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             Player player = PhotonNetwork.CurrentRoom.Players[i + 1];
             // 각 플레이어 아바타의 위치를 설정
             Vector3 position = GetSeatPosition(i);
+            print(11111111111111);
+
         }
     }
 }
