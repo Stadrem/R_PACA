@@ -181,7 +181,8 @@ public class PlayUniverseManager : MonoBehaviourPun
                 {
                     if (res.IsSuccess)
                     {
-                        playBackgroundManager.Init();
+                        InGamePlayerManager.Init();
+                        BackgroundManager.Init();
                     }
                 }
             )

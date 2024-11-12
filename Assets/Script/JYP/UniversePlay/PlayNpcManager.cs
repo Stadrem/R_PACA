@@ -19,8 +19,7 @@ namespace UniversePlay
         private List<NpcInPlay> currentNpcList = new();
 
         public CinemachineVirtualCamera CurrentNpcVcam => currentInteractNpc.ncVcam;
-        private NpcInPlay currentInteractNpc;
-
+        public NpcInPlay currentInteractNpc;
         private TurnSystem turnSystem = new();
 
         private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;

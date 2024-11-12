@@ -19,10 +19,7 @@ namespace UniversePlay
     public class PunSelectorChat : MonoBehaviourPun, ISelectorChat
     {
         //todo : user info
-
-
         private readonly List<KeyValuePair<string, string>> options = new();
-
 
         public int OptionCount => options.Count;
 
@@ -30,11 +27,6 @@ namespace UniversePlay
 
         private NpcChatUIManager ChatUIManager => PlayUniverseManager.Instance.NpcChatUIManager;
         private PlayNpcManager NpcManager => PlayUniverseManager.Instance.NpcManager;
-
-        private void Start()
-        {
-        }
-
 
         public void AddOption(string option)
         {
@@ -105,9 +97,10 @@ namespace UniversePlay
         }
 
         [PunRPC]
-        private void RPC_ApplyChatBubble(string sender, string option)
+        private void RPC_ApplyChatBubble(string sender, string chatContent)
         {
-            ChatUIManager.AddChatBubble(sender, option, true);
+            var isNpc = sender == NpcManager.currentInteractNpc.NpcName;
+            ChatUIManager.AddChatBubble(sender, chatContent, !isNpc);
         }
 
         [PunRPC]
@@ -117,14 +110,21 @@ namespace UniversePlay
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private (int, int) GetTowRandom()
+        private (int, int) GetTwoRandom()
         {
             return (Random.Range(1, 7), Random.Range(1, 7));
         }
 
+        /// <summary>
+        /// 이 함수는 방장에 의해서만 호출된다. (즉 모든 플레이어중에 한명만 실행한다)
+        /// </summary>
+        /// <param name="sender">채팅을 친 플레이어</param>
+        /// <param name="reaction">Npc의 반응 응답 값</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private void OnNpcReaction(string sender, NpcReaction reaction)
         {
-            RPC_ApplyChatBubble(sender, reaction.DialogMessage);
+            var npcName = NpcManager.currentInteractNpc.NpcName;
+            photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, npcName, reaction.DialogMessage);
             switch (reaction.ReactionType)
             {
                 case EReactionType.None:
@@ -133,12 +133,12 @@ namespace UniversePlay
                 case EReactionType.Progress:
                     photonView.RPC(nameof(RPC_ToNextTurn), RpcTarget.All);
                     Debug.Log($"Progress");
-
                     break;
                 case EReactionType.Battle:
+                    Debug.Log($"Battle");
                     break;
                 case EReactionType.Dice:
-                    var (d1, d2) = GetTowRandom();
+                    var (d1, d2) = GetTwoRandom();
                     Debug.Log($"Dice : {d1}, {d2}");
                     DiceRollManager.Get().DiceRoll(d1, d2, false);
                     StartCoroutine(

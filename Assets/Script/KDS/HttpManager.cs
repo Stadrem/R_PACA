@@ -308,6 +308,7 @@ public class HttpManager : MonoBehaviour
             {
                 if (info.onComplete != null)
                 {
+                    Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
                     var res = ParseResponse<TRes>(webRequest.downloadHandler);
                     info.onComplete(res);
                 }
