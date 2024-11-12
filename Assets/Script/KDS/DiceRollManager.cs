@@ -57,8 +57,6 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].SetActive(false);
         }
 
-        diceSound = GetComponent<AudioSource>();
-
       ClearValue();
     }
 
@@ -76,9 +74,6 @@ public class DiceRollManager : MonoBehaviour
 
     //결과값 합산
     int diceResult;
-
-    //사운드
-    AudioSource diceSound;
 
     public LayerMask layerMask;
 
@@ -288,9 +283,7 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
         }
 
-        diceSound.Play();
-
-        
+        SoundManager.Get().PlaySFX(0);
 
         print(diceCount + "D" + diceResult);
 

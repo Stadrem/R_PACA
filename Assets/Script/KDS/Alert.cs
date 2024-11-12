@@ -97,6 +97,8 @@ public class Alert : MonoBehaviour
     //코루틴
     IEnumerator alertStart(float time)
     {
+        SoundManager.Get().PlaySFX(2);
+
         alertCanvas.SetActive(true);
 
         yield return new WaitForSeconds(time);

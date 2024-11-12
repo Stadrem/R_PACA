@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
 public class SoundManager : MonoBehaviour
@@ -44,6 +45,20 @@ public class SoundManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Update()
+    {
+        // 마우스 클릭 감지
+        if (Input.GetMouseButtonDown(0))  // 왼쪽 클릭
+        {
+            // 클릭한 UI 오브젝트가 버튼인지 확인
+            if (EventSystem.current.currentSelectedGameObject != null &&
+                EventSystem.current.currentSelectedGameObject.GetComponent<UnityEngine.UI.Button>() != null)
+            {
+                PlaySFX(1);
+            }
         }
     }
 
