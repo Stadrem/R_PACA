@@ -73,5 +73,23 @@ namespace Data.Remote.Api
             
             yield return HttpManager.GetInstance().Post(request);
         }
+        
+        public static IEnumerator FinishNpcTalk(int roomNumber, Action<ApiResult> onComplete) // todo: JYP가 임의로 작성한 request body임, 수정 필요
+        {
+            var reqDto = new PlayProgressEndReqDto()
+            {
+                roomNum = roomNumber,
+            };
+
+            var request = new HttpInfoWithType<string, PlayProgressEndReqDto>()
+            {
+                url = $"{BaseUrl}/end",
+                body = reqDto,
+                onComplete = (result) => { onComplete(ApiResult.Success()); },
+                onError = (error) => onComplete(ApiResult.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Post(request);
+        }
     }
 }
