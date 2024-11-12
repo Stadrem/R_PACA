@@ -71,7 +71,7 @@ namespace Data.Remote.Api
                 onError = (error) => onComplete(ApiResult.Fail(error)),
             };
             
-            yield return HttpManager.GetInstance().Post();
+            yield return HttpManager.GetInstance().Post(request);
         }
     }
 }
