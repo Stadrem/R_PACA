@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Data.Models.Universe.Dice;
 using Data.Remote.Dtos.Request;
 
 namespace Data.Remote.Api
@@ -11,7 +12,8 @@ namespace Data.Remote.Api
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/progress";
 
-        public static IEnumerator StartNpcTalk(int roomNumber, string backgroundName, string npcName, Action<ApiResult> onComplete)
+        public static IEnumerator StartNpcTalk(int roomNumber, string backgroundName, string npcName,
+            Action<ApiResult> onComplete)
         {
             var reqDto = new StartTalkReqDto()
             {
@@ -26,7 +28,6 @@ namespace Data.Remote.Api
                 body = reqDto,
                 onComplete = (result) => { onComplete(ApiResult.Success()); },
                 onError = (error) => onComplete(ApiResult.Fail(error)),
-                
             };
 
             yield return HttpManager.GetInstance().Post(request);
@@ -40,7 +41,7 @@ namespace Data.Remote.Api
                 userChat = userChat,
             };
 
-            var request = new HttpInfoWithType<string, PlayProgressSendReqDto>()        //todo: response check
+            var request = new HttpInfoWithType<string, PlayProgressSendReqDto>() //todo: response check
 
             {
                 url = $"{BaseUrl}/send",
@@ -51,6 +52,26 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
-        
+
+        public static IEnumerator CheckDice(int roomNumber, DiceResult diceResult, Action<ApiResult> onComplete)
+        {
+            var reqDto = new CheckDiceReqDto()
+            {
+                roomNum = roomNumber,
+                diceFst = diceResult.FirstDiceNumber,
+                diceSnd = diceResult.SecondDiceNumber,
+            };
+            
+            
+            var request = new HttpInfoWithType<string, CheckDiceReqDto>() // TODO: response check
+            {
+                url = $"{BaseUrl}/dice",
+                body = reqDto,
+                onComplete = (result) => { onComplete(ApiResult.Success()); },
+                onError = (error) => onComplete(ApiResult.Fail(error)),
+            };
+            
+            yield return HttpManager.GetInstance().Post();
+        }
     }
 }
