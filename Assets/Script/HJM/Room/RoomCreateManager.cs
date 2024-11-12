@@ -103,6 +103,8 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
             MaxPlayers = maxPlayers,
             CustomRoomProperties = customRoomProperties,
         };
+        
+        
         if (!PhotonNetwork.CreateRoom(roomName, options))
         {
             Debug.LogError("방 생성에 실패했습니다.");

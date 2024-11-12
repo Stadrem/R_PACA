@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -229,7 +230,7 @@ public class HttpManager : MonoBehaviour
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
         {
-            print("body: " + body);
+            print("request body: " + body);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -257,7 +258,8 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Delete<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
-        var body = JsonUtility.ToJson(info.body);
+        var body = JsonConvert.SerializeObject(info.body);
+        
         using (var webRequest = new UnityWebRequest(info.url, "DELETE"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
@@ -289,12 +291,12 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Post<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
-        var body = JsonUtility.ToJson(info.body);
+        var body = JsonConvert.SerializeObject(info.body);
 
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
-            print("body: " + body);
+            print("request body: " + body);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
