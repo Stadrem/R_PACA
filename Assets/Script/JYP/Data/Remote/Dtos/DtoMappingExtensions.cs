@@ -4,7 +4,7 @@ using Data.Remote.Dtos.Response;
 
 namespace Data.Remote.Dtos
 {
-    public static class MappingExtensions
+    public static class DtoMappingExtensions
     {
         public static UniverseData ToUniverse(this ScenarioResDto dto)
         {

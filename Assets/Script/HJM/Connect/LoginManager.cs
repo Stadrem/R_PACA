@@ -60,6 +60,8 @@ public class LoginManager : MonoBehaviour
                 // userCode 저장
                 UserCodeMgr.Instance.SetUserCode(response.userCode);
 
+
+
                 // 추가 정보 요청
                 StartCoroutine(GetUserInfo(response.userCode));
 
@@ -98,6 +100,13 @@ public class LoginManager : MonoBehaviour
 
                 // UserCodeMgr에 userID와 nickname 저장
                 UserCodeMgr.Instance.SetUserInfo(response.userId, response.nickname);
+                
+                var properties = new ExitGames.Client.Photon.Hashtable
+                {
+                    { PunPropertyNames.Player.PlayerId, UserCodeMgr.Instance.UserID },
+                    { PunPropertyNames.Player.PlayerUserCode, UserCodeMgr.Instance.UserCode },
+                };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
                 // Photon의 NickName을 갱신
                 PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
             }
@@ -119,7 +128,7 @@ public class LoginManager : MonoBehaviour
     [System.Serializable]
     public class UserInfoResponse
     {
-        public string userId;   // 유저의 ID
+        public string userId; // 유저의 ID
         public string nickname; // 유저의 닉네임
     }
 }

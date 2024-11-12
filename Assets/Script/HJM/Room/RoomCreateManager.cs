@@ -103,6 +103,8 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
             MaxPlayers = maxPlayers,
             CustomRoomProperties = customRoomProperties,
         };
+        
+        
         if (!PhotonNetwork.CreateRoom(roomName, options))
         {
             Debug.LogError("방 생성에 실패했습니다.");
@@ -113,7 +115,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
         Debug.Log("방이 성공적으로 생성되었습니다.");
-
+        
         // 대기실 씬으로 전환
         PhotonNetwork.LoadLevel("WaitingScene");
     }

@@ -1,29 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Data.Models.Universe.Characters;
+using Data.Models.Universe.Characters.Player;
+using Data.Remote.Api;
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 using UniversePlay;
+using ViewModels;
 
 public class InGamePlayerManager : MonoBehaviour
 {
     public class PlayerInfo
     {
+        public int code;
         public string id;
         public string name;
         public int hitPoints;
         public int strength;
         public int dexterity;
     }
-    
+
 
     private Vector3 spawnPos;
     private List<HpBarSystem> playerHpSystemList = new List<HpBarSystem>();
 
     public PlayerInfo CurrentPlayerInfo => playerList[0];
 
-    private List<PlayerInfo> playerList = new List<PlayerInfo>();
+    public List<PlayerInfo> playerList = new List<PlayerInfo>();
     private CameraController currentPlayerCameraController;
 
     public int PlayerCount => playerList.Count;
+
 
     public void Init()
     {
@@ -32,16 +41,18 @@ public class InGamePlayerManager : MonoBehaviour
     /// <summary>
     /// 시나리오 플레이를 위해 플레이어 정보를 추가하는 함수
     /// </summary>
-    /// <param name="playerId">플레이어 ID</param>
+    /// <param name="userCode">user 식별 ID값</param>
+    /// <param name="playerId">플레이어 ID string</param>
     /// <param name="payerName">플레이어 이름</param>
     /// <param name="hitPoints">플레이어 HP</param>
     /// <param name="strength">플레이어 Str</param>
     /// <param name="dexterity">플레이어 Dex</param>
-    public void AddPlayer(string playerId, string payerName, int hitPoints, int strength, int dexterity)
+    public void AddPlayer(int userCode, string playerId, string payerName, int hitPoints, int strength, int dexterity)
     {
         playerList.Add(
             new PlayerInfo
             {
+                code = userCode,
                 id = playerId,
                 name = payerName,
                 hitPoints = hitPoints,
@@ -50,12 +61,15 @@ public class InGamePlayerManager : MonoBehaviour
             }
         );
     }
-    
-    public void AddCurrentPlayer(string playerId, string payerName, int hitPoints, int strength, int dexterity)
+
+    public void AddCurrentPlayer(int userCode, string playerId, string payerName, int hitPoints, int strength,
+        int dexterity)
     {
-        playerList.Insert(0,
+        playerList.Insert(
+            0,
             new PlayerInfo
             {
+                code = userCode,
                 id = playerId,
                 name = payerName,
                 hitPoints = hitPoints,
@@ -86,45 +100,85 @@ public class InGamePlayerManager : MonoBehaviour
         playerInfo.dexterity = dexterity;
     }
 
-    public void UpdatePLayerHitPoint(string playerId, int hp)
+    public void UpdatePlayerHitPoint(int userCode, string playerId, int hp)
     {
-        var playerInfo = playerList.Find(info => info.id == playerId);
+        var playerInfo = playerList.Find(info => info.code == userCode);
+
         if (playerInfo == null)
         {
             Debug.LogError("해당 이름을 가진 플레이어가 없습니다.");
             return;
         }
 
-        playerInfo.hitPoints = hp;
+        var newPlayer = new PlayerInfo
+        {
+            code = userCode,
+            id = playerId,
+            name = playerInfo.name,
+            hitPoints = hp,
+            strength = playerInfo.strength,
+            dexterity = playerInfo.dexterity
+        };
+
+        UpdateStat(
+            newPlayer,
+            () => { playerInfo.hitPoints = hp; }
+        );
     }
 
-    public void UpdatePlayerStrength(string playerId, int str)
+    public void UpdatePlayerStrength(int userCode, string playerId, int str)
     {
-        var playerInfo = playerList.Find(info => info.id == playerId);
+        var playerInfo = playerList.Find(info => info.code == userCode);
         if (playerInfo == null)
         {
             Debug.LogError("해당 이름을 가진 플레이어가 없습니다.");
             return;
         }
 
-        playerInfo.strength = str;
+        var newPlayer = new PlayerInfo
+        {
+            code = userCode,
+            id = playerId,
+            name = playerInfo.name,
+            hitPoints = playerInfo.hitPoints,
+            strength = str,
+            dexterity = playerInfo.dexterity
+        };
+
+        UpdateStat(
+            newPlayer,
+            () => { playerInfo.strength = str; }
+        );
     }
 
-    public void UpdatePlayerDexterity(string playerId, int dex)
+    public void UpdatePlayerDexterity(int userCode, string playerId, int dex)
     {
-        var playerInfo = playerList.Find(info => info.id == playerId);
+        var playerInfo = playerList.Find(info => info.code == userCode);
         if (playerInfo == null)
         {
             Debug.LogError("해당 이름을 가진 플레이어가 없습니다.");
             return;
         }
 
-        playerInfo.dexterity = dex;
+        var newPlayer = new PlayerInfo
+        {
+            code = userCode,
+            id = playerId,
+            name = playerInfo.name,
+            hitPoints = playerInfo.hitPoints,
+            strength = playerInfo.strength,
+            dexterity = dex
+        };
+
+        UpdateStat(
+            newPlayer,
+            () => { playerInfo.dexterity = dex; }
+        );
     }
 
-    public void DeletePlayer(string playerId)
+    public void DeletePlayer(int userCode)
     {
-        var playerInfo = playerList.Find(info => info.id == playerId);
+        var playerInfo = playerList.Find(info => info.code == userCode);
         if (playerInfo == null)
         {
             Debug.LogError("해당 이름을 가진 플레이어가 없습니다.");
@@ -184,5 +238,26 @@ public class InGamePlayerManager : MonoBehaviour
     public void UnblockPlayerCamera()
     {
         currentPlayerCameraController.isBlocked = false;
+    }
+
+    private void UpdateStat(PlayerInfo playerInfo, Action onUpdated)
+    {
+        var universeid = PhotonNetwork.CurrentRoom.CustomProperties[PunPropertyNames.Room.ScenarioCode];
+        var universePlayerSetting = new UniversePlayerSettings(
+            (int)universeid,
+            playerInfo.code,
+            new CharacterStats(playerInfo.hitPoints, playerInfo.strength, playerInfo.dexterity)
+        );
+
+        StartCoroutine(
+            ScenarioUserSettingsApi.UploadUserSettings(
+                universePlayerSetting,
+                (res) =>
+                {
+                    if (res.IsSuccess)
+                        onUpdated();
+                }
+            )
+        );
     }
 }

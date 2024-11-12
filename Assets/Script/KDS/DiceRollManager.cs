@@ -70,7 +70,7 @@ public class DiceRollManager : MonoBehaviour
     public int diceCount = 2;
 
     // 주사위 결과 저장 리스트
-    List<int> diceResults = new List<int>(); 
+    public List<int> diceResults = new List<int>(); 
 
     //결과값 합산
     int diceResult;

@@ -3,7 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Data.Models.Universe.Characters;
 using Data.Remote;
+using Data.Remote.Api;
+using Data.Remote.Dtos.Response;
+using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Script.JYP.UniversePlay.Chat;
 using UnityEngine;
 
@@ -56,20 +61,13 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         set => SetField(ref currentBackgroundId, value);
     }
 
-    public IEnumerator TalkNpc(string sender, string message, Action<ApiResult<NpcChatResponseDto>> callback)
+    public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcReaction>> callback)
     {
         // todo : send message thru API
-        yield return new WaitForSeconds(0.5f);
-        callback(
-            ApiResult<NpcChatResponseDto>.Success(
-                new NpcChatResponseDto()
-                {
-                    sender = "NPC",
-                    message = "응답이오~",
-                    isBattle = false,
-                    isQuestAchieved = false
-                }
-            )
+        yield return PlayProgressApi.SendChat(
+            roomNumber,
+            message,
+            (res) => { callback(res.Map((t) => t.ToReaction())); }
         );
     }
 
@@ -142,11 +140,33 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
             {
                 if (result.IsSuccess)
                 {
-                    if(result.value.backgroundPartDataList.Count == 0) // for test 
+                    if (result.value.backgroundPartDataList.Count == 0) // for test 
                     {
                         result.value.backgroundPartDataList = backgroundList;
                     }
+
                     UniverseData = result.value;
+                }
+            }
+        );
+    }
+
+    public IEnumerator StartRoom(int roomNumber, List<int> playerIds, Action<ApiResult> callback)
+    {
+        yield return PlayRoomApi.StartRoom(
+            roomNumber,
+            UniverseData.id,
+            playerIds,
+            (result) =>
+            {
+                if (result.IsSuccess)
+                {
+                    callback(ApiResult.Success());
+                    Debug.Log("Room Started");
+                }
+                else
+                {
+                    callback(ApiResult.Fail(result.error));
                 }
             }
         );

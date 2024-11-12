@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
 using UniversePlay;
@@ -47,6 +49,9 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public static PlayUniverseManager Instance => instance;
 
+
+    public int roomNumber;
+
     private void Awake()
     {
         if (instance == null)
@@ -64,7 +69,16 @@ public class PlayUniverseManager : MonoBehaviourPun
     {
         var code = Convert.ToInt32(PhotonNetwork.CurrentRoom.CustomProperties[PunPropertyNames.Room.ScenarioCode]);
         PhotonNetwork.AutomaticallySyncScene = true;
+        ViewModel.PropertyChanged += OnPropertyChange;
         StartCoroutine(ViewModel.LoadUniverseData(code));
+    }
+
+    private void OnPropertyChange(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ViewModel.UniverseData))
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+        }
     }
 
     private void Update()
@@ -117,11 +131,16 @@ public class PlayUniverseManager : MonoBehaviourPun
     public void FinishConversation()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC(nameof(FinishConversationRpc), RpcTarget.All);
+        StartCoroutine(
+            PlayProgressApi.FinishNpcTalk(
+                roomNumber,
+                (res) => { photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All); }
+            )
+        );
     }
 
     [PunRPC]
-    public void FinishConversationRpc()
+    public void RPC_FinishConversation()
     {
         NpcManager.FinishConversation();
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
@@ -148,8 +167,26 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public void StartPlay()
     {
-        if (PhotonNetwork.IsMasterClient)
-            playBackgroundManager.Init();
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
+        var codeList = InGamePlayerManager.playerList
+            .Select((t) => t.code)
+            .ToList();
+        StartCoroutine(
+            ViewModel.StartRoom(
+                roomNumber,
+                codeList,
+                (res) =>
+                {
+                    if (res.IsSuccess)
+                    {
+                        InGamePlayerManager.Init();
+                        BackgroundManager.Init();
+                    }
+                }
+            )
+        );
     }
 
     public static void Create()
@@ -165,5 +202,25 @@ public class PlayUniverseManager : MonoBehaviourPun
             Vector3.zero,
             Quaternion.identity
         );
+    }
+
+    private void OnDestroy()
+    {
+        ViewModel.PropertyChanged -= OnPropertyChange;
+    }
+
+    private void OnApplicationQuit()
+    {
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(
+                    PlayRoomApi.FinishRoom(
+                        roomNumber,
+                        (res) => { }
+                    )
+                );
+            }
+        }
     }
 }

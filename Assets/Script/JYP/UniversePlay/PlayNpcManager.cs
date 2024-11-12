@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using Data.Remote.Api;
 using Photon.Pun;
-using Photon.Realtime;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ViewModels;
@@ -17,12 +15,11 @@ namespace UniversePlay
         // private List<NpcInfo> currentBackgroundNPCList = new();
 
         public Transform NpcSpawnOffset { get; private set; }
-        
+
         private List<NpcInPlay> currentNpcList = new();
 
         public CinemachineVirtualCamera CurrentNpcVcam => currentInteractNpc.ncVcam;
-        private NpcInPlay currentInteractNpc;
-
+        public NpcInPlay currentInteractNpc;
         private TurnSystem turnSystem = new();
 
         private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -61,17 +58,32 @@ namespace UniversePlay
             foreach (var info in npcList)
             {
                 var npc = spawner.PunSpawn(info);
-                
+
                 currentNpcList.Add(npc);
             }
         }
 
 
+        /// <summary>
+        /// PUN으로 요청되야함
+        /// </summary>
+        /// <param name="npcId"></param>
         public void InteractNpc(int npcId)
         {
             var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
             currentInteractNpc = npcInfo;
             turnSystem.InitTurn();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(
+                    PlayProgressApi.StartNpcTalk(
+                        PlayUniverseManager.Instance.roomNumber,
+                        PlayUniverseManager.Instance.BackgroundManager.CurrentBackgroundName,
+                        currentInteractNpc.NpcName,
+                        (res) => { }
+                    )
+                );
+            }
             StartCoroutine(TurnBasedConversation());
         }
 
@@ -121,7 +133,6 @@ namespace UniversePlay
             NpcChatUIManager.ClearChatOptions();
             NpcChatUIManager.HideChatOptions();
             NpcChatUIManager.SetChattable(false);
-            
         }
 
         private IEnumerator ConversationWithNpc_Master()
@@ -187,7 +198,7 @@ namespace UniversePlay
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
         }
-        
+
 
         public void AddNpc(NpcInPlay npcInPlay)
         {

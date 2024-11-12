@@ -14,6 +14,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // 시나리오 플레이를 위한 플레이어 매니저
     private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance?.InGamePlayerManager;
     private bool currentPlayerAdded = false;
+
     private void Start()
     {
         if (PhotonNetwork.IsConnected)
@@ -32,16 +33,19 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         if (PlayerManager != null && !currentPlayerAdded)
         {
-            PlayerManager.AddCurrentPlayer(UserCodeMgr.UserID, UserCodeMgr.Nickname, 100, 10, 10);
+            PlayerManager.AddCurrentPlayer(UserCodeMgr.UserCode, UserCodeMgr.UserID, UserCodeMgr.Nickname, 0, 0, 0);
             currentPlayerAdded = true;
             foreach (var player in PhotonNetwork.PlayerList)
             {
-                if (player.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
+                var playerID = (string)player.CustomProperties[PunPropertyNames.Player.PlayerId];
+                var playerUserCode = (int)player.CustomProperties[PunPropertyNames.Player.PlayerUserCode];
+                if (playerUserCode == UserCodeMgr.UserCode)
                 {
-                    PlayerManager.AddPlayer(playerID.ToString(), player.NickName, 100, 10, 10);
+                    continue;
                 }
-            }
 
+                PlayerManager.AddPlayer(playerUserCode, playerID, player.NickName, 0, 0, 0);
+            }
         }
     }
 
@@ -63,7 +67,6 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
 
         playerAvatar.name = "Player_Avatar_" + PhotonNetwork.NickName;
         print(11111111111111);
-
     }
 
 
@@ -81,14 +84,13 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // 플레이어가 방에 들어왔을 때 호출
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        var playerId = (string)newPlayer.CustomProperties[PunPropertyNames.Player.PlayerId];
+        var playerUserCode = (int)newPlayer.CustomProperties[PunPropertyNames.Player.PlayerUserCode];
         // 새로운 플레이어가 들어왔을 때 좌석을 조정합니다.
-        if (newPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
-        {
-            AdjustSeats();
-            print(11111111111111);
+        AdjustSeats();
+        print(11111111111111);
 
-            PlayerManager.AddPlayer(playerID.ToString(), newPlayer.NickName, 100, 10, 10);
-        }
+        PlayerManager.AddPlayer(playerUserCode, playerId, newPlayer.NickName, 0, 0, 0);
     }
 
 
@@ -96,10 +98,10 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
 
-        if (otherPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerId, out object playerID))
+        if (otherPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerUserCode, out object userCode))
         {
             AdjustSeats();
-            PlayerManager.DeletePlayer(playerID.ToString());
+            PlayerManager.DeletePlayer((int)userCode);
         }
     }
 
@@ -112,7 +114,6 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             // 각 플레이어 아바타의 위치를 설정
             Vector3 position = GetSeatPosition(i);
             print(11111111111111);
-
         }
     }
 }

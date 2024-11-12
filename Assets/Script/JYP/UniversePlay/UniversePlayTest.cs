@@ -26,8 +26,7 @@ namespace Script.JYP.UniversePlay
 
         public void OnClickTest()
         {
-            PlayUniverseManager.Instance.InGamePlayerManager.Init();
-            PlayUniverseManager.Instance.BackgroundManager.Init();
+            PlayUniverseManager.Instance.StartPlay();
         }
 
         #endregion

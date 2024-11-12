@@ -47,6 +47,18 @@ public class ApiResult<T>
         };
     }
     
+    public ApiResult<TResult> Map<TResult>(Func<T, TResult> mapper)
+    {
+        if (IsSuccess)
+        {
+            return ApiResult<TResult>.Success(mapper(value));
+        }
+        else
+        {
+            return ApiResult<TResult>.Fail(error);
+        }
+    }
+    
     public bool IsSuccess => error == null;
     public bool IsFail => error != null;
 }

@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -228,7 +230,7 @@ public class HttpManager : MonoBehaviour
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
         {
-            print("body: " + body);
+            print("request body: " + body);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -256,7 +258,8 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Delete<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
-        var body = JsonUtility.ToJson(info.body);
+        var body = JsonConvert.SerializeObject(info.body);
+        
         using (var webRequest = new UnityWebRequest(info.url, "DELETE"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
@@ -288,24 +291,26 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Post<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
-        var body = JsonUtility.ToJson(info.body);
+        var body = JsonConvert.SerializeObject(info.body);
 
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
-            print("body: " + body);
+            print("request body: " + body);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
-
+            
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 if (info.onComplete != null)
                 {
-                    info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
+                    Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+                    var res = ParseResponse<TRes>(webRequest.downloadHandler);
+                    info.onComplete(res);
                 }
             }
             else
@@ -318,6 +323,17 @@ public class HttpManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static TRes ParseResponse<TRes>(DownloadHandler downloadHandler)
+    {
+        if (typeof(TRes) == typeof(string))
+        {
+            return (TRes)(object)downloadHandler.text;
+        }
+
+        return JsonUtility.FromJson<TRes>(downloadHandler.text);
     }
 
     //Post : 데이터를 서버로 전송
