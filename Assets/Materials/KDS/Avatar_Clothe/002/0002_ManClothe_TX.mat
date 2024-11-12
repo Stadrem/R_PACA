@@ -248,7 +248,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Set_HighColorMask:
-        m_Texture: {fileID: 2800000, guid: 2b4b821cd5fa9f747bd6aec7e2e4c860, type: 3}
+        m_Texture: {fileID: 2800000, guid: 72eb68b7f884f0d46938162bb3d65411, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Set_MatcapMask:
@@ -319,10 +319,10 @@ Material:
     - Vector1_DD3E7449: 0.01
     - Vector1_FDD381BC: 0.4492924
     - _1st2nd_Shades_Feather: 0.213
-    - _1st_ShadeColor_Feather: 0.041
-    - _1st_ShadeColor_Step: 0.71
+    - _1st_ShadeColor_Feather: 0.022
+    - _1st_ShadeColor_Step: 0.853
     - _2nd_ShadeColor_Feather: 0.213
-    - _2nd_ShadeColor_Step: 0.618
+    - _2nd_ShadeColor_Step: 0.694
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ARSampler_AlphaOn: 0
@@ -352,15 +352,15 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.71
-    - _BaseShade_Feather: 0.041
+    - _BaseColor_Step: 0.853
+    - _BaseShade_Feather: 0.022
     - _Base_Speed: 0
     - _Blend: 0
     - _BlendMode: 0
     - _BlendModePreserveSpecular: 1
     - _BlurLevelMatcap: 0
     - _BlurLevelSGM: 0
-    - _BumpScale: 0.162
+    - _BumpScale: 0.266
     - _BumpScaleMatcap: 1
     - _CameraRolling_Stabilizer: 0
     - _ClearCoatMask: 0
@@ -466,7 +466,7 @@ Material:
     - _Is_Ortho: 0
     - _Is_OutlineTex: 0
     - _Is_PingPong_Base: 0
-    - _Is_SpecularToHighColor: 1
+    - _Is_SpecularToHighColor: 0
     - _Is_UseTweakHighColorOnShadow: 1
     - _Is_UseTweakMatCapOnShadow: 0
     - _Is_ViewCoord_Scroll: 0
@@ -504,8 +504,8 @@ Material:
     - _RimLightOverridden: 0
     - _RimLightVisible: 1
     - _RimLight_FeatherOff: 1
-    - _RimLight_InsideMask: 0.468
-    - _RimLight_Power: 0.733
+    - _RimLight_InsideMask: 0.474
+    - _RimLight_Power: 0.559
     - _Rotate_EmissiveUV: 0
     - _Rotate_MatCapUV: 0
     - _Rotate_NormalMapForMatCapUV: 0
@@ -516,8 +516,8 @@ Material:
     - _Scroll_EmissiveV: 0
     - _SecondShadeOverridden: 0
     - _SecondShadeVisible: 1
-    - _Set_SystemShadowsToBase: 0
-    - _ShadeColor_Step: 0.618
+    - _Set_SystemShadowsToBase: 1
+    - _ShadeColor_Step: 0.694
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0

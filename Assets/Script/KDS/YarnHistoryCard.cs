@@ -58,16 +58,6 @@ public class YarnHistoryCard : MonoBehaviour
             ui_notFound.SetActive(true);
             ui_loading.SetActive(false);
             button.interactable = false;
-
-            //시연 전용
-            text_Title.text = "제목: 이세계 모험가";
-            text_Date.text = "생성일자: 24.11.14";
-            text_Time.text = "플레이타임: 00:05:00";
-            text_User.text = "참여자: 유저1, 유저2, 유저3, 유저4";
-            historyCode = -2;
-            ui_notFound.SetActive(false);
-            ui_loading.SetActive(false);
-            button.interactable = true;
         }
         //네트워크 연결 성공
         else
@@ -103,5 +93,10 @@ public class YarnHistoryCard : MonoBehaviour
         text_Like.text = like.ToString();
 
         btn_Like.interactable = false;
+    }
+
+    public void Emergency()
+    {
+
     }
 }

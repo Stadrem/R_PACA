@@ -122,6 +122,9 @@ public class YarnHTTPManager : MonoBehaviour
                 YarnHistoryCard itemCard = instance.GetComponent<YarnHistoryCard>();
 
                 itemCard.HistroyInfoSetup("", "", "", "", -1);
+
+                // 비상
+                yarnCard[0].GetComponent<YarnHistoryCard>().HistroyInfoSetup("제목: 이세계 모험가", "생성일자: 24.11.14", "플레이타임: 00:05:00", "참여자: 유저1, 유저2, 유저3, 유저4", -2);
             }
         }
     }
