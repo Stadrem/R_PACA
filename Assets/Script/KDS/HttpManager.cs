@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -305,7 +306,8 @@ public class HttpManager : MonoBehaviour
             {
                 if (info.onComplete != null)
                 {
-                    info.onComplete(JsonUtility.FromJson<TRes>(webRequest.downloadHandler.text));
+                    var res = ParseResponse<TRes>(webRequest.downloadHandler);
+                    info.onComplete(res);
                 }
             }
             else
@@ -318,6 +320,17 @@ public class HttpManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static TRes ParseResponse<TRes>(DownloadHandler downloadHandler)
+    {
+        if (typeof(TRes) == typeof(string))
+        {
+            return (TRes)(object)downloadHandler.text;
+        }
+
+        return JsonUtility.FromJson<TRes>(downloadHandler.text);
     }
 
     //Post : 데이터를 서버로 전송
