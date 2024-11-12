@@ -196,7 +196,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: df951c903eff87447a8f273d8b836cf2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e3ec35cfc5c37f44963762d9116fc4e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapForMatCap:
@@ -248,7 +248,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Set_HighColorMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8bbab31cf9d24c54faf2666a435f1d53, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Set_MatcapMask:
@@ -318,11 +318,11 @@ Material:
     - Vector1_C816C0B3: 0
     - Vector1_DD3E7449: 0.01
     - Vector1_FDD381BC: 0.4492924
-    - _1st2nd_Shades_Feather: 0.0001
-    - _1st_ShadeColor_Feather: 0.0001
+    - _1st2nd_Shades_Feather: 0.005
+    - _1st_ShadeColor_Feather: 0.447
     - _1st_ShadeColor_Step: 0.5
-    - _2nd_ShadeColor_Feather: 0.0001
-    - _2nd_ShadeColor_Step: 0
+    - _2nd_ShadeColor_Feather: 0.005
+    - _2nd_ShadeColor_Step: 0.306
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ARSampler_AlphaOn: 0
@@ -353,7 +353,7 @@ Material:
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
     - _BaseColor_Step: 0.5
-    - _BaseShade_Feather: 0.0001
+    - _BaseShade_Feather: 0.447
     - _Base_Speed: 0
     - _Blend: 0
     - _BlendMode: 0
@@ -517,7 +517,7 @@ Material:
     - _SecondShadeOverridden: 0
     - _SecondShadeVisible: 1
     - _Set_SystemShadowsToBase: 1
-    - _ShadeColor_Step: 0
+    - _ShadeColor_Step: 0.306
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -601,8 +601,8 @@ Material:
     - Color_76BAA23A: {r: 1, g: 1, b: 1, a: 0}
     - Color_87E01BB0: {r: 1, g: 1, b: 1, a: 0}
     - Color_E8A37F1E: {r: 1, g: 1, b: 1, a: 0}
-    - _1st_ShadeColor: {r: 0.6280323, g: 0.6280323, b: 0.6280323, a: 1}
-    - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _1st_ShadeColor: {r: 0.30997294, g: 0.30997294, b: 0.30997294, a: 1}
+    - _2nd_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
