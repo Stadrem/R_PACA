@@ -397,7 +397,19 @@ namespace ViewModels
         {
             yield return ScenarioCharacterApi.UpdateScenarioAvatar(
                 characterInfo,
-                onComplete
+                (res) =>
+                {
+                    if (res.IsSuccess)
+                    {
+                        var character = Characters.First(c => c.id == characterInfo.id);
+                        character.CopyFrom(characterInfo);
+                        onComplete(ApiResult.Success());
+                    }
+                    else
+                    {
+                        onComplete(ApiResult.Fail(res.error));
+                    }
+                }
             );
         }
     }

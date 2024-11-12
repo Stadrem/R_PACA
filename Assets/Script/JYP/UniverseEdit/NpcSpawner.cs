@@ -106,6 +106,10 @@ namespace UniverseEdit
                 npc.transform.localPosition,
                 (res) =>
                 {
+                    if (res.IsSuccess)
+                    {
+                        
+                    }
                     if (res.IsFail)
                     {
                         Debug.LogError(res.error);
