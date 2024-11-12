@@ -1,8 +1,9 @@
-﻿using Data.Models.Universe.Characters.Player;
+﻿using System;
+using Data.Models.Universe.Characters.Player;
 
 namespace Data.Remote.Dtos.Request
 {
-    [System.Serializable]
+    [Serializable]
     public class ScenarioUserUploadReqDto
     {
         public int userCode;
@@ -11,7 +12,7 @@ namespace Data.Remote.Dtos.Request
         public int strength;
         public int dex;
     }
-    
+
     public static class ScenarioUserUploadReqDtoExtensions
     {
         public static ScenarioUserUploadReqDto ToSecenarioUserUploadDto(this UniverseUserSettings settings)

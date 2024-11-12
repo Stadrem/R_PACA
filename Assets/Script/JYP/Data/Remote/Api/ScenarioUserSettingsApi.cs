@@ -2,6 +2,7 @@
 using System.Collections;
 using Data.Models.Universe.Characters.Player;
 using Data.Remote.Dtos.Request;
+using Data.Remote.Dtos.Response;
 
 namespace Data.Remote.Api
 {
@@ -23,7 +24,28 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
-        
 
+        public static IEnumerator GetUserSettings(int userCode, int universeId,
+            Action<ApiResult<UniverseUserSettings>> onCompleted)
+        {
+            var reqDto = new ScenarioUserGetReqDto()
+            {
+                userCode = userCode,
+                scenarioCode = universeId,
+            };
+
+            var request = new HttpInfoWithType<ScenarioUserResponseDto, ScenarioUserGetReqDto>()
+            {
+                url = $"{BaseUrl}/get",
+                body = reqDto,
+                onComplete = (result) =>
+                {
+                    onCompleted(ApiResult<UniverseUserSettings>.Success(result.ToUniverseUserSettings()));
+                },
+                onError = (error) => onCompleted(ApiResult<UniverseUserSettings>.Fail(error)),
+            };
+
+            yield return HttpManager.GetInstance().Post(request);
+        }
     }
 }
