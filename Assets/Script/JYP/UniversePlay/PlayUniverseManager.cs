@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Data.Remote.Api;
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 using UniversePlay;
 using ViewModels;
@@ -80,16 +78,6 @@ public class PlayUniverseManager : MonoBehaviourPun
         if (e.PropertyName == nameof(ViewModel.UniverseData))
         {
             if (!PhotonNetwork.IsMasterClient) return;
-            roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
-            var codeList = InGamePlayerManager.playerList
-                .Select((t) => t.code)
-                .ToList();
-            StartCoroutine(
-                ViewModel.StartRoom(
-                    roomNumber,
-                    codeList
-                )
-            );
         }
     }
 
@@ -143,11 +131,12 @@ public class PlayUniverseManager : MonoBehaviourPun
     public void FinishConversation()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        StartCoroutine(PlayProgressApi.FinishNpcTalk(roomNumber,
-            (res) =>
-            {
-                photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All);
-            }));
+        StartCoroutine(
+            PlayProgressApi.FinishNpcTalk(
+                roomNumber,
+                (res) => { photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All); }
+            )
+        );
     }
 
     [PunRPC]
@@ -178,8 +167,25 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     public void StartPlay()
     {
-        if (PhotonNetwork.IsMasterClient)
-            playBackgroundManager.Init();
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
+        var codeList = InGamePlayerManager.playerList
+            .Select((t) => t.code)
+            .ToList();
+        StartCoroutine(
+            ViewModel.StartRoom(
+                roomNumber,
+                codeList,
+                (res) =>
+                {
+                    if (res.IsSuccess)
+                    {
+                        playBackgroundManager.Init();
+                    }
+                }
+            )
+        );
     }
 
     public static void Create()

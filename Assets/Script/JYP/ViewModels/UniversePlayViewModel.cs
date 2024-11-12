@@ -151,7 +151,7 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         );
     }
 
-    public IEnumerator StartRoom(int roomNumber, List<int> playerIds)
+    public IEnumerator StartRoom(int roomNumber, List<int> playerIds, Action<ApiResult> callback)
     {
         yield return PlayRoomApi.StartRoom(
             roomNumber,
