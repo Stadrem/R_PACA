@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Data.Models.Universe.Characters;
+using Data.Models.Universe.Dice;
+using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
 using ViewModels;
+using Random = UnityEngine.Random;
 
 namespace UniversePlay
 {
@@ -65,14 +71,7 @@ namespace UniversePlay
                         if (res.IsSuccess)
                         {
                             var resVal = res.value;
-                            photonView.RPC(
-                                nameof(RPC_NpcResponse),
-                                RpcTarget.All,
-                                resVal.sender,
-                                resVal.message,
-                                resVal.isBattle,
-                                resVal.isQuestAchieved
-                            );
+                            OnNpcReaction(sender, resVal);
                         }
                     }
                 )
@@ -93,15 +92,7 @@ namespace UniversePlay
                         Debug.Log($"받았습니다 {res.value}");
                         if (res.IsSuccess)
                         {
-                            var val = res.value;
-                            photonView.RPC(
-                                nameof(RPC_NpcResponse),
-                                RpcTarget.All,
-                                val.sender,
-                                val.message,
-                                val.isBattle,
-                                val.isQuestAchieved
-                            );
+                            OnNpcReaction(sender, res.value);
                         }
                     }
                 )
@@ -120,21 +111,49 @@ namespace UniversePlay
         }
 
         [PunRPC]
-        private void RPC_NpcResponse(string sender, string message, bool isBattle, bool isQuestAchieved)
+        private void RPC_ToNextTurn()
         {
-            if (isQuestAchieved)
+            NpcManager.NextTurn();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private (int, int) GetTowRandom()
+        {
+            return (Random.Range(1, 7), Random.Range(1, 7));
+        }
+
+        private void OnNpcReaction(string sender, NpcReaction reaction)
+        {
+            RPC_ApplyChatBubble(sender, reaction.DialogMessage);
+            switch (reaction.ReactionType)
             {
-                // todo : quest achieved
-                Debug.Log($"Quest Finished!");
-            }
-            else if (isBattle)
-            {
-                Debug.Log($"Battle Start");
-            }
-            else // just chat
-            {
-                ChatUIManager.AddChatBubble(sender, message, false);
-                NpcManager.NextTurn();
+                case EReactionType.None:
+                    Debug.LogError($"{reaction.ReactionType} is not implemented");
+                    break;
+                case EReactionType.Progress:
+                    photonView.RPC(nameof(RPC_ToNextTurn), RpcTarget.All);
+                    Debug.Log($"Progress");
+
+                    break;
+                case EReactionType.Battle:
+                    break;
+                case EReactionType.Dice:
+                    var (d1, d2) = GetTowRandom();
+                    Debug.Log($"Dice : {d1}, {d2}");
+                    DiceRollManager.Get().DiceRoll(d1, d2, false);
+                    StartCoroutine(
+                        PlayProgressApi.CheckDice(
+                            PlayUniverseManager.Instance.roomNumber,
+                            new DiceResult(
+                                firstDiceNumber: d1,
+                                secondDiceNumber: d2
+                            ),
+                            (res) => { Debug.Log($"Dice Result : {res.IsSuccess}"); } // todo : Dice 잘됨?
+                        )
+                    );
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections;
 using Data.Models.Universe.Dice;
 using Data.Remote.Dtos.Request;
+using Data.Remote.Dtos.Response;
 
 namespace Data.Remote.Api
 {
@@ -33,7 +34,8 @@ namespace Data.Remote.Api
             yield return HttpManager.GetInstance().Post(request);
         }
 
-        public static IEnumerator SendChat(int roomNumber, string userChat, Action<ApiResult> onComplete)
+        public static IEnumerator SendChat(int roomNumber, string userChat,
+            Action<ApiResult<NpcChatResponseDto>> onComplete)
         {
             var reqDto = new PlayProgressSendReqDto()
             {
@@ -41,13 +43,13 @@ namespace Data.Remote.Api
                 userChat = userChat,
             };
 
-            var request = new HttpInfoWithType<string, PlayProgressSendReqDto>() //todo: response check
+            var request = new HttpInfoWithType<NpcChatResponseDto, PlayProgressSendReqDto>() //todo: response check
 
             {
                 url = $"{BaseUrl}/send",
                 body = reqDto,
-                onComplete = (result) => { onComplete(ApiResult.Success()); },
-                onError = (error) => onComplete(ApiResult.Fail(error)),
+                onComplete = (result) => { onComplete(ApiResult<NpcChatResponseDto>.Success(result)); },
+                onError = (res) => { onComplete(ApiResult<NpcChatResponseDto>.Fail(res)); },
             };
 
             yield return HttpManager.GetInstance().Post(request);
@@ -61,8 +63,8 @@ namespace Data.Remote.Api
                 diceFst = diceResult.FirstDiceNumber,
                 diceSnd = diceResult.SecondDiceNumber,
             };
-            
-            
+
+
             var request = new HttpInfoWithType<string, CheckDiceReqDto>() // TODO: response check
             {
                 url = $"{BaseUrl}/dice",
@@ -70,11 +72,12 @@ namespace Data.Remote.Api
                 onComplete = (result) => { onComplete(ApiResult.Success()); },
                 onError = (error) => onComplete(ApiResult.Fail(error)),
             };
-            
+
             yield return HttpManager.GetInstance().Post(request);
         }
-        
-        public static IEnumerator FinishNpcTalk(int roomNumber, Action<ApiResult> onComplete) // todo: JYP가 임의로 작성한 request body임, 수정 필요
+
+        public static IEnumerator
+            FinishNpcTalk(int roomNumber, Action<ApiResult> onComplete) // todo: JYP가 임의로 작성한 request body임, 수정 필요
         {
             var reqDto = new PlayProgressEndReqDto()
             {

@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Data.Models.Universe.Characters;
 using Data.Remote;
 using Data.Remote.Api;
+using Data.Remote.Dtos.Response;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using Script.JYP.UniversePlay.Chat;
@@ -59,13 +61,13 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         set => SetField(ref currentBackgroundId, value);
     }
 
-    public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcChatResponseDto>> callback)
+    public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcReaction>> callback)
     {
         // todo : send message thru API
         yield return PlayProgressApi.SendChat(
             roomNumber,
             message,
-            (res) => { callback(res); }
+            (res) => { callback(res.Map((t) => t.ToReaction())); }
         );
     }
 
@@ -142,7 +144,7 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
                     {
                         result.value.backgroundPartDataList = backgroundList;
                     }
-                    
+
                     UniverseData = result.value;
                 }
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Data.Remote.Api;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
@@ -142,11 +143,15 @@ public class PlayUniverseManager : MonoBehaviourPun
     public void FinishConversation()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC(nameof(FinishConversationRpc), RpcTarget.All);
+        StartCoroutine(PlayProgressApi.FinishNpcTalk(roomNumber,
+            (res) =>
+            {
+                photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All);
+            }));
     }
 
     [PunRPC]
-    public void FinishConversationRpc()
+    public void RPC_FinishConversation()
     {
         NpcManager.FinishConversation();
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
@@ -190,5 +195,25 @@ public class PlayUniverseManager : MonoBehaviourPun
             Vector3.zero,
             Quaternion.identity
         );
+    }
+
+    private void OnDestroy()
+    {
+        ViewModel.PropertyChanged -= OnPropertyChange;
+    }
+
+    private void OnApplicationQuit()
+    {
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(
+                    PlayRoomApi.FinishRoom(
+                        roomNumber,
+                        (res) => { }
+                    )
+                );
+            }
+        }
     }
 }
