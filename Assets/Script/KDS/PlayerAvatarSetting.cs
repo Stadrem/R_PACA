@@ -26,10 +26,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     private void Awake()
     {
         // 현재 씬의 이름을 가져옴
-        Scene currentScene = SceneManager.GetActiveScene();
+        //Scene currentScene = SceneManager.GetActiveScene();
 
         if (transform.parent != null && transform.parent.GetComponent<PhotonView>() != null)
         {
+            GetComponent<AvatarDragRotate>().enabled = false;
             pv = transform.parent.GetComponent<PhotonView>();
 
             if (pv.IsMine)
@@ -42,6 +43,8 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         }
         else
         {
+            GetComponent<AvatarDragRotate>().enabled = true;
+
             if (UserCodeMgr.Instance != null)
             {
                 myAvatar.userCode = UserCodeMgr.Instance.UserCode;

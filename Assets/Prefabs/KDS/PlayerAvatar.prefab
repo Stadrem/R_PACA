@@ -315,6 +315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9210420862258190837}
   - component: {fileID: 6340439059843399461}
+  - component: {fileID: 1264405966206712229}
   m_Layer: 0
   m_Name: PlayerAvatar
   m_TagString: Untagged
@@ -368,6 +369,18 @@ MonoBehaviour:
   notUseNetworkOn: 0
   ownerCrown: {fileID: 3071754912188069504}
   avatarLoading: {fileID: 2407130648858335179}
+--- !u!114 &1264405966206712229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4456483823356550926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb19624e493219646926ce89d5b814ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8564688461686884666
 GameObject:
   m_ObjectHideFlags: 0
