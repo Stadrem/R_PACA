@@ -9,7 +9,7 @@ using static System.Net.WebRequestMethods;
 
 public class AvatarHTTPManager : MonoBehaviour
 {
-    string url = "http://125.132.216.190:8765";
+    string url = URLImport.URL;
 
     public bool CheckConnect()
     {
@@ -53,7 +53,7 @@ public class AvatarHTTPManager : MonoBehaviour
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = $"http://125.132.216.190:8765/user?userCode={id}";
+        info.url = $"{url}/user?userCode={id}";
 
         // 전송할 데이터를 JSON 형식으로 변환하여 설정
         //info.body = JsonUtility.ToJson(getMyAvatar); ;

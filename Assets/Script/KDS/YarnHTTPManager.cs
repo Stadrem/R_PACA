@@ -34,7 +34,7 @@ public class YarnHTTPManager : MonoBehaviour
         public string content;
     }
 
-    private string url = "";
+    private string url = "";//URLImport.URL;
 
     private void Awake()
     {

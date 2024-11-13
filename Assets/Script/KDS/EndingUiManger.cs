@@ -11,6 +11,8 @@ using UnityEngine.Networking;
 
 public class EndingUiManger : MonoBehaviourPunCallbacks
 {
+    string url = URLImport.URL;
+
     public TMP_Text text_title;
     public TMP_Text text_theme;
     public TMP_Text text_user;
@@ -81,7 +83,7 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
         HttpInfo info = new HttpInfo();
 
         // 요청할 URL 설정
-        info.url = $"http://125.132.216.190:8765/test/running/get?roomNum={PlayUniverseManager.Instance.roomNumber}";
+        info.url = $"{url}/test/running/get?roomNum={PlayUniverseManager.Instance.roomNumber}";
 
         // 콘텐츠 타입 설정
         info.contentType = "application/json";
@@ -102,6 +104,7 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
                 InputCh();
                 InputGenre();
                 InputTime();
+                InputGoal();
 
                 Debug.Log("방 정보 받아오기 성공");
             }
@@ -147,14 +150,15 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
             StartCoroutine(
                 PlayRoomApi.FinishRoom(
                     PlayUniverseManager.Instance.roomNumber,
-                    (res) => { }
+                    (res) => 
+                    {
+                        PhotonNetwork.LeaveRoom();
+                        PhotonNetwork.LoadLevel("LobbyScene");
+                        Destroy(gameObject);
+                    }
                 )
             );
         }
-
-        PhotonNetwork.LeaveRoom();
-
-        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     void InputPlayerNames()
@@ -192,16 +196,18 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
             {
                 text_theme.text += "판타지";
             }
+            else
+            {
+                text_theme.text += "판타지";
+            }
         }
     }
 
     void InputTime()
     {
-        // startAt 값을 확인해보기
-        Debug.Log(scInfo.startAt);
+        // 공백 제거
+        string startTimeString = scInfo.startAt;
 
-        string startTimeString = scInfo.startAt;  // 공백 제거
-        print(startTimeString);
         DateTime startTime;
 
         try
@@ -223,7 +229,7 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
 
     void InputGoal()
     {
-        text_goalA.text = scInfo.mainQuest;
+        text_goalA.text = "목표: " + scInfo.mainQuest;
     }
 
     void InputCh()

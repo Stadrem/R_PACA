@@ -20,8 +20,6 @@ public class YarnHistoryCard : MonoBehaviour
 
     public Button btn_Like;
 
-    string url = "";
-
     Button button;
 
     GameObject parent;
