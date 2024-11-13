@@ -1489,6 +1489,7 @@ MonoBehaviour:
   inGamePlayerManager: {fileID: 8093603927009587201}
   selectorChat: {fileID: 1679314124423005616}
   roomNumber: 0
+  isBattle: 0
 --- !u!114 &6439204471733787449
 MonoBehaviour:
   m_ObjectHideFlags: 0
