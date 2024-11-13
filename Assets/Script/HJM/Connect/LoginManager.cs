@@ -23,6 +23,30 @@ public class LoginManager : MonoBehaviour
         string userId = userIdField.text;
         string password = passwordField.text;
 
+        // 디버그 전용
+        if (string.IsNullOrEmpty(userId) && string.IsNullOrEmpty(password))
+        {
+            Alert.Get().Set("디버그 전용으로 접속중...");
+
+            connection.OnClickConnect(); // 서버에 연결
+
+            UserCodeMgr.Instance.SetUserCode(1);
+
+            // UserCodeMgr에 userID와 nickname 저장
+            UserCodeMgr.Instance.SetUserInfo("RPACA", "모험가");
+
+            var properties = new ExitGames.Client.Photon.Hashtable
+                {
+                    { PunPropertyNames.Player.PlayerId, UserCodeMgr.Instance.UserID },
+                    { PunPropertyNames.Player.PlayerUserCode, UserCodeMgr.Instance.UserCode },
+                };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+
+            PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
+
+            return;
+        }
+
         // 필드 확인
         if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(password))
         {
