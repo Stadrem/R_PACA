@@ -30,7 +30,15 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
     {
         Alert.Get().Set("환영합니다.");
         // 닉네임 설정
-        PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
+        if(UserCodeMgr.Instance != null)
+        {
+            PhotonNetwork.NickName = UserCodeMgr.Instance.Nickname;
+        }
+        else
+        {
+            PhotonNetwork.NickName = "모험가";
+        }
+
         // 기본 Lobby 입장
         PhotonNetwork.JoinLobby();
     }

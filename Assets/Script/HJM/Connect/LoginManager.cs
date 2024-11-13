@@ -30,7 +30,9 @@ public class LoginManager : MonoBehaviour
 
             connection.OnClickConnect(); // 서버에 연결
 
-            UserCodeMgr.Instance.SetUserCode(1);
+            TempFakeServer.Get().FakeSet();
+
+            UserCodeMgr.Instance.SetUserCode(-1);
 
             // UserCodeMgr에 userID와 nickname 저장
             UserCodeMgr.Instance.SetUserInfo("RPACA", "모험가");

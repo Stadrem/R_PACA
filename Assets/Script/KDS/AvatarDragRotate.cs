@@ -5,7 +5,7 @@ using UnityEngine;
 public class AvatarDragRotate : MonoBehaviour
 {
     // 회전 속도 조절 변수
-    public float rotationSpeed = 0.1f;
+    float rotationSpeed = 0.3f;
 
     // 이전 프레임의 마우스 X 위치
     private float lastMouseX;

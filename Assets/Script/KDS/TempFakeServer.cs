@@ -44,4 +44,13 @@ public class TempFakeServer : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void FakeSet()
+    {
+        myAvatar.userCode = -1;
+        myAvatar.userAvatarBody = 2;
+        myAvatar.userAvatarHair = 2;
+        myAvatar.userAvatarSkin = 0;
+        myAvatar.userAvatarHand = 1;
+    }
 }

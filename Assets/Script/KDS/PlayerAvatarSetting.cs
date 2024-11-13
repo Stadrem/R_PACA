@@ -28,9 +28,19 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         // 현재 씬의 이름을 가져옴
         //Scene currentScene = SceneManager.GetActiveScene();
 
+        //TempFakeServer가 있다면 뒤에 연결 부분 모두 무시하고 로컬로 실행
+        if (GameObject.Find("TempFakeServer") || UserCodeMgr.Instance == null)
+        {
+            print("백엔드 없는 듯?");
+            NotNetwork();
+            return;
+        }
+
+        //포톤에 연결되었으면, 드래그 회전 기능 비활성화, isMine 기준으로, 클라이언트만 유저코드 받아오기
         if (transform.parent != null && transform.parent.GetComponent<PhotonView>() != null)
         {
             GetComponent<AvatarDragRotate>().enabled = false;
+
             pv = transform.parent.GetComponent<PhotonView>();
 
             if (pv.IsMine)
@@ -41,6 +51,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
                 }
             }
         }
+        //포톤 연결되어있지 않으면, 포톤이 필요없는 아바타 생성이나 로비이니 드래그 회전 기능 활성화, 일단은 코드 받아옴
         else
         {
             GetComponent<AvatarDragRotate>().enabled = true;
@@ -49,40 +60,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
             {
                 myAvatar.userCode = UserCodeMgr.Instance.UserCode;
             }
-            else
-            {
-                notUseNetworkOn = true;
-
-                myAvatar = TempFakeServer.Get().myAvatar;
-            }
         }
-
     }
 
     void Start()
     {
-        if (notUseNetworkOn)
-        {
-            myAvatar = TempFakeServer.Get().myAvatar;
-        }
-
-        if (myAvatar.userCode != -1)
-        {
-            //StartPostAvatarInfo(myAvatar.userCode);
-            print("정상 접속 상황");
-        }
-        else
-        {
-            TempFakeServer.Get();
-
-            //백엔드 없을 시 디버그 전용. 제거해도 됨.
-            tempFakeServer = GameObject.Find("TempFakeServer").GetComponent<TempFakeServer>();
-
-            notUseNetworkOn = true;
-
-            print("백엔드 없음");
-        }
-
         RefreshAvatar();
 
         //SceneManager.sceneLoaded += OnSceneLoaded;
@@ -96,17 +78,32 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     }
     */
 
+    //백엔드 없는거 판별되면, 로컬 작동 기초 작업 수행.
+    void NotNetwork()
+    {
+        if(notUseNetworkOn == false && myAvatar.userCode == -1)
+        {
+            notUseNetworkOn = true;
+
+            myAvatar = TempFakeServer.Get().myAvatar;
+
+            TempFakeServer.Get().FakeSet();
+
+            if (transform.parent != null && transform.parent.GetComponent<PhotonView>() != null)
+            {
+                pv = transform.parent.GetComponent<PhotonView>();
+
+                if (pv.IsMine)
+                {
+                    myAvatar.userCode = TempFakeServer.Get().myAvatar.userCode;
+                }
+            }
+        }
+    }
+
     public void RefreshAvatar()
     {
         avatarLoading.SetActive(true);
-
-        //서버에서 아바타 정보 받아오기
-        StartGetAvatarInfo(myAvatar.userCode, (getAvatar) =>
-        {
-            myAvatar = getAvatar;
-
-            ChangeAvatar();
-        });
 
         //백엔드 없을 시 디버그용
         if (notUseNetworkOn)
@@ -115,6 +112,16 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
             // 씬 로드 후 실행할 함수 호출
             ChangeAvatar();
+        }
+        else
+        {
+            //서버에서 아바타 정보 받아오기
+            StartGetAvatarInfo(myAvatar.userCode, (getAvatar) =>
+            {
+                myAvatar = getAvatar;
+
+                ChangeAvatar();
+            });
         }
     }
 
@@ -129,6 +136,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     //0번 게임 오브젝트 : 성별 바디 // 2번: 모자 // 3번: 의류 // 4번: 도구
     public void ChangeAvatar()
     {
+        if(myAvatar.userCode == -1)
+        {
+            NotNetwork();
+        }
+
         //이 알 수 없는 로직에 대한 설명
         //스킨메쉬 렌더러 컴포넌트 받아오기 -> 스킨메쉬 컴포넌트 비활성 -> 비우기 -> 받아오기 -> 컴포넌트 활성화
         //이따위로 해놓은 이유 : 교체 전 스키닝 메쉬 데이터와 교체 후 메쉬 데이터의 버텍스 값이 틀리다고 에러 계속 뿜어대서, 해결 방안이 이것이었음
