@@ -21,6 +21,7 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
     private int npcChatSelectedIndex = -1;
     private UniverseData universeData;
     private int currentBackgroundId = -1;
+    private Universe universe;
 
     #endregion
 
@@ -63,7 +64,6 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
 
     public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcReaction>> callback)
     {
-        // todo : send message thru API
         yield return PlayProgressApi.SendChat(
             roomNumber,
             message,
@@ -144,17 +144,18 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
                     {
                         result.value.backgroundPartDataList = backgroundList;
                     }
-
+                    
                     UniverseData = result.value;
                 }
             }
         );
     }
 
-    public IEnumerator StartRoom(int roomNumber, List<int> playerIds, Action<ApiResult> callback)
+    public IEnumerator StartRoom(int roomNumber,string title, List<int> playerIds, Action<ApiResult> callback)
     {
         yield return PlayRoomApi.StartRoom(
             roomNumber,
+            title,
             UniverseData.id,
             playerIds,
             (result) =>

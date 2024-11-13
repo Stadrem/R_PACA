@@ -24399,10 +24399,10 @@ MonoBehaviour:
   currentTurnIndex: 0
   totalPlayers: 0
   isMyTurn: 0
-  attackBtn: {fileID: 0}
-  defenseBtn: {fileID: 0}
-  turnCompBtn: {fileID: 0}
-  turnSilder: {fileID: 0}
+  attackBtn: {fileID: 6630820814320672581}
+  defenseBtn: {fileID: 5236698382697017752}
+  turnCompBtn: {fileID: 1567873636865664315}
+  turnSilder: {fileID: 2204691358192352121}
   isMyTurnAction: 0
   profiles: []
 --- !u!224 &3277921941532077664
@@ -25119,8 +25119,8 @@ MonoBehaviour:
   battleUI: {fileID: 3535244620977086028}
   profileUI: {fileID: 6255085196350749319, guid: 9f5dab9058b46824799696c855c5e8c2,
     type: 3}
-  nextTurnUI: {fileID: 0}
-  currentTurnTXT: {fileID: 0}
+  nextTurnUI: {fileID: 386214275}
+  currentTurnTXT: {fileID: 6249095791616357098}
   enemy: {fileID: 0}
   enemyAnim: {fileID: 0}
   enemyHPBar: {fileID: 0}
@@ -25479,7 +25479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6579614174890131882
 MonoBehaviour:
   m_ObjectHideFlags: 0
