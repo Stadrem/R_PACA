@@ -208,6 +208,7 @@ public class InGamePlayerManager : MonoBehaviour
     {
         Debug.Log($"생성!!");
         var go = PhotonNetwork.Instantiate("Player_Avatar", spawnPos, Quaternion.identity);
+        print("타운씬에서 플레이어_아바타 생성");
         var hpBarSystem = go.GetComponent<HpBarSystem>();
         go.GetComponent<UserStats>().Initialize(playerInfo.hitPoints, playerInfo.strength, playerInfo.dexterity);
         hpBarSystem.Init(playerInfo.hitPoints);

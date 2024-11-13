@@ -16951,20 +16951,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiceRollManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3322372703661683612, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000,
+        type: 0}
     - target: {fileID: 4162151573417029702, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -44
+      value: -67.67
       objectReference: {fileID: 0}
     - target: {fileID: 4162151573417029702, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -9.56
       objectReference: {fileID: 0}
     - target: {fileID: 4162151573417029702, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -36
+      value: -51.17
       objectReference: {fileID: 0}
     - target: {fileID: 7532922088017045870, guid: 4a98d156b8fb43d48a9f27e403a4a50d,
         type: 3}
@@ -24586,6 +24592,7 @@ MonoBehaviour:
   defenseBtn: {fileID: 5236698382697017752}
   turnCompBtn: {fileID: 1567873636865664315}
   turnSilder: {fileID: 2204691358192352121}
+  diceDamage: 0
   isMyTurnAction: 0
   profiles: []
 --- !u!224 &3277921941532077664
@@ -25306,7 +25313,7 @@ MonoBehaviour:
   currentTurnTXT: {fileID: 6249095791616357098}
   enemy: {fileID: 0}
   enemyAnim: {fileID: 0}
-  enemyHPBar: {fileID: 0}
+  enemyHPBar: {fileID: 196456219}
 --- !u!114 &5525024717357217103
 MonoBehaviour:
   m_ObjectHideFlags: 0
