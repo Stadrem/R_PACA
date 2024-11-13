@@ -6,7 +6,7 @@ using UnityEngine;
 using Photon.Realtime;
 using System;
 
-public class EndingUiManger : MonoBehaviour
+public class EndingUiManger : MonoBehaviourPunCallbacks
 {
     public TMP_Text text_title;
     public TMP_Text text_theme;
@@ -23,6 +23,16 @@ public class EndingUiManger : MonoBehaviour
         PhotonNetwork.LeaveRoom();
 
         PhotonNetwork.LoadLevel("LobbyScene");
+    }
+
+    void PlayerNames()
+    {
+        text_user.text = "";  // 초기화
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            text_user.text += player.NickName + ", ";  // 닉네임 추가
+        }
     }
 
     public void InputText(string a, string b, string c, string d, string e, string f, string g, string h, string i, string j)
