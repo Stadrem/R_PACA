@@ -49,6 +49,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void Start()
+    {
+        enemyHPBar.maxValue = 25;
+        enemyHPBar.value = enemyHPBar.maxValue;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -223,6 +229,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         NextTurn();
     }
 
+    [PunRPC]
     public void UpdateEnemyHealth(int damage)
     {
         enemyHPBar.value = enemyHPBar.value - damage; // 적 체력 감소

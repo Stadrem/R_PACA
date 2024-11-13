@@ -280,7 +280,7 @@ public class DiceRollManager : MonoBehaviour
                 // 충돌 지점의 월드 좌표
                 Vector3 hitPoint = hit.point;
 
-                transform.position = new Vector3(hitPoint.x, hitPoint.y + 0.5f, hitPoint.z);
+                transform.position = new Vector3(hitPoint.x, hitPoint.y - 2.5f, hitPoint.z);
             }
             else
             {
@@ -337,6 +337,7 @@ public class DiceRollManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3);
+        ClearValue();
 
         for (int j = 0; j < diceCount; j++)
         {
