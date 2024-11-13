@@ -9,12 +9,13 @@ namespace Data.Remote.Api
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/room";
 
-        public static IEnumerator StartRoom(int roomNum, int universeId, List<int> playerIds,
+        public static IEnumerator StartRoom(int roomNum,string title, int universeId, List<int> playerIds,
             Action<ApiResult> onCompleted)
         {
             var reqDto = new PlayRoomStartReqDto()
             {
                 roomNum = roomNum,
+                roomTitle = title,
                 scenarioId = universeId,
                 userCodes = playerIds,
             };
@@ -33,7 +34,7 @@ namespace Data.Remote.Api
         public static IEnumerator FinishRoom(int roomNum, Action<ApiResult> onCompleted)
         {
             var reqDto = roomNum.ToPlayRoomEndReqDto();
-
+        
 
             var request = new HttpInfoWithType<string, PlayRoomEndReqDto>()
             {
@@ -43,7 +44,7 @@ namespace Data.Remote.Api
                 onError = (error) => onCompleted(ApiResult.Fail(error)),
             };
 
-            yield return HttpManager.GetInstance().Get(request);
+            yield return HttpManager.GetInstance().Post(request);
         }
     }
 }

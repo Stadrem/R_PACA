@@ -38,7 +38,7 @@ public class PlayerBatList : MonoBehaviourPunCallbacks
         return battlePlayers;
     }
 
-    
+
     private void OnValidate()
     {
         SortBattlePlayersByDexterity();
@@ -58,5 +58,4 @@ public class PlayerBatList : MonoBehaviourPunCallbacks
         PlayerBatInfo newPlayer = new PlayerBatInfo(nickname, health, strength, dexterity);
         battlePlayers.Add(newPlayer);
     }
-
 }

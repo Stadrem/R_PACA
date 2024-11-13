@@ -22,8 +22,21 @@ namespace Data.Remote.Dtos.Response
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static NpcReaction ToReaction(this NpcChatResponseDto dto)
         {
-            
-            return new NpcReaction(EReactionType.Progress, dto.npcChat, dto.bonus);
+            var reactionType = EReactionType.None;
+            switch (dto.eventTypeName)
+            {
+
+                case "전투":
+                    reactionType = EReactionType.Battle;
+                    break;
+                case "다이스":
+                    reactionType = EReactionType.Dice;
+                    break;
+                default:
+                    reactionType = EReactionType.Progress;
+                    break;
+            }
+            return new NpcReaction(reactionType, dto.npcChat, dto.bonus);
         }
     }
 }

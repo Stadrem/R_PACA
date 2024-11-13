@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using Data.Remote.Api;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UniversePlay;
 using ViewModels;
@@ -51,6 +52,7 @@ public class PlayUniverseManager : MonoBehaviourPun
 
 
     public int roomNumber;
+    public bool isBattle = false;
 
     private void Awake()
     {
@@ -72,6 +74,7 @@ public class PlayUniverseManager : MonoBehaviourPun
         ViewModel.PropertyChanged += OnPropertyChange;
         StartCoroutine(ViewModel.LoadUniverseData(code));
     }
+    
 
     private void OnPropertyChange(object sender, PropertyChangedEventArgs e)
     {
@@ -83,11 +86,24 @@ public class PlayUniverseManager : MonoBehaviourPun
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F5))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ShowBattleUI();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(
+                    PlayRoomApi.FinishRoom(
+                        roomNumber,
+                        (res) =>
+                        {
+                            PhotonNetwork.LeaveRoom();
+                            PhotonNetwork.LoadLevel("LobbyScene");
+                        }
+                    )
+                    
+                );
+            }
         }
-
+        
         UserInteraction();
     }
 
@@ -99,7 +115,7 @@ public class PlayUniverseManager : MonoBehaviourPun
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, float.MaxValue))
             {
-                if (hit.collider.CompareTag("InPlayNPC"))
+                if (hit.collider.CompareTag("InPlayNPC") && !isBattle)
                 {
                     NpcInteract(hit);
                 }
@@ -176,6 +192,7 @@ public class PlayUniverseManager : MonoBehaviourPun
         StartCoroutine(
             ViewModel.StartRoom(
                 roomNumber,
+                PhotonNetwork.CurrentRoom.Name,
                 codeList,
                 (res) =>
                 {
@@ -208,6 +225,8 @@ public class PlayUniverseManager : MonoBehaviourPun
     {
         ViewModel.PropertyChanged -= OnPropertyChange;
     }
+    
+    
 
     private void OnApplicationQuit()
     {
