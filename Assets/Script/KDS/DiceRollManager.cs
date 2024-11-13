@@ -243,6 +243,23 @@ public class DiceRollManager : MonoBehaviour
         DiceRollView();
     }
 
+    public void DiceRoll(int diceA, int diceB)
+    {
+        //텍스트랑 오브젝트 초기화
+        ClearValue();
+
+        diceResults.Add(diceA);
+        diceResults.Add(diceB);
+
+        //나온 값 합산
+        diceResult = diceResults.Sum();
+
+        titleText.text = "";
+
+        //주사위 굴리기 비주얼
+        DiceRollView();
+    }
+
 
     //int 값으로 반환
     public void DiceRollView() 
