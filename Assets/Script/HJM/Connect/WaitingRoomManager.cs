@@ -63,7 +63,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         Debug.Log($"생성! {position}");
         // 포톤 인스턴스 생성
         GameObject playerAvatar = PhotonNetwork.Instantiate("Player_Avatar", position, Quaternion.Euler(0, 180, 0));
-        print(11111111111111);
+        print("대기방에서 플레이어_아바타 생성");
 
         playerAvatar.name = "Player_Avatar_" + PhotonNetwork.NickName;
         print(11111111111111);

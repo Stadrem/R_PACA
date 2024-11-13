@@ -296,7 +296,8 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].SetActive(true);
 
             //등장 위치 무작위
-            diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + (i*2), createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
+            //diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + (i*2), createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
+            diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x, createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
 
             //회전 값 무작위
             diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
