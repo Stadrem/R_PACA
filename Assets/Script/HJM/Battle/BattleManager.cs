@@ -113,6 +113,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
     void OnBattleStart()
     {
         PlayUniverseManager.Instance.isBattle = true;
+        var gameObject = PlayUniverseManager.Instance.NpcManager.currentInteractNpc?.gameObject;
+        if(gameObject == null)
+        {
+            gameObject = GameObject.Find("NPC_Golem(Clone)");
+        }
+        SetEnemy(gameObject);
         playerBatList = GetComponent<PlayerBatList>();
 
         for (int i = 0; i < players.Count; i++)
@@ -278,4 +284,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         photonView.RPC("DiceDefenseFail", RpcTarget.All, damage);
     }
+
+    public void SetEnemy(GameObject enemy)
+    {
+        var anim = enemy.GetComponentInChildren<Animator>();
+        this.enemy = enemy;
+        enemyAnim = anim;
+    }
+    
 }
