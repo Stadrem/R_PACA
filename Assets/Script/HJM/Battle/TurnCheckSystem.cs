@@ -68,7 +68,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         Debug.Log("턴 선택 행동 ~~");
 
         // 주사위 굴리기
-        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치 임의로 3
+        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값
+        //print(UserStats.Instance.userStrength + "보정치 값");
         print(diceDamage);
 
         // 굴리는거 기다림
@@ -83,7 +84,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(5f);
         // 안내창을 띄우자 . . . 나중에 좀 인터렉션을 넣을까
 
-        BattleManager.Instance.UpdateEnemyHealth(diceDamage);
+        photonView.RPC("UpdateEnemyHealth", RpcTarget.All, diceDamage);
+        //BattleManager.Instance.UpdateEnemyHealth(diceDamage);
         diceDamage = 0; // 다이스데미지 초기화
 
         EndTurn(); // 턴 종료(다른 플레이어에게 턴 넘어감)

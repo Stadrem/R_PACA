@@ -4,11 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class UserStats : MonoBehaviourPun
 {
+    public static UserStats Instance;
+
     [Header("유저 스탯")]
     public string userNickname;
     public int userHealth; // 생명력
     public int userStrength; // 힘
     public int userDexterity; // 손재주
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
