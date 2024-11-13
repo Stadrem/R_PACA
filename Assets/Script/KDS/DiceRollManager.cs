@@ -335,10 +335,6 @@ public class DiceRollManager : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        
-
-        ClearValue();
-
         for (int j = 0; j < diceCount; j++)
         {
             diceObjects[j].SetActive(false);
