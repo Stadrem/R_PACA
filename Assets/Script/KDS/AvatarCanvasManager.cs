@@ -40,8 +40,6 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
         pas = playerAvatar.GetComponent<PlayerAvatarSetting>();
 
-        Kim_Debug.Get().DebugPanel();
-
         anim = playerAvatar.GetComponentInChildren<Animator>();
     }
 

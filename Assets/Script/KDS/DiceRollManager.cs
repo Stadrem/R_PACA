@@ -101,7 +101,7 @@ public class DiceRollManager : MonoBehaviour
 
     public bool autoPosition = true;
 
-    //성공 실패만 판별하는 탐색 전용 주사위
+    //성공 실패만 판별하는 탐색 전용 주사위 // 성공 실패만 반환함
     public bool SearchDiceRoll(int stat)
     {
         //텍스트랑 오브젝트 초기화
@@ -135,7 +135,7 @@ public class DiceRollManager : MonoBehaviour
         return result;
     }
 
-    //전투 전용 주사위
+    //전투 전용 주사위 //데미지 값을 반환함
     public int BattleDiceRoll(int stat)
     {
         //텍스트랑 오브젝트 초기화
@@ -219,7 +219,7 @@ public class DiceRollManager : MonoBehaviour
         return diceResult = diceResults.Sum();
     }
 
-    //백엔드 주사위 굴리기
+    //백엔드 주사위 굴리기 // 단순 굴리기 용도
     public void DiceRoll(int diceA, int diceB, bool result)
     {
         //텍스트랑 오브젝트 초기화
@@ -243,6 +243,7 @@ public class DiceRollManager : MonoBehaviour
         DiceRollView();
     }
 
+    // 단순 굴리기 용도
     public void DiceRoll(int diceA, int diceB)
     {
         //텍스트랑 오브젝트 초기화

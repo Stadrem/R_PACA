@@ -68,6 +68,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         RefreshAvatar();
 
         //SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if(Kim_Debug.instance == null)
+        {
+            Kim_Debug.Get().DebugPanel();
+        }
     }
 
     /*
