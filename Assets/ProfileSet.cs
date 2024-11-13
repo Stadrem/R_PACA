@@ -21,17 +21,16 @@ public class ProfileSet : MonoBehaviour
     // 체력 초기화
     public void HpBarInit(int health)
     {
-        hpBar.maxValue = 100; 
-        hpBar.value = 100;    
-        currentHealthPercentage = Mathf.Clamp((health / (float)health) * 100, 0, 100); // 체력을 퍼센트로 변환
+        hpBar.maxValue = health;
+        hpBar.value = hpBar.maxValue;
     }
 
     // 데미지
     public void DamagedPlayer(int damage)
     {
-        float damagePercentage = (damage / (float)hpBar.maxValue) * 100;
-        hpBar.value = Mathf.Max(hpBar.value - damagePercentage, 0);
-        currentHealthPercentage = Mathf.Clamp(hpBar.value, 0, 100);
+        float damagePercentage = hpBar.value - damage;
+        hpBar.value = damagePercentage;
+      
     }
 
 

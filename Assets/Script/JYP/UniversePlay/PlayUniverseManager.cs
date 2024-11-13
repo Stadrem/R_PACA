@@ -12,7 +12,7 @@ using ViewModels;
 /// 플레이 화면에서의 전체적인 매니저
 /// 모든 매니저들을 관리하고, 유저의 상호작용을 처리하는 클래스
 /// </summary>
-public class PlayUniverseManager : MonoBehaviourPun
+public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 {
     private static PlayUniverseManager instance;
 
@@ -97,7 +97,7 @@ public class PlayUniverseManager : MonoBehaviourPun
                         {
                             PhotonNetwork.LeaveRoom();
                             PhotonNetwork.LoadLevel("LobbyScene");
-                            Destroy(gameObject);
+                            Dispose();
                         }
                     )
                     
@@ -242,5 +242,11 @@ public class PlayUniverseManager : MonoBehaviourPun
                 );
             }
         }
+    }
+
+    public void Dispose()
+    {
+        instance = null;
+        Destroy(gameObject);
     }
 }

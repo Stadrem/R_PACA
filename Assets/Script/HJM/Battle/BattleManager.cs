@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject nextTurnUI;
     public TMP_Text currentTurnTXT;
 
-    
+
 
     [Header("적 NPC")]
     public GameObject enemy;
@@ -115,7 +115,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         PlayUniverseManager.Instance.RPC_FinishConversation();
         PlayUniverseManager.Instance.isBattle = true;
         var gameObject = PlayUniverseManager.Instance.NpcManager.currentInteractNpc?.gameObject;
-        if(gameObject == null)
+        if (gameObject == null)
         {
             gameObject = GameObject.Find("NPC_Golem(Clone)");
         }
@@ -125,16 +125,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < players.Count; i++)
         {
             photonView.RPC("MoveToBattlePos", RpcTarget.All, i);
-            // photonView.RPC("ProfileSet", RpcTarget.All);
             ProfileSet();
         }
-        // if (PhotonNetwork.IsMasterClient)
-        // {
-        //     photonView.RPC("ProfileSet", RpcTarget.All);
-        // }
+
         playerBatList = GetComponent<PlayerBatList>();
         battleUI.SetActive(true);
-        
+
     }
 
     [PunRPC] // 프로필 UI 생성
@@ -148,32 +144,18 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
             for (int i = 0; i < players.Count; i++)
             {
-                Debug.Log($"{i}");
                 GameObject profile = Instantiate(profileUI, startPosition, Quaternion.identity);
-                Debug.Log($"-1");
                 profile.transform.SetParent(battleUI.transform, false);
-                Debug.Log($"-2");
                 startPosition.x += 400; // 간격
-                Debug.Log($"-3");
 
                 profiles.Add(profile);
-                Debug.Log($"profile : {profile}");
-                Debug.Log($"{playerBatList}");
-                Debug.Log($"{playerBatList.battlePlayers}");
-                Debug.Log($"{playerBatList.battlePlayers[i].nickname}");
                 ProfileSet profileSet = profile.GetComponent<ProfileSet>();
-                Debug.Log($"{profileSet}");
                 profileSet.NicknameSet(playerBatList.battlePlayers[i].nickname);
-                Debug.Log($"-6");
                 profileSet.HpBarInit(playerBatList.battlePlayers[i].health);
-                Debug.Log($"-7");
                 profileSet.SetSelectImage(0); // 선택안함
-                Debug.Log($"-8");
                 TurnCheckSystem.Instance.profiles = profiles;
-                Debug.Log($"end");
             }
         }
-        Debug.Log($"start");
 
     }
 
@@ -241,9 +223,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
         NextTurn();
     }
 
-    private void UpdateEnemyHealth(int damage)
+    public void UpdateEnemyHealth(int damage)
     {
-        enemyHPBar.value = Mathf.Max(enemyHPBar.value - damage, 0); // 적 체력 감소
+        enemyHPBar.value = enemyHPBar.value - damage; // 적 체력 감소
     }
 
     private void ShowBattleUI(string message)
@@ -292,5 +274,5 @@ public class BattleManager : MonoBehaviourPunCallbacks
         this.enemy = enemy;
         enemyAnim = anim;
     }
-    
+
 }
