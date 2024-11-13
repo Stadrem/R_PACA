@@ -112,6 +112,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void OnBattleStart()
     {
+        PlayUniverseManager.Instance.isBattle = true;
         playerBatList = GetComponent<PlayerBatList>();
 
         for (int i = 0; i < players.Count; i++)

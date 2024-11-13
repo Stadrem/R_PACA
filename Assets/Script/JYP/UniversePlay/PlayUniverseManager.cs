@@ -52,6 +52,7 @@ public class PlayUniverseManager : MonoBehaviourPun
 
 
     public int roomNumber;
+    public bool isBattle = false;
 
     private void Awake()
     {
@@ -114,7 +115,7 @@ public class PlayUniverseManager : MonoBehaviourPun
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, float.MaxValue))
             {
-                if (hit.collider.CompareTag("InPlayNPC"))
+                if (hit.collider.CompareTag("InPlayNPC") && !isBattle)
                 {
                     NpcInteract(hit);
                 }
