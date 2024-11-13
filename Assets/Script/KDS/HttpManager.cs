@@ -332,8 +332,7 @@ public class HttpManager : MonoBehaviour
         {
             return (TRes)(object)downloadHandler.text;
         }
-
-        return JsonUtility.FromJson<TRes>(downloadHandler.text);
+        return JsonConvert.DeserializeObject<TRes>(downloadHandler.text);
     }
 
     //Post : 데이터를 서버로 전송

@@ -6,6 +6,7 @@ namespace Data.Remote.Dtos.Request
     public class PlayRoomStartReqDto
     {
         public int roomNum;
+        public string roomTitle;
         public int scenarioId;
         public List<int> userCodes;
     }

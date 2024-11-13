@@ -13,9 +13,9 @@ public class UserStats : MonoBehaviourPun
     private void Start()
     {
         
-
+        
         // 자신을 battlePlayers 리스트에 등록하기 위해 RPC 호출
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsConnected)
         {
             RegisterPlayerStats();
         }
@@ -30,36 +30,38 @@ public class UserStats : MonoBehaviourPun
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        // SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // 씬 이름이 Town일때만
-        if (scene.name == "Town") 
-        {
-            if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-            {
-                RegisterPlayerStats();
-            }
-        }
-    }
+    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     // 씬 이름이 Town일때만
+    //     if (scene.name == "Town") 
+    //     {
+    //         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+    //         {
+    //             RegisterPlayerStats();
+    //         }
+    //     }
+    // }
 
     private void RegisterPlayerStats()
     {
         userNickname = photonView.Owner.NickName;
 
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsConnected && photonView.IsMine)
         {
             // PlayerBatList의 PhotonView를 찾고 자신을 리스트에 등록
+            Debug.Log($"RUN");
             PlayerBatList playerBatList = FindObjectOfType<PlayerBatList>();
             if (playerBatList != null)
             {
+                Debug.Log($"RUN 2");
                 playerBatList.photonView.RPC("RegisterPlayer", RpcTarget.All, userNickname, userHealth, userStrength, userDexterity);
             }
         }

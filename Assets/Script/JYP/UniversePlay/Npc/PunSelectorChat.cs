@@ -6,6 +6,7 @@ using Data.Models.Universe.Characters;
 using Data.Models.Universe.Dice;
 using Data.Remote.Api;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using ViewModels;
 using Random = UnityEngine.Random;
@@ -136,11 +137,21 @@ namespace UniversePlay
                     break;
                 case EReactionType.Battle:
                     Debug.Log($"Battle");
+                    BattleManager.Instance.StartBattle();
                     break;
                 case EReactionType.Dice:
-                    var (d1, d2) = GetTwoRandom();
-                    Debug.Log($"Dice : {d1}, {d2}");
-                    DiceRollManager.Get().DiceRoll(d1, d2, false);
+                    int stat;
+                    if (reaction.BonusMessage == "strength")
+                    {
+                        stat = PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.strength;
+                    }
+                    else
+                    {
+                        stat = 0;
+                    }
+                    DiceRollManager.Get().BattleDiceRoll(stat);
+                    var d1 = DiceRollManager.Get().diceResults[0];
+                    var d2 = DiceRollManager.Get().diceResults[1];
                     StartCoroutine(
                         PlayProgressApi.CheckDice(
                             PlayUniverseManager.Instance.roomNumber,
@@ -148,7 +159,7 @@ namespace UniversePlay
                                 firstDiceNumber: d1,
                                 secondDiceNumber: d2
                             ),
-                            (res) => { Debug.Log($"Dice Result : {res.IsSuccess}"); } // todo : Dice 잘됨?
+                            (res) => { Debug.Log($"Dice Result : {res.IsSuccess}"); } 
                         )
                     );
                     break;

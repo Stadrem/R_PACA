@@ -14,20 +14,20 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 1, g: 0.73259777, b: 0.45597476, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.39607844, g: 0.28235295, b: 0.16470589, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.002
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AmbientGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 0.16862746, g: 0.05882353, b: 0.023529412, a: 1}
+  m_AmbientEquatorColor: {r: 0.50980395, g: 0.4117647, b: 0.38431373, a: 1}
+  m_AmbientGroundColor: {r: 0.16862746, g: 0.050980393, b: 0.023529412, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 0eb944dee6168c949834b3eed03d1cbb, type: 2}
-  m_HaloStrength: 0.495
+  m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -35,7 +35,7 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 0.112
+  m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
@@ -96,9 +96,9 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 5fe6001d7ff11594995447bad265b005,
+  m_LightingDataAsset: {fileID: 112000000, guid: 9216763d2dc1bdc4cbcdcaf1328a3bc1,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 953624b4b45b70748b0d6beaa12a0fe9,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 8566ac479018a9a4486be9263d696d64,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -166,7 +166,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -829,6 +829,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Directional Light
       objectReference: {fileID: 0}
+    - target: {fileID: 1403055334030382574, guid: 83c1913b108283e44bc1583b71199f89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2273407659477069238, guid: 83c1913b108283e44bc1583b71199f89,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1158,6 +1163,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Post-Processing Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1962965929863931867, guid: a6f2cae31522bbd4ea70165937fcf40b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1469,7 +1479,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: f0320c975d4b6bd4092213f9751c0151, type: 2}
 --- !u!4 &1160234427
 Transform:
@@ -2534,7 +2544,7 @@ PrefabInstance:
     - target: {fileID: 4456483823356550926, guid: 5e258fec91d27484294348b0594c80b7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9210420862258190837, guid: 5e258fec91d27484294348b0594c80b7,
         type: 3}
