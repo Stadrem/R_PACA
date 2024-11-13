@@ -219,6 +219,25 @@ public class DiceRollManager : MonoBehaviour
         return diceResult = diceResults.Sum();
     }
 
+    // 단순 굴리기 용도
+    public void DiceRoll(int diceA, int diceB)
+    {
+        //텍스트랑 오브젝트 초기화
+        ClearValue();
+
+        diceResults.Add(diceA);
+        diceResults.Add(diceB);
+
+        //나온 값 합산
+        diceResult = diceResults.Sum();
+
+        titleText.text = "";
+
+        //주사위 굴리기 비주얼
+        DiceRollView();
+    }
+
+
     //백엔드 주사위 굴리기
     public void DiceRoll(int diceA, int diceB, bool result)
     {
