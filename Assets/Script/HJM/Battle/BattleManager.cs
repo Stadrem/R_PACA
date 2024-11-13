@@ -112,6 +112,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void OnBattleStart()
     {
+        PlayUniverseManager.Instance.RPC_FinishConversation();
         PlayUniverseManager.Instance.isBattle = true;
         var gameObject = PlayUniverseManager.Instance.NpcManager.currentInteractNpc?.gameObject;
         if(gameObject == null)

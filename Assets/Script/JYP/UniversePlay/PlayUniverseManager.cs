@@ -97,6 +97,7 @@ public class PlayUniverseManager : MonoBehaviourPun
                         {
                             PhotonNetwork.LeaveRoom();
                             PhotonNetwork.LoadLevel("LobbyScene");
+                            Destroy(gameObject);
                         }
                     )
                     
