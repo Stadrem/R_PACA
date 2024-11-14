@@ -81,7 +81,7 @@ public class DiceRollManager : MonoBehaviour
     float maxRayDistance = 1000f; 
 
     //적정값 입력
-    float rollDuration = 0.7f; // 주사위가 굴러가는 시간
+    float rollDuration = 0.4f; // 주사위가 굴러가는 시간
 
     public GameObject canvas;
 
@@ -110,7 +110,7 @@ public class DiceRollManager : MonoBehaviour
         //최종 결과값 초기화
         bool result = false;
 
-        titleText.text = "결과: " + "실패";
+        titleText.text = "실패";
 
         //주사위 랜덤 값 + 보정값
         int sumDice = DiceRandomPick() + AbilityCorrection(stat);
@@ -126,7 +126,7 @@ public class DiceRollManager : MonoBehaviour
         //성공 실패 여부 표시
         if (result)
         {
-            titleText.text = "결과: " + "성공";
+            titleText.text = "성공";
         }
 
         //주사위 굴리기 비주얼
@@ -168,7 +168,7 @@ public class DiceRollManager : MonoBehaviour
             print("200% 피해!");
         }
 
-        titleText.text = "결과: " + result + "공격력";
+        titleText.text = result + "공격력";
 
         //주사위 굴리기 비주얼
         DiceRollView();
@@ -201,7 +201,7 @@ public class DiceRollManager : MonoBehaviour
             plusDice = 2;
         }
 
-        plusText.text = "능력치 보정: +" + plusDice;
+        plusText.text = "보정: +" + plusDice;
 
         return plusDice;
     }
@@ -250,12 +250,12 @@ public class DiceRollManager : MonoBehaviour
         //나온 값 합산
         diceResult = diceResults.Sum();
 
-        titleText.text = "결과: " + "실패";
+        titleText.text = "실패";
 
         //성공 실패 여부 표시
         if (result)
         {
-            titleText.text = "결과: " + "성공";
+            titleText.text = "성공";
         }
 
         //주사위 굴리기 비주얼
@@ -296,7 +296,7 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].SetActive(true);
 
             //등장 위치 무작위
-            diceObjects[i].transform.position = new Vector3(createPoint.position.x + (i*2), createPoint.position.y, createPoint.position.z * Random.Range(0.9f, 1.0f));
+            diceObjects[i].transform.position = new Vector3(createPoint.position.x + (i*1.5f), createPoint.position.y, createPoint.position.z);
             //diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x, createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
 
             //회전 값 무작위
