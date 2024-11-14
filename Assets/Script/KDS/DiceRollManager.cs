@@ -280,7 +280,7 @@ public class DiceRollManager : MonoBehaviour
                 // 충돌 지점의 월드 좌표
                 Vector3 hitPoint = hit.point;
 
-                transform.position = new Vector3(hitPoint.x, hitPoint.y - 2.5f, hitPoint.z);
+                transform.position = new Vector3(hitPoint.x, hitPoint.y + 1.0f, hitPoint.z);
             }
             else
             {
@@ -296,8 +296,8 @@ public class DiceRollManager : MonoBehaviour
             diceObjects[i].SetActive(true);
 
             //등장 위치 무작위
-            //diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + (i*2), createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
-            diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x, createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
+            diceObjects[i].transform.position = new Vector3(createPoint.position.x + (i*2), createPoint.position.y, createPoint.position.z * Random.Range(0.9f, 1.0f));
+            //diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x, createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
 
             //회전 값 무작위
             diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
