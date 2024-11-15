@@ -50,10 +50,13 @@ public class DiceRollManager : MonoBehaviour
 
         diceObjects = new GameObject[diceCount];
 
+        diceRb = new Rigidbody[diceCount];
+
         for (int i = 0; i < diceCount; i++)
         {
             diceObjects[i] = Instantiate(dicePrefab, transform);
             diceObjects[i].transform.parent = transform;
+            diceRb[i] = diceObjects[i].GetComponent<Rigidbody>();
             diceObjects[i].SetActive(false);
         }
 
@@ -65,6 +68,8 @@ public class DiceRollManager : MonoBehaviour
 
     //오브젝트풀 생성
     GameObject[] diceObjects;
+
+    Rigidbody[] diceRb;
 
     //생성할 주사위 갯수
     public int diceCount = 2;
@@ -81,9 +86,11 @@ public class DiceRollManager : MonoBehaviour
     float maxRayDistance = 1000f; 
 
     //적정값 입력
-    float rollDuration = 0.4f; // 주사위가 굴러가는 시간
+    float rollDuration = 0.7f; // 주사위가 굴러가는 시간
 
     public GameObject canvas;
+
+    public TMP_Text playerText;
 
     public TMP_Text diceText;
 
@@ -110,23 +117,25 @@ public class DiceRollManager : MonoBehaviour
         //최종 결과값 초기화
         bool result = false;
 
-        titleText.text = "실패";
+        titleText.text = "<size=75><color=blue>실패</color></size>";
+
+        int dicePick = DiceRandomPick();
 
         //주사위 랜덤 값 + 보정값
-        int sumDice = DiceRandomPick() + AbilityCorrection(stat);
+        int sumDice = dicePick + AbilityCorrection(stat, dicePick);
 
         //최종 주사위 값 기반으로 피해량 결정
         //6 이하는 실패
         //7 이상은 성공
-        if (sumDice < 7) 
+        if (sumDice >= 7) 
         {
-            result = false;
+            result = true;
         }
 
         //성공 실패 여부 표시
         if (result)
         {
-            titleText.text = "성공";
+            titleText.text = "<size=75><color=red>성공</color></size>";
         }
 
         //주사위 굴리기 비주얼
@@ -144,8 +153,10 @@ public class DiceRollManager : MonoBehaviour
         //최종 결과값 초기화
         int result = 0;
 
+        int dicePick = DiceRandomPick();
+
         //주사위 랜덤 값 + 보정값
-        int sumDice = DiceRandomPick() + AbilityCorrection(stat);
+        int sumDice = dicePick + AbilityCorrection(stat, dicePick);
 
         //최종 주사위 값 기반으로 피해량 결정
         //3 이하는 0%
@@ -168,7 +179,18 @@ public class DiceRollManager : MonoBehaviour
             print("200% 피해!");
         }
 
-        titleText.text = result + "공격력";
+        if(result == 12)
+        {
+            titleText.text = "<size=75><color=red>공격력 " + result + "!</color></size>";
+        }
+        else if(result == 0)
+        {
+            titleText.text = "<size=55><color=blue>" + "공격 실패..." + "!</color></size>";
+        }
+        else
+        {
+            titleText.text = "공격력 " + result;
+        }
 
         //주사위 굴리기 비주얼
         DiceRollView();
@@ -177,7 +199,7 @@ public class DiceRollManager : MonoBehaviour
     }
 
     //능력치 보정 함수
-    int AbilityCorrection(int stat)
+    int AbilityCorrection(int stat, int dicePick)
     {
         //보정값 기본값
         int plusDice = -2;
@@ -201,7 +223,7 @@ public class DiceRollManager : MonoBehaviour
             plusDice = 2;
         }
 
-        plusText.text = "보정: +" + plusDice;
+        plusText.text = "주사위: " + dicePick + "<size=40><color=red>+" + plusDice + "</color></size>";
 
         return plusDice;
     }
@@ -293,6 +315,9 @@ public class DiceRollManager : MonoBehaviour
         //주사위 오브젝트풀 활성화
         for (int i = 0; i < diceCount; i++)
         {
+            diceRb[i].velocity = Vector3.zero;
+            diceRb[i].angularVelocity = Vector3.zero;
+
             diceObjects[i].SetActive(true);
 
             //등장 위치 무작위
@@ -300,7 +325,7 @@ public class DiceRollManager : MonoBehaviour
             //diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x, createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
 
             //회전 값 무작위
-            diceObjects[i].GetComponent<Rigidbody>().AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
+            diceRb[i].AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
         }
 
         SoundManager.Get().PlaySFX(0);
@@ -331,9 +356,7 @@ public class DiceRollManager : MonoBehaviour
         // 주사위의 결과에 맞게 회전 설정
         for (int i = 0; i < diceCount; i++)
         {
-            //주사위 나온 값에 맞춰서 최종 회전값 설정
-            Rigidbody rb = diceObjects[i].GetComponent<Rigidbody>();
-            SetDiceResult(diceResults[i], rb);
+            SetDiceResult(diceResults[i], diceRb[i]);
         }
 
         yield return new WaitForSeconds(3);
@@ -389,6 +412,7 @@ public class DiceRollManager : MonoBehaviour
         diceResults.Clear();
         diceResult = 0;
 
+        playerText.text = " ";
         titleText.text = " ";
         plusText.text = " ";
         diceText.text = " ";

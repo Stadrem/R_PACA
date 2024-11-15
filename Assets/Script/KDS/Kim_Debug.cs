@@ -83,7 +83,7 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     //전투 주사위 굴리기
     public void OnClickBattleDice()
     {
-        DiceRollManager.Get().BattleDiceRoll(9);
+        DiceRollManager.Get().BattleDiceRoll(4);
     }
 
     //엔딩 팝업
