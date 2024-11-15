@@ -302,7 +302,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4875208182446233096}
-  - {fileID: 2294243793746487945}
   m_Father: {fileID: 2669118371810453539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -449,7 +448,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBCF4\uC815: +0"
+  m_text: "\uC8FC\uC0AC\uC704: 12+2"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d00cbcb6d3acd2741882dd0970df8690, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: fc3c610e9c0bb8b48a7dd163936a78a0, type: 2}
@@ -611,6 +610,7 @@ RectTransform:
   m_Children:
   - {fileID: 3030314813897821618}
   - {fileID: 2158393057201843527}
+  - {fileID: 2294243793746487945}
   - {fileID: 7041301586301665481}
   - {fileID: 8343716693487032410}
   - {fileID: 2291589501145228848}
@@ -950,12 +950,12 @@ GameObject:
   - component: {fileID: 6897867493476974740}
   - component: {fileID: 8197425813545092299}
   m_Layer: 14
-  m_Name: Fail
+  m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2294243793746487945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -963,17 +963,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4465909798525496120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 607945789011639796}
+  m_Father: {fileID: 4875208182446233096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -9}
+  m_SizeDelta: {x: 1024, y: 146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6897867493476974740
 CanvasRenderer:
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: df97942bdce0c61408126f8f1a8c7253, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
