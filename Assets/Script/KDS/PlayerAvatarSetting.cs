@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,11 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     public GameObject ownerCrown;
 
     public GameObject avatarLoading;
+
+    public GameObject title;
+
+    public TMP_Text titleText;
+
 
     private void Awake()
     {

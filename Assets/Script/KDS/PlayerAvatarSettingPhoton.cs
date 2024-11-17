@@ -1,12 +1,17 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 {
     PlayerAvatarSetting pas;
     //PhotonView photonView; // 부모의 PhotonView 참조
+
+    TMP_Text titleText;
+
+    int titleIndex;
 
     private void Awake()
     {
@@ -33,6 +38,8 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
             {
                 photonView.RPC("SetOwnerIcon", RpcTarget.AllBuffered);
             }
+
+            titleText = pas.titleText;
         }
     }
 
@@ -50,5 +57,40 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
     public void SetOwnerIcon()
     {
         pas.ShowOwnerCrown();
+    }
+
+    private void OnEnable()
+    {
+        // 이벤트 구독
+        if (AchievementManager.Get() != null)
+        {
+            AchievementManager.Get().OnAchievementChanged += HandleAchievementChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        // 이벤트 구독 해제
+        if (AchievementManager.Get() != null)
+        {
+            AchievementManager.Get().OnAchievementChanged -= HandleAchievementChanged;
+        }
+    }
+
+    // 업적 변경 감지 시 호출되는 함수
+    private void HandleAchievementChanged(string title, int index)
+    {
+        if (photonView.IsMine) // 로컬 플레이어인 경우에만 RPC 호출
+        {
+            photonView.RPC("UpdatePlayerTitle", RpcTarget.All, title, index);
+        }
+    }
+
+    [PunRPC]
+    public void UpdatePlayerTitle(string title, int index)
+    {
+        titleText.text = title;
+
+        titleIndex = index;
     }
 }

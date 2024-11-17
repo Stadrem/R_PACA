@@ -123,6 +123,10 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     public void OnClickESC()
     {
         EscUiManager.Get().EnableCanvas();
-        print("누름");
+    }
+
+    public void OnClickAchievement()
+    {
+        AchievementManager.Get().EnableCanvas();
     }
 }

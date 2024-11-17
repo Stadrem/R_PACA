@@ -72,6 +72,8 @@ MonoBehaviour:
   - RPC_FinishConversation
   - RPC_ToNextTurn
   - UpdateEnemyHealth
+  - EquipAchievementRPC
+  - UpdatePlayerTitle
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
