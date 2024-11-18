@@ -9,7 +9,7 @@ using ViewModels;
 
 public class PlayBackgroundManager : MonoBehaviourPun
 {
-    private List<BackgroundPartInfo> backgroundPartDataList;
+    // private List<BackgroundPartInfo> backgroundPartDataList;
 
     private Background currentBackground = new Background();
     
@@ -58,7 +58,8 @@ public class PlayBackgroundManager : MonoBehaviourPun
     public void Init()
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.First();
-        LoadScene(background);
+        ViewModel.CurrentBackgroundId = background.ID;
+        // LoadScene(background);
     }
 
 
@@ -87,7 +88,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
 
     public void MoveTo(int backgroundId)
     {
-        var background = backgroundPartDataList.Find(x => x.ID == backgroundId);
+        var background = ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == backgroundId);
         LoadScene(background);
     }
 }
