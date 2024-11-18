@@ -7,8 +7,7 @@ using Data.Models.Universe.Characters;
 using Data.Remote;
 using Data.Remote.Api;
 using Data.Remote.Dtos.Response;
-using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
+using Data.Models.Universe;
 using Script.JYP.UniversePlay.Chat;
 using UnityEngine;
 
@@ -22,6 +21,7 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
     private UniverseData universeData;
     private int currentBackgroundId = -1;
     private Universe universe;
+    private EHUDState hudState = 0;
 
     #endregion
 
@@ -43,6 +43,25 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
     }
 
     #endregion
+
+    public EHUDState HUDState
+    {
+        get => hudState;
+        set => SetField(ref hudState, value);
+    }
+
+    public void AddHUDState(EHUDState state)
+    {
+        hudState |= state;
+        OnPropertyChanged(nameof(HUDState));
+    }
+
+    public void RemoveHUDState(EHUDState state)
+    {
+        hudState &= ~state;
+        OnPropertyChanged(nameof(HUDState));
+    }
+
 
     public int NpcChatSelectedIndex
     {
@@ -144,14 +163,14 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
                     {
                         result.value.backgroundPartDataList = backgroundList;
                     }
-                    
+
                     UniverseData = result.value;
                 }
             }
         );
     }
 
-    public IEnumerator StartRoom(int roomNumber,string title, List<int> playerIds, Action<ApiResult> callback)
+    public IEnumerator StartRoom(int roomNumber, string title, List<int> playerIds, Action<ApiResult> callback)
     {
         yield return PlayRoomApi.StartRoom(
             roomNumber,
