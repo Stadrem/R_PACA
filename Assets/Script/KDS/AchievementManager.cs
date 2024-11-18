@@ -53,7 +53,7 @@ public class AchievementManager : MonoBehaviour
     }
 
     public List<AchievementData> achievements = new List<AchievementData>();
-    AchievementData equippedAchievement;
+    public AchievementData equippedAchievement;
     AchievementUiManager achievementUiManager;
 
     public GameObject canvas;
