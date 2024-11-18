@@ -2,6 +2,7 @@
 using Data.Models.Universe;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using ViewModels;
 
@@ -17,14 +18,15 @@ namespace UI.UniversePlay
         private RectTransform chatPanel; // UI Panel의 RectTransform
 
         [SerializeField]
-        private float animateTime = 0.5f; // 애니메이션 지속 시간
+        private float rightHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
 
         private bool isChatPanelVisible = true; // 현재 패널 상태 (보이는지 여부)
 
         [Header("아랫쪽 HUD")]
         [SerializeField]
         private RectTransform dicePanel;
-
+        [SerializeField]
+        private float bottomHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
         private bool isDicePanelVisible = false;
 
         UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -109,7 +111,7 @@ namespace UI.UniversePlay
                     "islocal",
                     true,
                     "time",
-                    animateTime,
+                    rightHUDAnimateTime,
                     "easetype",
                     iTween.EaseType.easeOutCubic
                 )
@@ -129,7 +131,7 @@ namespace UI.UniversePlay
                     "islocal",
                     true,
                     "time",
-                    animateTime,
+                    rightHUDAnimateTime,
                     "easetype",
                     iTween.EaseType.easeOutCubic
                 )
@@ -146,7 +148,7 @@ namespace UI.UniversePlay
                     "islocal",
                     true,
                     "time",
-                    animateTime,
+                    rightHUDAnimateTime,
                     "easetype",
                     iTween.EaseType.easeOutCubic
                 )
@@ -163,7 +165,7 @@ namespace UI.UniversePlay
                     "islocal",
                     true,
                     "time",
-                    animateTime,
+                    rightHUDAnimateTime,
                     "easetype",
                     iTween.EaseType.easeOutCubic
                 )

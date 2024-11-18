@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1533473736361487820}
-  - component: {fileID: 8531559137584677276}
+  - component: {fileID: 111936337395678808}
   m_Layer: 5
   m_Name: InGame_HUD
   m_TagString: Untagged
@@ -39,7 +39,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &8531559137584677276
+--- !u!114 &111936337395678808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,9 +48,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 313919577243495824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc56c29fd029125449945a7fe8eb26f1, type: 3}
+  m_Script: {fileID: 11500000, guid: c012f99cd762454fa7e37964d8bfd682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inAndOutButton: {fileID: 7889851611707006523}
+  chatPanel: {fileID: 5647561579833832117}
+  animateTime: 0.5
+  dicePanel: {fileID: 7359683630260537373}
 --- !u!1 &4191971070061028581
 GameObject:
   m_ObjectHideFlags: 0
