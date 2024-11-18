@@ -961,6 +961,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievements: []
+  equippedAchievement: {fileID: 11400000, guid: d23649eeb77b9a24496554c35c1cd8f1,
+    type: 2}
   canvas: {fileID: 4365218972852740969}
 --- !u!1 &6015511497423082814
 GameObject:
