@@ -7,6 +7,7 @@ public class DragManager : MonoBehaviour
     private bool isDragging = false;
     private Camera camera;
     public LayerMask dragPointLayer;
+
     private void Start()
     {
         camera = Camera.main;
@@ -14,7 +15,8 @@ public class DragManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        // 마우스 왼쪽 버튼을 누를 때
+        if (Input.GetMouseButtonDown(0))
         {
             if (isDragging) return;
 
@@ -28,7 +30,8 @@ public class DragManager : MonoBehaviour
                 isDragging = true;
             }
         }
-        else if (Input.GetKey(KeyCode.G))
+        // 마우스 왼쪽 버튼을 누르고 있을 때
+        else if (Input.GetMouseButton(0))
         {
             if (!isDragging) return;
 
@@ -38,9 +41,11 @@ public class DragManager : MonoBehaviour
                 currentDraggable.Dragging(hit.point);
             }
         }
-        else if (Input.GetKeyUp(KeyCode.G))
+        // 마우스 왼쪽 버튼을 뗄 때
+        else if (Input.GetMouseButtonUp(0))
         {
             if (!isDragging) return;
+
             print("Stop Drag");
             currentDraggable.StopDrag();
             isDragging = false;

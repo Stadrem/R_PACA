@@ -144,14 +144,14 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
                     {
                         result.value.backgroundPartDataList = backgroundList;
                     }
-                    
+
                     UniverseData = result.value;
                 }
             }
         );
     }
 
-    public IEnumerator StartRoom(int roomNumber,string title, List<int> playerIds, Action<ApiResult> callback)
+    public IEnumerator StartRoom(int roomNumber, string title, List<int> playerIds, Action<ApiResult> callback)
     {
         yield return PlayRoomApi.StartRoom(
             roomNumber,
@@ -171,5 +171,18 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
                 }
             }
         );
+    }
+
+    public void GoToNextBackground()
+    {
+        var nextIdx = UniverseData.backgroundPartDataList.FindIndex((t) => t.ID == CurrentBackgroundId) + 1;
+        if (nextIdx >= UniverseData.backgroundPartDataList.Count)
+        {
+            Debug.Log("마지막 배경입니다.");
+            return;
+        }
+        
+        CurrentBackgroundId = UniverseData.backgroundPartDataList[nextIdx].ID;
+        OnPropertyChanged();
     }
 }

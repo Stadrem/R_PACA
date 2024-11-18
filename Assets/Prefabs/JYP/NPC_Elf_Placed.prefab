@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3669555986380144688}
   - component: {fileID: 871006117754237544}
   - component: {fileID: -2754114822838556737}
+  - component: {fileID: 2122506796359192431}
   m_Layer: 0
   m_Name: NPC_Elf_Placed
   m_TagString: InPlayNPC
@@ -72,6 +73,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcSpawner: {fileID: 0}
+--- !u!114 &2122506796359192431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709414301000549324}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8cc9dadd2f494f8ef1008375f65ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 45
 --- !u!1 &2142126971265541659
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,17 @@ public class PlayBackgroundManager : MonoBehaviourPun
 
     private void Start()
     {
+        ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
         SceneManager.sceneLoaded += OnSceneLoaded;
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager Start");
+    }
+
+    private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ViewModel.CurrentBackgroundId))
+        {
+            MoveTo(ViewModel.CurrentBackgroundId);
+        }
     }
 
     private void OnDestroy()
@@ -48,6 +57,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     public void Init()
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.First();
+        ViewModel.CurrentBackgroundId = background.ID;
         LoadScene(background);
     }
 
@@ -73,7 +83,6 @@ public class PlayBackgroundManager : MonoBehaviourPun
                 throw new ArgumentOutOfRangeException();
         }
 
-        ViewModel.CurrentBackgroundId = background.ID;
     }
 
     public void MoveTo(int backgroundId)

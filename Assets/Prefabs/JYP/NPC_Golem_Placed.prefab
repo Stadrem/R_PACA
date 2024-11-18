@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8753619234690991415}
   - component: {fileID: 4894543141795361600}
   - component: {fileID: 5091869316152710482}
+  - component: {fileID: 6296979954114195204}
   m_Layer: 0
   m_Name: NPC_Golem_Placed
   m_TagString: Untagged
@@ -68,6 +69,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcSpawner: {fileID: 0}
+--- !u!114 &6296979954114195204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8753619234690991416}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8cc9dadd2f494f8ef1008375f65ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 45
 --- !u!1001 &8753619234851802246
 PrefabInstance:
   m_ObjectHideFlags: 0
