@@ -29,18 +29,23 @@ public class RoomItem : MonoBehaviourPunCallbacks
         ShowConfirmationPopup(); // 확인 팝업 표시
     }
 
-    // 참여 확인 팝업을 보여주는 함수
     private void ShowConfirmationPopup()
     {
         // 안내창 인스턴스를 생성하고 부모 캔버스에 추가
         confirmationPopupInstance = Instantiate(confirmationPopupPrefab);
         confirmationPopupInstance.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
 
-        // 버튼에 이벤트 핸들러 연결
+        // TXT_join 텍스트에 방제목 넣기
+        var joinText = confirmationPopupInstance.GetComponentInChildren<TMP_Text>();
+        if (joinText != null)
+        {
+            joinText.text = roomName + "에 참여하시겠습니까?";
+        }
+
         var confirmButton = confirmationPopupInstance.transform.Find("Btn_YesJoin").GetComponent<Button>();
         confirmButton.onClick.AddListener(OnConfirmJoin);
 
-        // 팝업을 활성화
+        // 팝업 활성화
         confirmationPopupInstance.SetActive(true);
     }
 
