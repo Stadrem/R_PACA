@@ -321,6 +321,11 @@ namespace ViewModels
             characters.Remove(character);
             OnPropertyChanged(nameof(Characters));
         }
+        
+        public void SetYAxisRotation(int characterId, float rotation)
+        {
+            
+        }
 
         public IEnumerator CreateUniverse(Action<ApiResult<string>> onComplete)
         {
