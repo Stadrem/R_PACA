@@ -50,7 +50,11 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     public bool IsHudVisible
     {
         get => hudUI.activeSelf;
-        set => hudUI.SetActive(value);
+        set
+        {
+            Debug.Log($"HUD Visible : {value}");
+            hudUI.SetActive(value);
+        }
     }
 
     public ISelectorChat SelectorChat => selectorChat;
