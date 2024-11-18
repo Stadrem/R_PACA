@@ -76,10 +76,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         //SceneManager.sceneLoaded += OnSceneLoaded;
 
 
-            titleText.text = AchievementManager.Get().GetEquippedAchievement().set.title;
+        titleText.text = AchievementManager.Get().GetEquippedAchievement().set.title;
 
 
-        if(Kim_Debug.instance == null)
+        if (Kim_Debug.instance == null)
         {
             Kim_Debug.Get().DebugPanel();
         }
