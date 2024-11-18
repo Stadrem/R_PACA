@@ -1,5 +1,7 @@
 ﻿using Cinemachine;
+using Data.Models.Universe;
 using UnityEngine;
+using ViewModels;
 
 public class TalkViewCamSetting : ICamSettingState
 {

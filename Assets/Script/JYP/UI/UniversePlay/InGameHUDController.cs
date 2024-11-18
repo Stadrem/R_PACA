@@ -2,7 +2,6 @@
 using Data.Models.Universe;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using ViewModels;
 
@@ -25,8 +24,10 @@ namespace UI.UniversePlay
         [Header("아랫쪽 HUD")]
         [SerializeField]
         private RectTransform dicePanel;
+
         [SerializeField]
         private float bottomHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
+
         private bool isDicePanelVisible = false;
 
         UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
