@@ -9,6 +9,8 @@ namespace UI.UniversePlay
 {
     public class InGameHUDController : MonoBehaviour
     {
+        public bool testWithKeyboard = false;
+
         [Header("오른쪽 HUD")]
         [SerializeField]
         private Button inAndOutButton;
@@ -28,7 +30,7 @@ namespace UI.UniversePlay
         [SerializeField]
         private float bottomHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
 
-        private bool isDicePanelVisible = false;
+        public bool isDicePanelVisible = false;
 
         UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
@@ -37,12 +39,16 @@ namespace UI.UniversePlay
             inAndOutButton.onClick.AddListener(OnInAndOutButtonClick);
             ViewModel.PropertyChanged += OnViewModelPropertyChanged;
             isChatPanelVisible = ViewModel.HUDState.HasFlag(EHUDState.Chat);
+            if (isChatPanelVisible) AnimateIn();
+            else AnimateOut();
             isDicePanelVisible = ViewModel.HUDState.HasFlag(EHUDState.Dice);
+            if (isDicePanelVisible) AnimateDiceIn();
+            else AnimateDiceOut();
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (testWithKeyboard && Input.GetKeyDown(KeyCode.A))
             {
                 if (isDicePanelVisible)
                 {
@@ -62,11 +68,15 @@ namespace UI.UniversePlay
                 if (ViewModel.HUDState.HasFlag(EHUDState.Chat) && !isChatPanelVisible)
                 {
                     isChatPanelVisible = true;
+                    inAndOutButton.GetComponentInChildren<TMP_Text>()
+                        .text = ">";
                     AnimateIn();
                 }
                 else if (!ViewModel.HUDState.HasFlag(EHUDState.Chat) && isChatPanelVisible)
                 {
                     isChatPanelVisible = false;
+                    inAndOutButton.GetComponentInChildren<TMP_Text>()
+                        .text = "<";
                     AnimateOut();
                 }
 
@@ -78,6 +88,7 @@ namespace UI.UniversePlay
                 else if (!ViewModel.HUDState.HasFlag(EHUDState.Dice) && isDicePanelVisible)
                 {
                     isDicePanelVisible = false;
+
                     AnimateDiceOut();
                 }
             }
@@ -88,14 +99,10 @@ namespace UI.UniversePlay
             if (isChatPanelVisible)
             {
                 ViewModel.RemoveHUDState(EHUDState.Chat);
-                inAndOutButton.GetComponentInChildren<TMP_Text>()
-                    .text = "<";
             }
             else
             {
                 ViewModel.AddHUDState(EHUDState.Chat);
-                inAndOutButton.GetComponentInChildren<TMP_Text>()
-                    .text = ">";
             }
         }
 
