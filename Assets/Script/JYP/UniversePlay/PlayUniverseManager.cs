@@ -44,6 +44,19 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     [SerializeField]
     private PunSelectorChat selectorChat;
 
+    [SerializeField]
+    private GameObject hudUI;
+
+    public bool IsHudVisible
+    {
+        get => hudUI.activeSelf;
+        set
+        {
+            Debug.Log($"HUD Visible : {value}");
+            hudUI.SetActive(value);
+        }
+    }
+
     public ISelectorChat SelectorChat => selectorChat;
 
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -74,13 +87,11 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
         ViewModel.PropertyChanged += OnPropertyChange;
         StartCoroutine(ViewModel.LoadUniverseData(code));
     }
-    
 
     private void OnPropertyChange(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(ViewModel.UniverseData))
         {
-            if (!PhotonNetwork.IsMasterClient) return;
         }
     }
 
@@ -100,11 +111,10 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                             Dispose();
                         }
                     )
-                    
                 );
             }
         }
-        
+
         UserInteraction();
     }
 
@@ -148,6 +158,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     public void FinishConversation()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        
         StartCoroutine(
             PlayProgressApi.FinishNpcTalk(
                 roomNumber,
@@ -161,6 +172,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     {
         NpcManager.FinishConversation();
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.QuarterView);
+        SelectorChat.ClearOptions();
     }
 
     /// <summary>
@@ -226,8 +238,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     {
         ViewModel.PropertyChanged -= OnPropertyChange;
     }
-    
-    
+
 
     private void OnApplicationQuit()
     {

@@ -40,6 +40,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     {
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnSceneLoaded");
         if(arg0.name == "WaitingScene") return;
+        PlayUniverseManager.Instance.IsHudVisible = true;
         var background =
             ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
         currentBackground.Init(background);

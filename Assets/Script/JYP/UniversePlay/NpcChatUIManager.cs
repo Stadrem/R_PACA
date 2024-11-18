@@ -10,7 +10,6 @@ using WebSocketSharp;
 
 public class NpcChatUIManager : MonoBehaviour
 {
-    public Canvas chatCanvas;
     public TMP_InputField ChatInputField;
     public RectTransform listContent;
     public TMP_Text turnText;
@@ -52,12 +51,14 @@ public class NpcChatUIManager : MonoBehaviour
 
     public void Show()
     {
-        chatCanvas.gameObject.SetActive(true);
+        finishButton.gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        chatCanvas.gameObject.SetActive(false);
+        finishButton.gameObject.SetActive(false);
+        optionsContainer.gameObject.SetActive(false);
+        
     }
 
     public void AddChatBubble(string sender, string text, bool isPlayer)
