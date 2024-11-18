@@ -11,10 +11,6 @@ public class PlayerMove : MonoBehaviourPun
     // 카메라 
     public GameObject cam;
 
-    // 오타 조심
-    const string IDLE = "Idle";
-    const string WALK = "Walk";
-
     CustomActions input;
 
     NavMeshAgent agent;
@@ -66,7 +62,7 @@ public class PlayerMove : MonoBehaviourPun
             // 위치 보정
             transform.position = Vector3.Lerp(transform.position, receivePos, Time.deltaTime * lerpSpeed);
             // 회전 보정
-            if (Quaternion.Dot(receiveRot, Quaternion.identity) > 0.0001f) // 유효한 쿼터니언인지 확인
+            if (Quaternion.Dot(receiveRot, Quaternion.identity) > 0.0001f)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, Time.deltaTime * lerpSpeed);
             }
@@ -89,7 +85,6 @@ public class PlayerMove : MonoBehaviourPun
 
             // 일정 시간이 지나면 이펙트를 삭제
             StartCoroutine(DestroyAfterTime(clickEffect, 2.0f)); // 2초 후 삭제됨
-            // 추후에 클릭이펙트가 플레이어 도착 시 사라지도록 수정
         }
 
     }
@@ -132,17 +127,21 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
-    // 애니메이션 재생 (테스트용으로 idle, walk 만), 다른 방식으로 애니메이션 넣어도 됨
-    // 나중에 포톤 동기화해야함 !!! 아바타설정 후에 하면 될듯
     void SetAnimaions()
     {
-        if (agent.velocity == Vector3.zero)
+        if (photonView.IsMine)
         {
-            animator.Play(IDLE);
+            if (agent.velocity == Vector3.zero)
+            {
+                animator.SetBool("isIdle", true);      
+                animator.SetBool("isWalk", false);      
+            }
+            else
+            {
+                animator.SetBool("isWalk", true);
+                animator.SetBool("isIdle", false);
+            }
         }
-        else
-        {
-            animator.Play(WALK);
-        }
+
     }
 }
