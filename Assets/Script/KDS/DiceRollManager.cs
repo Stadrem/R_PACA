@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DiceRollManager : MonoBehaviour
 {
@@ -107,6 +109,7 @@ public class DiceRollManager : MonoBehaviour
     int baseAttack = 6;
 
     public bool autoPosition = true;
+    public Action onDiceRollFinished = null;
 
     //성공 실패만 판별하는 탐색 전용 주사위
     public bool SearchDiceRoll(int stat)
@@ -360,6 +363,7 @@ public class DiceRollManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3);
+        onDiceRollFinished?.Invoke();
         ClearValue();
 
         for (int j = 0; j < diceCount; j++)

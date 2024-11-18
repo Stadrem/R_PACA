@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Data.Models.Universe;
 using Data.Models.Universe.Characters;
 using Data.Models.Universe.Dice;
 using Data.Remote.Api;
@@ -141,6 +142,7 @@ namespace UniversePlay
                     BattleManager.Instance.StartBattle();
                     break;
                 case EReactionType.Dice:
+                    ViewModel.AddHUDState(EHUDState.Dice);
                     int stat;
                     if (reaction.BonusMessage == "strength")
                     {
@@ -150,6 +152,12 @@ namespace UniversePlay
                     {
                         stat = 0;
                     }
+                    DiceRollManager.Get().onDiceRollFinished = () =>
+                    {
+                        
+                        ViewModel.RemoveHUDState(EHUDState.Dice); 
+                        
+                    };
                     DiceRollManager.Get().BattleDiceRoll(stat);
                     var d1 = DiceRollManager.Get().diceResults[0];
                     var d2 = DiceRollManager.Get().diceResults[1];
