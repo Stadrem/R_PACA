@@ -20,8 +20,9 @@ namespace UniverseEdit
         private List<DraggableNpcUIController> npcEntries = new List<DraggableNpcUIController>();
         private Dictionary<CharacterInfo, GameObject> spawnedNpcs = new Dictionary<CharacterInfo, GameObject>();
         private Transform npcPositionOffset;
-        
+
         public int currentBackgroundPartId = -1;
+
         private void Start()
         {
             viewModel = ViewModelManager.Instance.UniverseEditViewModel;
@@ -53,7 +54,7 @@ namespace UniverseEdit
             }
         }
 
-        
+
         public void Init()
         {
             ClearNpcList();
@@ -96,6 +97,7 @@ namespace UniverseEdit
             var npc = Instantiate(npcPrefabs[(int)character.shapeType], position, Quaternion.identity);
             npc.transform.SetParent(npcPositionOffset);
             var script = npc.GetComponent<SpawnedNpc>();
+            var rot = npc.GetComponent<RotateObject>();
             script.characterId = character.id;
             script.npcSpawner = this;
             spawnedNpcs.Add(character, npc);
@@ -108,8 +110,8 @@ namespace UniverseEdit
                 {
                     if (res.IsSuccess)
                     {
-                        
                     }
+
                     if (res.IsFail)
                     {
                         Debug.LogError(res.error);
@@ -200,7 +202,20 @@ namespace UniverseEdit
             UpdateNpcPosition(character, position, callback);
         }
 
-        public void UpdateNpcPosition(CharacterInfo characterInfo, Vector3 position,
+        public void UpdateNpcYAxisRotation(int characterId, float rotation, Action<ApiResult> callback)
+        {
+            var character = viewModel.Characters.FirstOrDefault(c => c.id == characterId);
+            if (character == null)
+            {
+                return;
+            }
+
+            character.yRotation = rotation;
+            StartCoroutine(UpdateNpcState(character, callback));
+        }
+
+        public void UpdateNpcPosition(CharacterInfo characterInfo,
+            Vector3 position,
             Action<ApiResult<CharacterInfo>> callback)
         {
             var newCharacter = new CharacterInfo(characterInfo)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1766479911613401741}
   - component: {fileID: 1594524100459228735}
   - component: {fileID: 3117748708752219525}
+  - component: {fileID: 3734695376495863142}
   m_Layer: 0
   m_Name: NPC_Human_Placed
   m_TagString: Untagged
@@ -70,6 +71,19 @@ CapsuleCollider:
   m_Height: 2.18
   m_Direction: 1
   m_Center: {x: 0, y: 0.66, z: 0}
+--- !u!114 &3734695376495863142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2389740261151551814}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8cc9dadd2f494f8ef1008375f65ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 45
 --- !u!1001 &6771843818796674398
 PrefabInstance:
   m_ObjectHideFlags: 0

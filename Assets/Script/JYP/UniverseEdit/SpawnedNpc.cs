@@ -9,10 +9,22 @@ namespace UniverseEdit
         public NpcSpawner npcSpawner;
         public int characterId { get; set; } = -1;
         private Vector3 startPos = Vector3.zero;
+        private RotateObject rotateObject;
+
+        private void Awake()
+        {
+            rotateObject = GetComponent<RotateObject>();
+            rotateObject.onRotate += () => npcSpawner.UpdateNpcYAxisRotation(
+                characterId,
+                transform.rotation.eulerAngles.y,
+                (res) => { }
+            );
+        }
 
         public void StartDrag()
         {
             startPos = transform.position;
+            rotateObject.enabled = true;
         }
 
         public void Dragging(Vector3 position)
@@ -26,6 +38,7 @@ namespace UniverseEdit
 
         public void StopDrag()
         {
+            rotateObject.enabled = false;
             // check ray cast for UI or detail ground
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (RectTransformUtility.RectangleContainsScreenPoint(
