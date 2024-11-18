@@ -58,7 +58,6 @@ public class PlayBackgroundManager : MonoBehaviourPun
     public void Init()
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.First();
-        ViewModel.CurrentBackgroundId = background.ID;
         LoadScene(background);
     }
 
