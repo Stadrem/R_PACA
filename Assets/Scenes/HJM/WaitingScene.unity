@@ -7662,7 +7662,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9019031847145330442}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9191682069661539880}
+        m_TargetAssemblyTypeName: EscCall, Assembly-CSharp
+        m_MethodName: OnClickEsc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4407304886721252595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13570,6 +13582,7 @@ GameObject:
   - component: {fileID: 2679743354417068761}
   - component: {fileID: 9019031847145330442}
   - component: {fileID: 4403064849240239218}
+  - component: {fileID: 9191682069661539880}
   m_Layer: 5
   m_Name: Btn_Menu
   m_TagString: Untagged
@@ -13577,6 +13590,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9191682069661539880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9191682069661539879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3117ebf211ab24d81d05c4635c0e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9195210271275788233
 GameObject:
   m_ObjectHideFlags: 0

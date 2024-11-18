@@ -11,6 +11,7 @@ public class UserCodeMgr : MonoBehaviour
     public int UserCode;
     public string UserID;
     public string Nickname;
+    public int title;
 
     private void Awake()
     {

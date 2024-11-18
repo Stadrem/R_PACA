@@ -97,6 +97,8 @@ public class AchievementManager : MonoBehaviour
 
             achievementUiManager.Equipped();
 
+            ChangeAchievement(equippedAchievement);
+
             return;
         }
     }
@@ -108,6 +110,11 @@ public class AchievementManager : MonoBehaviour
 
         // 이벤트 발생
         OnAchievementChanged?.Invoke(newAchievement.set.title, newAchievement.set.index);
+
+        if (UserCodeMgr.Instance != null)
+        {
+            UserCodeMgr.Instance.title = newAchievement.set.index;
+        }
     }
 
     // 현재 착용 중인 업적 확인

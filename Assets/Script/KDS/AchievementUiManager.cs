@@ -48,8 +48,15 @@ public class AchievementUiManager : MonoBehaviour
             button.onClick.AddListener(() => OnClickTitleChange(ac.set.index));
         }
 
-        //기본값 반영, 나중에 캐릭터에서 타이틀 가져와야함
-        achievementManager.EquipAchievement(0);
+        if(UserCodeMgr.Instance != null)
+        {
+            achievementManager.EquipAchievement(UserCodeMgr.Instance.title);
+        }
+        else
+        {
+            //기본값 반영
+            achievementManager.EquipAchievement(0);
+        }
     }
 
     //버튼에 반영할 클릭 이벤트

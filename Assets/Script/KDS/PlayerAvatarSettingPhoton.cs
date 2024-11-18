@@ -9,7 +9,7 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
     PlayerAvatarSetting pas;
     //PhotonView photonView; // 부모의 PhotonView 참조
 
-    TMP_Text titleText;
+    public TMP_Text titleText;
 
     int titleIndex;
 

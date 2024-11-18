@@ -75,6 +75,10 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
         //SceneManager.sceneLoaded += OnSceneLoaded;
 
+
+            titleText.text = AchievementManager.Get().GetEquippedAchievement().set.title;
+
+
         if(Kim_Debug.instance == null)
         {
             Kim_Debug.Get().DebugPanel();
@@ -197,8 +201,34 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         avatarLoading.SetActive(false);
     }
 
+    //방장 아이콘
     public void ShowOwnerCrown()
     {
         ownerCrown.SetActive(true);
     }
+    /*
+    private void OnEnable()
+    {
+        // 이벤트 구독
+        if (AchievementManager.Get() != null)
+        {
+            AchievementManager.Get().OnAchievementChanged += HandleAchievementChangedLocal;
+        }
+    }
+
+    private void OnDisable()
+    {
+        // 이벤트 구독 해제
+        if (AchievementManager.Get() != null)
+        {
+            AchievementManager.Get().OnAchievementChanged -= HandleAchievementChangedLocal;
+        }
+    }
+
+    // 업적 변경 감지 시 호출되는 함수
+    private void HandleAchievementChangedLocal(string title, int index)
+    {
+        
+    }
+    */
 }
