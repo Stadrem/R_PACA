@@ -16,19 +16,5 @@ public class Background
         this.info = info;
         PlayerManager.SpawnPlayers();
     }
-
-    public void LoadParts()
-    {
-        if (info == null) return;
-        Debug.Log($"LoadParts on {SceneManager.GetActiveScene().name} / {info.Name}");
-        var portals = info.PortalList;
-        foreach (var portal in portals)
-        {
-            var portalPrefab = Resources.Load<GameObject>("BackgroundPart/Portal_Play");
-            var go = GameObject.Instantiate(portalPrefab, portal.position, Quaternion.identity, parent);
-            var portalInPlay = go.GetComponent<PortalInPlay>();
-            portalInPlay.Init(portal);
-        }
-    }
     
 }

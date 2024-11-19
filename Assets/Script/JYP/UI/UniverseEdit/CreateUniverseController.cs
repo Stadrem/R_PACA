@@ -14,7 +14,9 @@ public class CreateUniverseController : MonoBehaviour
     private Button backgroundSettingButton;
     private Button objectiveSettingButton;
     private Button backButton;
+
     private Button saveButton;
+
     // private TextField tagsInput;
     private EGenreType selectedGenre = EGenreType.None;
     // private Label createdDate;
@@ -54,10 +56,8 @@ public class CreateUniverseController : MonoBehaviour
             selectedGenre = genre;
             genreFantasySelector.AddToClassList("character-shape--selected");
         }
-        
-        
-        
-        
+
+
         titleInput.RegisterValueChangedCallback(
             e => { ViewModel.Title = e.newValue; }
         );
@@ -67,7 +67,6 @@ public class CreateUniverseController : MonoBehaviour
         descriptionInput.RegisterValueChangedCallback(
             e => { ViewModel.Content = e.newValue; }
         );
-        
 
 
         genreFantasySelector.RegisterCallback<ClickEvent>(
@@ -83,7 +82,11 @@ public class CreateUniverseController : MonoBehaviour
         charactersSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCharactersEdit(); };
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
         objectiveSettingButton.clicked += () => { objectiveSelectionPopupController.Show(); };
-        backButton.clicked += () => { SceneManager.LoadScene("LobbyScene"); };
+        backButton.clicked += () =>
+        {
+            ViewModelManager.Instance.Reset();
+            SceneManager.LoadScene("LobbyScene");
+        };
         saveButton.clicked += () =>
         {
             StartCoroutine(
@@ -91,7 +94,10 @@ public class CreateUniverseController : MonoBehaviour
                     (res) =>
                     {
                         if (res.IsSuccess)
+                        {
+                            ViewModelManager.Instance.Reset();
                             SceneManager.LoadScene("LobbyScene");
+                        }
                         else
                             Debug.LogError($"error: {res.error}");
                     }

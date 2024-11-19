@@ -194,6 +194,7 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
 
     public void GoToNextBackground()
     {
+        Debug.LogWarning($"current id - {CurrentBackgroundId}");
         var nextIdx = UniverseData.backgroundPartDataList.FindIndex((t) => t.ID == CurrentBackgroundId) + 1;
         if (nextIdx >= UniverseData.backgroundPartDataList.Count)
         {
@@ -202,6 +203,8 @@ public sealed class UniversePlayViewModel : INotifyPropertyChanged
         }
         
         CurrentBackgroundId = UniverseData.backgroundPartDataList[nextIdx].ID;
+        
+        Debug.LogWarning($"next id - {CurrentBackgroundId}");
         OnPropertyChanged();
     }
 }

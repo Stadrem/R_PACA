@@ -44,7 +44,6 @@ public class PlayBackgroundManager : MonoBehaviourPun
         var background =
             ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
         currentBackground.Init(background);
-        currentBackground.LoadParts();
         PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
     }
     
