@@ -5,21 +5,16 @@ using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniversePlay;
 using ViewModels;
 
 public class PlayBackgroundManager : MonoBehaviourPun
 {
-    // private List<BackgroundPartInfo> backgroundPartDataList;
-
-    private Background currentBackground = new Background();
-    
-    public string CurrentBackgroundName => currentBackground.Name;
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     private void Start()
     {
         ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
-        SceneManager.sceneLoaded += OnSceneLoaded;
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager Start");
     }
 
@@ -31,30 +26,12 @@ public class PlayBackgroundManager : MonoBehaviourPun
         }
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnSceneLoaded");
-        if(arg0.name == "WaitingScene") return;
-        PlayUniverseManager.Instance.IsHudVisible = true;
-        var background =
-            ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
-        currentBackground.Init(background);
-        PlayUniverseManager.Instance.NpcManager.LoadNpcList(background.NpcList);
-    }
-    
-    
-
     private void OnEnable()
     {
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnEnabled");
     }
 
-    public void Init()
+    public void StartFirstBackground()
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.First();
         ViewModel.CurrentBackgroundId = background.ID;
@@ -82,7 +59,6 @@ public class PlayBackgroundManager : MonoBehaviourPun
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
     }
 
     public void MoveTo(int backgroundId)

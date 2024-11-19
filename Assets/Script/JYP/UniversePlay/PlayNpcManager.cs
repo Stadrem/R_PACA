@@ -75,10 +75,12 @@ namespace UniversePlay
             turnSystem.InitTurn();
             if (PhotonNetwork.IsMasterClient)
             {
+                var currentBackgroundName = ViewModel.UniverseData.backgroundPartDataList
+                    .First(t => t.ID == ViewModel.CurrentBackgroundId).Name;
                 StartCoroutine(
                     PlayProgressApi.StartNpcTalk(
                         PlayUniverseManager.Instance.roomNumber,
-                        PlayUniverseManager.Instance.BackgroundManager.CurrentBackgroundName,
+                        currentBackgroundName,
                         currentInteractNpc.NpcName,
                         (res) => { }
                     )

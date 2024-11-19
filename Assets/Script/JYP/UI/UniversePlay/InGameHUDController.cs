@@ -3,6 +3,7 @@ using Data.Models.Universe;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UniversePlay;
 using ViewModels;
 
 namespace UI.UniversePlay
