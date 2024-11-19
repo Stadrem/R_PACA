@@ -11,13 +11,6 @@ public class CircularSlider : MonoBehaviour
     public float depletionTime = 8.0f; // 슬라이더가 0이 되기까지 걸리는 시간 (8초)
 
     private bool isDepleting = false;  // 슬라이더 감소 여부를 확인하는 변수
-
-    void Start()
-    {
-        //UpdateSlider(sliderValue);
-        //battleManager = battleMgr.GetComponent<BattleManager>();
-    }
-
     
     void Update()
     {

@@ -30,10 +30,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     public List<GameObject> profiles;
 
-    //[Header("선택지 UI")]
-    //public List<Image> selectImgs;
-
-
     void Awake()
     {
         if (Instance == null)
@@ -70,7 +66,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         // 주사위 굴리기
         diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값
-        //print(UserStats.Instance.userStrength + "보정치 값");
         print(diceDamage);
 
         // 굴리는거 기다림
@@ -146,6 +141,14 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
     }
+
+    [PunRPC]
+    public void MonsterTurn()
+    {
+
+    }
+
+
 
     public void OnClickAttack()
     {

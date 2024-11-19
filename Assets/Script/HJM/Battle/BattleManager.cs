@@ -238,7 +238,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     private void ShowBattleUI(string message)
     {
         currentTurnTXT.text = message;
-        nextTurnUI.SetActive(true); // 다음턴 UI 표시
+        //nextTurnUI.SetActive(true); // 다음턴 UI 표시
     }
 
     private void NextTurn()
