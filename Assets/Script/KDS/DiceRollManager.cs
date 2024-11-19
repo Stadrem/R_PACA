@@ -291,6 +291,8 @@ public class DiceRollManager : MonoBehaviour
     //int 값으로 반환
     public void DiceRollView() 
     {
+        SoundManager.Get().PlaySFX(0);
+
         // 카메라 중심에서 레이캐스트 발사
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
@@ -330,8 +332,6 @@ public class DiceRollManager : MonoBehaviour
             //회전 값 무작위
             diceRb[i].AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
         }
-
-        SoundManager.Get().PlaySFX(0);
 
         print(diceCount + "D" + diceResult);
 
@@ -408,6 +408,8 @@ public class DiceRollManager : MonoBehaviour
 
         // 주사위의 최종 위치와 회전 설정
         rb.MoveRotation(finalRotation);
+
+        SoundManager.Get().PlaySFX(4);
     }
 
     void ClearValue()

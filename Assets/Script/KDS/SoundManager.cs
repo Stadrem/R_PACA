@@ -87,7 +87,7 @@ public class SoundManager : MonoBehaviour
             if (EventSystem.current.currentSelectedGameObject != null &&
                 EventSystem.current.currentSelectedGameObject.GetComponent<UnityEngine.UI.Button>() != null)
             {
-                PlaySFX(1);
+                PlaySFX(1, 0.5f);
             }
         }
     }
@@ -101,9 +101,14 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxAudioSource;
     public AudioSource bgmAudioSource;
 
-    public void PlaySFX(int num)
+    public void PlaySFX(int i)
     {
-        sfxAudioSource.PlayOneShot(sfxClips[num], sfxVolume);
+        sfxAudioSource.PlayOneShot(sfxClips[i], sfxVolume);
+    }
+
+    public void PlaySFX(int i, float volume)
+    {
+        sfxAudioSource.PlayOneShot(sfxClips[i], sfxVolume * volume);
     }
 
     public void PlayBGM(int i)
