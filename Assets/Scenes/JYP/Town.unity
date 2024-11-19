@@ -16117,7 +16117,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: dcb99a083ff6b4d20a01ac90db6996de,
+      objectReference: {fileID: 23800000, guid: da915b78a7fa9a14fb924815a041e719,
         type: 2}
     - target: {fileID: 4907019561880769237, guid: 3bfa832820aafc04b82f14e4b15a88bf,
         type: 3}
@@ -16173,11 +16173,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 7189581551409587999, guid: 3bfa832820aafc04b82f14e4b15a88bf,
-        type: 3}
-      propertyPath: m_Layer
-      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
