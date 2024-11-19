@@ -10,11 +10,6 @@ using ViewModels;
 
 public class PlayBackgroundManager : MonoBehaviourPun
 {
-    // private List<BackgroundPartInfo> backgroundPartDataList;
-
-    public string CurrentBackgroundName => ViewModel.UniverseData.backgroundPartDataList
-        .Find((t) => t.ID == ViewModel.CurrentBackgroundId).Name;
-
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     private void Start()
