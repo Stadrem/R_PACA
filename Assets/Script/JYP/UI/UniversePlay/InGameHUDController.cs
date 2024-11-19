@@ -22,7 +22,8 @@ namespace UI.UniversePlay
         private float rightHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
 
         private bool isChatPanelVisible = true; // 현재 패널 상태 (보이는지 여부)
-
+        private float chatPanelWidth;
+        
         [Header("아랫쪽 HUD")]
         [SerializeField]
         private RectTransform dicePanel;
@@ -31,11 +32,14 @@ namespace UI.UniversePlay
         private float bottomHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
 
         public bool isDicePanelVisible = false;
-
+        private float dicePanelHeight;
+        
         UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
         private void Start()
         {
+            dicePanelHeight = dicePanel.rect.height;
+            chatPanelWidth = chatPanel.rect.width;
             inAndOutButton.onClick.AddListener(OnInAndOutButtonClick);
             ViewModel.PropertyChanged += OnViewModelPropertyChanged;
             isChatPanelVisible = ViewModel.HUDState.HasFlag(EHUDState.Chat);
@@ -135,7 +139,7 @@ namespace UI.UniversePlay
                 chatPanel.gameObject,
                 iTween.Hash(
                     "x",
-                    -400,
+                    -chatPanelWidth,
                     "islocal",
                     true,
                     "time",
@@ -169,7 +173,7 @@ namespace UI.UniversePlay
                 dicePanel.gameObject,
                 iTween.Hash(
                     "y",
-                    -300,
+                    -dicePanelHeight,
                     "islocal",
                     true,
                     "time",

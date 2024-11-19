@@ -75,6 +75,7 @@ MonoBehaviour:
   - EquipAchievementRPC
   - UpdatePlayerTitle
   - SyncAnimation
+  - RPC_FinishTurn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

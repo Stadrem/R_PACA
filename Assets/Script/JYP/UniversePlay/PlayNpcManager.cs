@@ -84,6 +84,7 @@ namespace UniversePlay
                     )
                 );
             }
+
             StartCoroutine(TurnBasedConversation());
         }
 
@@ -123,12 +124,15 @@ namespace UniversePlay
         public void FinishPlayerTurn()
         {
             //clear data
-            photonView.RPC(nameof(RPC_FinishTurn), RpcTarget.All);
+            RPC_FinishTurn();
         }
 
+        [PunRPC]
         private void RPC_FinishTurn()
         {
+            print($"this is Called by {PhotonNetwork.LocalPlayer.NickName}");
             ViewModel.NpcChatSelectedIndex = -1;
+            
             selectorChat.ClearOptions();
             NpcChatUIManager.ClearChatOptions();
             NpcChatUIManager.HideChatOptions();

@@ -52,30 +52,14 @@ namespace UniversePlay
         {
             var sender = options.ElementAt(index).Key;
             var option = options.ElementAt(index).Value;
-            var roomNumber = PlayUniverseManager.Instance.roomNumber;
-            NpcManager.FinishPlayerTurn();
-
-            photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, sender, option);
-            StartCoroutine(
-                ViewModel.TalkNpc(
-                    roomNumber,
-                    option,
-                    (res) =>
-                    {
-                        if (res.IsSuccess)
-                        {
-                            var resVal = res.value;
-                            OnNpcReaction(sender, resVal);
-                        }
-                    }
-                )
-            );
+            Select(sender, option);
         }
 
         public void Select(string sender, string option)
         {
             var roomNumber = PlayUniverseManager.Instance.roomNumber;
             Debug.Log($"NPC한테 보냅니다");
+            NpcManager.FinishPlayerTurn();
             photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, sender, option);
             StartCoroutine(
                 ViewModel.TalkNpc(
