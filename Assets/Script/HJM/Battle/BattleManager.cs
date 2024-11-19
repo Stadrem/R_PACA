@@ -27,9 +27,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject profileUI;
     public GameObject nextTurnUI;
     public TMP_Text currentTurnTXT;
-
-
-
+    public RectTransform profileParent;
+    
+    
     [Header("적 NPC")]
     public GameObject enemy;
     public Animator enemyAnim;
@@ -53,6 +53,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         enemyHPBar.maxValue = 25;
         enemyHPBar.value = enemyHPBar.maxValue;
+        
+        profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
     }
 
     void Update()
@@ -146,13 +148,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         if (players.Count > 0)
         {
             Debug.Log($"플레이어 수 : {players.Count}");
-            Vector3 startPosition = profileUI.transform.position;
+            // Vector3 startPosition = profileUI.transform.position;
 
             for (int i = 0; i < players.Count; i++)
             {
-                GameObject profile = Instantiate(profileUI, startPosition, Quaternion.identity);
-                profile.transform.SetParent(battleUI.transform, false);
-                startPosition.x += 400; // 간격
+                GameObject profile = Instantiate(profileUI, Vector3.zero, Quaternion.identity, profileParent);
+                // startPosition.x += 400; // 간격 -> LayoutGroup 사용하면 필요없음
 
                 profiles.Add(profile);
                 ProfileSet profileSet = profile.GetComponent<ProfileSet>();

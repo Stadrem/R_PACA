@@ -994,6 +994,7 @@ MonoBehaviour:
     type: 3}
   nextTurnUI: {fileID: 0}
   currentTurnTXT: {fileID: 2209579051958070773}
+  profileParent: {fileID: 0}
   enemy: {fileID: 0}
   enemyAnim: {fileID: 0}
   enemyHPBar: {fileID: 6968637022383581047}
@@ -1016,6 +1017,7 @@ MonoBehaviour:
   defenseBtn: {fileID: 7228069371282176591}
   turnCompBtn: {fileID: 2531599870026006812}
   turnSilder: {fileID: 2613597642724754609}
+  diceDamage: 0
   isMyTurnAction: 0
   profiles: []
 --- !u!114 &2867567317307440785
@@ -3143,7 +3145,7 @@ RectTransform:
   m_Father: {fileID: 4210791674635595880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
