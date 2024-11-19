@@ -108,7 +108,7 @@ public class AchievementUiManager : MonoBehaviour
 
     public IEnumerator CoGetTitle(string titlename)
     {
-        Debug.Log("뿅!");
+        SoundManager.Get().PlaySFX(7);
 
         Text_GetTitleName.text = titlename;
 

@@ -978,6 +978,7 @@ MonoBehaviour:
   UserCode: 0
   UserID: 
   Nickname: 
+  title: 0
 --- !u!4 &396877230
 Transform:
   m_ObjectHideFlags: 0
