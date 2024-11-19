@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using Data.Remote.Api;
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UniversePlay;
 using ViewModels;
 
@@ -63,7 +63,6 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     public static PlayUniverseManager Instance => instance;
 
-
     public int roomNumber;
     public bool isBattle = false;
 
@@ -85,6 +84,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
         var code = Convert.ToInt32(PhotonNetwork.CurrentRoom.CustomProperties[PunPropertyNames.Room.ScenarioCode]);
         PhotonNetwork.AutomaticallySyncScene = true;
         ViewModel.PropertyChanged += OnPropertyChange;
+        SceneManager.sceneLoaded += OnSceneLoaded;
         StartCoroutine(ViewModel.LoadUniverseData(code));
     }
 
@@ -158,7 +158,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     public void FinishConversation()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        
+
         StartCoroutine(
             PlayProgressApi.FinishNpcTalk(
                 roomNumber,
@@ -212,7 +212,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                     if (res.IsSuccess)
                     {
                         InGamePlayerManager.Init();
-                        BackgroundManager.Init();
+                        BackgroundManager.StartFirstBackground();
                     }
                 }
             )
@@ -237,6 +237,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     private void OnDestroy()
     {
         ViewModel.PropertyChanged -= OnPropertyChange;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
 
@@ -259,5 +260,33 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     {
         instance = null;
         Destroy(gameObject);
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnSceneLoaded");
+        if (arg0.name == "WaitingScene")
+        {
+            OnWaitingSceneLoaded();
+        }
+        else
+        {
+            OnPlaySceneLoaded();
+        }
+    }
+
+    private void OnPlaySceneLoaded()
+    {
+        if (!IsHudVisible)
+            IsHudVisible = true;
+        var background =
+            ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
+        NpcManager.LoadNpcList(background.NpcList);
+    }
+
+    private void OnWaitingSceneLoaded()
+    {
+        if (IsHudVisible)
+            IsHudVisible = false;
     }
 }
