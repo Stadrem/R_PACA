@@ -281,6 +281,8 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
             IsHudVisible = true;
         var background =
             ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
+        
+        InGamePlayerManager.SpawnPlayers();
         NpcManager.LoadNpcList(background.NpcList);
     }
 
