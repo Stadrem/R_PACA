@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "003_\uC5C5\uC801_\uCCAB\uAC78\uC74C"
   m_EditorClassIdentifier: 
   set:
-    title: "\uCCAB\uAC78\uC74C"
+    title: "\uC8FC\uC0AC\uC704\uB97C \uAD74\uB838\uB354\uB2C8"
     description: "R_PACA\uC5D0 \uC2E0\uADDC \uD68C\uC6D0\uAC00\uC785\uC744 \uD558\uB2E4."
     isUnlocked: 0
     isEquipped: 0

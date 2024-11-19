@@ -156,6 +156,11 @@ public class AvatarCanvasManager : AvatarHTTPManager
         anim.SetTrigger("Talking");
 
         pas.ChangeAvatar();
+
+        if(parts == 4 && code == 2)
+        {
+            AchievementManager.Get().UnlockAchievement(8);
+        }
     }
 }
 
