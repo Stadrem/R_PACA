@@ -57,7 +57,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (isMyTurn && isMyTurnAction == true)
         {
             PerformAction();
-            DisableButtons();
+            DisableBatUI();
+
         }
     }
     private void PerformAction()
@@ -72,7 +73,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         StartCoroutine(WaitAndEndTurn());
 
 
-        Debug.Log("턴 선택 행동 끝");
         isMyTurnAction = false;
     }
 
@@ -95,9 +95,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         // diceDamage 초기화
         diceDamage = 0;
-
-        // 턴 종료 (다른 플레이어에게 턴 넘어감)
-        EndTurn();
+        Debug.Log("턴 선택 행동 끝, 몬스터 턴");
+        EndTurn(); // 턴 종료
     }
 
     void StartGame()
@@ -110,25 +109,20 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     void BeginTurn(int turnIndex)
     {
         currentTurnIndex = turnIndex;
+        print("턴 시작 currentTurnIndex값은" + currentTurnIndex);
         Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
-
         isMyTurn = currentPlayer == PhotonNetwork.LocalPlayer;
 
         if (isMyTurn)
         {
             Debug.Log("내 턴");
-            // 타이머 시작하기
-            circularSlider.StartDepletion();
-            // 선택지 버튼 활성화
-            EnableButtons();
+            EnableBatUI();
         }
         else
         {
-            Debug.Log("다음 사람 턴");
-            // 타이머 초기화하고 멈춰놓기
-            circularSlider.ResetSlider();
+            Debug.Log("내 턴 아님");
             // 선택지 버튼 비 활성화
-            DisableButtons();
+            DisableBatUI();
         }
     }
     public void EndTurn()
@@ -142,27 +136,24 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void BeginMonsterTurn()
+    public IEnumerator BeginMonsterTurn()
     {
         Debug.Log("몬스터 턴 시작");
-
-        // 타이머 초기화
-        circularSlider.ResetSlider();
         // 버튼 비활성화
-        DisableButtons();
-
+        DisableBatUI();
+        yield return new WaitForSeconds(3f);
         // 몬스터 행동 처리
         StartCoroutine(MonsterAction());
+
     }
 
     private IEnumerator MonsterAction()
     {
         Debug.Log("몬스터 행동");
-        BattleManager.Instance.enemyAnim.SetTrigger("Hit");
-        // 몬스터 행동 (예: 공격)
+        BattleManager.Instance.enemyAnim.SetTrigger("Hit2");
+        Debug.Log("몬스터 행동끝");
 
-        // 몬스터 행동 시간 지연
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         // 행동 후 턴 종료
         photonView.RPC("EndMonsterTurn", RpcTarget.All);
@@ -171,11 +162,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void EndMonsterTurn()
     {
-        Debug.Log("몬스터 턴 종료. 다음 플레이어의 턴으로 넘어갑니다.");
+            Debug.Log("몬스터 턴 종료. 다음 플레이어의 턴으로 넘어갑니다.");
 
-        // 다음 플레이어 턴으로 전환
-        currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
-        photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
+            currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
+
+            print("currentTurnIndex: " + currentTurnIndex);
+
+            photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
     }
 
 
@@ -197,15 +190,17 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     }
 
 
-    public void EnableButtons()
+    public void EnableBatUI()
     {
+        circularSlider.StartDepletion();
         attackBtn.interactable = true;
         defenseBtn.interactable = true;
         turnCompBtn.interactable = true;
     }
 
-    public void DisableButtons()
+    public void DisableBatUI()
     {
+        circularSlider.ResetSlider();
         attackBtn.interactable = false;
         defenseBtn.interactable = false;
         turnCompBtn.interactable = false;
