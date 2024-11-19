@@ -70,7 +70,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         // 굴리는거 기다림
         StartCoroutine(WaitAndEndTurn());
-        
+
 
         Debug.Log("턴 선택 행동 끝");
         isMyTurnAction = false;
@@ -131,21 +131,51 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             DisableButtons();
         }
     }
-
     public void EndTurn()
     {
         if (!isMyTurn) return;
 
         isMyTurn = false;
-        currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
 
-        photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
+        // 몬스터 턴 시작
+        photonView.RPC("BeginMonsterTurn", RpcTarget.All);
     }
 
     [PunRPC]
-    public void MonsterTurn()
+    public void BeginMonsterTurn()
     {
+        Debug.Log("몬스터 턴 시작");
 
+        // 타이머 초기화
+        circularSlider.ResetSlider();
+        // 버튼 비활성화
+        DisableButtons();
+
+        // 몬스터 행동 처리
+        StartCoroutine(MonsterAction());
+    }
+
+    private IEnumerator MonsterAction()
+    {
+        Debug.Log("몬스터 행동");
+        BattleManager.Instance.enemyAnim.SetTrigger("Hit");
+        // 몬스터 행동 (예: 공격)
+
+        // 몬스터 행동 시간 지연
+        yield return new WaitForSeconds(3f);
+
+        // 행동 후 턴 종료
+        photonView.RPC("EndMonsterTurn", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void EndMonsterTurn()
+    {
+        Debug.Log("몬스터 턴 종료. 다음 플레이어의 턴으로 넘어갑니다.");
+
+        // 다음 플레이어 턴으로 전환
+        currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
+        photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
     }
 
 
@@ -180,6 +210,4 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         defenseBtn.interactable = false;
         turnCompBtn.interactable = false;
     }
-
-
 }
