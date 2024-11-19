@@ -110,19 +110,9 @@ public class SoundManager : MonoBehaviour
     {
         if (currentBGM != i)
         {
-            previousBGM = currentBGM;
-
-            bgmAudioSource.Stop();
-
-            bgmAudioSource.clip = bgmClips[i];
+            GeneralBGMPlaying(i);
 
             bgmAudioSource.volume = bgmVolume;
-
-            bgmAudioSource.loop = true;
-
-            bgmAudioSource.Play();
-
-            currentBGM = i;
         }
     }
 
@@ -130,23 +120,28 @@ public class SoundManager : MonoBehaviour
     {
         if (currentBGM != i)
         {
-            previousBGM = currentBGM;
-
-            bgmAudioSource.Stop();
-
-            bgmAudioSource.clip = bgmClips[i];
+            GeneralBGMPlaying(i);
 
             bgmAudioSource.volume = bgmVolume * volume;
-
-            bgmAudioSource.loop = true;
-
-            bgmAudioSource.Play();
-
-            currentBGM = i;
         }
     }
 
-    // 볼륨 변경 메서드 추가
+    void GeneralBGMPlaying(int i)
+    {
+        previousBGM = currentBGM;
+
+        bgmAudioSource.Stop();
+
+        bgmAudioSource.clip = bgmClips[i];
+
+        bgmAudioSource.loop = true;
+
+        bgmAudioSource.Play();
+
+        currentBGM = i;
+    }
+
+    // 볼륨 변경
     public void SetBGMVolume(float volume)
     {
         bgmVolume = volume;
@@ -171,6 +166,10 @@ public class SoundManager : MonoBehaviour
         else if(currentScene.name == "Town")
         {
             PlayBGM(2, 0.5f);
+        }
+        else if(currentScene.name == "Dungeon")
+        {
+            PlayBGM(4, 0.5f);
         }
     }
 
