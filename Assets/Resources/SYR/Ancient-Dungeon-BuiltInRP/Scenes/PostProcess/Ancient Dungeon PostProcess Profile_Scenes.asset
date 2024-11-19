@@ -18,13 +18,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.96
+    m_Value: 1.41
   intensity:
     m_OverrideState: 1
-    m_Value: 3.33
+    m_Value: 2.01
   scatter:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.36
   clamp:
     m_OverrideState: 0
     m_Value: 65472
@@ -65,10 +65,10 @@ MonoBehaviour:
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 49.9
+    m_Value: 38.1
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 80
+    m_Value: 84.6
   gaussianMaxRadius:
     m_OverrideState: 1
     m_Value: 1.044
@@ -93,6 +93,28 @@ MonoBehaviour:
   bladeRotation:
     m_OverrideState: 0
     m_Value: 5
+--- !u!114 &-2929274607645591115
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
+  m_Name: SplitToning
+  m_EditorClassIdentifier: 
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {r: 0.34591186, g: 0.34591186, b: 0.34591186, a: 1}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {r: 0.6000553, g: 0.9308176, b: 0.85975105, a: 1}
+  balance:
+    m_OverrideState: 1
+    m_Value: -39
 --- !u!114 &-1703968785816107919
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -147,6 +169,7 @@ MonoBehaviour:
   - {fileID: 3540053158585561239}
   - {fileID: -5335893846266564387}
   - {fileID: 92421998150827693}
+  - {fileID: -2929274607645591115}
 --- !u!114 &92421998150827693
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -184,10 +207,10 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: -0.43
+    m_Value: -0.9
   contrast:
     m_OverrideState: 1
-    m_Value: -9
+    m_Value: -6.1
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 0.76415086, g: 1, b: 0.76415086, a: 1}
@@ -196,7 +219,7 @@ MonoBehaviour:
     m_Value: -9
   saturation:
     m_OverrideState: 1
-    m_Value: 15
+    m_Value: 2
 --- !u!114 &3540053158585561239
 MonoBehaviour:
   m_ObjectHideFlags: 3
