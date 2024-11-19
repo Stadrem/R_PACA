@@ -73,10 +73,10 @@ public class AchievementUiManager : MonoBehaviour
 
     private void OnEnable()
     {
-        RefreshCards();
+        //RefreshCards();
     }
 
-    void RefreshCards()
+    public void RefreshCards()
     {
         //생성되어있는 요소들 만큼 자식 오브젝트 생성
         for (int i = 0; i < achievementManager.achievements.Count; i++)

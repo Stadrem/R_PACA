@@ -145,6 +145,8 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
 
     public void OnClickExitLobby()
     {
+        AchievementManager.Get().UnlockAchievement(7);
+
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(
@@ -244,6 +246,8 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        SoundManager.Get().PlayBGM(5, 0.7f);
+
         StartPostRoomInfo();
     }
 

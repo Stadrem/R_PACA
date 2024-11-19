@@ -122,6 +122,8 @@ public class AchievementManager : MonoBehaviour
 
             achievementUiManager.GetTitle(achievements[index].set.title);
         }
+
+        achievementUiManager.RefreshCards();
     }
 
     // 업적 착용
@@ -172,6 +174,8 @@ public class AchievementManager : MonoBehaviour
     public void EnableCanvas()
     {
         canvas.SetActive(true);
+
+        achievementUiManager.RefreshCards();
     }
 }
 
