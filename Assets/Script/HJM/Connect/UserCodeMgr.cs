@@ -25,6 +25,8 @@ public class UserCodeMgr : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        SoundManager.Get();
     }
 
     // userCode를 설정하는 함수

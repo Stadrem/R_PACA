@@ -69,7 +69,7 @@ public class EscUiManager : MonoBehaviour
 
     public void BGMSliderMove()
     {
-        SoundManager.Get().bgmVolume = bgmSlider.value;
+        SoundManager.Get().SetBGMVolume(bgmSlider.value);
     }
 
     public void SFXSliderMove()

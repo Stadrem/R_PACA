@@ -17,6 +17,8 @@ public class AvatarCanvasManager : AvatarHTTPManager
 
     public ConnectionMgr connectionMgr;
 
+    public ParticleSystem ps;
+
     Animator anim;
 
     public bool notUseNetworkOn = false;
@@ -146,6 +148,10 @@ public class AvatarCanvasManager : AvatarHTTPManager
         }
 
         print("성별 " + pas.myAvatar.userAvatarGender + "/ 부위" + parts + "/ 아이템 넘버 " + code);
+
+        SoundManager.Get().PlaySFX(3);
+
+        ps.Play();
 
         anim.SetTrigger("Talking");
 

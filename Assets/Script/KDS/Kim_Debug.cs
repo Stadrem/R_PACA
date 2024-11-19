@@ -129,4 +129,14 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     {
         AchievementManager.Get().EnableCanvas();
     }
+
+    public void OnClickBattleBGM()
+    {
+        SoundManager.Get().BattleBGMCall();
+    }
+
+    public void OnClickBattleBGMEnd()
+    {
+        SoundManager.Get().BattleBGMEnd();
+    }
 }
