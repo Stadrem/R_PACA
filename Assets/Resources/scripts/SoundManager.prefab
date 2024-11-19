@@ -191,10 +191,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   bgmClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: a72be6dbb33ae1d48b44895f4943bee6, type: 3}
+  - {fileID: 8300000, guid: 498e30a3f67c1f84f87ddc00a18ed0ad, type: 3}
+  - {fileID: 8300000, guid: 54b522eeb124c4b4ab14b269e7d768e1, type: 3}
+  - {fileID: 8300000, guid: f480091c3c59e4f49a590777b7d70f20, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
