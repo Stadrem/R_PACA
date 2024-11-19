@@ -140,7 +140,7 @@ public class AchievementManager : MonoBehaviour
             // 새 업적 착용
             equippedAchievement = achievements[index];
             achievements[index].set.isEquipped = true;
-            Debug.Log($"업적 장착: {achievements[index].set.title}");
+            Debug.Log($"업적 장착: {index}번 인덱스: {achievements[index].set.title}");
 
             achievementUiManager.Equipped();
 

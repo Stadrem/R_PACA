@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8df28e794f4cc7e48946ad24f21baa79, type: 3}
-  m_Name: "003_\uC5C5\uC801_\uCCAB\uAC78\uC74C"
+  m_Name: "010_\uC5C5\uC801_\uD544\uC5F0\uC801\uC778"
   m_EditorClassIdentifier: 
   set:
-    title: "\uC8FC\uC0AC\uC704\uB97C \uAD74\uB838\uB354\uB2C8"
-    description: "R_PACA\uC5D0 \uC2E0\uADDC \uD68C\uC6D0\uAC00\uC785\uC744 \uD558\uB2E4."
+    title: "\uD544\uC5F0\uC801\uC778"
+    description: "\uC8FC\uC0AC\uC704 \uAD74\uB9BC\uC744 \uC5F0\uC18D 3\uBC88 \uC131\uACF5\uD558\uB2E4"
     isUnlocked: 0
     isEquipped: 0
-    index: 3
-    color: {r: 0.75596935, g: 0.4198113, b: 1, a: 1}
-    sprite: {fileID: 21300000, guid: d50e625131f3bd646ae4bdc3ed76ce2f, type: 3}
+    index: 10
+    color: {r: 0.29385278, g: 0.09468848, b: 0.3509434, a: 1}
+    sprite: {fileID: 21300000, guid: 3fbd0bbdf5db9ca449b27f09b9cf16da, type: 3}

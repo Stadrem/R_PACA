@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df28e794f4cc7e48946ad24f21baa79, type: 3}
+  m_Name: "009_\uC5C5\uC801_\uC544 \uB20C\uB800\uB2E4\uACE0"
+  m_EditorClassIdentifier: 
+  set:
+    title: "\uC544 \uB20C\uB800\uB2E4\uACE0"
+    description: "\uC8FC\uC0AC\uC704 \uAD74\uB9BC\uC744 \uC5F0\uC18D 3\uBC88 \uC2E4\uD328\uD558\uB2E4"
+    isUnlocked: 0
+    isEquipped: 0
+    index: 9
+    color: {r: 0.18734828, g: 0.54901963, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: d50e625131f3bd646ae4bdc3ed76ce2f, type: 3}
