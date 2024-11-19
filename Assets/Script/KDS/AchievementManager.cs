@@ -1,7 +1,9 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AchievementManager : MonoBehaviour
 {
@@ -43,13 +45,48 @@ public class AchievementManager : MonoBehaviour
             instance = this;
 
             LoadAchievements();
+
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
 
-        achievementUiManager = GetComponent<AchievementUiManager>();
+        // 현재 씬의 이름을 가져옴
+        currentScene = SceneManager.GetActiveScene();
+    }
+
+    // 씬이 로드될 때마다 호출되는 함수
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 현재 씬의 이름을 가져옴
+        currentScene = SceneManager.GetActiveScene();
+
+        if(currentScene.name == "Town")
+        {
+            UnlockAchievement(2);
+        }
+        switch (currentScene.name)
+        {
+            case "Town":
+                UnlockAchievement(2);
+                break;
+            case "JYP_TotalTestScene":
+                UnlockAchievement(1);
+                break;
+        }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        // 오브젝트가 파괴될 때 이벤트 등록 해제 (중복 방지)
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public List<AchievementData> achievements = new List<AchievementData>();
@@ -57,6 +94,8 @@ public class AchievementManager : MonoBehaviour
     AchievementUiManager achievementUiManager;
 
     public GameObject canvas;
+
+    Scene currentScene;
 
     // Resources 폴더에서 업적 데이터를 자동으로 로드
     public void LoadAchievements()
@@ -67,6 +106,10 @@ public class AchievementManager : MonoBehaviour
 
         // index 값 기준으로 정렬
         achievements.Sort((a, b) => a.set.index.CompareTo(b.set.index));
+
+        achievementUiManager = GetComponent<AchievementUiManager>();
+
+        achievementUiManager.CreateCards();
     }
 
     // 특정 조건 만족 시 업적 해제
@@ -76,6 +119,8 @@ public class AchievementManager : MonoBehaviour
         {
             achievements[index].set.isUnlocked = true;
             Debug.Log($"업적 해제: {achievements[index].set.title}");
+
+            achievementUiManager.GetTitle(achievements[index].set.title);
         }
     }
 

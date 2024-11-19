@@ -91,6 +91,8 @@ public class YarnHistoryCard : MonoBehaviour
         text_Like.text = like.ToString();
 
         btn_Like.interactable = false;
+
+        AchievementManager.Get().UnlockAchievement(5);
     }
 
     public void Emergency()

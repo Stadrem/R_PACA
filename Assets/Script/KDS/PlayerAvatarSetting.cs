@@ -206,7 +206,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         ownerCrown.SetActive(true);
     }
-    /*
+    
     private void OnEnable()
     {
         // 이벤트 구독
@@ -228,7 +228,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     // 업적 변경 감지 시 호출되는 함수
     private void HandleAchievementChangedLocal(string title, int index)
     {
-        
+        titleText.text = title;
     }
-    */
+    
 }

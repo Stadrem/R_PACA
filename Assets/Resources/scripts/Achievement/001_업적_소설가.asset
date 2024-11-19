@@ -15,8 +15,8 @@ MonoBehaviour:
   set:
     title: "\uC18C\uC124\uAC00"
     description: "\uCC98\uC74C\uC73C\uB85C \uC138\uACC4\uAD00\uC744 \uC0DD\uC131\uD558\uB2E4."
-    isUnlocked: 1
-    isEquipped: 1
+    isUnlocked: 0
+    isEquipped: 0
     index: 1
     color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
     sprite: {fileID: 21300000, guid: d50e625131f3bd646ae4bdc3ed76ce2f, type: 3}

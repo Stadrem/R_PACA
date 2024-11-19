@@ -102,6 +102,9 @@ public class SignupManager : AvatarHTTPManager
 
                 // 1초 대기 후 AvatarCreate 씬으로 이동
                 yield return new WaitForSeconds(1f);
+
+                AchievementManager.Get().UnlockAchievement(3);
+
                 SceneManager.LoadScene("AvatarCreate"); // 아바타 생성 씬으로 이동
             }
             else

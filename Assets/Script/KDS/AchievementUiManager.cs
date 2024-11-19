@@ -1,4 +1,5 @@
 ﻿using ExitGames.Client.Photon.StructWrapping;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,13 +14,20 @@ public class AchievementUiManager : MonoBehaviour
 
     public GameObject contents;
 
-    List<GameObject> cards = new List<GameObject>();
+    public List<GameObject> cards = new List<GameObject>();
+
+    public List<AchievementCards> achievementCards = new List<AchievementCards>();
 
     public AchievementSet selectAchievement;
 
-    public AchievementCards achievementCards;
+    //[선택 중]을 위한 카드 한 장
+    public AchievementCards selectCard;
 
-    private void Start()
+    public TMP_Text Text_GetTitleName;
+
+    public GameObject Canvas_GetTitle;
+
+    public void CreateCards()
     {
         achievementManager = GetComponent<AchievementManager>();
 
@@ -32,30 +40,50 @@ public class AchievementUiManager : MonoBehaviour
         //생성되어있는 요소들 만큼 자식 오브젝트 생성
         for (int i = 0; i < achievementManager.achievements.Count; i++)
         {
-            GameObject instance = Instantiate(titlePrefab);
+            cards.Add(Instantiate(titlePrefab));
 
-            instance.transform.SetParent(contents.transform, false);
+            cards[i].transform.SetParent(contents.transform, false);
 
-            AchievementCards ac = instance.GetComponent<AchievementCards>();
+            achievementCards.Add(cards[i].GetComponent<AchievementCards>());
 
-            ac.set = achievementManager.achievements[i].set;
+            achievementCards[i].set = achievementManager.achievements[i].set;
 
-            ac.SetUp();
+            achievementCards[i].SetUp(achievementCards[i].set.isUnlocked);
+
+            //활성화 칭호 찾기
+            if (achievementCards[i].set.isEquipped)
+            {
+                achievementManager.EquipAchievement(i);
+            }
 
             //버튼에 액션 할당
-            Button button = instance.GetComponent<Button>();
+            Button button = cards[i].GetComponent<Button>();
 
-            button.onClick.AddListener(() => OnClickTitleChange(ac.set.index));
+            int tempindex = achievementCards[i].set.index;
+
+            button.onClick.AddListener(() => OnClickTitleChange(tempindex));
         }
 
-        if(UserCodeMgr.Instance != null)
+        //알 수 없는 이유로 장착 가능한게 없으면 [없음]으로 설정
+        if(achievementManager.equippedAchievement == null)
         {
-            achievementManager.EquipAchievement(UserCodeMgr.Instance.title);
-        }
-        else
-        {
-            //기본값 반영
             achievementManager.EquipAchievement(0);
+        }
+    }
+
+    private void OnEnable()
+    {
+        RefreshCards();
+    }
+
+    void RefreshCards()
+    {
+        //생성되어있는 요소들 만큼 자식 오브젝트 생성
+        for (int i = 0; i < achievementManager.achievements.Count; i++)
+        {
+            achievementCards[i].set = achievementManager.achievements[i].set;
+
+            achievementCards[i].SetUp(achievementCards[i].set.isUnlocked);
         }
     }
 
@@ -65,11 +93,29 @@ public class AchievementUiManager : MonoBehaviour
         achievementManager.EquipAchievement(num);
     }
 
-    //선택 중 갱신 함수
+    //[선택 중] 갱신 함수
     public void Equipped()
     {
-        achievementCards.set = achievementManager.GetEquippedAchievement().set;
+        selectCard.set = achievementManager.GetEquippedAchievement().set;
 
-        achievementCards.SetUp();
+        selectCard.SetUp(true);
+    }
+
+    public void GetTitle(string titlename)
+    {
+        StartCoroutine(CoGetTitle(titlename));
+    }
+
+    public IEnumerator CoGetTitle(string titlename)
+    {
+        Debug.Log("뿅!");
+
+        Text_GetTitleName.text = titlename;
+
+        Canvas_GetTitle.SetActive(true);
+
+        yield return new WaitForSeconds(3.0f);
+
+        Canvas_GetTitle.SetActive(false);
     }
 }

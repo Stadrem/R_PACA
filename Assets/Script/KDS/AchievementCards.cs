@@ -17,12 +17,28 @@ public class AchievementCards : MonoBehaviour, IPointerClickHandler, IPointerEnt
     public GameObject descriptionPopUp;
 
     //데이터 반영
-    public void SetUp()
+    public void SetUp(bool unlock)
     {
-        text_Title.text = set.title;
-        icon.sprite = set.sprite;
-        text_Description.text = set.description;
-        backgroundColor.color = set.color;
+        //언락 상태면 정상값 입력
+        if (unlock) 
+        {
+            text_Title.text = set.title;
+            text_Title.color = new Color32(255, 255, 255, 255);
+            icon.sprite = set.sprite;
+            icon.color = new Color32(255, 255, 255, 255);
+            text_Description.text = set.description;
+            backgroundColor.color = set.color;
+        }
+        //언락 아니면 선택 불가하게
+        else
+        {
+            text_Title.text = set.title;
+            text_Title.color = new Color32(128, 128, 128, 128);
+            icon.sprite = null;
+            icon.color = new Color32(0, 0, 0, 0);
+            text_Description.text = set.description;
+            backgroundColor.color = Color.black;
+        }
     }
 
     //마우스 포인터 오버 이벤트

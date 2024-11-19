@@ -53,6 +53,8 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
 
     public GameObject debugPanel;
 
+    public int dice = 9;    
+
     //패널 활성화
     public void DebugPanel()
     {
@@ -77,13 +79,13 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     //일상 주사위 굴리기
     public void OnClickDice()
     {
-        DiceRollManager.Get().SearchDiceRoll(9);
+        DiceRollManager.Get().SearchDiceRoll(dice);
     }
 
     //전투 주사위 굴리기
     public void OnClickBattleDice()
     {
-        DiceRollManager.Get().BattleDiceRoll(4);
+        DiceRollManager.Get().BattleDiceRoll(dice);
     }
 
     //엔딩 팝업
@@ -138,5 +140,10 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     public void OnClickBattleBGMEnd()
     {
         SoundManager.Get().BattleBGMEnd();
+    }
+
+    public void OnClickGetTitle()
+    {
+        AchievementManager.Get().UnlockAchievement(3);
     }
 }

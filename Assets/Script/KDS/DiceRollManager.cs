@@ -180,6 +180,12 @@ public class DiceRollManager : MonoBehaviour
         {
             result = baseAttack * 2;
             print("200% 피해!");
+
+            AchievementManager.Get().UnlockAchievement(4);
+        }
+        else
+        {
+            AchievementManager.Get().UnlockAchievement(6);
         }
 
         if(result == 12)

@@ -15,7 +15,7 @@ MonoBehaviour:
   set:
     title: "\uCCAB\uAC78\uC74C"
     description: "R_PACA\uC5D0 \uC2E0\uADDC \uD68C\uC6D0\uAC00\uC785\uC744 \uD558\uB2E4."
-    isUnlocked: 1
+    isUnlocked: 0
     isEquipped: 0
     index: 3
     color: {r: 0.75596935, g: 0.4198113, b: 1, a: 1}
