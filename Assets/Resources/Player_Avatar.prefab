@@ -286,8 +286,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: 662069803b3dfd64a9f72731afdfdc72,
-        type: 2}
+      objectReference: {fileID: 9100000, guid: 721d8f71fdb079547a772c3aa7a5d897, type: 2}
     - target: {fileID: 4456483823356550926, guid: 5e258fec91d27484294348b0594c80b7,
         type: 3}
       propertyPath: m_Name
@@ -405,16 +404,13 @@ MonoBehaviour:
     Name: isWalk
   - Type: 9
     SynchronizeType: 1
-    Name: Hit
-  - Type: 9
-    SynchronizeType: 1
     Name: Attack
   - Type: 4
     SynchronizeType: 1
-    Name: isBattle
-  - Type: 4
-    SynchronizeType: 1
     Name: isInjured
+  - Type: 9
+    SynchronizeType: 1
+    Name: Damage
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
