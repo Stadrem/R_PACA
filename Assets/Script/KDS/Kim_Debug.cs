@@ -82,6 +82,11 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
         DiceRollManager.Get().SearchDiceRoll(dice);
     }
 
+    public void OnClickGeDice()
+    {
+        DiceRollManager.Get().DiceRoll(1,1);
+    }
+
     //전투 주사위 굴리기
     public void OnClickBattleDice()
     {

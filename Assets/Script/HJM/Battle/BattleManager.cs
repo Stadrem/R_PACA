@@ -189,10 +189,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     // 주사위 공격 성공
     [PunRPC]
-    public void DiceAttackSuccess(int damage)
+    public IEnumerator DiceAttackSuccess(int damage)
     {
-        enemyAnim.SetTrigger("Hit");
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
+        yield return new WaitForSeconds(0.3f);
+        enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
         ShowBattleUI("공격 성공!"); // 공격 성공 UI
         NextTurn();
@@ -200,10 +201,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     // 주사위 공격 실패
     [PunRPC]
-    public void DiceAttackFail()
+    public IEnumerator DiceAttackFail()
     {
-        enemyAnim.SetTrigger("Defense");
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
+        yield return new WaitForSeconds(0.3f);
+        enemyAnim.SetTrigger("Damage");
         ShowBattleUI("공격 실패"); // 공격 실패 UI
         NextTurn();
     }
@@ -212,8 +214,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceDefenseSuccess(int damage)
     {
-        enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Defense"); // 플레이어 Defense 트리거
+        enemyAnim.SetTrigger("Hit2"); // 몬스터 Hit2 트리거
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage"); // 플레이어 Damage 트리거
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
         ShowBattleUI("방어 성공!"); // 방어 성공 UI
         NextTurn();
@@ -223,8 +225,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceDefenseFail(int damage)
     {
-        enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Hit"); // 플레이어 Hit 트리거
+        enemyAnim.SetTrigger("Hit2"); // 몬스터 Hit2 트리거
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage"); // 플레이어 Damage 트리거
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
         ShowBattleUI("방어 실패"); // 방어 실패 UI
         NextTurn();

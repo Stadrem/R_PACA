@@ -111,6 +111,8 @@ public class DiceRollManager : MonoBehaviour
     public bool autoPosition = true;
     public Action onDiceRollFinished = null;
 
+    int failSum = 0;
+
     //성공 실패만 판별하는 탐색 전용 주사위
     public bool SearchDiceRoll(int stat)
     {
@@ -119,8 +121,6 @@ public class DiceRollManager : MonoBehaviour
 
         //최종 결과값 초기화
         bool result = false;
-
-        titleText.text = "<size=75><color=blue>실패</color></size>";
 
         int dicePick = DiceRandomPick();
 
@@ -139,6 +139,22 @@ public class DiceRollManager : MonoBehaviour
         if (result)
         {
             titleText.text = "<size=75><color=red>성공</color></size>";
+            failSum ++;
+            if(failSum == 3)
+            {
+                AchievementManager.Get().UnlockAchievement(10);
+                failSum = 0;
+            }
+        }
+        else
+        {
+            titleText.text = "<size=75><color=blue>실패</color></size>";
+            failSum --;
+            if (failSum == -3)
+            {
+                AchievementManager.Get().UnlockAchievement(9);
+                failSum = 0;
+            }
         }
 
         //주사위 굴리기 비주얼
@@ -299,6 +315,11 @@ public class DiceRollManager : MonoBehaviour
     {
         SoundManager.Get().PlaySFX(0);
 
+        if (diceResults[0] == 1 && diceResults[1] == 1)
+        {
+            AchievementManager.Get().UnlockAchievement(11);
+        }
+
         // 카메라 중심에서 레이캐스트 발사
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
@@ -415,7 +436,7 @@ public class DiceRollManager : MonoBehaviour
         // 주사위의 최종 위치와 회전 설정
         rb.MoveRotation(finalRotation);
 
-        SoundManager.Get().PlaySFX(4);
+        SoundManager.Get().PlaySFX(4, 0.3f);
     }
 
     void ClearValue()
