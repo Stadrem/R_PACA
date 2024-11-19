@@ -15,6 +15,7 @@ namespace ViewModels
         public void Reset()
         {
             universeEditViewModel = null;
+            universePlayViewModel = null;
         }
     }
 }

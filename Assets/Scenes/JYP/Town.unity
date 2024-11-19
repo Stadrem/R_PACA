@@ -16557,20 +16557,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: point
       objectReference: {fileID: 0}
+    - target: {fileID: 1193816679479232452, guid: ee9ab6f12f747af469bd328df7af17df,
+        type: 3}
+      propertyPath: m_TagString
+      value: Portal
+      objectReference: {fileID: 0}
     - target: {fileID: 3928928092328262481, guid: ee9ab6f12f747af469bd328df7af17df,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -32.42
+      value: -40.93
       objectReference: {fileID: 0}
     - target: {fileID: 3928928092328262481, guid: ee9ab6f12f747af469bd328df7af17df,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19.17
+      value: -19.37
       objectReference: {fileID: 0}
     - target: {fileID: 3928928092328262481, guid: ee9ab6f12f747af469bd328df7af17df,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 32.76
+      value: 21.46
       objectReference: {fileID: 0}
     - target: {fileID: 3928928092328262481, guid: ee9ab6f12f747af469bd328df7af17df,
         type: 3}
@@ -16610,7 +16615,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1193816679479232452, guid: ee9ab6f12f747af469bd328df7af17df,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1977803348}
   m_SourcePrefab: {fileID: 100100000, guid: ee9ab6f12f747af469bd328df7af17df, type: 3}
 --- !u!4 &1509577984 stripped
 Transform:
@@ -22148,6 +22157,24 @@ RectTransform:
   m_AnchoredPosition: {x: 9.73472, y: 1.6145456}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1977803347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1193816679479232452, guid: ee9ab6f12f747af469bd328df7af17df,
+    type: 3}
+  m_PrefabInstance: {fileID: 1509577983}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1977803348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977803347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3729206fcb9744f580dc96837e935949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1979563973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24991,6 +25018,7 @@ MonoBehaviour:
     type: 3}
   nextTurnUI: {fileID: 386214275}
   currentTurnTXT: {fileID: 6249095791616357098}
+  profileParent: {fileID: 0}
   enemy: {fileID: 0}
   enemyAnim: {fileID: 0}
   enemyHPBar: {fileID: 196456219}

@@ -5,6 +5,7 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 using ViewModels;
 using WebSocketSharp;
 
@@ -19,7 +20,9 @@ public class NpcChatUIManager : MonoBehaviour
     public Button finishButton;
 
 
-    [Header("Chat Options")] public RectTransform optionsContainer;
+    [Header("Chat Options")]
+    public RectTransform optionsContainer;
+
     public GameObject selectorEntryPrefab;
     public List<NpcChatSelectorEntryController> selectorEntries;
 
@@ -58,7 +61,6 @@ public class NpcChatUIManager : MonoBehaviour
     {
         finishButton.gameObject.SetActive(false);
         optionsContainer.gameObject.SetActive(false);
-        
     }
 
     public void AddChatBubble(string sender, string text, bool isPlayer)
@@ -70,14 +72,14 @@ public class NpcChatUIManager : MonoBehaviour
                 text,
                 isPlayer
             );
-        Canvas.ForceUpdateCanvases();
-        StartCoroutine(ScrollToBottom());
+
+        StartCoroutine(ScrollToBottomNextFrame());
     }
 
-    private IEnumerator ScrollToBottom()
+    private IEnumerator ScrollToBottomNextFrame()
     {
-        yield return new WaitForSeconds(0.1f);
-        scrollRect.normalizedPosition = new Vector2(0, 0);
+        yield return new WaitForSeconds(0.1f); // 다음 프레임까지 대기
+        scrollRect.ScrollToBottom();
     }
 
 
@@ -89,26 +91,28 @@ public class NpcChatUIManager : MonoBehaviour
 
     public void ClearChatOptions()
     {
-        selectorEntries.Clear();
-        while (optionsContainer.childCount > 0)
+        foreach (var entry in selectorEntries)
         {
-            Destroy(optionsContainer.GetChild(0).gameObject);
+            Destroy(entry.gameObject);
         }
+
+        selectorEntries.Clear();
     }
-    
+
     public void HideChatOptions()
     {
+        optionsContainer.SetParent(null);
         if (optionsContainer.gameObject.activeSelf)
             optionsContainer.gameObject.SetActive(false);
-        
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(optionsContainer);
     }
-    
+
     public void ShowChatOptions(List<KeyValuePair<string, string>> options)
     {
         if (!optionsContainer.gameObject.activeSelf)
             optionsContainer.gameObject.SetActive(true);
-
+        optionsContainer.SetParent(listContent);
         foreach (var entry in selectorEntries)
         {
             Destroy(entry.gameObject);
@@ -127,7 +131,7 @@ public class NpcChatUIManager : MonoBehaviour
             controller.BindData(idx, optionText);
             selectorToggleGroup.RegisterToggle(controller.toggle);
             controller.SetOnValueChanged(OnToggleValueChanged);
-            
+
             selectorEntries.Add(selectorEntry.GetComponent<NpcChatSelectorEntryController>());
         }
 
