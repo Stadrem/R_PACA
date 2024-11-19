@@ -99,7 +99,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             UserStats stats = playerGameObjects[i].GetComponent<UserStats>();
             NavMeshAgent agent = playerGameObjects[i].GetComponent<NavMeshAgent>();
             PlayerMove playerMove = playerGameObjects[i].GetComponent<PlayerMove>();
-            Animator playerAnim = playerGameObjects[i].GetComponent<Animator>();
+            Animator playerAnim = playerGameObjects[i].GetComponentInChildren<Animator>();
 
             tempPlayerStats.Add(stats);
             tempAgents.Add(agent);
@@ -190,8 +190,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceAttackSuccess(int damage)
     {
-        //enemyAnim.SetTrigger("Hit");
-        //playerAnim.SetTrigger("Attack");
+        enemyAnim.SetTrigger("Hit");
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
         ShowBattleUI("공격 성공!"); // 공격 성공 UI
         NextTurn();
@@ -201,8 +201,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceAttackFail()
     {
-        //enemyAnim.SetTrigger("Defense");
-        //playerAnim.SetTrigger("Attack");
+        enemyAnim.SetTrigger("Defense");
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         ShowBattleUI("공격 실패"); // 공격 실패 UI
         NextTurn();
     }
@@ -211,8 +211,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceDefenseSuccess(int damage)
     {
-        //enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
-        //playerAnim.SetTrigger("Defense"); // 플레이어 Defense 트리거
+        enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Defense"); // 플레이어 Defense 트리거
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
         ShowBattleUI("방어 성공!"); // 방어 성공 UI
         NextTurn();
@@ -222,8 +222,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceDefenseFail(int damage)
     {
-        //enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
-        //playerAnim.SetTrigger("Hit"); // 플레이어 Hit 트리거
+        enemyAnim.SetTrigger("Attack"); // 몬스터 Attack 트리거
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Hit"); // 플레이어 Hit 트리거
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
         ShowBattleUI("방어 실패"); // 방어 실패 UI
         NextTurn();
@@ -244,7 +244,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     private void NextTurn()
     {
         turnCount++;
-        currentTurnTXT.text = "턴 수: " + turnCount;
+        currentTurnTXT.text = "전투 " + turnCount + "턴";
         StartCoroutine(HideNextTurnUI());
     }
 
@@ -252,27 +252,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(2f);
         nextTurnUI.SetActive(false);
-    }
-
-    // 포톤으로 호출
-    public void OnAttackSuccess(int damage)
-    {
-        photonView.RPC("DiceAttackSuccess", RpcTarget.All, damage);
-    }
-
-    public void OnAttackFail()
-    {
-        photonView.RPC("DiceAttackFail", RpcTarget.All);
-    }
-
-    public void OnDefenseSuccess(int damage)
-    {
-        photonView.RPC("DiceDefenseSuccess", RpcTarget.All, damage);
-    }
-
-    public void OnDefenseFail(int damage)
-    {
-        photonView.RPC("DiceDefenseFail", RpcTarget.All, damage);
     }
 
     public void SetEnemy(GameObject enemy)
