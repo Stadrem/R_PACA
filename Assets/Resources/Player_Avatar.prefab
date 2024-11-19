@@ -403,6 +403,18 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isWalk
+  - Type: 9
+    SynchronizeType: 1
+    Name: Hit
+  - Type: 9
+    SynchronizeType: 1
+    Name: Attack
+  - Type: 4
+    SynchronizeType: 1
+    Name: isBattle
+  - Type: 4
+    SynchronizeType: 1
+    Name: isInjured
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
