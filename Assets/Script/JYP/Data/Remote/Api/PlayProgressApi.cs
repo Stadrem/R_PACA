@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Data.Models.Universe.Battle;
+using Data.Models.Universe.Characters;
 using Data.Models.Universe.Dice;
 using Data.Remote.Dtos.Request;
 using Data.Remote.Dtos.Response;
@@ -56,7 +57,8 @@ namespace Data.Remote.Api
             yield return HttpManager.GetInstance().Post(request);
         }
 
-        public static IEnumerator CheckDice(int roomNumber, DiceResult diceResult, Action<ApiResult> onComplete)
+        public static IEnumerator CheckDice(int roomNumber, DiceResult diceResult,
+            Action<ApiResult<NpcReaction>> onComplete)
         {
             var reqDto = new CheckDiceReqDto()
             {
@@ -66,12 +68,12 @@ namespace Data.Remote.Api
             };
 
 
-            var request = new HttpInfoWithType<string, CheckDiceReqDto>() // TODO: response check
+            var request = new HttpInfoWithType<NpcChatResponseDto, CheckDiceReqDto>() // TODO: response check
             {
                 url = $"{BaseUrl}/dice",
                 body = reqDto,
-                onComplete = (result) => { onComplete(ApiResult.Success()); },
-                onError = (error) => onComplete(ApiResult.Fail(error)),
+                onComplete = (result) => { onComplete(ApiResult<NpcReaction>.Success(result.ToReaction())); },
+                onError = (error) => onComplete(ApiResult<NpcReaction>.Fail(error)),
             };
 
             yield return HttpManager.GetInstance().Post(request);
