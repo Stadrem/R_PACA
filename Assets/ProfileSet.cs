@@ -10,6 +10,7 @@ public class ProfileSet : MonoBehaviour
     public Slider hpBar;
     public List<Image> selects; // [0]: 공격, [1]: 방어
     public TMP_Text hp;
+    public GameObject turnBlur;
 
     int maxHealth;
 
@@ -57,5 +58,14 @@ public class ProfileSet : MonoBehaviour
         {
             selects[1].gameObject.SetActive(true);
         }
+    }
+
+    public void OnBlur()
+    {
+        turnBlur.SetActive(true);
+    }
+    public void OffBlur()
+    {
+        turnBlur.SetActive(false);
     }
 }
