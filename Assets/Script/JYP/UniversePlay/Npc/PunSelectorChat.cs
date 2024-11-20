@@ -152,7 +152,18 @@ namespace UniversePlay
                                 firstDiceNumber: d1,
                                 secondDiceNumber: d2
                             ),
-                            (res) => { Debug.Log($"Dice Result : {res.IsSuccess}"); } 
+                            (res) =>
+                            {
+                                Debug.Log($"Dice Result : {res.IsSuccess}");
+                                if (res.IsSuccess)
+                                {
+                                    OnNpcReaction(npcName, res.value);
+                                }
+                                else
+                                {
+                                    Debug.LogError($"Something Wrong When On Dice Result: {res.error}");
+                                }
+                            } 
                         )
                     );
                     break;
