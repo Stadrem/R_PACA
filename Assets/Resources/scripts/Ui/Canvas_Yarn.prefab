@@ -3588,7 +3588,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1312030098644795289}
+      - m_Target: {fileID: 4194086040010844671}
         m_TargetAssemblyTypeName: BtnCloseAction, Assembly-CSharp
         m_MethodName: OnClickClose
         m_Mode: 1
