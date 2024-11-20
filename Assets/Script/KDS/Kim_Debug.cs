@@ -146,4 +146,9 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     {
         AchievementManager.Get().UnlockAchievement(3);
     }
+
+    public void OnClickDiceStandby()
+    {
+        DiceRollManager.Get().DiceStandby();
+    }
 }

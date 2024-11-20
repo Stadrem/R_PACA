@@ -94,10 +94,16 @@ public class DiceSpin : MonoBehaviour
 
         anim.SetTrigger("dicePop");
 
-        //물리 회전 멈추기
-        rb.angularVelocity = Vector3.zero;
-
         // 주사위의 최종 위치와 회전 설정
         rb.MoveRotation(finalRotation);
+
+        DiceStop();
+    }
+
+    public void DiceStop()
+    {
+        //물리 회전 멈추기
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 }

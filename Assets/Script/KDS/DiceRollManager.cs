@@ -169,6 +169,8 @@ public class DiceRollManager : MonoBehaviour
     bool success = false;
     bool critical = false;
 
+    bool diceStandby = false;
+
     /// <summary>
     /// Bool 반환, 성공 실패만 판별하는 탐색 전용 주사위 + 자체 계산 포함
     /// <para>최종 주사위 값 기반으로 피해량 결정</para>
@@ -409,6 +411,44 @@ public class DiceRollManager : MonoBehaviour
         DiceRollView(diceResults);
     }
 
+    public void DiceStandby()
+    {
+        if (!diceStandby)
+        {
+            ClearValue();
+
+            cameraCanvas.SetActive(true);
+
+            diceStandby = true;
+
+            //주사위 오브젝트풀 활성화
+            for (int i = 0; i < diceCount; i++)
+            {
+                //오브젝트 활성화
+                diceObjects[i].SetActive(true);
+
+                diceSpin[i].DiceStop();
+            }
+        }
+        else
+        {
+            ClearValue();
+
+            cameraCanvas.SetActive(false);
+
+            diceStandby = false;
+
+            //주사위 오브젝트풀 활성화
+            for (int i = 0; i < diceCount; i++)
+            {
+                //오브젝트 활성화
+                diceObjects[i].SetActive(false);
+
+                diceSpin[i].DiceStop();
+            }
+        }
+    }
+
     //주사위 값 랜덤
     int DiceRandomPick()
     {
@@ -488,6 +528,8 @@ public class DiceRollManager : MonoBehaviour
         // 종료 대기
         yield return ws;
 
+        diceStandby = false;
+
         // 마무리
         ClearValue();
 
@@ -500,19 +542,23 @@ public class DiceRollManager : MonoBehaviour
     //청소기
     void ClearValue()
     {
-        //저장된 값 초기화
-        diceResults.Clear();
-        diceResult = 0;
+        if (!diceStandby)
+        {
 
-        playerText.text = " ";
-        titleText.text = " ";
-        plusText.text = " ";
+            //저장된 값 초기화
+            diceResults.Clear();
+            diceResult = 0;
 
-        success = false;
-        critical = false;
+            playerText.text = " ";
+            titleText.text = " ";
+            plusText.text = " ";
 
-        canvas.SetActive(false);
+            success = false;
+            critical = false;
 
-        cameraCanvas.SetActive(false);
+            canvas.SetActive(false);
+
+            cameraCanvas.SetActive(false);
+        }
     }
 }
