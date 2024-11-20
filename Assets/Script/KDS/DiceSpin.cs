@@ -14,7 +14,7 @@ public class DiceSpin : MonoBehaviour
     //코루틴 변수
     private IEnumerator coroutine;
 
-    Vector3 halfSpin = new Vector3(-40, -90);
+    Vector3 halfSpin = new Vector3(-40, -90, -40);
 
     private void Awake()
     {
@@ -49,7 +49,7 @@ public class DiceSpin : MonoBehaviour
     //주사위 회전 시키기
     IEnumerator CoSpin(int num)
     {
-        rb.AddTorque(new Vector3(Random.Range(40,90), Random.Range(180, 360), Random.Range(30, 90)));
+        rb.AddTorque(new Vector3(Random.Range(120,160), Random.Range(180, 360), Random.Range(120, 160)));
 
         yield return ws;
 

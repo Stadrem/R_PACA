@@ -21,8 +21,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [Header("턴 UI")]
     public Button attackBtn;
     public Button defenseBtn;
-    public Button turnCompBtn;
-    public GameObject turnSilder;
 
     public int diceDamage;
 
@@ -40,7 +38,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        circularSlider = turnSilder.GetComponent<CircularSlider>();
         attackBtn.onClick.AddListener(OnClickAttack);
         defenseBtn.onClick.AddListener(OnClickDefense);
 
@@ -52,15 +49,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         }
     }
 
-    void Update()
-    {
-        if (isMyTurn && isMyTurnAction == true)
-        {
-            PerformAction();
-            DisableBatUI();
-
-        }
-    }
     private void PerformAction()
     {
         Debug.Log("턴 선택 행동 ~~");
@@ -71,9 +59,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         // 굴리는거 기다림
         StartCoroutine(WaitAndEndTurn());
-
-
-        isMyTurnAction = false;
+        DisableBatUI();
     }
 
     private IEnumerator WaitAndEndTurn()
@@ -84,17 +70,14 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (diceDamage > 0)
         {
             // 공격 성공
-            photonView.RPC("DiceAttackSuccess", RpcTarget.All, diceDamage);
-            photonView.RPC("UpdateEnemyHealth", RpcTarget.All, diceDamage);
+            print("공격 성공");
         }
         else
         {
-            // 공격 실패
-            photonView.RPC("DiceAttackFail", RpcTarget.All);
+            print("공격 실패");
         }
-
-        // diceDamage 초기화
         diceDamage = 0;
+        
         Debug.Log("턴 선택 행동 끝, 몬스터 턴");
         EndTurn(); // 턴 종료
     }
@@ -102,11 +85,9 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     void StartGame()
     {
         BeginTurn(currentTurnIndex);
-        //photonView.RPC("BeginTurn", RpcTarget.AllBuffered, currentTurnIndex);
 
     }
 
-    [PunRPC]
     void BeginTurn(int turnIndex)
     {
         currentTurnIndex = turnIndex;
@@ -117,13 +98,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (isMyTurn)
         {
             Debug.Log("내 턴");
+            SetActiveTrueBatUI();
             EnableBatUI();
         }
         else
         {
             Debug.Log("내 턴 아님");
-            // 선택지 버튼 비 활성화
-            DisableBatUI();
+            SetActiveFalseBatUI();
         }
     }
     public void EndTurn()
@@ -133,8 +114,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         isMyTurn = false;
 
         // 몬스터 턴 시작
-        BeginMonsterTurn();
-        //photonView.RPC("BeginMonsterTurn", RpcTarget.All);
+        photonView.RPC("BeginMonsterTurn", RpcTarget.All);
     }
 
     [PunRPC]
@@ -142,7 +122,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         Debug.Log("몬스터 턴 시작");
         // 버튼 비활성화
-        DisableBatUI();
         yield return new WaitForSeconds(3f);
         // 몬스터 행동 처리
         StartCoroutine(MonsterAction());
@@ -152,13 +131,11 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private IEnumerator MonsterAction()
     {
         Debug.Log("몬스터 행동");
-        BattleManager.Instance.enemyAnim.SetTrigger("Hit2");
-        Debug.Log("몬스터 행동끝");
-
         yield return new WaitForSeconds(2f);
 
+        Debug.Log("몬스터 행동끝");
+
         // 행동 후 턴 종료
-        EndMonsterTurn();
         photonView.RPC("EndMonsterTurn", RpcTarget.All);
     }
 
@@ -174,16 +151,16 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
     }
 
-
-
     public void OnClickAttack()
     {
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 1);
+        PerformAction();
     }
 
     public void OnClickDefense()
     {
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 2);
+        PerformAction();
     }
 
     [PunRPC]
@@ -193,19 +170,29 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     }
 
 
+    public void SetActiveTrueBatUI()
+    {
+        attackBtn.gameObject.SetActive(true);
+        defenseBtn.gameObject.SetActive(true);
+    }
+
+    public void SetActiveFalseBatUI()
+    {
+
+        attackBtn.gameObject.SetActive(false);
+        defenseBtn.gameObject.SetActive(false);
+    }
+
+
     public void EnableBatUI()
     {
-        circularSlider.StartDepletion();
         attackBtn.interactable = true;
         defenseBtn.interactable = true;
-        turnCompBtn.interactable = true;
     }
 
     public void DisableBatUI()
     {
-        circularSlider.ResetSlider();
         attackBtn.interactable = false;
         defenseBtn.interactable = false;
-        turnCompBtn.interactable = false;
     }
 }

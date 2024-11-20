@@ -120,7 +120,7 @@ public class AchievementManager : MonoBehaviour
             achievements[index].set.isUnlocked = true;
             Debug.Log($"업적 해제: {achievements[index].set.title}");
 
-            achievementUiManager.GetTitle(achievements[index].set.title);
+            achievementUiManager.GetTitle(achievements[index].set.title, achievements[index].set.description);
         }
 
         achievementUiManager.RefreshCards();

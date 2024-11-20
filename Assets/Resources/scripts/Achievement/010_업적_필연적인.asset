@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   set:
     title: "\uD544\uC5F0\uC801\uC778"
-    description: "\uC8FC\uC0AC\uC704 \uAD74\uB9BC\uC744 \uC5F0\uC18D 3\uBC88 \uC131\uACF5\uD558\uB2E4"
+    description: "\uC8FC\uC0AC\uC704 \uAD74\uB9BC\uC744 \uC5F0\uC18D 3\uBC88 \uC131\uACF5\uD558\uB2E4."
     isUnlocked: 0
     isEquipped: 0
     index: 10

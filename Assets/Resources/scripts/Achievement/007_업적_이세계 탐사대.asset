@@ -15,7 +15,7 @@ MonoBehaviour:
   set:
     title: "\uC774\uC138\uACC4 \uD0D0\uD5D8\uAC00"
     description: "\uCC98\uC74C\uC73C\uB85C \uC5D4\uB529 \uC2A4\uD06C\uB864\uC744
-      \uBCF4\uB2E4"
+      \uBCF4\uB2E4."
     isUnlocked: 0
     isEquipped: 0
     index: 7

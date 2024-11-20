@@ -25,6 +25,8 @@ public class AchievementUiManager : MonoBehaviour
 
     public TMP_Text Text_GetTitleName;
 
+    public TMP_Text Text_GetTitleDesc;
+
     public GameObject Canvas_GetTitle;
 
     public void CreateCards()
@@ -101,16 +103,19 @@ public class AchievementUiManager : MonoBehaviour
         selectCard.SetUp(true);
     }
 
-    public void GetTitle(string titlename)
+    //업적 획득 알림 타이틀
+    public void GetTitle(string titlename, string desc)
     {
-        StartCoroutine(CoGetTitle(titlename));
+        StartCoroutine(CoGetTitle(titlename, desc));
     }
 
-    public IEnumerator CoGetTitle(string titlename)
+    public IEnumerator CoGetTitle(string titlename, string desc)
     {
         SoundManager.Get().PlaySFX(7);
 
-        Text_GetTitleName.text = titlename;
+        Text_GetTitleName.text = "~ " + titlename + " ~";
+
+        Text_GetTitleDesc.text = "<color=green>" + desc + "</color>" + " 달성!";
 
         Canvas_GetTitle.SetActive(true);
 
