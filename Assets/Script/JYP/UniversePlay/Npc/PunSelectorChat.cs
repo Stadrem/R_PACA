@@ -32,6 +32,20 @@ namespace UniversePlay
         private NpcChatUIManager ChatUIManager => PlayUniverseManager.Instance.NpcChatUIManager;
         private PlayNpcManager NpcManager => PlayUniverseManager.Instance.NpcManager;
 
+        private bool isDiceRollReady = false;
+        private NpcReaction currentNpcReaction;
+        private void Update()
+        {
+            if (isDiceRollReady)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    RollDice(currentNpcReaction, NpcManager.currentInteractNpc.NpcName);
+                    isDiceRollReady = false;
+                }
+            }
+        }
+
         public void AddOption(string option)
         {
             photonView.RPC(nameof(RPC_AddOption), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.NickName, option);
@@ -129,48 +143,59 @@ namespace UniversePlay
                     break;
                 case EReactionType.Dice:
                     ViewModel.AddHUDState(EHUDState.Dice);
-                    int stat;
-                    if (reaction.BonusMessage == "strength")
-                    {
-                        stat = PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.strength;
-                    }
-                    else
-                    {
-                        stat = 0;
-                    }
-
-                    DiceRollManager.Get().onDiceRollFinished = () =>
-                    {
-                        this.DoAfterSeconds(3, () => { ViewModel.RemoveHUDState(EHUDState.Dice); });
-                    };
-                    DiceRollManager.Get().BattleDiceRoll(stat);
-                    var d1 = DiceRollManager.Get().diceResults[0];
-                    var d2 = DiceRollManager.Get().diceResults[1];
-                    StartCoroutine(
-                        PlayProgressApi.CheckDice(
-                            PlayUniverseManager.Instance.roomNumber,
-                            new DiceResult(
-                                firstDiceNumber: d1,
-                                secondDiceNumber: d2
-                            ),
-                            (res) =>
-                            {
-                                Debug.Log($"Dice Result : {res.IsSuccess}");
-                                if (res.IsSuccess)
-                                {
-                                    OnNpcReaction(npcName, res.value);
-                                }
-                                else
-                                {
-                                    Debug.LogError($"Something Wrong When On Dice Result: {res.error}");
-                                }
-                            }
-                        )
-                    );
+                    DiceRollManager.Get().DiceStandby();
+                    currentNpcReaction = reaction;
+                    isDiceRollReady = true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void RollDice(NpcReaction reaction, string npcName)
+        {
+            int stat;
+            if (reaction.BonusMessage == "strength")
+            {
+                stat = PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.strength;
+            }
+            else
+            {
+                stat = 0;
+            }
+
+            DiceRollManager.Get().onDiceRollFinished = () =>
+            {
+                this.DoAfterSeconds(3,
+                    () =>
+                    {
+                        ViewModel.RemoveHUDState(EHUDState.Dice);
+                    });
+            };
+            DiceRollManager.Get().SearchDiceRoll(stat);
+            var d1 = DiceRollManager.Get().diceResults[0];
+            var d2 = DiceRollManager.Get().diceResults[1];
+            StartCoroutine(
+                PlayProgressApi.CheckDice(
+                    PlayUniverseManager.Instance.roomNumber,
+                    new DiceResult(
+                        firstDiceNumber: d1,
+                        secondDiceNumber: d2
+                    ),
+                    (res) =>
+                    {
+                        Debug.Log($"Dice Result : {res.IsSuccess}");
+                        if (res.IsSuccess)
+                        {
+                            OnNpcReaction(npcName, res.value);
+                        }
+                        else
+                        {
+                            Debug.LogError($"Something Wrong When On Dice Result: {res.error}");
+                        }
+                    }
+                )
+            );
         }
     }
 }

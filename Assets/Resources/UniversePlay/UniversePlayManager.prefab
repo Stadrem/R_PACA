@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1702,7 +1702,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 227}
-  m_SizeDelta: {x: 760, y: 50}
+  m_SizeDelta: {x: 726, y: 60}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6859227412107773412
 CanvasRenderer:
@@ -1732,8 +1732,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD589\uB3D9\uC5D0 \uB300\uD55C \uD310\uC815\uC744 \uC704\uD574 \uC8FC\uC0AC\uC704\uB97C
-    \uAD74\uB824\uC8FC\uC138\uC694!"
+  m_text: "<color=#102301><b>\uC2A4\uD398\uC774\uC2A4\uBC14</b></color>\uB97C \uB20C\uB7EC\n\uD310\uC815\uC744
+    \uC704\uD55C \uC8FC\uC0AC\uC704\uB97C \uAD74\uB824\uC8FC\uC138\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 86621367ec418b54fbd39176c5a2d3dc, type: 2}
   m_sharedMaterial: {fileID: 4916857557503908562, guid: 86621367ec418b54fbd39176c5a2d3dc,
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 3
