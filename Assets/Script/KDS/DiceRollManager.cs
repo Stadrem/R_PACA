@@ -7,6 +7,8 @@ using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+//주사위의 카메라 생성 위치는 y -200에 있습니다.
 public class DiceRollManager : MonoBehaviour
 {
     //싱글톤
@@ -22,11 +24,12 @@ public class DiceRollManager : MonoBehaviour
             {
                 // 프리팹 생성
                 GameObject newInstance = Instantiate(prefabToInstantiate);
+
                 instance = newInstance.GetComponent<DiceRollManager>();
 
                 if (instance == null)
                 {
-                    Debug.LogError("DiceRollManager 컴포넌트를 찾을 수 없습니다!");
+                    Debug.LogError("DiceRollManagerV2 컴포넌트를 찾을 수 없습니다!");
                     return null;
                 }
             }
@@ -52,29 +55,78 @@ public class DiceRollManager : MonoBehaviour
 
         diceObjects = new GameObject[diceCount];
 
-        diceRb = new Rigidbody[diceCount];
+        diceSpin = new DiceSpin[diceCount];
 
-        for (int i = 0; i < diceCount; i++)
+        ws = new WaitForSeconds(spinTime);
+
+        if (diceCount > 0)
         {
-            diceObjects[i] = Instantiate(dicePrefab, transform);
-            diceObjects[i].transform.parent = transform;
-            diceRb[i] = diceObjects[i].GetComponent<Rigidbody>();
-            diceObjects[i].SetActive(false);
+            for (int i = 0; i < diceCount; i++)
+            {
+                diceObjects[i] = Instantiate(dicePrefab, transform);
+                diceObjects[i].transform.parent = transform;
+
+                diceSpin[i] = diceObjects[i].GetComponent<DiceSpin>();
+
+                diceSpin[i].GetSettings(spinTime);
+
+                diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + i * 1.5f, 0, 0);
+
+                diceObjects[i].SetActive(false);
+            }
+
+            // 카메라를 주사위 중심으로 이동
+            AdjustCameraToCenter(diceObjects, renderCamera);
+
+        }
+      ClearValue();
+    }
+
+    //렌더 텍스처 카메라의 위치를 주사위들의 위치 중심으로 설정
+    void AdjustCameraToCenter(GameObject[] diceObjects, Camera camera)
+    {
+        float centerX = GetCenterX(diceObjects);
+
+        // 카메라의 새로운 위치 설정
+        Vector3 newCameraPosition = new Vector3(centerX, camera.transform.localPosition.y, camera.transform.localPosition.z);
+        camera.transform.localPosition = newCameraPosition;
+    }
+
+    //주사위 전용 카메라 위치 설정
+    float GetCenterX(GameObject[] diceObjects)
+    {
+        float totalX = 0;
+        int activeCount = 0;
+
+        foreach (var dice in diceObjects)
+        {
+            totalX += dice.transform.position.x;
+            activeCount++;
         }
 
-      ClearValue();
+        return activeCount > 0 ? totalX / activeCount : 0;
     }
 
     //주사위 프리팹
     public GameObject dicePrefab;
 
+    //주사위 렌더 텍스처 카메라
+    public Camera renderCamera;
+
     //오브젝트풀 생성
     GameObject[] diceObjects;
 
-    Rigidbody[] diceRb;
+    //주사위의 회전 스크립트
+    DiceSpin[] diceSpin;
 
     //생성할 주사위 갯수
     public int diceCount = 2;
+
+    //전체 회전 시간
+    public float spinTime = 1.5f;
+
+    //new 생성 안하려고 고정시켜놓음
+    WaitForSeconds ws;
 
     // 주사위 결과 저장 리스트
     public List<int> diceResults = new List<int>(); 
@@ -82,66 +134,68 @@ public class DiceRollManager : MonoBehaviour
     //결과값 합산
     int diceResult;
 
-    public LayerMask layerMask;
-
-    // 레이캐스트가 도달할 최대 거리
-    float maxRayDistance = 1000f; 
-
-    //적정값 입력
-    float rollDuration = 0.7f; // 주사위가 굴러가는 시간
-
+    //결과창 표시 ui
     public GameObject canvas;
-
+    public GameObject cameraCanvas;
     public TMP_Text playerText;
-
-    public TMP_Text diceText;
-
     public TMP_Text titleText;
-
     public TMP_Text plusText;
 
     //코루틴 변수
     private IEnumerator coroutine;
 
+    //주사위 생성 위치
     public Transform createPoint;
 
     //기본 공격력 값
-    int baseAttack = 6;
+    public int baseAttack = 6;
 
-    public bool autoPosition = true;
+    //박진영이 추가한 콜백 기능..?
     public Action onDiceRollFinished = null;
 
+    //업적 전용 변수
     int failSum = 0;
 
-    //성공 실패만 판별하는 탐색 전용 주사위
+    /// <summary>
+    /// Bool 반환, 성공 실패만 판별하는 탐색 전용 주사위 + 자체 계산 포함
+    /// <para>최종 주사위 값 기반으로 피해량 결정</para>
+    /// <para>6 이하는 실패</para>
+    /// <para>7 이상은 성공</para>
+    /// <para>능력치 int 값 입력, 싫으면 -1 입력</para>
+    /// </summary>
+    /// <param name="stat">연산할 능력치, 능력치 없으면 -1 입력</param>
+    /// <returns></returns>
     public bool SearchDiceRoll(int stat)
     {
         //텍스트랑 오브젝트 초기화
         ClearValue();
 
-        //최종 결과값 초기화
+        //최종 성공 실패 여부 결과값 초기화
         bool result = false;
 
+        //랜덤 결과 연산
         int dicePick = DiceRandomPick();
 
-        //주사위 랜덤 값 + 보정값
-        int sumDice = dicePick + AbilityCorrection(stat, dicePick);
+        //주사위 랜덤 값 + 능력치 보정값
+        int sumDice;
+        sumDice = dicePick + AbilityCorrection(stat, dicePick);
 
-        //최종 주사위 값 기반으로 피해량 결정
-        //6 이하는 실패
-        //7 이상은 성공
-        if (sumDice >= 7) 
+        //성공 실패 여부
+        if (sumDice >= 7)
         {
             result = true;
         }
 
-        //성공 실패 여부 표시
+        //성공 실패 여부 텍스트 표시
         if (result)
         {
             titleText.text = "<size=75><color=red>성공</color></size>";
+
+            //업적 달성 전용
             failSum ++;
             if(failSum == 3)
             {
+                //필연적인
                 AchievementManager.Get().UnlockAchievement(10);
                 failSum = 0;
             }
@@ -149,21 +203,35 @@ public class DiceRollManager : MonoBehaviour
         else
         {
             titleText.text = "<size=75><color=blue>실패</color></size>";
-            failSum --;
+
+            //업적 달성 전용
+            failSum--;
             if (failSum == -3)
             {
+                //아 눌렀다고 업적
                 AchievementManager.Get().UnlockAchievement(9);
                 failSum = 0;
             }
         }
 
         //주사위 굴리기 비주얼
-        DiceRollView();
+        DiceRollView(diceResults);
 
+        //성공 실패 여부 반환
         return result;
     }
 
-    //전투 전용 주사위
+    /// <summary>
+    /// int 데미지 값을 반환, 전투 전용 주사위  + 자체 계산 포함
+    /// <para>최종 주사위 값 기반으로 피해량 결정</para>
+    /// <para>3 이하는 0%</para>
+    /// <para>4~6은 50 %</para>
+    /// <para>7~11은 100 %</para>
+    /// <para>12 이상은 200 %</para>
+    /// <para>능력치 int 값 입력, 싫으면 -1 입력</para>
+    /// </summary>
+    /// <param name="stat">연산할 능력치, 능력치 없으면 -1 입력</param>
+    /// <returns></returns>
     public int BattleDiceRoll(int stat)
     {
         //텍스트랑 오브젝트 초기화
@@ -172,16 +240,14 @@ public class DiceRollManager : MonoBehaviour
         //최종 결과값 초기화
         int result = 0;
 
+        //랜덤 결과 연산
         int dicePick = DiceRandomPick();
 
-        //주사위 랜덤 값 + 보정값
-        int sumDice = dicePick + AbilityCorrection(stat, dicePick);
+        //주사위 랜덤 값 + 능력치 보정값
+        int sumDice;
+        sumDice = dicePick + AbilityCorrection(stat, dicePick);
 
         //최종 주사위 값 기반으로 피해량 결정
-        //3 이하는 0%
-        //4~6은 50 %
-        //7~11은 100 %
-        //12 이상은 200 %
         if (sumDice >= 4 && sumDice <= 6)
         {
             result = (int)(baseAttack * 0.5f);
@@ -197,13 +263,16 @@ public class DiceRollManager : MonoBehaviour
             result = baseAttack * 2;
             print("200% 피해!");
 
+            //힘세고 강한 업적
             AchievementManager.Get().UnlockAchievement(4);
         }
         else
         {
+            //손이 미끄러진 업적
             AchievementManager.Get().UnlockAchievement(6);
         }
 
+        //공격 결과에 따른 폰트 설정
         if(result == 12)
         {
             titleText.text = "<size=75><color=red>공격력 " + result + "!</color></size>";
@@ -218,55 +287,62 @@ public class DiceRollManager : MonoBehaviour
         }
 
         //주사위 굴리기 비주얼
-        DiceRollView();
+        DiceRollView(diceResults);
 
+        //데미지 값 반환
         return result;
     }
 
     //능력치 보정 함수
     int AbilityCorrection(int stat, int dicePick)
     {
-        //보정값 기본값
-        int plusDice = -2;
+        //-1은 능력치 없는걸로 판단
+        if(stat == -1)
+        {
+            //보정값 기본값
+            int plusDice = 0;
 
-        //함수 int값에 보정할 능력치 입력 (0~9)
-        //0~1: -2 / 2~3: -1 / 4~5: 0 / 6~7: +1 / 8이상: +2
-        if (stat == 2 || stat == 3)
-        {
-            plusDice = -1;
-        }
-        else if (stat == 4 || stat == 5)
-        {
-            plusDice = 0;
-        }
-        else if (stat == 6 || stat == 7)
-        {
-            plusDice = 1;
-        }
-        else if (stat >= 8)
-        {
-            plusDice = 2;
-        }
+            plusText.text = "주사위: " + dicePick;
 
-        plusText.text = "주사위: " + dicePick + "<size=40><color=red>+" + plusDice + "</color></size>";
+            //보정 값 반환!
+            return plusDice;
+        }
+        else
+        {
+            //보정값 기본값
+            int plusDice = -2;
 
-        return plusDice;
+            //함수 int값에 보정할 능력치 입력 (0~9)
+            //0~1: -2 / 2~3: -1 / 4~5: 0 / 6~7: +1 / 8이상: +2
+            if (stat == 2 || stat == 3)
+            {
+                plusDice = -1;
+            }
+            else if (stat == 4 || stat == 5)
+            {
+                plusDice = 0;
+            }
+            else if (stat == 6 || stat == 7)
+            {
+                plusDice = 1;
+            }
+            else if (stat >= 8)
+            {
+                plusDice = 2;
+            }
+
+            plusText.text = "주사위: " + dicePick + "<size=40><color=red>+" + plusDice + "</color></size>";
+
+            //보정 값 반환!
+            return plusDice;
+        }
     }
 
-    //주사위 값 랜덤
-    int DiceRandomPick()
-    {
-        //1~6 무작위값
-        for (int i = 0; i < diceCount; i++)
-        {
-            diceResults.Add(Random.Range(1, 7));
-        }
-
-        //나온 값 합산
-        return diceResult = diceResults.Sum();
-    }
-
-    // 단순 굴리기 용도
+    /// <summary>
+    /// 어디선가 값을 가져올때 사용하는 주사위 굴림 함수 1
+    /// </summary>
+    /// <param name="diceA">1번째 주사위 눈에 띄울 값</param>
+    /// <param name="diceB">2번째 주사위 눈에 띄울 값</param>
     public void DiceRoll(int diceA, int diceB)
     {
         //텍스트랑 오브젝트 초기화
@@ -278,14 +354,20 @@ public class DiceRollManager : MonoBehaviour
         //나온 값 합산
         diceResult = diceResults.Sum();
 
-        titleText.text = "";
+        titleText.text = "주사위 값";
+
+        plusText.text = diceA + ", " + diceB;
 
         //주사위 굴리기 비주얼
-        DiceRollView();
+        DiceRollView(diceResults);
     }
 
-
-    //백엔드 주사위 굴리기
+    /// <summary>
+    /// 어디선가 값을 가져올때 사용하는 주사위 굴림 함수 2
+    /// </summary>
+    /// <param name="diceA">1번째 주사위 눈에 띄울 값</param>
+    /// <param name="diceB">2번째 주사위 눈에 띄울 값</param>
+    /// <param name="result">성공, 실패 여부</param>
     public void DiceRoll(int diceA, int diceB, bool result)
     {
         //텍스트랑 오브젝트 초기화
@@ -305,65 +387,51 @@ public class DiceRollManager : MonoBehaviour
             titleText.text = "성공";
         }
 
+        plusText.text = diceA + ", " + diceB;
+
         //주사위 굴리기 비주얼
-        DiceRollView();
+        DiceRollView(diceResults);
     }
 
-
-    //int 값으로 반환
-    public void DiceRollView() 
+    //주사위 값 랜덤
+    int DiceRandomPick()
     {
+        //1~6 무작위값
+        for (int i = 0; i < diceCount; i++)
+        {
+            diceResults.Add(Random.Range(1, 7));
+        }
+
+        //나온 값 합산
+        return diceResult = diceResults.Sum();
+    }
+
+    //코루틴 시작
+    public void DiceRollView(List<int> num) 
+    {
+        //렌더 텍스처 캔버스 켜기
+        cameraCanvas.SetActive(true);
+
+        //주사위 굴림 효과음 재생
         SoundManager.Get().PlaySFX(0);
 
+        //사보타지 업적
         if (diceResults[0] == 1 && diceResults[1] == 1)
         {
             AchievementManager.Get().UnlockAchievement(11);
         }
 
-        // 카메라 중심에서 레이캐스트 발사
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-
-        RaycastHit hit; // 충돌 정보를 저장할 변수
-
-        //오토 포지션 체크 되어있으면, 카메라 위치 변경때마다 위치 갱신, 아니라면, 첫 위치 그대로 생성
-        if (autoPosition)
-        {
-            // 레이캐스트가 충돌했는지 확인
-            if (Physics.Raycast(ray, out hit, maxRayDistance, layerMask))
-            {
-                // 충돌 지점의 월드 좌표
-                Vector3 hitPoint = hit.point;
-
-                transform.position = new Vector3(hitPoint.x, hitPoint.y + 1.0f, hitPoint.z);
-            }
-            else
-            {
-                // 레이캐스트가 아무 오브젝트와도 충돌하지 않았을 때
-                transform.position = new Vector3(0, 0, 0);
-                print("없음");
-            }
-        }
-
         //주사위 오브젝트풀 활성화
         for (int i = 0; i < diceCount; i++)
         {
-            diceRb[i].velocity = Vector3.zero;
-            diceRb[i].angularVelocity = Vector3.zero;
-
+            //오브젝트 활성화
             diceObjects[i].SetActive(true);
 
-            //등장 위치 무작위
-            diceObjects[i].transform.position = new Vector3(createPoint.position.x + (i*1.5f), createPoint.position.y, createPoint.position.z);
-            //diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x, createPoint.position.y, createPoint.position.z * Random.Range(0.8f, 1.1f));
-
-            //회전 값 무작위
-            diceRb[i].AddTorque(new Vector3(120 * Random.Range(1.6f, 1.9f), 60 * Random.Range(1.6f, 1.9f)));
+            //주사위에 붙어있는 스핀 함수 활성화
+            diceSpin[i].SpinStart(num[i]);
         }
 
-        print(diceCount + "D" + diceResult);
-
-        diceText.text = diceCount + "D" + diceResult;
-
+        //코루틴 초기화
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
@@ -379,18 +447,16 @@ public class DiceRollManager : MonoBehaviour
     private IEnumerator SetDiceResultsAfterRoll(int diceCount)
     {
         // 주사위가 굴러가는 시간을 기다림
-        yield return new WaitForSeconds(rollDuration);
+        yield return ws;
 
         canvas.SetActive(true);
 
-        // 주사위의 결과에 맞게 회전 설정
-        for (int i = 0; i < diceCount; i++)
-        {
-            SetDiceResult(diceResults[i], diceRb[i]);
-        }
-
-        yield return new WaitForSeconds(3);
         onDiceRollFinished?.Invoke();
+
+        SoundManager.Get().PlaySFX(4, 0.3f);
+
+        yield return ws;
+
         ClearValue();
 
         for (int j = 0; j < diceCount; j++)
@@ -399,46 +465,7 @@ public class DiceRollManager : MonoBehaviour
         }
     }
 
-    //주사위 회전 함수
-    public void SetDiceResult(int result, Rigidbody rb)
-    {
-        Quaternion finalRotation;
-
-        switch (result)
-        {
-            //주사위의 눈에 맞는 회전값
-            case 1:
-                finalRotation = Quaternion.Euler(-90, 0, 0);  
-                break;
-            case 2:
-                finalRotation = Quaternion.Euler(0, 0, 0); 
-                break;
-            case 3:
-                finalRotation = Quaternion.Euler(0, 0, -90); 
-                break;
-            case 4:
-                finalRotation = Quaternion.Euler(0, 0, 90); 
-                break;
-            case 5:
-                finalRotation = Quaternion.Euler(0, 0, -180); 
-                break;
-            case 6:
-                finalRotation = Quaternion.Euler(90, 0, 0);
-                break;
-            default:
-                finalRotation = Quaternion.Euler(-90, 0, 0);
-                break;
-        }
-
-        //물리 회전 멈추기
-        rb.angularVelocity = Vector3.zero;
-
-        // 주사위의 최종 위치와 회전 설정
-        rb.MoveRotation(finalRotation);
-
-        SoundManager.Get().PlaySFX(4, 0.3f);
-    }
-
+    //청소기
     void ClearValue()
     {
         //저장된 값 초기화
@@ -448,8 +475,9 @@ public class DiceRollManager : MonoBehaviour
         playerText.text = " ";
         titleText.text = " ";
         plusText.text = " ";
-        diceText.text = " ";
 
         canvas.SetActive(false);
+
+        cameraCanvas.SetActive(false);
     }
 }
