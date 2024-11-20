@@ -577,7 +577,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "99\uC0B4\uC5D0 \uACF0\uC744 \uC7A1\uC740"
+  m_text: "99999\uC0B4\uC5D0 \uACF0\uC744 \uC7A1\uC740"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d00cbcb6d3acd2741882dd0970df8690, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f2b37429921408749991804f81953a39, type: 2}
@@ -1288,6 +1288,7 @@ MonoBehaviour:
     sprite: {fileID: 0}
   selectCard: {fileID: 1261793877047022392}
   Text_GetTitleName: {fileID: 1122841587885357096}
+  Text_GetTitleDesc: {fileID: 1633804193728767533}
   Canvas_GetTitle: {fileID: 1787207516069203126}
 --- !u!114 &850004217129314164
 MonoBehaviour:
@@ -1370,7 +1371,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCE6D\uD638\uB97C \uD68D\uB4DD\uD558\uC600\uC2B5\uB2C8\uB2E4!"
+  m_text: "\uC8FC\uC0AC\uC704 \uAD74\uB9BC\uC744 \uC5F0\uC18D 3\uBC88 \uC2E4\uD328\uD558\uB2E4.
+    \uB2EC\uC131!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 86621367ec418b54fbd39176c5a2d3dc, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 93f5af2b5aecbe84c85b4af632d67299, type: 2}
@@ -1397,12 +1399,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
+  m_fontSize: 26.65
   m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 40
   m_fontStyle: 3
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
