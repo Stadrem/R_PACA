@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,7 @@ using Data.Remote.Api;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
+using Utils;
 using ViewModels;
 using Random = UnityEngine.Random;
 
@@ -136,11 +138,10 @@ namespace UniversePlay
                     {
                         stat = 0;
                     }
+
                     DiceRollManager.Get().onDiceRollFinished = () =>
                     {
-                        
-                        ViewModel.RemoveHUDState(EHUDState.Dice); 
-                        
+                        this.DoAfterSeconds(3, () => { ViewModel.RemoveHUDState(EHUDState.Dice); });
                     };
                     DiceRollManager.Get().BattleDiceRoll(stat);
                     var d1 = DiceRollManager.Get().diceResults[0];
@@ -152,7 +153,18 @@ namespace UniversePlay
                                 firstDiceNumber: d1,
                                 secondDiceNumber: d2
                             ),
-                            (res) => { Debug.Log($"Dice Result : {res.IsSuccess}"); } 
+                            (res) =>
+                            {
+                                Debug.Log($"Dice Result : {res.IsSuccess}");
+                                if (res.IsSuccess)
+                                {
+                                    OnNpcReaction(npcName, res.value);
+                                }
+                                else
+                                {
+                                    Debug.LogError($"Something Wrong When On Dice Result: {res.error}");
+                                }
+                            }
                         )
                     );
                     break;
