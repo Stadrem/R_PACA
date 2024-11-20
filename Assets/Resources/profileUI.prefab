@@ -53,7 +53,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5851557550921027965
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1175,7 +1175,7 @@ MonoBehaviour:
   - {fileID: 4864760493140261646}
   - {fileID: 7226910914898662341}
   hp: {fileID: 6231206228273747015}
-  turnBlur: {fileID: 0}
+  turnBlur: {fileID: 312470429258716183}
 --- !u!1 &6440573281721853317
 GameObject:
   m_ObjectHideFlags: 0
