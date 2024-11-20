@@ -8,14 +8,17 @@ using UnityEngine.UI;
 
 public class AchievementUiManager : MonoBehaviour
 {
+    //매니저 받아오기
     private AchievementManager achievementManager;
 
     public GameObject titlePrefab;
 
     public GameObject contents;
 
+    //칭호 UI 카드 오브젝트
     public List<GameObject> cards = new List<GameObject>();
 
+    //칭호 UI 카드의 스크립트 받아오기
     public List<AchievementCards> achievementCards = new List<AchievementCards>();
 
     public AchievementSet selectAchievement;
@@ -29,6 +32,7 @@ public class AchievementUiManager : MonoBehaviour
 
     public GameObject Canvas_GetTitle;
 
+    //칭호 UI 카드 생성
     public void CreateCards()
     {
         achievementManager = GetComponent<AchievementManager>();
@@ -73,11 +77,7 @@ public class AchievementUiManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        //RefreshCards();
-    }
-
+    //카드 정보 갱신
     public void RefreshCards()
     {
         //생성되어있는 요소들 만큼 자식 오브젝트 생성
@@ -109,18 +109,24 @@ public class AchievementUiManager : MonoBehaviour
         StartCoroutine(CoGetTitle(titlename, desc));
     }
 
+    //업적 획득 알림 타이틀 코루틴
     public IEnumerator CoGetTitle(string titlename, string desc)
     {
+        //칭호 획득 효과음
         SoundManager.Get().PlaySFX(7);
 
+        //칭호 이름 가져오기
         Text_GetTitleName.text = "~ " + titlename + " ~";
 
+        //칭호 설명 가져오기
         Text_GetTitleDesc.text = "<color=green>" + desc + "</color>" + " 달성!";
 
+        //UI 활성화
         Canvas_GetTitle.SetActive(true);
 
         yield return new WaitForSeconds(3.0f);
 
+        //UI 비활성화
         Canvas_GetTitle.SetActive(false);
     }
 }
