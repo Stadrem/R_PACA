@@ -1,4 +1,4 @@
-﻿Shader "Custom/DiamondMaskShader"
+﻿Shader "Custom/HexagonMaskShader"
 {
     Properties
     {
@@ -43,11 +43,25 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 uv = i.uv - 0.5;
-                float mask = abs(uv.x) + abs(uv.y);
-                if (mask > 0.5) discard;
+                // 중심 이동 및 크기 조정
+                float2 uv = (i.uv - 0.5) * 2.0;
 
-                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
+                // 30도 회전을 적용하여 육각형의 방향을 바꿈
+                float angle = radians(60.0); // 60도 회전 (각진 부분을 위로)
+                float2 rotatedUV = float2(
+                    uv.x * cos(angle) - uv.y * sin(angle),
+                    uv.x * sin(angle) + uv.y * cos(angle)
+                );
+
+                // 육각형 마스크 계산 (크기 조정)
+                float2 absUV = abs(rotatedUV);
+                float mask = max(absUV.x * 0.5 + absUV.y * 0.8660254, absUV.x); // 0.8660254 = sqrt(3)/2
+
+                // 경계값 조정 (1.0은 육각형 크기, 크기를 더 조정하려면 이 값을 수정)
+                if (mask > 1.0) discard;
+
+                // 텍스처 샘플링 및 색상 적용
+                fixed4 col = tex2D(_MainTex, i.uv) * _Color; 
                 return col;
             }
             ENDCG

@@ -16,7 +16,8 @@ namespace Data.Remote
         {
             var reqDto = new ScenarioBackgroundCreateReqDto()
             {
-                WorldName = backgroundInfo.Name,
+                backgroundName = backgroundInfo.Name,
+                backgroundType = (int)backgroundInfo.Type,
                 isPortalEnable = false,
                 towardWorldPartId = -1
             };

@@ -39,6 +39,7 @@ namespace Data.Remote.Dtos
             {
                 ID = dto.partId,
                 Name = dto.partName,
+                Type = (EBackgroundPartType)dto.backgroundType,
                 UniverseId = universeId,
                 TowardBackground = towards
             };
@@ -70,14 +71,16 @@ namespace Data.Remote.Dtos
 
 
             avatars.GroupBy(
-                (avatar) => avatar.worldId
-            ).Where((t) => t.Key != -1)
+                    (avatar) => avatar.worldId
+                ).Where((t) => t.Key != -1)
                 .ToList()
-                .ForEach((t) =>
-                {
-                    var part = backgroundParts.First((part) => part.ID == t.Key);
-                    part.NpcList = t.Select((avatar) => avatar.ToNpcInfo()).ToList();
-                });
+                .ForEach(
+                    (t) =>
+                    {
+                        var part = backgroundParts.First((part) => part.ID == t.Key);
+                        part.NpcList = t.Select((avatar) => avatar.ToNpcInfo()).ToList();
+                    }
+                );
 
             return backgroundParts;
         }
