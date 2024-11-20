@@ -814,6 +814,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 517572027249331905, guid: 222325a833e2fd847b4a0400bdc66b19,
+        type: 3}
+      propertyPath: dice
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 916638398074987028, guid: 222325a833e2fd847b4a0400bdc66b19,
         type: 3}
       propertyPath: m_AnchorMax.y

@@ -6,6 +6,8 @@ public class DiceSpin : MonoBehaviour
 {
     Rigidbody rb;
 
+    Animator anim;
+
     //코루틴 대기 시간
     WaitForSeconds ws;
 
@@ -17,6 +19,8 @@ public class DiceSpin : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        anim = GetComponent<Animator>();
     }
 
     //회전 시작
@@ -87,6 +91,8 @@ public class DiceSpin : MonoBehaviour
                 finalRotation = Quaternion.Euler(-90, 0, 0);
                 break;
         }
+
+        anim.SetTrigger("dicePop");
 
         //물리 회전 멈추기
         rb.angularVelocity = Vector3.zero;

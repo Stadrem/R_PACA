@@ -35,7 +35,7 @@ public class DiceRollManager : MonoBehaviour
             }
             else
             {
-                print("없는데요?");
+                print("걍 없는데요?");
                 return null;
             }
         }
@@ -53,25 +53,34 @@ public class DiceRollManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //배열 크기 선언
         diceObjects = new GameObject[diceCount];
-
         diceSpin = new DiceSpin[diceCount];
 
+        //new 반복 안하려고 미리 선언
         ws = new WaitForSeconds(spinTime);
 
+        //오브젝트 풀 생성
         if (diceCount > 0)
         {
             for (int i = 0; i < diceCount; i++)
             {
+                //주사위 프리팹 가져오기
                 diceObjects[i] = Instantiate(dicePrefab, transform);
+
+                //자식으로 만들기
                 diceObjects[i].transform.parent = transform;
 
+                //스크립트 가져오기
                 diceSpin[i] = diceObjects[i].GetComponent<DiceSpin>();
 
+                //회전 시간 동기화
                 diceSpin[i].GetSettings(spinTime);
 
+                //생성 위치
                 diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + i * 1.5f, 0, 0);
 
+                //만들었으니 감춰
                 diceObjects[i].SetActive(false);
             }
 
@@ -156,6 +165,10 @@ public class DiceRollManager : MonoBehaviour
     //업적 전용 변수
     int failSum = 0;
 
+    //공격 실패 여부 bool
+    bool success = false;
+    bool critical = false;
+
     /// <summary>
     /// Bool 반환, 성공 실패만 판별하는 탐색 전용 주사위 + 자체 계산 포함
     /// <para>최종 주사위 값 기반으로 피해량 결정</para>
@@ -170,9 +183,6 @@ public class DiceRollManager : MonoBehaviour
         //텍스트랑 오브젝트 초기화
         ClearValue();
 
-        //최종 성공 실패 여부 결과값 초기화
-        bool result = false;
-
         //랜덤 결과 연산
         int dicePick = DiceRandomPick();
 
@@ -183,17 +193,13 @@ public class DiceRollManager : MonoBehaviour
         //성공 실패 여부
         if (sumDice >= 7)
         {
-            result = true;
-        }
+            success = true;
 
-        //성공 실패 여부 텍스트 표시
-        if (result)
-        {
             titleText.text = "<size=75><color=red>성공</color></size>";
 
             //업적 달성 전용
-            failSum ++;
-            if(failSum == 3)
+            failSum++;
+            if (failSum == 3)
             {
                 //필연적인
                 AchievementManager.Get().UnlockAchievement(10);
@@ -202,6 +208,8 @@ public class DiceRollManager : MonoBehaviour
         }
         else
         {
+            success = false;
+
             titleText.text = "<size=75><color=blue>실패</color></size>";
 
             //업적 달성 전용
@@ -218,7 +226,7 @@ public class DiceRollManager : MonoBehaviour
         DiceRollView(diceResults);
 
         //성공 실패 여부 반환
-        return result;
+        return success;
     }
 
     /// <summary>
@@ -250,40 +258,44 @@ public class DiceRollManager : MonoBehaviour
         //최종 주사위 값 기반으로 피해량 결정
         if (sumDice >= 4 && sumDice <= 6)
         {
+            //50% 피해
             result = (int)(baseAttack * 0.5f);
-            print("50% 피해!");
+            success = false;
+
+            //50% 피해
+            titleText.text = "<color=blue>공격력 " + result + "..</color>";
         }
         else if (sumDice >= 7 && sumDice <= 11)
         {
+            //100% 피해
             result = baseAttack;
-            print("100% 피해!");
+            success = true;
+
+            //일반 공격
+            titleText.text = "공격력 " + result;
         }
         else if (sumDice >= 12)
         {
+            //200% 피해
             result = baseAttack * 2;
-            print("200% 피해!");
+            success = true;
+            critical = true;
+
+            //치명타!
+            titleText.text = "<size=75><color=red>공격력 " + result + "!</color></size>";
 
             //힘세고 강한 업적
             AchievementManager.Get().UnlockAchievement(4);
         }
         else
         {
+            success = false;
             //손이 미끄러진 업적
-            AchievementManager.Get().UnlockAchievement(6);
-        }
 
-        //공격 결과에 따른 폰트 설정
-        if(result == 12)
-        {
-            titleText.text = "<size=75><color=red>공격력 " + result + "!</color></size>";
-        }
-        else if(result == 0)
-        {
+            //공격 완전 실패
             titleText.text = "<size=55><color=blue>" + "공격 실패..." + "!</color></size>";
-        }
-        else
-        {
-            titleText.text = "공격력 " + result;
+
+            AchievementManager.Get().UnlockAchievement(6);
         }
 
         //주사위 굴리기 비주얼
@@ -358,6 +370,8 @@ public class DiceRollManager : MonoBehaviour
 
         plusText.text = diceA + ", " + diceB;
 
+        success = true;
+
         //주사위 굴리기 비주얼
         DiceRollView(diceResults);
     }
@@ -373,6 +387,8 @@ public class DiceRollManager : MonoBehaviour
         //텍스트랑 오브젝트 초기화
         ClearValue();
 
+        success = result;
+
         diceResults.Add(diceA);
         diceResults.Add(diceB);
 
@@ -382,7 +398,7 @@ public class DiceRollManager : MonoBehaviour
         titleText.text = "실패";
 
         //성공 실패 여부 표시
-        if (result)
+        if (success)
         {
             titleText.text = "성공";
         }
@@ -449,14 +465,30 @@ public class DiceRollManager : MonoBehaviour
         // 주사위가 굴러가는 시간을 기다림
         yield return ws;
 
+        //결과창 UI 켜기
         canvas.SetActive(true);
 
+        //박진영 콜백 기능..?
         onDiceRollFinished?.Invoke();
 
-        SoundManager.Get().PlaySFX(4, 0.3f);
+        //효과음 재생
+        if (success && critical)
+        {
+            SoundManager.Get().PlaySFX(9, 0.5f);
+        }
+        else if (success)
+        {
+            SoundManager.Get().PlaySFX(4, 0.3f);
+        }
+        else
+        {
+            SoundManager.Get().PlaySFX(8, 0.3f);
+        }
 
+        // 종료 대기
         yield return ws;
 
+        // 마무리
         ClearValue();
 
         for (int j = 0; j < diceCount; j++)
@@ -475,6 +507,9 @@ public class DiceRollManager : MonoBehaviour
         playerText.text = " ";
         titleText.text = " ";
         plusText.text = " ";
+
+        success = false;
+        critical = false;
 
         canvas.SetActive(false);
 
