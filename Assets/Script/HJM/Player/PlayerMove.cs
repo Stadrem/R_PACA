@@ -34,6 +34,8 @@ public class PlayerMove : MonoBehaviourPun
     // 보정 속력
     public float lerpSpeed = 50.0f;
 
+
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -46,8 +48,8 @@ public class PlayerMove : MonoBehaviourPun
         // 내 플레이어라면 카메라를 활성화하자
         cam.SetActive(photonView.IsMine);
 
-        PhotonNetwork.SendRate = 30; // 초당 전송 속도
-        PhotonNetwork.SerializationRate = 10; // 초당 동기화 호출 횟수
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 30;
     }
 
     void AssignInputs()

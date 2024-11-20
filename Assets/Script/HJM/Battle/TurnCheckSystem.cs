@@ -101,7 +101,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     void StartGame()
     {
-        photonView.RPC("BeginTurn", RpcTarget.AllBuffered, currentTurnIndex);
+        BeginTurn(currentTurnIndex);
+        //photonView.RPC("BeginTurn", RpcTarget.AllBuffered, currentTurnIndex);
 
     }
 
@@ -132,7 +133,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         isMyTurn = false;
 
         // 몬스터 턴 시작
-        photonView.RPC("BeginMonsterTurn", RpcTarget.All);
+        BeginMonsterTurn();
+        //photonView.RPC("BeginMonsterTurn", RpcTarget.All);
     }
 
     [PunRPC]
@@ -156,6 +158,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2f);
 
         // 행동 후 턴 종료
+        EndMonsterTurn();
         photonView.RPC("EndMonsterTurn", RpcTarget.All);
     }
 
@@ -167,7 +170,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
 
             print("currentTurnIndex: " + currentTurnIndex);
-
+            
             photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
     }
 

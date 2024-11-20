@@ -57,7 +57,7 @@ public class UserStats : MonoBehaviourPun
     //     }
     // }
 
-    private void RegisterPlayerStats()
+    public void RegisterPlayerStats()
     {
         userNickname = photonView.Owner.NickName;
 
