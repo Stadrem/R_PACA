@@ -218,6 +218,14 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         photonView.RPC("BeginTurn", RpcTarget.All, 0); // 첫 번째 플레이어의 턴으로 복귀
     }
 
+    [PunRPC]
+    public void UpdateSelectImage(int playerIndex, int selection)
+    {
+        profiles[playerIndex].GetComponent<ProfileSet>().SetSelectImage(selection);
+    }
+
+
+
     public void EnableBatUI()
     {
         attackBtn.interactable = true;
