@@ -11,21 +11,22 @@ public class AchievementUiManager : MonoBehaviour
     //매니저 받아오기
     private AchievementManager achievementManager;
 
+    [Header("칭호 카드 프리팹")]
     public GameObject titlePrefab;
 
+    [Header("칭호 카드 넣을 콘텐츠 박스")]
     public GameObject contents;
 
-    //칭호 UI 카드 오브젝트
-    public List<GameObject> cards = new List<GameObject>();
-
-    //칭호 UI 카드의 스크립트 받아오기
+    [Header("생성된 칭호 카드의 스크립트 배열")]
     public List<AchievementCards> achievementCards = new List<AchievementCards>();
 
+    [Header("선택된 칭호의 데이터")]
     public AchievementSet selectAchievement;
 
-    //[선택 중]을 위한 카드 한 장
+    [Header("선택된 칭호를 [선택 중]")]
     public AchievementCards selectCard;
 
+    [Header("칭호 획득 알림 관련")]
     public TMP_Text Text_GetTitleName;
 
     public TMP_Text Text_GetTitleDesc;
@@ -46,14 +47,17 @@ public class AchievementUiManager : MonoBehaviour
         //생성되어있는 요소들 만큼 자식 오브젝트 생성
         for (int i = 0; i < achievementManager.achievements.Count; i++)
         {
-            cards.Add(Instantiate(titlePrefab));
+            GameObject obj = Instantiate(titlePrefab);
 
-            cards[i].transform.SetParent(contents.transform, false);
+            obj.transform.SetParent(contents.transform, false);
 
-            achievementCards.Add(cards[i].GetComponent<AchievementCards>());
+            //스크립트를 배열에 삽입
+            achievementCards.Add(obj.GetComponent<AchievementCards>());
 
+            //스크립터블 오브젝트 데이터 가져오기
             achievementCards[i].set = achievementManager.achievements[i].set;
 
+            //언락인지 아닌지 확인
             achievementCards[i].SetUp(achievementCards[i].set.isUnlocked);
 
             //활성화 칭호 찾기
@@ -63,11 +67,8 @@ public class AchievementUiManager : MonoBehaviour
             }
 
             //버튼에 액션 할당
-            Button button = cards[i].GetComponent<Button>();
-
             int tempindex = achievementCards[i].set.index;
-
-            button.onClick.AddListener(() => OnClickTitleChange(tempindex));
+            obj.GetComponent<Button>().onClick.AddListener(() => OnClickTitleChange(tempindex));
         }
 
         //알 수 없는 이유로 장착 가능한게 없으면 [없음]으로 설정
@@ -80,7 +81,7 @@ public class AchievementUiManager : MonoBehaviour
     //카드 정보 갱신
     public void RefreshCards()
     {
-        //생성되어있는 요소들 만큼 자식 오브젝트 생성
+        //생성되어있는 요소들 만큼 정보 갱신
         for (int i = 0; i < achievementManager.achievements.Count; i++)
         {
             achievementCards[i].set = achievementManager.achievements[i].set;
@@ -92,12 +93,14 @@ public class AchievementUiManager : MonoBehaviour
     //버튼에 반영할 클릭 이벤트
     public void OnClickTitleChange(int num)
     {
+        //매니저가 가지고 있는 장착 이벤트 설정
         achievementManager.EquipAchievement(num);
     }
 
     //[선택 중] 갱신 함수
     public void Equipped()
     {
+        //매니저에서 장착된 칭호 찾아서, 선택중에다가 갱신
         selectCard.set = achievementManager.GetEquippedAchievement().set;
 
         selectCard.SetUp(true);
@@ -119,7 +122,7 @@ public class AchievementUiManager : MonoBehaviour
         Text_GetTitleName.text = "~ " + titlename + " ~";
 
         //칭호 설명 가져오기
-        Text_GetTitleDesc.text = "<color=green>" + desc + "</color>" + " 달성!";
+        Text_GetTitleDesc.text =  desc + "<color=white> 달성!</color>";
 
         //UI 활성화
         Canvas_GetTitle.SetActive(true);

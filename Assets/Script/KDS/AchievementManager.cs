@@ -89,10 +89,13 @@ public class AchievementManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    [Header("유니티에 저장 된 칭호 데이터")]
     public List<AchievementData> achievements = new List<AchievementData>();
+    [Header("장착된 칭호 데이터")]
     public AchievementData equippedAchievement;
     AchievementUiManager achievementUiManager;
 
+    [Header("칭호 캔버스")]
     public GameObject canvas;
 
     Scene currentScene;
