@@ -28,7 +28,7 @@ namespace UniversePlay
         private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
         private NpcChatUIManager ChatUIManager => PlayUniverseManager.Instance.NpcChatUIManager;
-        private PlayNpcManager NpcManager => PlayUniverseManager.Instance.NpcManager;
+        private InGameNpcManager NpcManager => PlayUniverseManager.Instance.NpcManager;
 
         private bool isDiceRollReady = false;
         private NpcReaction currentNpcReaction;
@@ -38,7 +38,7 @@ namespace UniversePlay
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    RollDice(currentNpcReaction, NpcManager.currentInteractNpc.NpcName);
+                    RollDice(currentNpcReaction, NpcManager.currentInteractInGameNpc.NpcName);
                     isDiceRollReady = false;
                 }
             }
@@ -99,7 +99,7 @@ namespace UniversePlay
         [PunRPC]
         private void RPC_ApplyChatBubble(string sender, string chatContent)
         {
-            var isNpc = sender == NpcManager.currentInteractNpc.NpcName;
+            var isNpc = sender == NpcManager.currentInteractInGameNpc.NpcName;
             ChatUIManager.AddChatBubble(sender, chatContent, !isNpc);
         }
 
@@ -123,7 +123,7 @@ namespace UniversePlay
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         private void OnNpcReaction(string sender, NpcReaction reaction)
         {
-            var npcName = NpcManager.currentInteractNpc.NpcName;
+            var npcName = NpcManager.currentInteractInGameNpc.NpcName;
             photonView.RPC(nameof(RPC_ApplyChatBubble), RpcTarget.All, npcName, reaction.DialogMessage);
             switch (reaction.ReactionType)
             {

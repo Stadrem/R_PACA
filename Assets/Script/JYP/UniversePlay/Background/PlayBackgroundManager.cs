@@ -12,6 +12,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
 {
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
+    private int previousBackgroundId = -1;
     private void Start()
     {
         ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
@@ -20,8 +21,9 @@ public class PlayBackgroundManager : MonoBehaviourPun
 
     private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(ViewModel.CurrentBackgroundId))
+        if (e.PropertyName == nameof(ViewModel.CurrentBackgroundId) && ViewModel.CurrentBackgroundId != previousBackgroundId)
         {
+            previousBackgroundId = ViewModel.CurrentBackgroundId;
             MoveTo(ViewModel.CurrentBackgroundId);
         }
     }

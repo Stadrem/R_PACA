@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Data.Models.Universe.Characters;
 using Data.Models.Universe.Characters.Player;
 
 namespace Data.Models.Universe.Battle
@@ -11,9 +12,9 @@ namespace Data.Models.Universe.Battle
         public int RoomNumber { get; private set; }
         public int IsBattleWon { get; private set; }
         public List<UniversePlayer> Players { get; private set; }
-        public NpcInfo Npc { get; private set; }
+        public UniverseNpc Npc { get; private set; }
 
-        public BattleResult(int roomNumber, int isBattleWon, List<UniversePlayer> players, NpcInfo npc)
+        public BattleResult(int roomNumber, int isBattleWon, List<UniversePlayer> players, UniverseNpc npc)
         {
             RoomNumber = roomNumber;
             IsBattleWon = isBattleWon;

@@ -5,6 +5,7 @@ using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UniversePlay;
 using ViewModels;
 
@@ -21,10 +22,11 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     public PlayBackgroundManager BackgroundManager => playBackgroundManager;
 
+    [FormerlySerializedAs("playNpcManager")]
     [SerializeField]
-    private PlayNpcManager playNpcManager;
+    private InGameNpcManager inGameNpcManager;
 
-    public PlayNpcManager NpcManager => playNpcManager;
+    public InGameNpcManager NpcManager => inGameNpcManager;
 
     [SerializeField]
     private NpcChatUIManager npcChatUIManager;
@@ -148,7 +150,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     private void NpcInteract(RaycastHit hit)
     {
-        var npc = hit.collider.GetComponent<NpcInPlay>();
+        var npc = hit.collider.GetComponent<InGameNpc>();
         if (npc == null) return;
         photonView.RPC(nameof(NpcInteract), RpcTarget.All, npc.NpcId);
     }
@@ -156,7 +158,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     [PunRPC]
     private void NpcInteract(int npcId)
     {
-        playNpcManager.InteractNpc(npcId);
+        inGameNpcManager.InteractNpc(npcId);
         CamSettingManager.TransitState(CamSettingStateManager.ECamSettingStates.TalkView);
     }
 
@@ -244,6 +246,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     public void Dispose()
     {
+        ViewModelManager.Instance.Reset();
         instance = null;
         Destroy(gameObject);
     }

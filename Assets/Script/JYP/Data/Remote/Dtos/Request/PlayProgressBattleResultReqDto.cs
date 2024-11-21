@@ -50,7 +50,7 @@ namespace Data.Remote.Dtos.Request
             public List<string> status;
         }
     }
-    
+
     public static class PlayProgressBattleResultReqDtoExtension
     {
         public static PlayProgressBattleResultReqDto ToDto(this BattleResult battleResult)
@@ -69,8 +69,8 @@ namespace Data.Remote.Dtos.Request
 
             var npcStatus = new PlayProgressBattleResultReqDto.NpcDto()
             {
-                npcId = battleResult.Npc.id,
-                hitPoint = battleResult.Npc.hitPoints,
+                npcId = battleResult.Npc.Id,
+                hitPoint = battleResult.Npc.Stats.GetStat(EStatType.Hp),
                 status = new List<string>()
             };
 
