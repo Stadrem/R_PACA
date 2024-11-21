@@ -42,6 +42,7 @@ namespace Data.Remote
             {
                 partId = backgroundPartInfo.ID,
                 partName = backgroundPartInfo.Name,
+                partType = (int)backgroundPartInfo.Type,
                 isPortalEnable = backgroundPartInfo.TowardBackground != null,
                 towardWorldPartId = backgroundPartInfo.TowardBackground?.ID ?? -1
             };
