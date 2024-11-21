@@ -36,7 +36,7 @@ public class CircularSlider : MonoBehaviour
     public void OnClickStopSlider()
     {
         isDepleting = false;
-        TurnCheckSystem.Instance.isMyTurnAction = true;
+        //TurnCheckSystem.Instance.isMyTurnAction = true;
     }
 
     // 시간 경과에 따라 슬라이더 값을 줄이는 함수

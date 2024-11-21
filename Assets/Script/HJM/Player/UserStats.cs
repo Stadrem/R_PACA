@@ -19,10 +19,10 @@ public class UserStats : MonoBehaviourPun
 
     private void Start()
     {
-        
-        
+
+
         // 자신을 battlePlayers 리스트에 등록하기 위해 RPC 호출
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
             RegisterPlayerStats();
         }
@@ -63,13 +63,13 @@ public class UserStats : MonoBehaviourPun
 
         if (PhotonNetwork.IsConnected && photonView.IsMine)
         {
-            // PlayerBatList의 PhotonView를 찾고 자신을 리스트에 등록
             Debug.Log($"RUN");
             PlayerBatList playerBatList = FindObjectOfType<PlayerBatList>();
             if (playerBatList != null)
             {
                 Debug.Log($"RUN 2");
-                playerBatList.photonView.RPC("RegisterPlayer", RpcTarget.All, userNickname, userHealth, userStrength, userDexterity);
+                int viewID = photonView.ViewID; // ViewID 가져오기
+                playerBatList.photonView.RPC("RegisterPlayer", RpcTarget.All, userNickname, userHealth, userStrength, userDexterity, viewID);
             }
         }
     }

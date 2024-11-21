@@ -20,7 +20,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     public int diceDamage;
 
-    public bool isMyTurnAction = false;
+    public bool isMonsterTurn = false;
 
     public List<GameObject> profiles;
 
@@ -34,7 +34,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        // Photon 네트워크가 연결되면 총 플레이어 수를 업데이트합니다.
         totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
         Debug.Log("현재 플레이어 수: " + totalPlayers);
 
@@ -44,11 +43,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         // 마스터 클라이언트만 게임 시작
         if (PhotonNetwork.IsMasterClient)
         {
-            // 모든 플레이어가 입장하면 게임을 시작하도록 함
-            if (totalPlayers >= 2) // 플레이어가 최소 2명이 되어야 게임을 시작하도록
-            {
-                StartGame();
-            }
+            StartGame();
         }
     }
 
@@ -58,12 +53,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
         Debug.Log("새로운 플레이어 입장: " + newPlayer.NickName);
         Debug.Log("현재 플레이어 수: " + totalPlayers);
-
-        // 모든 플레이어가 입장한 후 마스터 클라이언트가 게임을 시작하도록 처리
-        if (PhotonNetwork.IsMasterClient && totalPlayers >= 2)
-        {
-            StartGame();
-        }
     }
 
     void StartGame()
@@ -71,37 +60,29 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         photonView.RPC("BeginTurn", RpcTarget.AllBuffered, currentTurnIndex);
     }
 
-    void Update()
-    {
-        // 내 차례일 때만 버튼 활성화
-        if (isMyTurn)
-        {
-            EnableBatUI();
-            SetActiveTrueBatUI();
-        }
-        else
-        {
-            DisableBatUI();
-            SetActiveFalseBatUI();
-        }
-    }
-
     [PunRPC]
     void BeginTurn(int turnIndex)
     {
         // 현재 턴 설정
         currentTurnIndex = turnIndex;
+        
         Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
-
         isMyTurn = currentPlayer == PhotonNetwork.LocalPlayer;
 
-        if (isMyTurn)
+        
+
+        if (isMyTurn && !isMonsterTurn)
         {
             Debug.Log("내 턴");
+            EnableBatUI();
+            SetActiveTrueBatUI();
         }
         else
         {
             Debug.Log("다음 사람 턴");
+            DisableBatUI();
+            SetActiveFalseBatUI();
+
         }
     }
 
@@ -112,32 +93,76 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         // 턴을 넘길 때는 내 턴일때만 
         if (isMyTurn)
         {
+            photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 0);
             currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
             photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
+            photonView.RPC("TurnTXTUpdate", RpcTarget.All);
         }
+
+        //// currentTurnIndex가 0일 때 몬스터 턴 시작
+        //if (currentTurnIndex == 0 && !isMonsterTurn)
+        //{
+        //    isMonsterTurn = true;
+        //    print("턴 한바퀴 돌았음, 몬스터 턴");
+        //    DisableBatUI();
+        //    SetActiveFalseBatUI();
+        //    MonsterTurnRPCCall();  // 몬스터 턴 시작 호출
+        //}
     }
 
     public void OnClickAttack()
     {
-        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값
+        DisableBatUI();
+
+        DiceRollManager.Get().DiceStandby(); // 주사위 보이게
+        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값 3 넣음
         Debug.Log("주사위 굴린 결과: " + diceDamage);
-
+        // 선택이미지 업데이트
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 1);
-
-        StartCoroutine(WaitAndEndTurn());
+        StartCoroutine(AttackCallRPC());
     }
 
     public void OnClickDefense()
     {
-        photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 2);
+        DisableBatUI();
 
-        StartCoroutine(WaitAndEndTurn());
+        DiceRollManager.Get().DiceStandby(); // 주사위 보이게
+        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값 3 넣음
+        Debug.Log("주사위 굴린 결과: " + diceDamage);
+        // 선택이미지 업데이트
+        photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 2);
+        StartCoroutine(DefenseCallRPC());
     }
 
-    private IEnumerator WaitAndEndTurn()
+    private IEnumerator AttackCallRPC()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f); // 2초 대기
 
+        if (diceDamage >= 4)
+        {
+            photonView.RPC("DiceAttackSuccess", RpcTarget.All, diceDamage);
+        }
+        else
+        {
+            photonView.RPC("DiceAttackFail", RpcTarget.All, diceDamage);
+        }
+        yield return new WaitForSeconds(3f); // 액션시간 기다리기
+        EndTurn();
+    }
+
+    private IEnumerator DefenseCallRPC()
+    {
+        yield return new WaitForSeconds(2f); // 2초 대기
+
+        if (diceDamage >= 4)
+        {
+            photonView.RPC("DiceDefenseSuccess", RpcTarget.All, diceDamage);
+        }
+        else
+        {
+            photonView.RPC("DiceDefenseFail", RpcTarget.All, diceDamage);
+        }
+        yield return new WaitForSeconds(3f); // 액션시간 기다리기
         EndTurn();
     }
 
@@ -145,6 +170,49 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public void UpdateSelectImage(int playerIndex, int selection)
     {
         profiles[playerIndex].GetComponent<ProfileSet>().SetSelectImage(selection);
+    }
+
+    [PunRPC] // 프로필 인덱스에 접근하는 타이밍 다시 잡기 BeginTurn에서 호출하니까 계속 인덱스 초과뜸
+    public void ProfileLight(int playerIndex, bool isActive)
+    {
+        if (isActive)
+        {
+            // 내 턴에만 불 켬
+            profiles[playerIndex].GetComponent<ProfileSet>().OnLightProfile();
+        }
+        else
+        {
+            // 내 턴아니면 불 끔
+            profiles[playerIndex].GetComponent<ProfileSet>().OffLightProfile();
+        }
+
+    }
+
+    public void MonsterTurnRPCCall()
+    {
+        isMonsterTurn = true;
+        photonView.RPC("MonsterTurnStart", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void MonsterTurnStart()
+    {
+        print("몬스터 턴 시작");
+        MonsterAction();
+    }
+    public void MonsterAction()
+    {
+        print("몬스터 행동 시작");
+        BattleManagerCopy.Instance.enemyAnim.SetTrigger("Rage");
+        StartCoroutine(MonsterTurnEnd());
+    }
+
+    public IEnumerator MonsterTurnEnd()
+    {
+        print("몬스터 행동 종료, 턴을 넘깁니다.");
+        yield return new WaitForSeconds(2f);
+        isMonsterTurn = false;
+        EndTurn();
     }
 
     public void SetActiveTrueBatUI()
@@ -170,4 +238,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         attackBtn.interactable = false;
         defenseBtn.interactable = false;
     }
+
+
 }
