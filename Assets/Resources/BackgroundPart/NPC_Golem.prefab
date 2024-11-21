@@ -775,7 +775,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ncVcam: {fileID: 6682916958468311530}
   npcNameText: {fileID: 8453699155576523300}
-  hpBar: {fileID: 744096856918906893}
   root: {fileID: 5682901588988502337}
 --- !u!135 &829678540651731131
 SphereCollider:

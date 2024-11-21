@@ -16,7 +16,7 @@ namespace UniversePlay
     {
         // private List<NpcInfo> currentBackgroundNPCList = new();
 
-        private Transform NpcSpawnOffset { get; set; }
+        public Transform npcSpawnOffset;
 
         private List<InGameNpc> currentNpcList = new();
 
@@ -44,13 +44,15 @@ namespace UniversePlay
         {
             if (scene.name == "WaitingScene") return;
             var go = GameObject.Find("NpcSpawnOffset");
-            NpcSpawnOffset = go?.transform;
+            npcSpawnOffset = go?.transform;
         }
 
         public void LoadNpcList(List<UniverseNpc> npcList)
         {
             if (!photonView.IsMine) return;
-
+            var go = GameObject.Find("NpcSpawnOffset");
+            Debug.Log($"NpcSpawnOffset : {go}");
+            npcSpawnOffset = go?.transform;
             if (currentNpcList.Count > 0)
             {
                 currentNpcList.ForEach(Destroy);
@@ -211,7 +213,8 @@ namespace UniversePlay
 
         public void AddNpc(InGameNpc inGameNpc)
         {
-            inGameNpc.transform.SetParent(NpcSpawnOffset);
+            Debug.Log($"add npc : {inGameNpc}");
+            inGameNpc.transform.SetParent(npcSpawnOffset);
             currentNpcList.Add(inGameNpc);
         }
     }

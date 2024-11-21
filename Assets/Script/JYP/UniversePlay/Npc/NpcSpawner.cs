@@ -15,7 +15,8 @@ namespace UniversePlay
             const string backgroundPartNpcGoblin = "BackgroundPart/NPC_Goblin";
             const string backgroundPartNpcElf = "BackgroundPart/NPC_Elf";
             const string backgroundPartNpcGolem = "BackgroundPart/NPC_Golem";
-            
+            Debug.Log($"npc: {npc.Name} / {npc.NpcShapeType} / {npc.Position} / {npc.YRotation}");
+            var rot = Quaternion.Euler(0, npc.YRotation, 0);
             GameObject npcObject;
             switch (npc.NpcShapeType)
             {
@@ -25,7 +26,7 @@ namespace UniversePlay
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcHuman,
                         Vector3.zero,
-                        Quaternion.identity,
+                        rot,
                         group: 0,
                         data: new object[] {npc.Id}
                     );
@@ -34,7 +35,7 @@ namespace UniversePlay
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcGoblin,
                         Vector3.zero,
-                        Quaternion.identity,
+                        rot,
                         group: 0,
                         data: new object[] {npc.Id}
                     );
@@ -43,7 +44,7 @@ namespace UniversePlay
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcElf,
                         Vector3.zero,
-                        Quaternion.identity,
+                        rot,
                         group: 0,
                         data: new object[] {npc.Id}
                     );
@@ -53,7 +54,7 @@ namespace UniversePlay
                     npcObject = PhotonNetwork.Instantiate(
                         backgroundPartNpcGolem,
                         Vector3.zero,
-                        Quaternion.identity,
+                        rot,
                         group: 0,
                         data: new object[] {npc.Id}
                     );

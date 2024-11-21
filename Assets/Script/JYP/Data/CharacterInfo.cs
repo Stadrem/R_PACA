@@ -14,7 +14,7 @@ public class CharacterInfo
     public int dexterity;
     public bool isPlayable;
 
-    public Vector3 position;
+    public Vector3 position; //local position
     public float yRotation;
     
 

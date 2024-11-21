@@ -246,6 +246,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     public void Dispose()
     {
+        ViewModelManager.Instance.Reset();
         instance = null;
         Destroy(gameObject);
     }
