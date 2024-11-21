@@ -220,7 +220,7 @@ namespace UniverseEdit
         {
             var newCharacter = new CharacterInfo(characterInfo)
             {
-                position = position
+                position = position - npcPositionOffset.position
             };
 
             StartCoroutine(

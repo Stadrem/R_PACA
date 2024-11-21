@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Data.Models.Universe.Characters;
 
 [System.Serializable]
 public sealed class BackgroundPartInfo 
@@ -11,7 +12,7 @@ public sealed class BackgroundPartInfo
     public EBackgroundPartType Type;
     public BackgroundPartInfo TowardBackground = null;
     public List<PortalData> PortalList;
-    public List<NpcInfo> NpcList;
+    public List<UniverseNpc> NpcList;
 
     public BackgroundPartInfo()
     {

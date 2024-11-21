@@ -210,7 +210,7 @@ public class HttpManager : MonoBehaviour
                     //todo api 괜찮아 지면 지우기
                     var txt = webRequest.downloadHandler.text;
                     Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
-                    info.onComplete(JsonUtility.FromJson<TRes>(txt));
+                    info.onComplete(JsonConvert.DeserializeObject<TRes>(txt));
                 }
             }
             else
@@ -226,7 +226,7 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Put<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
-        var body = JsonUtility.ToJson(info.body);
+        var body = JsonConvert.SerializeObject(info.body);
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
         {

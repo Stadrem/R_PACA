@@ -50,22 +50,30 @@ public class AvatarPresetSettings : MonoBehaviour
     [System.Serializable]
     public struct GenderParts
     {
+        [Header("부위별 분류 0: 스킨 / 1: 헤어 / 2: 의류 / 3: 도구")]
         public AvatarParts[] avatarParts;
+        [Header("성별 바디 메쉬")]
         public SkinnedMeshRenderer mesh;
     }
-
-    [Header("성별")]
+    [Space]
+    [Header("성별 -> 부위 -> 아이템별 순서")]
     [SerializeField]
     public GenderParts[] genderParts = new GenderParts[] { };
 
     [System.Serializable]
     public struct AvatarItems
     {
+        [Header("더미 데이터")]
         public string name;
+        [Header("메인 메쉬")]
         public SkinnedMeshRenderer mesh;
+        [Header("보조 메쉬: 의류의 피부 메쉬 처리")]
         public SkinnedMeshRenderer subMesh;
+        [Header("더미 데이터")]
         public MeshFilter meshB;
+        [Header("메인 메쉬의 메테리얼")]
         public Material material;
+        [Header("UI에 표시할 아이콘")]
         public Sprite sprite;
     }
 

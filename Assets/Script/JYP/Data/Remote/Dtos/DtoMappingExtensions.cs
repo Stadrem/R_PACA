@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Data.Models.Universe.Characters;
 using Data.Remote.Dtos.Response;
+using UnityEngine;
 
 namespace Data.Remote.Dtos
 {
@@ -16,23 +18,22 @@ namespace Data.Remote.Dtos
             };
         }
 
-        public static NpcInfo ToNpcInfo(this ScenarioAvatarResDto dto)
+        private static UniverseNpc ToUniverseNpc(this ScenarioAvatarResDto dto)
         {
-            return new NpcInfo()
-            {
-                id = dto.scenarioAvatarId,
-                name = dto.avatarName,
-                npcShapeType = (NpcInfo.ENpcType)dto.outfit,
-                hitPoints = dto.health,
-                strength = dto.strength,
-                dexterity = dto.dex,
-                backgroundPartId = dto.worldId,
-                position = new UnityEngine.Vector3(dto.axisX, dto.axisY, dto.axisZ),
-                yRotation = dto.rotation,
-            };
+
+            return new UniverseNpc(
+                dto.scenarioAvatarId,
+                dto.avatarName,
+                "",
+                new CharacterStats(dto.health, dto.strength, dto.dex),
+                dto.rotation,
+                new Vector3(dto.axisX, dto.axisY, dto.axisZ),
+                (UniverseNpc.ENpcType)dto.outfit,
+                dto.worldId
+            );
         }
 
-        public static BackgroundPartInfo ToBackgroundPartInfo(this ScenarioWorldPartResDto dto, int universeId,
+        private static BackgroundPartInfo ToBackgroundPartInfo(this ScenarioWorldPartResDto dto, int universeId,
             BackgroundPartInfo towards)
         {
             return new BackgroundPartInfo()
@@ -51,7 +52,6 @@ namespace Data.Remote.Dtos
             if (dtos.Count == 0)
                 return new List<BackgroundPartInfo>();
 
-            var result = new BackgroundPartInfo[dtos.Count];
             dtos.Reverse();
             BackgroundPartInfo previous = null;
 
@@ -60,7 +60,7 @@ namespace Data.Remote.Dtos
                     {
                         var part = t.ToBackgroundPartInfo(universeId, previous);
                         part.PortalList = new List<PortalData>();
-                        part.NpcList = new List<NpcInfo>();
+                        part.NpcList = new List<UniverseNpc>();
                         previous = part;
                         return part;
                     }
@@ -78,7 +78,7 @@ namespace Data.Remote.Dtos
                     (t) =>
                     {
                         var part = backgroundParts.First((part) => part.ID == t.Key);
-                        part.NpcList = t.Select((avatar) => avatar.ToNpcInfo()).ToList();
+                        part.NpcList = t.Select((avatar) => avatar.ToUniverseNpc()).ToList();
                     }
                 );
 
@@ -91,12 +91,12 @@ namespace Data.Remote.Dtos
             {
                 id = dto.scenarioAvatarId,
                 name = dto.avatarName,
-                shapeType = (NpcInfo.ENpcType)dto.outfit,
+                shapeType = (UniverseNpc.ENpcType)dto.outfit,
                 isPlayable = dto.isPlayable,
                 hitPoints = dto.health,
                 strength = dto.strength,
                 dexterity = dto.dex,
-                position = new UnityEngine.Vector3(dto.axisX, dto.axisY, dto.axisZ),
+                position = new Vector3(dto.axisX, dto.axisY, dto.axisZ),
                 yRotation = dto.rotation,
             };
         }
