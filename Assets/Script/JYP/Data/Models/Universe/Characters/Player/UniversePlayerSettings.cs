@@ -4,15 +4,15 @@
     {
         public int UniverseId { get; private set; }
 
-        public int UserId { get; private set; }
+        public int UserCode { get; private set; }
 
         public CharacterStats CharacterStats { get; private set; }
 
 
-        public UniversePlayerSettings(int universeId, int userId, CharacterStats characterStats)
+        public UniversePlayerSettings(int universeId, int userCode, CharacterStats characterStats)
         {
             UniverseId = universeId;
-            UserId = userId;
+            UserCode = userCode;
             CharacterStats = characterStats;
         }
     }

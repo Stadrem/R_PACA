@@ -52,6 +52,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     [SerializeField]
     private Canvas canvas;
+
     public bool IsHudVisible
     {
         get => hudUI.activeSelf;
@@ -180,32 +181,13 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
         SelectorChat.ClearOptions();
     }
 
-    /// <summary>
-    /// 전투화면에서의 UI를 보여주는 함수, 등장인물들의 HP UI를 보여준다.
-    /// NPC의 경우, 대화를 시작했다는 가정하에 대화하고 있던 Npc의 HP UI를 보여준다.
-    /// </summary>
-    public void ShowBattleUI()
-    {
-        NpcManager.ShowNpcHpBar();
-        InGamePlayerManager.ShowPlayersHpBar();
-    }
-
-    /// <summary>
-    /// 전투화면에서의 UI를 숨기는 함수, 등장인물들의 HP UI를 숨긴다.
-    /// </summary>
-    public void HideBattleUI()
-    {
-        NpcManager.HideNpcHpBar();
-        InGamePlayerManager.HidePlayersHpBar();
-    }
-
     public void StartPlay()
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
         roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
-        var codeList = InGamePlayerManager.playerList
-            .Select((t) => t.code)
+        var codeList = ViewModel.UniversePlayers
+            .Select((t) => t.UserCode)
             .ToList();
         StartCoroutine(
             ViewModel.StartRoom(
@@ -216,7 +198,6 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                 {
                     if (res.IsSuccess)
                     {
-                        InGamePlayerManager.Init();
                         BackgroundManager.StartFirstBackground();
                     }
                 }
@@ -292,7 +273,6 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
         var go = Instantiate(backgroundNameUI, canvas.transform);
         var controller = go.GetComponent<BackgroundNameDisplayUIController>();
         controller.ShowBackgroundName(background.Name);
-
     }
 
     private void OnWaitingSceneLoaded()

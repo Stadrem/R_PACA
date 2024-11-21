@@ -31,7 +31,6 @@ public class TalkViewCamSetting : ICamSettingState
         Vcam.enabled = false;
         PlayUniverseManager.Instance.NpcChatUIManager.Hide();
         ViewModelManager.Instance.UniversePlayViewModel.RemoveHUDState(EHUDState.Chat);
-        PlayUniverseManager.Instance.HideBattleUI();
         Vcam.Priority = 0;
     }
 }

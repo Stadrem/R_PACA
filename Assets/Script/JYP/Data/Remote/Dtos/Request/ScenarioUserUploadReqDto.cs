@@ -20,7 +20,7 @@ namespace Data.Remote.Dtos.Request
         {
             return new ScenarioUserUploadReqDto
             {
-                userCode = settings.UserId,
+                userCode = settings.UserCode,
                 scenarioCode = settings.UniverseId,
                 health = settings.CharacterStats.GetStat(EStatType.Hp),
                 strength = settings.CharacterStats.GetStat(EStatType.Str),

@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Data.Models.Universe.Characters;
+using Data.Models.Universe.Characters.Player;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UniversePlay;
+using ViewModels;
 
 public class WaitingRoomManager : MonoBehaviourPunCallbacks
 {
     public List<Transform> seatPositions; // 자리 위치 트랜스폼 리스트
-
-
     private static UserCodeMgr UserCodeMgr => UserCodeMgr.Instance;
 
     // 시나리오 플레이를 위한 플레이어 매니저
     private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance?.InGamePlayerManager;
     private bool currentPlayerAdded = false;
+
+    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     private void Start()
     {
@@ -33,20 +38,40 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     {
         if (PlayerManager != null && !currentPlayerAdded)
         {
-            PlayerManager.AddCurrentPlayer(UserCodeMgr.UserCode, UserCodeMgr.UserID, UserCodeMgr.Nickname, 0, 0, 0);
             currentPlayerAdded = true;
-            foreach (var player in PhotonNetwork.PlayerList)
-            {
-                var playerID = (string)player.CustomProperties[PunPropertyNames.Player.PlayerId];
-                var playerUserCode = (int)player.CustomProperties[PunPropertyNames.Player.PlayerUserCode];
-                if (playerUserCode == UserCodeMgr.UserCode)
-                {
-                    continue;
-                }
 
-                PlayerManager.AddPlayer(playerUserCode, playerID, player.NickName, 0, 0, 0);
-            }
+            var list = new List<UniversePlayer>()
+            {
+                new UniversePlayer(
+                    UserCodeMgr.UserID,
+                    UserCodeMgr.Nickname,
+                    UserCodeMgr.UserCode,
+                    new CharacterStats(0, 0, 0)
+                )
+            };
+            var otherPlayers = PhotonNetwork.PlayerList
+                .Where(
+                    player => (int)player.CustomProperties[PunPropertyNames.Player.PlayerUserCode] !=
+                              UserCodeMgr.UserCode
+                )
+                .Select(CreateUniversePlayer)
+                .ToList();
+            list.AddRange(otherPlayers);
+
+            ViewModel.UniversePlayers = list;
         }
+    }
+
+    private UniversePlayer CreateUniversePlayer(Player player)
+    {
+        var playerID = (string)player.CustomProperties[PunPropertyNames.Player.PlayerId];
+        var playerUserCode = (int)player.CustomProperties[PunPropertyNames.Player.PlayerUserCode];
+        return new UniversePlayer(
+            playerID,
+            player.NickName,
+            playerUserCode,
+            new CharacterStats(0, 0, 0)
+        );
     }
 
     // 플레이어 아바타 생성 메서드
@@ -88,9 +113,14 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         var playerUserCode = (int)newPlayer.CustomProperties[PunPropertyNames.Player.PlayerUserCode];
         // 새로운 플레이어가 들어왔을 때 좌석을 조정합니다.
         AdjustSeats();
-        print(11111111111111);
-
-        PlayerManager.AddPlayer(playerUserCode, playerId, newPlayer.NickName, 0, 0, 0);
+        ViewModel.AddPlayer(
+            new UniversePlayer(
+                playerId,
+                newPlayer.NickName,
+                playerUserCode,
+                new CharacterStats(0, 0, 0)
+            )
+        );
     }
 
 
@@ -101,7 +131,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         if (otherPlayer.CustomProperties.TryGetValue(PunPropertyNames.Player.PlayerUserCode, out object userCode))
         {
             AdjustSeats();
-            PlayerManager.DeletePlayer((int)userCode);
+            ViewModel.RemovePlayer((int)userCode);
         }
     }
 
