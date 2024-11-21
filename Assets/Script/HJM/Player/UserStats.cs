@@ -54,7 +54,8 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
                     userNickname,
                     userHealth,
                     userStrength,
-                    userDexterity
+                    userDexterity,
+                    photonView.ViewID
                 );
             }
         }
