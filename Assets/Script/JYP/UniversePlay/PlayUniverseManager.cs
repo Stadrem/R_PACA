@@ -47,6 +47,11 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     [SerializeField]
     private GameObject hudUI;
 
+    [SerializeField]
+    private GameObject backgroundNameUI;
+
+    [SerializeField]
+    private Canvas canvas;
     public bool IsHudVisible
     {
         get => hudUI.activeSelf;
@@ -281,9 +286,13 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
             IsHudVisible = true;
         var background =
             ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == ViewModel.CurrentBackgroundId);
-        
+
         InGamePlayerManager.SpawnPlayers();
         NpcManager.LoadNpcList(background.NpcList);
+        var go = Instantiate(backgroundNameUI, canvas.transform);
+        var controller = go.GetComponent<BackgroundNameDisplayUIController>();
+        controller.ShowBackgroundName(background.Name);
+
     }
 
     private void OnWaitingSceneLoaded()
