@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Profiling;
 
 public class TurnCheckSystem : MonoBehaviourPunCallbacks
 {
@@ -40,18 +41,18 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         attackBtn.onClick.AddListener(OnClickAttack);
         defenseBtn.onClick.AddListener(OnClickDefense);
 
-        turnFSM = GetComponent<TurnFSM>();
+        GameObject turnFSMObject = GameObject.Find("---TurnFSM---"); // 나중엔 그냥 인스펙터에서 할당하자~
+        turnFSM = turnFSMObject.GetComponent<TurnFSM>();
 
-        // 마스터 클라이언트만 게임 시작
         if (PhotonNetwork.IsMasterClient)
         {
             StartGame();
         }
     }
 
+    // 새로운 플레이어가 들어왔을 때 totalPlayers 갱신 함수 덮어쓰기
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        // 새로운 플레이어가 들어왔을 때 totalPlayers를 갱신
         totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
         Debug.Log("새로운 플레이어 입장: " + newPlayer.NickName);
         Debug.Log("현재 플레이어 수: " + totalPlayers);
@@ -65,10 +66,10 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     void BeginTurn(int turnIndex)
     {
+        currentTurnIndex = turnIndex;
+        photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
         if (turnFSM.turnState == ActionTurn.Player)
         {
-            currentTurnIndex = turnIndex;
-
             Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
             isMyTurn = currentPlayer == PhotonNetwork.LocalPlayer;
 
@@ -77,17 +78,19 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
                 Debug.Log("내 턴");
                 EnableBatUI();
                 SetActiveTrueBatUI();
+                photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
             }
             else
             {
                 Debug.Log("다른 플레이어의 턴");
                 DisableBatUI();
                 SetActiveFalseBatUI();
+                photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, false);
+
             }
         }
         else if (turnFSM.turnState == ActionTurn.Enemy)
         {
-            // 몬스터 턴
             if (PhotonNetwork.IsMasterClient)
             {
                 MonsterTurnRPCCall();
@@ -99,23 +102,20 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         if (!isMyTurn) return;
 
-            //FinishMyTask();
-            photonView.RPC("FinishMyTask", RpcTarget.All);
+        photonView.RPC("FinishMyTask", RpcTarget.All);
 
-        // 플레이어 턴에서만 순서를 진행
         if (turnFSM.turnState == ActionTurn.Player)
         {
             photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 0);
+            photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, false);
             currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
 
-            // 모든 플레이어의 턴이 끝나면 몬스터 턴으로 전환
             if (currentTurnIndex == 0)
             {
                 photonView.RPC("ChangeTurnToEnemy", RpcTarget.All);
             }
             else
             {
-                //BeginTurn(currentTurnIndex);
                 photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
             }
         }
@@ -131,15 +131,15 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public void ChangeTurnToEnemy()
     {
         turnFSM.turnState = ActionTurn.Enemy;
-        BeginTurn(-1); // 몬스터 턴 시작
+        BeginTurn(-1);
     }
 
     public void OnClickAttack()
     {
         DisableBatUI();
 
-        DiceRollManager.Get().DiceStandby(); // 주사위 보이게
-        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값 3 넣음
+        DiceRollManager.Get().DiceStandby();
+        diceDamage = DiceRollManager.Get().BattleDiceRoll(3);
         Debug.Log("주사위 굴린 결과: " + diceDamage);
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 1);
         StartCoroutine(AttackCallRPC());
@@ -149,8 +149,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         DisableBatUI();
 
-        DiceRollManager.Get().DiceStandby(); // 주사위 보이게
-        diceDamage = DiceRollManager.Get().BattleDiceRoll(3); // 보정치(유저의 힘 스탯 값) 임의값 3 넣음
+        DiceRollManager.Get().DiceStandby();
+        diceDamage = DiceRollManager.Get().BattleDiceRoll(3);
         Debug.Log("주사위 굴린 결과: " + diceDamage);
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 2);
         StartCoroutine(DefenseCallRPC());
@@ -158,7 +158,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     private IEnumerator AttackCallRPC()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         if (diceDamage >= 4)
         {
@@ -174,7 +174,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     private IEnumerator DefenseCallRPC()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         if (diceDamage >= 4)
         {
@@ -213,11 +213,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public void ChangeTurnToPlayer()
     {
         turnFSM.turnState = ActionTurn.Player;
-        //StartGame(); dmdkdkdk아아아으ㅏ앙어앙아앙ㅇ앙 제발 두번씩 호출되지말아줘ㅣ...
-        // 턴 FSM을 싱글톤으로 빼서 카운트 누적하고 값 받아와서 할까...
         BeginTurn(0);
-        //photonView.RPC("BeginTurn", RpcTarget.All, 0); // 첫 번째 플레이어의 턴으로 복귀
-
     }
 
     [PunRPC]
@@ -225,8 +221,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         profiles[playerIndex].GetComponent<ProfileSet>().SetSelectImage(selection);
     }
-
-
 
     public void EnableBatUI()
     {
@@ -251,4 +245,15 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         attackBtn.gameObject.SetActive(false);
         defenseBtn.gameObject.SetActive(false);
     }
+
+    [PunRPC] // 낼 아침에 이거해결하자.. . . .  .. 어째서 이 아이만 인덱스오류가.. .
+             // 호출 타이밍을 늦추면 안뜨는게 더 신기하네.. 다른데서는 profiles 참조 잘만 되면서.. ㅠㅜㅜㅠㅜ
+    public void ProfileLight(int playerIndex, bool isOn)
+    {
+        if (BattleManagerCopy.Instance.isBattle)
+        {
+            profiles[playerIndex].GetComponent<ProfileSet>().LightProfile(isOn);
+        }
+    }
 }
+

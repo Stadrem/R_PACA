@@ -37,6 +37,8 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
 
     private int turnCount = 1;
 
+    public bool isBattle = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -62,12 +64,18 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.B))
         {
             StartBattle();
+            photonView.RPC("IsBattle", RpcTarget.All);
         }
 
         if (players.Count != PhotonNetwork.CurrentRoom.PlayerCount)
         {
             InitializePlayers();
         }
+    }
+    [PunRPC]
+    public void IsBattle()
+    {
+        isBattle = true;
     }
 
     public void StartBattle()
@@ -171,17 +179,16 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         }
     }
 
-    // ------------------------- 전투 시작 초기 세팅 --------------------------
 
-
-    // ------------------------- 전투 결과 세팅 -------------------------------
+    // --------------------------------------------------------
+    // 전투 결과 세팅
 
     // 주사위 공격 성공
     [PunRPC]
     public IEnumerator DiceAttackSuccess(int damage)
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.37f);
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
@@ -191,7 +198,7 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     public IEnumerator DiceAttackFail(int damage)
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.37f);
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
 
@@ -201,8 +208,8 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceDefenseSuccess(int damage)
     {
-        enemyAnim.SetTrigger("Hit2"); // 몬스터 Hit2 트리거
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage"); // 플레이어 Damage 트리거
+        enemyAnim.SetTrigger("Hit2");
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
     }
 
@@ -210,8 +217,8 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DiceDefenseFail(int damage)
     {
-        enemyAnim.SetTrigger("Hit2"); // 몬스터 Hit2 트리거
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage"); // 플레이어 Damage 트리거
+        enemyAnim.SetTrigger("Hit2");
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
     }
 

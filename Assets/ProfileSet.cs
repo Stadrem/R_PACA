@@ -14,6 +14,10 @@ public class ProfileSet : MonoBehaviour
     public GameObject turnBlur;
 
     int maxHealth;
+    private void Start()
+    {
+        turnBlur.SetActive(false);
+    }
 
     public void NicknameSet(string name)
     {
@@ -61,14 +65,9 @@ public class ProfileSet : MonoBehaviour
         }
     }
 
-    
-    public void OnLightProfile()
+
+    public void LightProfile(bool isOn)
     {
-        turnBlur.SetActive(true);
-    }
-    
-    public void OffLightProfile()
-    {
-        turnBlur.SetActive(false);
+        turnBlur.SetActive(isOn);
     }
 }
