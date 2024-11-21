@@ -101,7 +101,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC("FinishMyTask", RpcTarget.All);
+            FinishMyTask();
+            //photonView.RPC("FinishMyTask", RpcTarget.All);
         }
 
         // 플레이어 턴에서만 순서를 진행
