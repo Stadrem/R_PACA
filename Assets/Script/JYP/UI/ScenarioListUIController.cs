@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data.Remote;
 using Data.Remote.Dtos.Response;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 public class ScenarioListUIController : MonoBehaviour
@@ -18,11 +19,13 @@ public class ScenarioListUIController : MonoBehaviour
 
     [Space]
     [Header("UI Flow Manage")]
-    
     [Tooltip("방 생성을 위한 데이터 입력을 위한 팝업")]
     [SerializeField]
     private CanvasActive roomCreatePopupCanvasActive;
 
+    [Space]
+    [Header("방 생성 세계관 이름")]
+    public TMP_Text createRoom02_roomName;
     
     //todo data container전용 클래스로 옮기기
     private List<ScenarioListItemResponseDto> scenarioList;
@@ -75,6 +78,8 @@ public class ScenarioListUIController : MonoBehaviour
 
     private void Select(ScenarioListItemResponseDto scenario)
     {
+        createRoom02_roomName.text = scenario.scenarioTitle;
+
         selectedIndex = scenarioList.IndexOf(scenario);
         roomCreatePopupCanvasActive.OnClickPop();
     }
