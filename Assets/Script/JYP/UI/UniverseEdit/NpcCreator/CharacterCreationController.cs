@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Data.Models.Universe.Characters;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ViewModels;
@@ -33,7 +34,7 @@ namespace UI.Universe.Edit
         
         private bool isPopupOpen = false;
 
-        private NpcInfo.ENpcType selectedShapeType = NpcInfo.ENpcType.None;
+        private UniverseNpc.ENpcType selectedShapeType = UniverseNpc.ENpcType.None;
 
         //
         private UniverseEditViewModel viewModel;
@@ -64,7 +65,7 @@ namespace UI.Universe.Edit
                 {
                     Debug.Log($"goblin selected");
                     selectShapeButton.text = "외형: 고블린";
-                    selectedShapeType = NpcInfo.ENpcType.Goblin;
+                    selectedShapeType = UniverseNpc.ENpcType.Goblin;
                     goblinSelectionItem.AddToClassList("character-shape--selected");
                     humanSelectionItem.RemoveFromClassList("character-shape--selected");
                 }
@@ -75,7 +76,7 @@ namespace UI.Universe.Edit
                 {
                     Debug.Log($"human selected");
                     selectShapeButton.text = "외형: 인간";
-                    selectedShapeType = NpcInfo.ENpcType.Human;
+                    selectedShapeType = UniverseNpc.ENpcType.Human;
                     humanSelectionItem.AddToClassList("character-shape--selected");
                     goblinSelectionItem.RemoveFromClassList("character-shape--selected");
                 }
@@ -86,7 +87,7 @@ namespace UI.Universe.Edit
                 {
                     Debug.Log($"elf selected");
                     selectShapeButton.text = "외형: 엘프";
-                    selectedShapeType = NpcInfo.ENpcType.Elf;
+                    selectedShapeType = UniverseNpc.ENpcType.Elf;
                     elfSelectionItem.AddToClassList("character-shape--selected");
                 });
             
@@ -95,7 +96,7 @@ namespace UI.Universe.Edit
                 {
                     Debug.Log($"golem selected");
                     selectShapeButton.text = "외형: 골렘";
-                    selectedShapeType = NpcInfo.ENpcType.Golem;
+                    selectedShapeType = UniverseNpc.ENpcType.Golem;
                     golemSelectionItem.AddToClassList("character-shape--selected");
                 });
 
@@ -120,7 +121,7 @@ namespace UI.Universe.Edit
 
         private void OnAddButtonClicked()
         {
-            if (selectedShapeType == NpcInfo.ENpcType.None) return;
+            if (selectedShapeType == UniverseNpc.ENpcType.None) return;
 
 
             var character = new CharacterInfo
@@ -162,7 +163,7 @@ namespace UI.Universe.Edit
             strengthInput.value = 0;
             dexterityInput.value = 0;
             selectShapeButton.text = "외형 선택하기";
-            selectedShapeType = NpcInfo.ENpcType.None;
+            selectedShapeType = UniverseNpc.ENpcType.None;
         }
     }
 }

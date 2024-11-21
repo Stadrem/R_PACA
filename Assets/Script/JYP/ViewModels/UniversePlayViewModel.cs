@@ -17,7 +17,6 @@ namespace UniversePlay
     {
         #region Properties
 
-        private List<NpcInfo> currentMapNpcList = new();
         private List<ChatLog> chatLogs = new();
         private int npcChatSelectedIndex = -1;
         private UniverseData universeData;
@@ -44,7 +43,6 @@ namespace UniversePlay
         }
 
         #endregion
-
 
 
         public EHUDState HUDState
@@ -81,7 +79,15 @@ namespace UniversePlay
         public int CurrentBackgroundId
         {
             get => currentBackgroundId;
-            set => SetField(ref currentBackgroundId, value);
+            set
+            {
+                if (value >= 0)
+                {
+                    currentMapNpcList = UniverseData.backgroundPartDataList.Find((info) => info.ID == value).NpcList;
+                }
+
+                SetField(ref currentBackgroundId, value);
+            }
         }
 
         public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcReaction>> callback)
@@ -100,62 +106,6 @@ namespace UniversePlay
         /// <returns></returns>
         public IEnumerator LoadUniverseData(int universeId) //todo 아직 더미 데이터
         {
-            var portalList1 = new List<PortalData>()
-            {
-                new PortalData()
-                {
-                    position = new Vector3(58.4300003f, 9.30700016f, 51.8300018f),
-                    targetBackgroundId = 1,
-                },
-            };
-
-            var portalList2 = new List<PortalData>()
-            {
-                new PortalData()
-                {
-                    position = Vector3.zero,
-                    targetBackgroundId = 0,
-                },
-            };
-
-            var npcList1 = new List<NpcInfo>()
-            {
-                new NpcInfo()
-                {
-                    name = "마을사람 1",
-                    position = new Vector3(58.8600006f, 9.57999992f, 65.8899994f),
-                    npcShapeType = NpcInfo.ENpcType.Human,
-                },
-
-                new NpcInfo()
-                {
-                    name = "고블린 1",
-                    position = new Vector3(62.4500008f, 9.45199966f, 66.5199966f),
-                    npcShapeType = NpcInfo.ENpcType.Goblin,
-                }
-            };
-            var backgroundList = new List<BackgroundPartInfo>()
-            {
-                new BackgroundPartInfo()
-                {
-                    ID = 0,
-                    Name = "Town 0",
-                    Type = EBackgroundPartType.Town,
-                    UniverseId = 0,
-                    PortalList = portalList1,
-                    NpcList = npcList1,
-                },
-                new BackgroundPartInfo()
-                {
-                    ID = 1,
-                    Name = "Dungeon 0",
-                    Type = EBackgroundPartType.Dungeon,
-                    UniverseId = 0,
-                    PortalList = portalList2,
-                    NpcList = new List<NpcInfo>()
-                },
-            };
-
             yield return ScenarioApi.GetScenario(
                 universeId,
                 (result) =>
@@ -164,7 +114,8 @@ namespace UniversePlay
                     {
                         if (result.value.backgroundPartDataList.Count == 0) // for test 
                         {
-                            result.value.backgroundPartDataList = backgroundList;
+                            Debug.LogError($"배경없는 세계관입니다. {universeId}");
+                            return;
                         }
 
                         UniverseData = result.value;

@@ -62,6 +62,8 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        if(photonView.InstantiationData == null) return;
+        
         Initialize(
             Convert.ToInt32(photonView.InstantiationData[0]),
             Convert.ToInt32(photonView.InstantiationData[1]),

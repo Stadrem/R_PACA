@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using Data.Models.Universe.Characters;
 using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using ViewModels;
 
 namespace UniversePlay
 {
-    public class PlayNpcManager : MonoBehaviourPun
+    public class InGameNpcManager : MonoBehaviourPun
     {
         // private List<NpcInfo> currentBackgroundNPCList = new();
 
-        public Transform NpcSpawnOffset { get; private set; }
+        private Transform NpcSpawnOffset { get; set; }
 
-        private List<NpcInPlay> currentNpcList = new();
+        private List<InGameNpc> currentNpcList = new();
 
-        public CinemachineVirtualCamera CurrentNpcVcam => currentInteractNpc.ncVcam;
-        public NpcInPlay currentInteractNpc;
+        public CinemachineVirtualCamera CurrentNpcVcam => currentInteractInGameNpc.ncVcam;
+        [FormerlySerializedAs("currentInteractNpc")]
+        public InGameNpc currentInteractInGameNpc;
         private TurnSystem turnSystem = new();
 
         private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -44,7 +47,7 @@ namespace UniversePlay
             NpcSpawnOffset = go?.transform;
         }
 
-        public void LoadNpcList(List<NpcInfo> npcList)
+        public void LoadNpcList(List<UniverseNpc> npcList)
         {
             if (!photonView.IsMine) return;
 
@@ -71,7 +74,7 @@ namespace UniversePlay
         public void InteractNpc(int npcId)
         {
             var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
-            currentInteractNpc = npcInfo;
+            currentInteractInGameNpc = npcInfo;
             turnSystem.InitTurn();
             if (PhotonNetwork.IsMasterClient)
             {
@@ -81,7 +84,7 @@ namespace UniversePlay
                     PlayProgressApi.StartNpcTalk(
                         PlayUniverseManager.Instance.roomNumber,
                         currentBackgroundName,
-                        currentInteractNpc.NpcName,
+                        currentInteractInGameNpc.NpcName,
                         (_) => { }
                     )
                 );
@@ -187,15 +190,15 @@ namespace UniversePlay
 
         public void ShowNpcHpBar()
         {
-            Debug.Log($"currentInterACTnPC : {currentInteractNpc.name}");
-            if (currentInteractNpc.root != null)
-                currentInteractNpc.root.SetActive(true);
+            Debug.Log($"currentInterACTnPC : {currentInteractInGameNpc.name}");
+            if (currentInteractInGameNpc.root != null)
+                currentInteractInGameNpc.root.SetActive(true);
         }
 
         public void HideNpcHpBar()
         {
-            if (currentInteractNpc.root != null)
-                currentInteractNpc.root.SetActive(false);
+            if (currentInteractInGameNpc.root != null)
+                currentInteractInGameNpc.root.SetActive(false);
         }
 
         public void FinishConversation()
@@ -206,10 +209,10 @@ namespace UniversePlay
         }
 
 
-        public void AddNpc(NpcInPlay npcInPlay)
+        public void AddNpc(InGameNpc inGameNpc)
         {
-            npcInPlay.transform.SetParent(NpcSpawnOffset);
-            currentNpcList.Add(npcInPlay);
+            inGameNpc.transform.SetParent(NpcSpawnOffset);
+            currentNpcList.Add(inGameNpc);
         }
     }
 }

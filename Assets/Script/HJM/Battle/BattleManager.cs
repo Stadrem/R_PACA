@@ -122,7 +122,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         PlayUniverseManager.Instance.RPC_FinishConversation();
         PlayUniverseManager.Instance.isBattle = true;
-        var gameObject = PlayUniverseManager.Instance.NpcManager.currentInteractNpc?.gameObject;
+        var gameObject = PlayUniverseManager.Instance.NpcManager.currentInteractInGameNpc?.gameObject;
         if (gameObject == null)
         {
             gameObject = GameObject.Find("NPC_Golem(Clone)");
