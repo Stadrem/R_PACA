@@ -36,28 +36,6 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         userDexterity = dexterity;
     }
 
-    private void OnEnable()
-    {
-        // SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        // SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     // 씬 이름이 Town일때만
-    //     if (scene.name == "Town") 
-    //     {
-    //         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-    //         {
-    //             RegisterPlayerStats();
-    //         }
-    //     }
-    // }
-
     public void RegisterPlayerStats()
     {
         userNickname = photonView.Owner.NickName;
@@ -84,10 +62,11 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        userHealth = Convert.ToInt32(info.photonView.InstantiationData[0]);
-        userStrength = Convert.ToInt32(info.photonView.InstantiationData[1]);
-        userDexterity = Convert.ToInt32(info.photonView.InstantiationData[2]);
-
+        Initialize(
+            Convert.ToInt32(photonView.InstantiationData[0]),
+            Convert.ToInt32(photonView.InstantiationData[1]),
+            Convert.ToInt32(photonView.InstantiationData[2])
+        );
         var userCode = Convert.ToInt32(
             PhotonNetwork.LocalPlayer.CustomProperties[PunPropertyNames.Player.PlayerUserCode]
         );
