@@ -99,11 +99,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         if (!isMyTurn) return;
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            FinishMyTask();
-            //photonView.RPC("FinishMyTask", RpcTarget.All);
-        }
+            //FinishMyTask();
+            photonView.RPC("FinishMyTask", RpcTarget.All);
 
         // 플레이어 턴에서만 순서를 진행
         if (turnFSM.turnState == ActionTurn.Player)
@@ -118,6 +115,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             }
             else
             {
+                //BeginTurn(currentTurnIndex);
                 photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
             }
         }
@@ -215,7 +213,11 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public void ChangeTurnToPlayer()
     {
         turnFSM.turnState = ActionTurn.Player;
-        photonView.RPC("BeginTurn", RpcTarget.All, 0); // 첫 번째 플레이어의 턴으로 복귀
+        //StartGame(); dmdkdkdk아아아으ㅏ앙어앙아앙ㅇ앙 제발 두번씩 호출되지말아줘ㅣ...
+        // 턴 FSM을 싱글톤으로 빼서 카운트 누적하고 값 받아와서 할까...
+        BeginTurn(0);
+        //photonView.RPC("BeginTurn", RpcTarget.All, 0); // 첫 번째 플레이어의 턴으로 복귀
+
     }
 
     [PunRPC]

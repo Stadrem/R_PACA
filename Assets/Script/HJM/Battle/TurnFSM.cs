@@ -18,12 +18,15 @@ public class TurnFSM : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if(turnState == ActionTurn.Player)
+        if (turnState == ActionTurn.Player)
         {
-            if(finishActionCount >= 2)
+            if (finishActionCount >= 2)
             {
-                photonView.RPC("ChangeTurn", RpcTarget.All);
-                finishActionCount = 0;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC("ChangeTurn", RpcTarget.All);
+                    finishActionCount = 0;
+                }
             }
         }
     }
