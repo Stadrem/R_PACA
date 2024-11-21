@@ -53,7 +53,9 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
 
     public GameObject debugPanel;
 
-    public int dice = 9;    
+    public int dice = 9;
+
+    public int diceCount = 4;
 
     //패널 활성화
     public void DebugPanel()
@@ -150,5 +152,10 @@ public class Kim_Debug : MonoBehaviourPunCallbacks
     public void OnClickDiceStandby()
     {
         DiceRollManager.Get().DiceStandby();
+    }
+
+    public void OnClickDiceReSetup()
+    {
+        DiceRollManager.Get().NewDiceSetup(diceCount);
     }
 }

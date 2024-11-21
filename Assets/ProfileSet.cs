@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -60,11 +61,13 @@ public class ProfileSet : MonoBehaviour
         }
     }
 
-    public void OnBlur()
+    
+    public void OnLightProfile()
     {
         turnBlur.SetActive(true);
     }
-    public void OffBlur()
+    
+    public void OffLightProfile()
     {
         turnBlur.SetActive(false);
     }

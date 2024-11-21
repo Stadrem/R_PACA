@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &607945789011639796
 RectTransform:
   m_ObjectHideFlags: 0
@@ -491,11 +491,11 @@ MonoBehaviour:
   middleAttackAbove: 7
   halfAttackBelow: 6
   halfAttackAbove: 4
+  searchDiceRoll: 7
   inRenderTextureActive: 0
   cameraCanvas: {fileID: 4557476770677769906}
   renderCamera: {fileID: 6396609122755285006}
   diceRT: {fileID: 8182538451166886009}
-  searchDiceRoll: 7
 --- !u!1 &3322372703661683612
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,8 +854,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.1
+  far clip plane: 20
   field of view: 60
   orthographic: 0
   orthographic size: 5
