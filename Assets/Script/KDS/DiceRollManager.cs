@@ -54,17 +54,37 @@ public class DiceRollManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //배열 크기 선언
-        diceObjects = new GameObject[diceCount];
-        diceSpin = new DiceSpin[diceCount];
-
         //new 반복 안하려고 미리 선언
         ws = new WaitForSeconds(spinTime);
 
-        //오브젝트 풀 생성
-        if (diceCount > 0)
+        NewDiceSetup(diceCount);
+    }
+
+    /// <summary>
+    /// 주사위 생성 및 갱신 함수. 이미 생성되어있더라도, int 값을 변경하여 호출하면 재생성됨.
+    /// </summary>
+    /// <param name="count">생성하고 싶은 주사위 갯수</param>
+    public void NewDiceSetup(int count)
+    {
+        diceCount = count;
+
+        //혹시라도 값이 있으면 파괴
+        if (diceObjects != null)
         {
-            for (int i = 0; i < diceCount; i++)
+            for (int i = 0; i < diceObjects.Length; i++)
+            {
+                Destroy(diceObjects[i]);
+            }
+        }
+
+        //배열 크기 선언
+        diceObjects = new GameObject[count];
+        diceSpin = new DiceSpin[count];
+
+        //오브젝트 풀 생성
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
             {
                 //주사위 프리팹 가져오기
                 diceObjects[i] = Instantiate(dicePrefab, transform);
