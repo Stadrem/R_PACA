@@ -226,7 +226,7 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Put<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
-        var body = JsonUtility.ToJson(info.body);
+        var body = JsonConvert.SerializeObject(info.body);
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
         {

@@ -7,7 +7,7 @@ namespace Data.Remote.Dtos.Request
     public class ScenarioBackgroundUpdateReqDto
     {
         public int partId;
-        public string partName;
+        public string WorldName;
         public int partType;
         public bool isPortalEnable;
         public int towardWorldPartId;

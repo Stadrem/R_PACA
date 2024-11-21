@@ -41,7 +41,7 @@ namespace Data.Remote
             var reqDto = new ScenarioBackgroundUpdateReqDto()
             {
                 partId = backgroundPartInfo.ID,
-                partName = backgroundPartInfo.Name,
+                WorldName = backgroundPartInfo.Name,
                 partType = (int)backgroundPartInfo.Type,
                 isPortalEnable = backgroundPartInfo.TowardBackground != null,
                 towardWorldPartId = backgroundPartInfo.TowardBackground?.ID ?? -1
