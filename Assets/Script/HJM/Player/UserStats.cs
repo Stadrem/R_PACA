@@ -1,13 +1,16 @@
-﻿using Photon.Pun;
+﻿using System;
+using Data.Models.Universe.Characters;
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using ViewModels;
 
-public class UserStats : MonoBehaviourPun
+public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     public static UserStats Instance;
 
     [Header("유저 스탯")]
     public string userNickname;
+
     public int userHealth; // 생명력
     public int userStrength; // 힘
     public int userDexterity; // 손재주
@@ -19,8 +22,6 @@ public class UserStats : MonoBehaviourPun
 
     private void Start()
     {
-        
-        
         // 자신을 battlePlayers 리스트에 등록하기 위해 RPC 호출
         if (PhotonNetwork.IsConnected)
         {
@@ -35,28 +36,6 @@ public class UserStats : MonoBehaviourPun
         userDexterity = dexterity;
     }
 
-    private void OnEnable()
-    {
-        // SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        // SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     // 씬 이름이 Town일때만
-    //     if (scene.name == "Town") 
-    //     {
-    //         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-    //         {
-    //             RegisterPlayerStats();
-    //         }
-    //     }
-    // }
-
     public void RegisterPlayerStats()
     {
         userNickname = photonView.Owner.NickName;
@@ -69,8 +48,31 @@ public class UserStats : MonoBehaviourPun
             if (playerBatList != null)
             {
                 Debug.Log($"RUN 2");
-                playerBatList.photonView.RPC("RegisterPlayer", RpcTarget.All, userNickname, userHealth, userStrength, userDexterity);
+                playerBatList.photonView.RPC(
+                    "RegisterPlayer",
+                    RpcTarget.All,
+                    userNickname,
+                    userHealth,
+                    userStrength,
+                    userDexterity
+                );
             }
         }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        Initialize(
+            Convert.ToInt32(photonView.InstantiationData[0]),
+            Convert.ToInt32(photonView.InstantiationData[1]),
+            Convert.ToInt32(photonView.InstantiationData[2])
+        );
+        var userCode = Convert.ToInt32(
+            PhotonNetwork.LocalPlayer.CustomProperties[PunPropertyNames.Player.PlayerUserCode]
+        );
+        ViewModelManager.Instance.UniversePlayViewModel.UpdateStatByUserCodeWithoutRemote(
+            userCode,
+            new CharacterStats(userHealth, userStrength, userDexterity)
+        );
     }
 }

@@ -82,7 +82,7 @@ namespace UniversePlay
                         PlayUniverseManager.Instance.roomNumber,
                         currentBackgroundName,
                         currentInteractNpc.NpcName,
-                        (res) => { }
+                        (_) => { }
                     )
                 );
             }
@@ -104,7 +104,7 @@ namespace UniversePlay
                 if (ViewModel.NpcChatSelectedIndex == 0)
                 {
                     selectorChat.Select(
-                        PlayerManager.CurrentPlayerInfo.name,
+                        ViewModel.CurrentPlayer.Nickname,
                         NpcChatUIManager.ChatInputField.text
                     );
                 }
@@ -134,7 +134,7 @@ namespace UniversePlay
         {
             print($"this is Called by {PhotonNetwork.LocalPlayer.NickName}");
             ViewModel.NpcChatSelectedIndex = -1;
-            
+
             selectorChat.ClearOptions();
             NpcChatUIManager.ClearChatOptions();
             NpcChatUIManager.HideChatOptions();
@@ -144,7 +144,7 @@ namespace UniversePlay
         private IEnumerator ConversationWithNpc_Master()
         {
             print("기다림 시작");
-            yield return new WaitUntil(() => selectorChat.OptionCount >= PlayerManager.PlayerCount - 1);
+            yield return new WaitUntil(() => selectorChat.OptionCount >= ViewModel.UniversePlayers.Count - 1);
             print("기다림 끝");
             NpcChatUIManager.SetChattable(true);
             selectorChat.ShowSelectors();
@@ -153,7 +153,7 @@ namespace UniversePlay
         private IEnumerator ConversationWithNpc_Other()
         {
             NpcChatUIManager.SetChattable(true);
-            yield return new WaitUntil(() => selectorChat.OptionCount >= PlayerManager.PlayerCount - 1);
+            yield return new WaitUntil(() => selectorChat.OptionCount >= ViewModel.UniversePlayers.Count - 1);
         }
 
         public void NextTurn()

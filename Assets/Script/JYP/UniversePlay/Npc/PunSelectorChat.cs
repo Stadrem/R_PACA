@@ -155,7 +155,7 @@ namespace UniversePlay
             int stat;
             if (reaction.BonusMessage == "strength")
             {
-                stat = PlayUniverseManager.Instance.InGamePlayerManager.CurrentPlayerInfo.strength;
+                stat = ViewModel.CurrentPlayer.Stats.GetStat(EStatType.Str);
             }
             else
             {
