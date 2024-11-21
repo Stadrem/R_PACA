@@ -79,6 +79,19 @@ MonoBehaviour:
   - MonsterTurn
   - BeginMonsterTurn
   - EndMonsterTurn
+  - SortBattlePlayersByPhotonViewIDRPC
+  - ActivateBlur
+  - OffLightProfile
+  - OnLightProfile
+  - ProfileLight
+  - TurnTXTUpdate
+  - MonsterAction
+  - MonsterTurnEnd
+  - MonsterTurnStart
+  - FinishMyTask
+  - ChangeTurn
+  - ChangeTurnToEnemy
+  - ChangeTurnToPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

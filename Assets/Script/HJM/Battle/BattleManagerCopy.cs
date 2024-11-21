@@ -28,8 +28,8 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     public GameObject nextTurnUI;
     public TMP_Text currentTurnTXT;
     public RectTransform profileParent;
-    
-    
+
+
     [Header("적 NPC")]
     public GameObject enemy;
     public Animator enemyAnim;
@@ -53,7 +53,7 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     {
         enemyHPBar.maxValue = 25;
         enemyHPBar.value = enemyHPBar.maxValue;
-        
+
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
     }
 
@@ -73,48 +73,39 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     public void StartBattle()
     {
         playerBatList = GetComponent<PlayerBatList>();
-        // ProfileSet();
         photonView.RPC("OnBattleStart", RpcTarget.All);
     }
 
     private void InitializePlayers()
     {
         GameObject[] playerGameObjects = GameObject.FindGameObjectsWithTag("Player");
-        //print("플레이어 오브젝트 수 : " + playerGameObjects.Length.ToString());
         GameObject[] Playerss = new GameObject[playerGameObjects.Length];
 
-        List<UserStats> tempPlayerStats = new List<UserStats>();
-        List<NavMeshAgent> tempAgents = new List<NavMeshAgent>();
-        List<PlayerMove> tempPlayerMoves = new List<PlayerMove>();
-        List<Animator> tempPlayerAnims = new List<Animator>();
+        // 임시 배열들
+        UserStats[] tempPlayerStats = new UserStats[playerGameObjects.Length];
+        NavMeshAgent[] tempAgents = new NavMeshAgent[playerGameObjects.Length];
+        PlayerMove[] tempPlayerMoves = new PlayerMove[playerGameObjects.Length];
+        Animator[] tempPlayerAnims = new Animator[playerGameObjects.Length];
 
         for (int i = 0; i < playerGameObjects.Length; i++)
         {
             PhotonView pv = playerGameObjects[i].GetComponent<PhotonView>();
-            int playerindex = pv.ViewID / 1000;
-            //print(playerindex);
+            int playerindex = pv.ViewID / 1000 - 1; // 포톤뷰(들어온 순서대로) 정렬
 
-            // 플레이어 게임 오브젝트 리스트에 추가
-            Playerss[playerindex - 1] = playerGameObjects[i];
 
-            // 컴포넌트들 가져오기
-            UserStats stats = playerGameObjects[i].GetComponent<UserStats>();
-            NavMeshAgent agent = playerGameObjects[i].GetComponent<NavMeshAgent>();
-            PlayerMove playerMove = playerGameObjects[i].GetComponent<PlayerMove>();
-            Animator playerAnim = playerGameObjects[i].GetComponentInChildren<Animator>();
-
-            tempPlayerStats.Add(stats);
-            tempAgents.Add(agent);
-            tempPlayerMoves.Add(playerMove);
-            tempPlayerAnims.Add(playerAnim);
+            Playerss[playerindex] = playerGameObjects[i];
+            tempPlayerStats[playerindex] = playerGameObjects[i].GetComponent<UserStats>();
+            tempAgents[playerindex] = playerGameObjects[i].GetComponent<NavMeshAgent>();
+            tempPlayerMoves[playerindex] = playerGameObjects[i].GetComponent<PlayerMove>();
+            tempPlayerAnims[playerindex] = playerGameObjects[i].GetComponentInChildren<Animator>();
         }
 
-
+        // 리스트로 다시 넣어주기
         players = Playerss.ToList();
-        playerStats = tempPlayerStats;
-        agents = tempAgents;
-        playerMoves = tempPlayerMoves;
-        playerAnims = tempPlayerAnims;
+        playerStats = tempPlayerStats.ToList();
+        agents = tempAgents.ToList();
+        playerMoves = tempPlayerMoves.ToList();
+        playerAnims = tempPlayerAnims.ToList();
     }
 
     [PunRPC]
@@ -125,7 +116,7 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         //var gameObject = PlayUniverseManager.Instance.NpcManager.currentInteractNpc?.gameObject;
         //if (gameObject == null)
         //{
-            //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
+        //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
         SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
@@ -133,10 +124,9 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         for (int i = 0; i < players.Count; i++)
         {
             photonView.RPC("MoveToBattlePos", RpcTarget.All, i);
-            ProfileSet();
         }
 
-        playerBatList = GetComponent<PlayerBatList>();
+        ProfileSet();
         battleUI.SetActive(true);
 
     }
@@ -163,7 +153,6 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
                 TurnCheckSystem.Instance.profiles = profiles;
             }
         }
-
     }
 
     [PunRPC]
@@ -195,19 +184,17 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.3f);
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
-        ShowBattleUI("공격 성공!"); // 공격 성공 UI
-        NextTurn();
     }
 
     // 주사위 공격 실패
     [PunRPC]
-    public IEnumerator DiceAttackFail()
+    public IEnumerator DiceAttackFail(int damage)
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         yield return new WaitForSeconds(0.3f);
         enemyAnim.SetTrigger("Damage");
-        ShowBattleUI("공격 실패"); // 공격 실패 UI
-        NextTurn();
+        UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
+
     }
 
     // 주사위 방어 성공
@@ -217,8 +204,6 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         enemyAnim.SetTrigger("Hit2"); // 몬스터 Hit2 트리거
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage"); // 플레이어 Damage 트리거
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
-        ShowBattleUI("방어 성공!"); // 방어 성공 UI
-        NextTurn();
     }
 
     // 주사위 방어 실패
@@ -228,8 +213,6 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         enemyAnim.SetTrigger("Hit2"); // 몬스터 Hit2 트리거
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage"); // 플레이어 Damage 트리거
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
-        ShowBattleUI("방어 실패"); // 방어 실패 UI
-        NextTurn();
     }
 
     [PunRPC]
@@ -237,24 +220,11 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     {
         enemyHPBar.value = enemyHPBar.value - damage; // 적 체력 감소
     }
-
-    private void ShowBattleUI(string message)
-    {
-        currentTurnTXT.text = message;
-        //nextTurnUI.SetActive(true); // 다음턴 UI 표시
-    }
-
-    private void NextTurn()
+    [PunRPC]
+    public void TurnTXTUpdate()
     {
         turnCount++;
         currentTurnTXT.text = "전투 " + turnCount + "턴";
-        StartCoroutine(HideNextTurnUI());
-    }
-
-    private IEnumerator HideNextTurnUI()
-    {
-        yield return new WaitForSeconds(2f);
-        nextTurnUI.SetActive(false);
     }
 
     public void SetEnemy(GameObject enemy)
