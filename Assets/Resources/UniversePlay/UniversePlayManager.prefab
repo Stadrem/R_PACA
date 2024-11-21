@@ -876,7 +876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3649915847376877603
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1558,6 +1558,9 @@ MonoBehaviour:
   inGamePlayerManager: {fileID: 8093603927009587201}
   selectorChat: {fileID: 1679314124423005616}
   hudUI: {fileID: 1119449359002368146}
+  backgroundNameUI: {fileID: 2057581958139900809, guid: 4a8bccddded0f43228cbe7ff14db41ec,
+    type: 3}
+  canvas: {fileID: 1571574651377728402}
   roomNumber: 0
   isBattle: 0
 --- !u!114 &6439204471733787449
@@ -2066,7 +2069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &888228634348265679
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3005,7 +3008,7 @@ PrefabInstance:
     - target: {fileID: 4653627720742082463, guid: 9aeae967bef597445be96b293273e9e0,
         type: 3}
       propertyPath: m_text
-      value: '>'
+      value: <
       objectReference: {fileID: 0}
     - target: {fileID: 4653627720742082463, guid: 9aeae967bef597445be96b293273e9e0,
         type: 3}
