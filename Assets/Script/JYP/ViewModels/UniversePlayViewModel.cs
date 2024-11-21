@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Data.Models.Universe;
 using Data.Models.Universe.Characters;
 using Data.Remote;
 using Data.Remote.Api;
 using Data.Remote.Dtos.Response;
-using Data.Models.Universe;
 using Script.JYP.UniversePlay.Chat;
 using UnityEngine;
 
 namespace UniversePlay
 {
-    public sealed class UniversePlayViewModel : INotifyPropertyChanged
+    public sealed partial class UniversePlayViewModel : INotifyPropertyChanged
     {
         #region Properties
 
@@ -22,7 +22,6 @@ namespace UniversePlay
         private int npcChatSelectedIndex = -1;
         private UniverseData universeData;
         private int currentBackgroundId = -1;
-        private Universe universe;
         private EHUDState hudState = 0;
 
         #endregion
@@ -45,6 +44,8 @@ namespace UniversePlay
         }
 
         #endregion
+
+
 
         public EHUDState HUDState
         {

@@ -1,6 +1,8 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using Data.Models.Universe.Characters;
 using TMPro;
+using UnityEngine;
+using UniversePlay;
+using ViewModels;
 
 public class UserStatsManager : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class UserStatsManager : MonoBehaviour
     public TMP_InputField strengthInput;
     public TMP_InputField dexterityInput;
 
-    private InGamePlayerManager PlayerManager => PlayUniverseManager.Instance.InGamePlayerManager;
+    private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     void Start()
     {
@@ -30,10 +32,11 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int health))
         {
             UserStats.userHealth = health;
-            PlayerManager.UpdatePlayerHitPoint(
-                UserCodeMgr.Instance.UserCode,
-                UserCodeMgr.Instance.UserID,
-                health
+            StartCoroutine(
+                ViewModel.UpdateStatByUserCode(
+                    UserCodeMgr.Instance.UserCode,
+                    new CharacterStats(health, UserStats.userStrength, UserStats.userDexterity)
+                )
             );
         }
         else
@@ -48,10 +51,11 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int strength))
         {
             UserStats.userStrength = strength;
-            PlayerManager.UpdatePlayerStrength(
-                UserCodeMgr.Instance.UserCode,
-                UserCodeMgr.Instance.UserID,
-                strength
+            StartCoroutine(
+                ViewModel.UpdateStatByUserCode(
+                    UserCodeMgr.Instance.UserCode,
+                    new CharacterStats(UserStats.userHealth, strength, UserStats.userDexterity)
+                )
             );
         }
         else
@@ -66,10 +70,11 @@ public class UserStatsManager : MonoBehaviour
         if (int.TryParse(input, out int dexterity))
         {
             UserStats.userDexterity = dexterity;
-            PlayerManager.UpdatePlayerDexterity(
-                UserCodeMgr.Instance.UserCode,
-                UserCodeMgr.Instance.UserID,
-                dexterity
+            StartCoroutine(
+                ViewModel.UpdateStatByUserCode(
+                    UserCodeMgr.Instance.UserCode,
+                    new CharacterStats(UserStats.userHealth, UserStats.userStrength, dexterity)
+                )
             );
         }
         else
