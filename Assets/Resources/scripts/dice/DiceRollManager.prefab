@@ -625,6 +625,8 @@ MonoBehaviour:
   plusText: {fileID: 7255967575876250773}
   createPoint: {fileID: 4162151573417029702}
   baseAttack: 6
+  inRenderTextureActive: 0
+  diceRT: {fileID: 8182538451166886009}
 --- !u!1 &3322372703661683612
 GameObject:
   m_ObjectHideFlags: 0

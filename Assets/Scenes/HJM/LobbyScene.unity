@@ -11257,7 +11257,7 @@ MonoBehaviour:
   scenarioEntryPrefab: {fileID: 6151380902154591382, guid: efb83d810ff314dd58a055ca4bbb076b,
     type: 3}
   roomCreatePopupCanvasActive: {fileID: 6922957366869279996}
-  createRoom02_roomName: {fileID: 3786443981695710643}
+  createRoom02_roomName: {fileID: 515045799199321770}
 --- !u!114 &2385942314720772810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14020,7 +14020,7 @@ GameObject:
   - component: {fileID: 1667747665577328047}
   - component: {fileID: 515045799199321770}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text_RoomName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14690,7 +14690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &7449741203021037659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15855,7 +15855,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 5
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 14.97
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1

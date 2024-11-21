@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
@@ -86,7 +87,6 @@ public class DiceRollManager : MonoBehaviour
 
             // 카메라를 주사위 중심으로 이동
             AdjustCameraToCenter(diceObjects, renderCamera);
-
         }
       ClearValue();
     }
@@ -128,6 +128,8 @@ public class DiceRollManager : MonoBehaviour
     //주사위의 회전 스크립트
     DiceSpin[] diceSpin;
 
+    [Space]
+    [Header("등장 주사위 갯수")]
     //생성할 주사위 갯수
     public int diceCount = 2;
 
@@ -137,6 +139,9 @@ public class DiceRollManager : MonoBehaviour
     //new 생성 안하려고 고정시켜놓음
     WaitForSeconds ws;
 
+    [Space]
+    [Header("주사위 랜덤 연산 후, 결과 값 저장 변수")]
+    [Tooltip("주사위 개당 1개씩 배열 변수")]
     // 주사위 결과 저장 리스트
     public List<int> diceResults = new List<int>(); 
 
@@ -171,6 +176,16 @@ public class DiceRollManager : MonoBehaviour
 
     bool diceStandby = false;
 
+    [Space]
+    [Header("내장된 렌더 텍스처 캔버스 사용")]
+    public bool inRenderTextureActive = false;
+    public RawImage diceRT;
+
+    [Space]
+    [Header("일반, 탐색 주사위 설정값")]
+    [Tooltip("설정된 값 이상일 시 성공, 미만일 시 실패")]
+    public int searchDiceRoll = 7;
+
     /// <summary>
     /// Bool 반환, 성공 실패만 판별하는 탐색 전용 주사위 + 자체 계산 포함
     /// <para>최종 주사위 값 기반으로 피해량 결정</para>
@@ -193,7 +208,7 @@ public class DiceRollManager : MonoBehaviour
         sumDice = dicePick + AbilityCorrection(stat, dicePick);
 
         //성공 실패 여부
-        if (sumDice >= 7)
+        if (sumDice >= searchDiceRoll)
         {
             success = true;
 
@@ -411,11 +426,17 @@ public class DiceRollManager : MonoBehaviour
         DiceRollView(diceResults);
     }
 
+    /// <summary>
+    /// 주사위만 표시하는 기능
+    /// </summary>
     public void DiceStandby()
     {
+        //diceStandby가 활성화중이지 않을 때, 렌더 텍스처 카메라를 켜고, diceStandby를 활성화
         if (!diceStandby)
         {
             ClearValue();
+
+            renderCamera.enabled = true;
 
             cameraCanvas.SetActive(true);
 
@@ -430,9 +451,12 @@ public class DiceRollManager : MonoBehaviour
                 diceSpin[i].DiceStop();
             }
         }
+        //diceStandby가 활성화중일 때, 렌더 텍스처 카메라를 끄고, diceStandby를 비활성화
         else
         {
             ClearValue();
+
+            renderCamera.enabled = false;
 
             cameraCanvas.SetActive(false);
 
@@ -467,6 +491,11 @@ public class DiceRollManager : MonoBehaviour
     {
         //렌더 텍스처 캔버스 켜기
         cameraCanvas.SetActive(true);
+        renderCamera.enabled = true;
+        if (inRenderTextureActive)
+        {
+            diceRT.enabled = true;
+        }
 
         //주사위 굴림 효과음 재생
         SoundManager.Get().PlaySFX(0);
@@ -542,9 +571,10 @@ public class DiceRollManager : MonoBehaviour
     //청소기
     void ClearValue()
     {
+        //diceStandby가 활성화 중이지 않을 때만 초기화
+        //diceStandby가 준비중일 때 갑자기 렌더 텍스처 꺼지는거 방지하기 위함임
         if (!diceStandby)
         {
-
             //저장된 값 초기화
             diceResults.Clear();
             diceResult = 0;
@@ -559,6 +589,8 @@ public class DiceRollManager : MonoBehaviour
             canvas.SetActive(false);
 
             cameraCanvas.SetActive(false);
+
+            renderCamera.enabled = false;
         }
     }
 }
