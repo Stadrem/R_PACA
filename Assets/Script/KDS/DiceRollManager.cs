@@ -88,7 +88,12 @@ public class DiceRollManager : MonoBehaviour
             // 카메라를 주사위 중심으로 이동
             AdjustCameraToCenter(diceObjects, renderCamera);
         }
-      ClearValue();
+        ClearValue();
+
+        if (inRenderTextureActive)
+        {
+            diceRT.enabled = true;
+        }
     }
 
     //렌더 텍스처 카메라의 위치를 주사위들의 위치 중심으로 설정
@@ -116,11 +121,9 @@ public class DiceRollManager : MonoBehaviour
         return activeCount > 0 ? totalX / activeCount : 0;
     }
 
-    //주사위 프리팹
+    [Space]
+    [Header("생성할 주사위 프리팹")]
     public GameObject dicePrefab;
-
-    //주사위 렌더 텍스처 카메라
-    public Camera renderCamera;
 
     //오브젝트풀 생성
     GameObject[] diceObjects;
@@ -130,10 +133,11 @@ public class DiceRollManager : MonoBehaviour
 
     [Space]
     [Header("등장 주사위 갯수")]
-    //생성할 주사위 갯수
     public int diceCount = 2;
 
-    //전체 회전 시간
+    [Space]
+    [Header("주사위 회전 시킬 시간")]
+    [Tooltip("각 주사위의 회전에도 자동적으로 값 대입됨.")]
     public float spinTime = 1.5f;
 
     //new 생성 안하려고 고정시켜놓음
@@ -142,27 +146,47 @@ public class DiceRollManager : MonoBehaviour
     [Space]
     [Header("주사위 랜덤 연산 후, 결과 값 저장 변수")]
     [Tooltip("주사위 개당 1개씩 배열 변수")]
-    // 주사위 결과 저장 리스트
     public List<int> diceResults = new List<int>(); 
 
     //결과값 합산
     int diceResult;
 
-    //결과창 표시 ui
+    [Space]
+    [Header("결과창 캔버스")]
     public GameObject canvas;
-    public GameObject cameraCanvas;
-    public TMP_Text playerText;
     public TMP_Text titleText;
     public TMP_Text plusText;
 
     //코루틴 변수
     private IEnumerator coroutine;
 
+    [Space]
+    [Header("주사위가 생성될 로컬 포지션")]
     //주사위 생성 위치
     public Transform createPoint;
 
-    //기본 공격력 값
+    [Space]
+    [Header("주사위 평균 공격력")]
+    [Tooltip("0%, 50%, 100%, 200%")]
     public int baseAttack = 6;
+    [Header("최대 데미지")]
+    [Tooltip("입력될 값 이상일 시 200% 데미지")]
+    public int doubleAttackAbove = 12;
+    [Header("평균 데미지")]
+    [Tooltip("입력될 값 이하일 시 100% 데미지")]
+    public int middleAttackBelow = 11;
+    [Tooltip("입력될 값 이상일 시 100% 데미지")]
+    public int middleAttackAbove = 7;
+    [Header("절반 데미지")]
+    [Tooltip("입력될 값 이하일 시 50% 데미지")]
+    public int halfAttackBelow = 6;
+    [Tooltip("입력될 값 이상일 시 50% 데미지")]
+    public int halfAttackAbove = 4;
+
+    [Space]
+    [Header("일반, 탐색 주사위 설정값")]
+    [Tooltip("설정된 값 이상일 시 성공, 미만일 시 실패")]
+    public int searchDiceRoll = 7;
 
     //박진영이 추가한 콜백 기능..?
     public Action onDiceRollFinished = null;
@@ -179,12 +203,9 @@ public class DiceRollManager : MonoBehaviour
     [Space]
     [Header("내장된 렌더 텍스처 캔버스 사용")]
     public bool inRenderTextureActive = false;
+    public GameObject cameraCanvas;
+    public Camera renderCamera;
     public RawImage diceRT;
-
-    [Space]
-    [Header("일반, 탐색 주사위 설정값")]
-    [Tooltip("설정된 값 이상일 시 성공, 미만일 시 실패")]
-    public int searchDiceRoll = 7;
 
     /// <summary>
     /// Bool 반환, 성공 실패만 판별하는 탐색 전용 주사위 + 자체 계산 포함
@@ -259,11 +280,8 @@ public class DiceRollManager : MonoBehaviour
     /// <returns></returns>
     public int BattleDiceRoll(int stat)
     {
-        //텍스트랑 오브젝트 초기화
+        //텍스트랑 변수, 오브젝트 초기화
         ClearValue();
-
-        //최종 결과값 초기화
-        int result = 0;
 
         //랜덤 결과 연산
         int dicePick = DiceRandomPick();
@@ -273,33 +291,33 @@ public class DiceRollManager : MonoBehaviour
         sumDice = dicePick + AbilityCorrection(stat, dicePick);
 
         //최종 주사위 값 기반으로 피해량 결정
-        if (sumDice >= 4 && sumDice <= 6)
+        if (sumDice >= halfAttackAbove && sumDice <= halfAttackBelow)
         {
             //50% 피해
-            result = (int)(baseAttack * 0.5f);
+            diceResult = (int)(baseAttack * 0.5f);
             success = false;
 
             //50% 피해
-            titleText.text = "<color=blue>공격력 " + result + "..</color>";
+            titleText.text = "<color=blue>공격력 " + diceResult + "..</color>";
         }
-        else if (sumDice >= 7 && sumDice <= 11)
+        else if (sumDice >= middleAttackAbove && sumDice <= middleAttackBelow)
         {
             //100% 피해
-            result = baseAttack;
+            diceResult = baseAttack;
             success = true;
 
             //일반 공격
-            titleText.text = "공격력 " + result;
+            titleText.text = "공격력 " + diceResult;
         }
-        else if (sumDice >= 12)
+        else if (sumDice >= doubleAttackAbove)
         {
             //200% 피해
-            result = baseAttack * 2;
+            diceResult = baseAttack * 2;
             success = true;
             critical = true;
 
             //치명타!
-            titleText.text = "<size=75><color=red>공격력 " + result + "!</color></size>";
+            titleText.text = "<size=75><color=red>공격력 " + diceResult + "!</color></size>";
 
             //힘세고 강한 업적
             AchievementManager.Get().UnlockAchievement(4);
@@ -307,11 +325,11 @@ public class DiceRollManager : MonoBehaviour
         else
         {
             success = false;
-            //손이 미끄러진 업적
 
             //공격 완전 실패
             titleText.text = "<size=55><color=blue>" + "공격 실패..." + "!</color></size>";
 
+            //손이 미끄러진 업적
             AchievementManager.Get().UnlockAchievement(6);
         }
 
@@ -319,7 +337,7 @@ public class DiceRollManager : MonoBehaviour
         DiceRollView(diceResults);
 
         //데미지 값 반환
-        return result;
+        return diceResult;
     }
 
     //능력치 보정 함수
@@ -432,6 +450,26 @@ public class DiceRollManager : MonoBehaviour
     public void DiceStandby()
     {
         //diceStandby가 활성화중이지 않을 때, 렌더 텍스처 카메라를 켜고, diceStandby를 활성화
+        //diceStandby가 활성화중일 때, 렌더 텍스처 카메라를 끄고, diceStandby를 비활성화
+        ClearValue();
+
+        renderCamera.enabled = !diceStandby;
+
+        cameraCanvas.SetActive(!diceStandby);
+
+        //주사위 오브젝트풀 활성화
+        for (int i = 0; i < diceCount; i++)
+        {
+            //오브젝트 활성화
+            diceObjects[i].SetActive(!diceStandby);
+
+            diceSpin[i].DiceStop();
+        }
+
+        diceStandby = !diceStandby;
+
+        /*
+        
         if (!diceStandby)
         {
             ClearValue();
@@ -451,7 +489,6 @@ public class DiceRollManager : MonoBehaviour
                 diceSpin[i].DiceStop();
             }
         }
-        //diceStandby가 활성화중일 때, 렌더 텍스처 카메라를 끄고, diceStandby를 비활성화
         else
         {
             ClearValue();
@@ -471,6 +508,7 @@ public class DiceRollManager : MonoBehaviour
                 diceSpin[i].DiceStop();
             }
         }
+        */
     }
 
     //주사위 값 랜덤
@@ -575,21 +613,17 @@ public class DiceRollManager : MonoBehaviour
         //diceStandby가 준비중일 때 갑자기 렌더 텍스처 꺼지는거 방지하기 위함임
         if (!diceStandby)
         {
-            //저장된 값 초기화
+            //저장된 변수 초기화
             diceResults.Clear();
             diceResult = 0;
-
-            playerText.text = " ";
-            titleText.text = " ";
-            plusText.text = " ";
-
             success = false;
             critical = false;
 
+            //ui 초기화
+            titleText.text = " ";
+            plusText.text = " ";
             canvas.SetActive(false);
-
             cameraCanvas.SetActive(false);
-
             renderCamera.enabled = false;
         }
     }
