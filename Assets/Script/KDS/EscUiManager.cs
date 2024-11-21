@@ -76,9 +76,4 @@ public class EscUiManager : MonoBehaviour
     {
         SoundManager.Get().sfxVolume = sfxSlider.value;
     }
-
-    public void OnClickAchievement()
-    {
-        AchievementManager.Get().EnableCanvas();
-    }
 }

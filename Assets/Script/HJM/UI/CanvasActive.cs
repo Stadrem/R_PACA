@@ -41,4 +41,9 @@ public class CanvasActive : MonoBehaviour
     {
         PhotonNetwork.LoadLevel("Town");
     }
+
+    public void OnClickTitle()
+    {
+        AchievementManager.Get().EnableCanvas();
+    }
 }
