@@ -105,6 +105,12 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     private void Update()
     {
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            StartCoroutine(GameMasterApi.Test(roomNumber, (res) => { }));
+        }
+        #endif
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (PhotonNetwork.IsMasterClient)
@@ -114,9 +120,14 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                         roomNumber,
                         (res) =>
                         {
-                            PhotonNetwork.LeaveRoom();
-                            PhotonNetwork.LoadLevel("LobbyScene");
-                            Dispose();
+                            StartCoroutine(GameMasterApi.UnsubscribeGameMasterSSE(roomNumber,
+                                (res) =>
+                                {
+                                    PhotonNetwork.LeaveRoom();
+                                    PhotonNetwork.LoadLevel("LobbyScene");
+                                    Dispose(); 
+                                }));
+           
                         }
                     )
                 );
@@ -186,12 +197,12 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     public void StartPlay()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
         roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
         var codeList = ViewModel.UniversePlayers
             .Select((t) => t.UserCode)
             .ToList();
         StartCoroutine(
+            
             ViewModel.StartRoom(
                 roomNumber,
                 PhotonNetwork.CurrentRoom.Name,
@@ -201,6 +212,22 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                     if (res.IsSuccess)
                     {
                         BackgroundManager.StartFirstBackground();
+                    }
+                }
+            )
+        );
+        StartCoroutine(
+            GameMasterApi.SubscribeGameMasterSSE(
+                roomNumber,
+                (res) =>
+                {
+                    if (res.IsSuccess)
+                    {
+                        Debug.Log($"res: {res}");
+                    }
+                    else
+                    {
+                        Debug.LogError($"erro: {res.error}");
                     }
                 }
             )
