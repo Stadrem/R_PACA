@@ -213,7 +213,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private IEnumerator MonsterAction()
     {
         Debug.Log("몬스터 행동 시작");
-        BattleManagerCopy.Instance.enemyAnim.SetTrigger("Rage");
+        BattleManager.Instance.enemyAnim.SetTrigger("Rage");
 
         yield return new WaitForSeconds(2f);
         photonView.RPC("ChangeTurnToPlayer", RpcTarget.All);
@@ -259,7 +259,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [PunRPC] 
     public void ProfileLight(int playerIndex, bool isOn)
     {
-        if (BattleManagerCopy.Instance.isBattle)
+        if (BattleManager.Instance.isBattle)
         {
             profiles[playerIndex].GetComponent<ProfileSet>().LightProfile(isOn);
             turnLight[playerIndex].SetActive(isOn);
