@@ -97,6 +97,7 @@ MonoBehaviour:
   - ProfileLightOn
   - IsBattle
   - WaitStartLight
+  - RPC_SetCurrentBackgroundId
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
