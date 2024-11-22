@@ -64,36 +64,38 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     void BeginTurn(int turnIndex)
     {
-        currentTurnIndex = turnIndex;
-        //photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
-        if (turnFSM.turnState == ActionTurn.Player)
+        if (BattleManager.Instance.isBattle)
         {
-            Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
-            isMyTurn = currentPlayer == PhotonNetwork.LocalPlayer;
+            currentTurnIndex = turnIndex;
+            //photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
+            if (turnFSM.turnState == ActionTurn.Player)
+            {
+                Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
+                isMyTurn = currentPlayer == PhotonNetwork.LocalPlayer;
 
-            if (isMyTurn)
-            {
-                Debug.Log("내 턴");
-                EnableBatUI();
-                SetActiveTrueBatUI();
-                photonView.RPC("WaitStartLight", RpcTarget.AllBuffered, currentTurnIndex, true);
+                if (isMyTurn)
+                {
+                    Debug.Log("내 턴");
+                    EnableBatUI();
+                    SetActiveTrueBatUI();
+                    photonView.RPC("WaitStartLight", RpcTarget.AllBuffered, currentTurnIndex, true);
+                }
+                else
+                {
+                    Debug.Log("다른 플레이어의 턴");
+                    DisableBatUI();
+                    SetActiveFalseBatUI();
+                }
             }
-            else
+            else if (turnFSM.turnState == ActionTurn.Enemy)
             {
-                Debug.Log("다른 플레이어의 턴");
-                DisableBatUI();
-                SetActiveFalseBatUI();
-            }
-        }
-        else if (turnFSM.turnState == ActionTurn.Enemy)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                MonsterTurnRPCCall();
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    MonsterTurnRPCCall();
+                }
             }
         }
     }
-
     [PunRPC]
     public IEnumerator WaitStartLight(int playerIndex, bool isOn)
     {
@@ -229,7 +231,9 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateSelectImage(int playerIndex, int selection)
     {
+        if (BattleManager.Instance.isBattle == false) return;
         profiles[playerIndex].GetComponent<ProfileSet>().SetSelectImage(selection);
+
     }
 
     public void EnableBatUI()
@@ -256,7 +260,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         defenseBtn.gameObject.SetActive(false);
     }
 
-    [PunRPC] 
+    [PunRPC]
     public void ProfileLight(int playerIndex, bool isOn)
     {
         if (BattleManager.Instance.isBattle)

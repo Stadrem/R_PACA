@@ -53,7 +53,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        enemyHPBar.maxValue = 25;
+        enemyHPBar.maxValue = 10; // 적 체력 설정
         enemyHPBar.value = enemyHPBar.maxValue;
 
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
@@ -220,7 +220,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyAnim.SetTrigger("Hit2");
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
-        // 근데 방어가 좀 이상하긴 함... 공격하면 공격 안당하는데 방어하면 공격당함
+        // 근데 방어가 좀 이상하긴 함... 공격하면 공격 안당하는데 방어하면 공격당함 방패같은거라도 세워놔야하나
     }
 
     // 주사위 방어 실패
@@ -246,14 +246,41 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateEnemyHealth(int damage)
     {
-        enemyHPBar.value = enemyHPBar.value - damage; // 적 체력 감소
+
+        enemyHPBar.value -= damage;
+
+        if (enemyHPBar.value <= 0)
+        {
+            enemyAnim.SetTrigger("Die");
+            print("몬스터 사망!");
+            EndBattle();
+        }
     }
-    [PunRPC]
-    public void TurnTXTUpdate()
+    private void EndBattle()
     {
-        turnCount++;
-        currentTurnTXT.text = "전투 " + turnCount + "턴";
+        // 전투 종료
+        isBattle = false;
+
+        battleUI.SetActive(false);
+
+        foreach (var profile in profiles)
+        {
+            Destroy(profile);
+        }
+        profiles.Clear();
+        foreach (var turnLight in TurnCheckSystem.Instance.turnLight)
+        {
+            turnLight.SetActive(false);
+        }
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            agents[i].enabled = true; 
+            playerMoves[i].clickMovementEnabled = true;
+        }
+        Debug.Log("전투 종료. 플레이어 측 승리!");
     }
+
 
     public void SetEnemy(GameObject enemy)
     {
