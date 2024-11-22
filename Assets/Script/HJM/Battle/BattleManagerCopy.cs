@@ -76,6 +76,10 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
     public void IsBattle()
     {
         isBattle = true;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            TurnCheckSystem.Instance.StartGame();
+        }
     }
 
     public void StartBattle()
