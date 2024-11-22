@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UnityEngine.Internal;
 
 namespace Data.Remote.Dtos.Response
 {
@@ -41,8 +42,8 @@ namespace Data.Remote.Dtos.Response
         public int partId;
         public string partName;
 
-        [JsonProperty("partType")]
-        public int backgroundType;
+        [JsonProperty("partType", NullValueHandling = NullValueHandling.Ignore)]
+        public int backgroundType = 0;
         public string isPortalEnable;
         public int towardWorldPartId;
     }
