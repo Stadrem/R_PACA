@@ -71,6 +71,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             InitializePlayers();
         }
+
+        if (enemy == null)
+        {
+            GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
+            enemy = gameObject;
+        }
     }
     [PunRPC]
     public void IsBattle()
@@ -131,12 +137,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
 
-        if (enemy == null)
-        {
-            GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
-            enemy = gameObject;
-        }
-
         SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
 
@@ -147,7 +147,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         ProfileSet();
         battleUI.SetActive(true);
-
+        photonView.RPC("IsBattle", RpcTarget.All);
     }
 
     [PunRPC] // 프로필 UI 생성
