@@ -11,7 +11,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     public TMP_InputField inputMaxPlayer;
     public Button btnCreate;
     //public Button btnJoin;
-    
+
     private string roomName;
     private byte maxPlayers;
 
@@ -23,7 +23,6 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        
         // inputRoomName 의 내용이 변경될 때 호출되는 함수 등록
         inputRoomName.onValueChanged.AddListener(OnValueChangedRoomName);
         // inputMaxPlayer 의 내용이 변경될 때 호출되는 함수 등록
@@ -31,7 +30,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
 
         //btnJoin.onClick.AddListener(OnClickJoinRoom); // 방 참여 버튼 클릭 이벤트 등록
         //btnJoin.interactable = false; // 초기 상태에서 비활성화
-        
+
         scenarioListUIController.Init();
     }
 
@@ -66,7 +65,7 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
             Debug.LogError("시나리오를 선택해주세요.");
             return;
         }
-        
+
         // 방 옵션 추가
         var option = new Hashtable
         {
@@ -103,8 +102,8 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
             MaxPlayers = maxPlayers,
             CustomRoomProperties = customRoomProperties,
         };
-        
-        
+
+
         if (!PhotonNetwork.CreateRoom(roomName, options))
         {
             Debug.LogError("방 생성에 실패했습니다.");
@@ -115,14 +114,27 @@ public class RoomCreateManager : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
         Debug.Log("방이 성공적으로 생성되었습니다.");
-        
-        // 대기실 씬으로 전환
-        PhotonNetwork.LoadLevel("WaitingScene");
+
+        // 대기실 씬으로 전환 -> 기존에 방이 있을때, OnCreated의 LoadLevel이랑 OnJoinedRoom의 LoadLevel이 겹쳐 불리는 문제가 있어서 주석처리하고, OnJoinedRoom의 위치를 이 class 로 옮김
+        // PhotonNetwork.LoadLevel("WaitingScene"); 
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         base.OnCreateRoomFailed(returnCode, message);
         Debug.LogError("방 생성 실패: " + message);
+    }
+
+    // 방 참여 요청에 대한 콜백 함수
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("방에 성공적으로 참여했습니다: " + PhotonNetwork.CurrentRoom.Name);
+        PhotonNetwork.LoadLevel("WaitingScene"); // 대기실 씬으로 전환
+    }
+
+    // 방 참여 실패 시 호출되는 콜백 함수
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError("방 참여 실패: " + message);
     }
 }

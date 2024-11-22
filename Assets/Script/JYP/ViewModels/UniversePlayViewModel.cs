@@ -28,7 +28,7 @@ namespace UniversePlay
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -89,11 +89,6 @@ namespace UniversePlay
                 SetField(ref currentBackgroundId, value);
             }
         }
-        
-        public void SetCurrentBackgroundIdWithoutNotify(int id)
-        {
-            CurrentBackgroundId = id;
-        }
 
         public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcReaction>> callback)
         {
@@ -131,6 +126,7 @@ namespace UniversePlay
 
         public IEnumerator StartRoom(int roomNumber, string title, List<int> playerIds, Action<ApiResult> callback)
         {
+            Debug.Log($"Start Room - {roomNumber}");
             yield return PlayRoomApi.StartRoom(
                 roomNumber,
                 title,
