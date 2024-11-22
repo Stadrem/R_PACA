@@ -174,7 +174,7 @@ namespace UI.UniversePlay
                 dicePanel.gameObject,
                 iTween.Hash(
                     "y",
-                    -dicePanelHeight,
+                    -220,
                     "islocal",
                     true,
                     "time",
