@@ -30,6 +30,10 @@ public class BackgroundEditUIController : MonoBehaviour
         createButton.onClick.AddListener(
             () => { backgroundCreateUIController.gameObject.SetActive(true); }
         );
+        
+        objectiveSettingButton.onClick.AddListener(
+            () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); }
+        );
     }
 
     public void ShowUI()

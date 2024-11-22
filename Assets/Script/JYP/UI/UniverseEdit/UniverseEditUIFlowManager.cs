@@ -13,6 +13,7 @@ public class UniverseEditUIFlowManager : MonoBehaviour
     
     [SerializeField] private BackgroundEditUIController backgroundEditUIController;
 
+    [SerializeField] private ObjectiveSelectionPopupController objectiveSelectionPopupController;
     private static UniverseEditUIFlowManager instance;
 
     public static UniverseEditUIFlowManager Instance
@@ -54,7 +55,7 @@ public class UniverseEditUIFlowManager : MonoBehaviour
             universeCharactersEditController.gameObject.SetActive(false);
         if(backgroundEditUIController.gameObject.activeSelf)
             backgroundEditUIController.gameObject.SetActive(false);
-        
+        objectiveSelectionPopupController.Hide(); 
         createUniverseController.gameObject.SetActive(true);
     }
 
@@ -64,7 +65,7 @@ public class UniverseEditUIFlowManager : MonoBehaviour
             createUniverseController.gameObject.SetActive(false);
         if(backgroundEditUIController.gameObject.activeSelf)
             backgroundEditUIController.gameObject.SetActive(false);
-        
+        objectiveSelectionPopupController.Hide(); 
         universeCharactersEditController.gameObject.SetActive(true);
     }
     
@@ -75,7 +76,12 @@ public class UniverseEditUIFlowManager : MonoBehaviour
      
         if (universeCharactersEditController.gameObject.activeSelf)
             universeCharactersEditController.gameObject.SetActive(false);
-        
+        objectiveSelectionPopupController.Hide();
         backgroundEditUIController.ShowUI();
+    }
+
+    public void ShowObjectiveSelection()
+    {
+        objectiveSelectionPopupController.Show();
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using UI.Universe.Edit;
 using UnityEngine;
@@ -13,12 +13,11 @@ public class UniverseCharactersEditController : MonoBehaviour
     private CharactersListViewController charactersListController;
     private CharacterCreationController characterCreationController;
     private Button backButton;
-
+    
     private Button backgroundButton;
 
     private Button objectiveButton;
     // private Label createdDate;
-    private ObjectiveSelectionPopupController objectiveSelectionPopupController;
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>()
@@ -28,9 +27,6 @@ public class UniverseCharactersEditController : MonoBehaviour
         objectiveButton = root.Q<Button>("Button_Objectives");
         // createdDate = root.Q<Label>("label_createdDate");
 
-        var popup = root.Q<TemplateContainer>("ObjectiveSelectionPopup");
-        objectiveSelectionPopupController = new ObjectiveSelectionPopupController();
-        objectiveSelectionPopupController.Init(popup);
         viewModel = ViewModelManager.Instance.UniverseEditViewModel;
 
         charactersListController = new CharactersListViewController();
@@ -40,16 +36,16 @@ public class UniverseCharactersEditController : MonoBehaviour
             viewModel.DeleteCharacter
         );
         charactersListController.SetItem(viewModel.Characters);
-
+    
 
         characterCreationController = new CharacterCreationController();
         characterCreationController.Initialize(root,this);
-
+    
         // createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
 
+        objectiveButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); };
         backButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); };
         backgroundButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
-        objectiveButton.clicked += () => { objectiveSelectionPopupController.Show(); };
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
@@ -69,9 +65,5 @@ public class UniverseCharactersEditController : MonoBehaviour
         {
             charactersListController.SetItem(viewModel.Characters);
         }
-    }
-
-    private void OnAddCharacterClicked()
-    {
     }
 }

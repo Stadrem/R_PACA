@@ -1,7 +1,9 @@
-﻿using UnityEngine.UIElements;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UIElements;
 using ViewModels;
 
-public class ObjectiveSelectionPopupController
+public class ObjectiveSelectionPopupController: MonoBehaviour
 {
     private const string ObjectiveSelectionHided = "objective-selection--hided";
     private const string SelectionElementSelected = "character-shape--selected";
@@ -19,11 +21,12 @@ public class ObjectiveSelectionPopupController
         "마왕 처치"
     };
 
-    private EObjectiveType selectedObjectiveType = EObjectiveType.None;
 
-    public void Init(VisualElement root)
+
+    private void OnEnable()
     {
-        this.root = root;
+        root = GetComponent<UIDocument>().rootVisualElement;
+        Hide();
         selectionCollectSword = root.Q<VisualElement>("selection_getSword");
         selectionDemonKing = root.Q<VisualElement>("selection_objectiveDemonKing");
         confirm = root.Q<Button>("button_objectiveConfirm");
@@ -33,7 +36,16 @@ public class ObjectiveSelectionPopupController
 
         selectionCollectSword.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.CollectSword));
         selectionDemonKing.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.DefeatDemonKing));
-        confirm.clicked += () => { Hide(); };
+        confirm.clicked += Hide; 
+    }
+
+    
+
+    private void OnDisable()
+    {
+        selectionCollectSword.UnregisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.CollectSword));
+        selectionDemonKing.UnregisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.DefeatDemonKing));
+        confirm.clicked -= Hide;
     }
 
     public void Hide()
@@ -48,7 +60,6 @@ public class ObjectiveSelectionPopupController
 
     public void OnSelectionChanged(EObjectiveType type)
     {
-        selectedObjectiveType = type;
 
         selectionCollectSword.RemoveFromClassList(SelectionElementSelected);
         selectionDemonKing.RemoveFromClassList(SelectionElementSelected);

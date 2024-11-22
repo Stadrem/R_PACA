@@ -21,7 +21,6 @@ public class CreateUniverseController : MonoBehaviour
     private EGenreType selectedGenre = EGenreType.None;
     // private Label createdDate;
 
-    private ObjectiveSelectionPopupController objectiveSelectionPopupController;
 
     private static UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
@@ -44,8 +43,6 @@ public class CreateUniverseController : MonoBehaviour
         // tagsInput = root.Q<TextField>("input_tags");
         // createdDate = root.Q<Label>("label_createdDate");
         var popup = root.Q<TemplateContainer>("ObjectiveSelectionPopup");
-        objectiveSelectionPopupController = new ObjectiveSelectionPopupController();
-        objectiveSelectionPopupController.Init(popup);
 
         //put data from viewModel
         titleInput.value = ViewModel.Title;
@@ -81,7 +78,7 @@ public class CreateUniverseController : MonoBehaviour
 
         charactersSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCharactersEdit(); };
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
-        objectiveSettingButton.clicked += () => { objectiveSelectionPopupController.Show(); };
+        objectiveSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); };
         backButton.clicked += () =>
         {
             ViewModelManager.Instance.Reset();
