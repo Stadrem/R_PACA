@@ -779,6 +779,16 @@ PrefabInstance:
       propertyPath: inRenderTextureActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2291589501145228848, guid: 6afdbb60097ce8c459cd934107f2b9c0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 420
+      objectReference: {fileID: 0}
+    - target: {fileID: 2291589501145228848, guid: 6afdbb60097ce8c459cd934107f2b9c0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 211
+      objectReference: {fileID: 0}
     - target: {fileID: 2673664361433913010, guid: 6afdbb60097ce8c459cd934107f2b9c0,
         type: 3}
       propertyPath: m_RenderPostProcessing
