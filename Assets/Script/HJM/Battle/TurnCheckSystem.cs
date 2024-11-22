@@ -44,10 +44,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         GameObject turnFSMObject = GameObject.Find("---TurnFSM---"); // 나중엔 그냥 인스펙터에서 할당하자~
         turnFSM = turnFSMObject.GetComponent<TurnFSM>();
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartGame();
-        }
+
     }
 
     // 새로운 플레이어가 들어왔을 때 totalPlayers 갱신 함수 덮어쓰기
@@ -58,7 +55,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         Debug.Log("현재 플레이어 수: " + totalPlayers);
     }
 
-    void StartGame()
+    public void StartGame()
     {
         photonView.RPC("BeginTurn", RpcTarget.AllBuffered, currentTurnIndex);
     }
@@ -67,7 +64,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     void BeginTurn(int turnIndex)
     {
         currentTurnIndex = turnIndex;
-        photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
+        //photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
         if (turnFSM.turnState == ActionTurn.Player)
         {
             Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
@@ -78,15 +75,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
                 Debug.Log("내 턴");
                 EnableBatUI();
                 SetActiveTrueBatUI();
-                photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
+                photonView.RPC("WaitStartLight", RpcTarget.AllBuffered, currentTurnIndex, true);
             }
             else
             {
                 Debug.Log("다른 플레이어의 턴");
                 DisableBatUI();
                 SetActiveFalseBatUI();
-                photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, false);
-
             }
         }
         else if (turnFSM.turnState == ActionTurn.Enemy)
@@ -97,6 +92,18 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    [PunRPC]
+    public IEnumerator WaitStartLight(int playerIndex, bool isOn)
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (isMyTurn)
+        {
+            print("내 프로필 불 킴");
+            photonView.RPC("ProfileLight", RpcTarget.AllBuffered, playerIndex, isOn);
+        }
+    }
+
 
     public void EndTurn()
     {
@@ -246,8 +253,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         defenseBtn.gameObject.SetActive(false);
     }
 
-    [PunRPC] // 낼 아침에 이거해결하자.. . . .  .. 어째서 이 아이만 인덱스오류가.. .
-             // 호출 타이밍을 늦추면 안뜨는게 더 신기하네.. 다른데서는 profiles 참조 잘만 되면서.. ㅠㅜㅜㅠㅜ
+    [PunRPC] 
     public void ProfileLight(int playerIndex, bool isOn)
     {
         if (BattleManagerCopy.Instance.isBattle)
