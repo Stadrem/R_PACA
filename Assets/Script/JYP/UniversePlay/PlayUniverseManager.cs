@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UniversePlay;
+using Utils;
 using ViewModels;
 
 /// <summary>
@@ -217,19 +218,8 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
             )
         );
         StartCoroutine(
-            GameMasterApi.SubscribeGameMasterSSE(
-                roomNumber,
-                (res) =>
-                {
-                    if (res.IsSuccess)
-                    {
-                        Debug.Log($"res: {res}");
-                    }
-                    else
-                    {
-                        Debug.LogError($"erro: {res.error}");
-                    }
-                }
+            SSEManager.Instance.ConnectToSSE(
+                roomNumber
             )
         );
     }
