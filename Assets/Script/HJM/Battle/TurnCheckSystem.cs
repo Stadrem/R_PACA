@@ -262,7 +262,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (BattleManagerCopy.Instance.isBattle)
         {
             profiles[playerIndex].GetComponent<ProfileSet>().LightProfile(isOn);
-            turnLight[playerIndex].SetActive(true);
+            turnLight[playerIndex].SetActive(isOn);
         }
     }
 }
