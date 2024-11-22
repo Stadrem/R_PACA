@@ -3183,6 +3183,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &620924347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6601335124918660830, guid: 57d5769808f7e164f8b93ab51f651f68,
+    type: 3}
+  m_PrefabInstance: {fileID: 1858401831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &620924351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620924347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962f7b01e3e49714c8c965edb907210c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 0}
+  emissionColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &631926092
 GameObject:
   m_ObjectHideFlags: 0
@@ -3570,6 +3590,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693349014}
   m_CullTransparentMesh: 1
+--- !u!1 &713699524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2835971300983869344, guid: 57d5769808f7e164f8b93ab51f651f68,
+    type: 3}
+  m_PrefabInstance: {fileID: 1858401831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &713699528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713699524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962f7b01e3e49714c8c965edb907210c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 0}
+  emissionColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &742934497
 GameObject:
   m_ObjectHideFlags: 0
@@ -9963,6 +10003,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 326719969}
+    - targetCorrespondingSourceObject: {fileID: 6601335124918660830, guid: 57d5769808f7e164f8b93ab51f651f68,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 620924351}
+    - targetCorrespondingSourceObject: {fileID: 2835971300983869344, guid: 57d5769808f7e164f8b93ab51f651f68,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 713699528}
+    - targetCorrespondingSourceObject: {fileID: 4897450584271065369, guid: 57d5769808f7e164f8b93ab51f651f68,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858401835}
   m_SourcePrefab: {fileID: 100100000, guid: 57d5769808f7e164f8b93ab51f651f68, type: 3}
 --- !u!4 &1858401832 stripped
 Transform:
@@ -9976,6 +10028,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1858401831}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1858401834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4897450584271065369, guid: 57d5769808f7e164f8b93ab51f651f68,
+    type: 3}
+  m_PrefabInstance: {fileID: 1858401831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1858401835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858401834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962f7b01e3e49714c8c965edb907210c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 0}
+  emissionColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1858579120
 GameObject:
   m_ObjectHideFlags: 0
