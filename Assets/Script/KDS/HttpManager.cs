@@ -40,7 +40,7 @@ public class HttpInfoWithType<T, R> where R : class
 
     // 컨텐츠 타입
     public string contentType = "application/json";
-    
+
     public string acceptContentType = null;
 
     // 요청이 완료되면 호출될 델리게이트
@@ -201,8 +201,14 @@ public class HttpManager : MonoBehaviour
             info.url = url.ToString();
         }
 
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
         {
+            if (info.acceptContentType != null)
+            {
+                webRequest.SetRequestHeader("Accept", info.acceptContentType);
+            }
+
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.Success)
@@ -261,7 +267,7 @@ public class HttpManager : MonoBehaviour
     public IEnumerator Delete<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
         var body = JsonConvert.SerializeObject(info.body);
-        
+
         using (var webRequest = new UnityWebRequest(info.url, "DELETE"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
@@ -303,7 +309,7 @@ public class HttpManager : MonoBehaviour
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", info.contentType);
-            
+
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.Success)
@@ -334,6 +340,7 @@ public class HttpManager : MonoBehaviour
         {
             return (TRes)(object)downloadHandler.text;
         }
+
         return JsonConvert.DeserializeObject<TRes>(downloadHandler.text);
     }
 
