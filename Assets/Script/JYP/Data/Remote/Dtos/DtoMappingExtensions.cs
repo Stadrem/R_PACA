@@ -24,7 +24,7 @@ namespace Data.Remote.Dtos
             return new UniverseNpc(
                 dto.scenarioAvatarId,
                 dto.avatarName,
-                "",
+                dto.avatarDetail,
                 new CharacterStats(dto.health, dto.strength, dto.dex),
                 dto.rotation,
                 new Vector3(dto.axisX, dto.axisY, dto.axisZ),
