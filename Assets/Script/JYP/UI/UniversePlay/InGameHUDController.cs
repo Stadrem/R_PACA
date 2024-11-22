@@ -73,15 +73,11 @@ namespace UI.UniversePlay
                 if (ViewModel.HUDState.HasFlag(EHUDState.Chat) && !isChatPanelVisible)
                 {
                     isChatPanelVisible = true;
-                    inAndOutButton.GetComponentInChildren<TMP_Text>()
-                        .text = ">";
                     AnimateIn();
                 }
                 else if (!ViewModel.HUDState.HasFlag(EHUDState.Chat) && isChatPanelVisible)
                 {
                     isChatPanelVisible = false;
-                    inAndOutButton.GetComponentInChildren<TMP_Text>()
-                        .text = "<";
                     AnimateOut();
                 }
 
@@ -120,7 +116,7 @@ namespace UI.UniversePlay
                 chatPanel.gameObject,
                 iTween.Hash(
                     "x",
-                    0,
+                    483,
                     "islocal",
                     true,
                     "time",
@@ -140,7 +136,7 @@ namespace UI.UniversePlay
                 chatPanel.gameObject,
                 iTween.Hash(
                     "x",
-                    -chatPanelWidth,
+                    0,
                     "islocal",
                     true,
                     "time",
@@ -174,7 +170,7 @@ namespace UI.UniversePlay
                 dicePanel.gameObject,
                 iTween.Hash(
                     "y",
-                    -dicePanelHeight,
+                    -220,
                     "islocal",
                     true,
                     "time",
