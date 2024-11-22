@@ -27,6 +27,8 @@ namespace Data.Remote.Dtos.Response
         public int outfit;
         public bool isPlayable;
         public int health;
+        [JsonProperty("avatarDetail", NullValueHandling = NullValueHandling.Ignore)]
+        public string avatarDetail = "";
         public int strength;
         public int dex;
         public float axisX;
