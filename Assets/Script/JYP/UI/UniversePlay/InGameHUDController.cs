@@ -120,7 +120,7 @@ namespace UI.UniversePlay
                 chatPanel.gameObject,
                 iTween.Hash(
                     "x",
-                    0,
+                    483,
                     "islocal",
                     true,
                     "time",
@@ -140,7 +140,7 @@ namespace UI.UniversePlay
                 chatPanel.gameObject,
                 iTween.Hash(
                     "x",
-                    -chatPanelWidth,
+                    0,
                     "islocal",
                     true,
                     "time",
