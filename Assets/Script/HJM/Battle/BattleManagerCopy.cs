@@ -130,6 +130,13 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         //{
         //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
+
+        if (enemy == null)
+        {
+            GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
+            enemy = gameObject;
+        }
+
         SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
 
@@ -150,12 +157,10 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         if (players.Count > 0)
         {
             Debug.Log($"플레이어 수 : {players.Count}");
-            // Vector3 startPosition = profileUI.transform.position;
 
             for (int i = 0; i < players.Count; i++)
             {
                 GameObject profile = Instantiate(profileUI, Vector3.zero, Quaternion.identity, profileParent);
-                // startPosition.x += 400; // 간격 -> LayoutGroup 사용하면 필요없음
 
                 profiles.Add(profile);
                 ProfileSet profileSet = profile.GetComponent<ProfileSet>();
@@ -167,7 +172,7 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
+    [PunRPC] // 나중에 NPC기준으로 생성하게 할까.. 일단은 미리 배치 
     void MoveToBattlePos(int playerIndex)
     {
         if (playerIndex < players.Count && playerIndex < battlePos.Count)

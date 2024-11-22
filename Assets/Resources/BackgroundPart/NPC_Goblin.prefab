@@ -660,7 +660,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ncVcam: {fileID: 1125351419375732668}
   npcNameText: {fileID: 8197131101460151238}
-  hpBar: {fileID: 2799010433826999946}
   root: {fileID: 6121150522342420716}
 --- !u!114 &5445616125340112927
 MonoBehaviour:

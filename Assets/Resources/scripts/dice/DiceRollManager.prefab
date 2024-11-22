@@ -479,7 +479,7 @@ MonoBehaviour:
   dicePrefab: {fileID: 5067661436939685997, guid: c6468c3bcb9585e40ada4e32804420d2,
     type: 3}
   diceCount: 2
-  spinTime: 1.5
+  spinTime: 3
   diceResults: 
   canvas: {fileID: 304645743453247074}
   titleText: {fileID: 2678321638932564960}

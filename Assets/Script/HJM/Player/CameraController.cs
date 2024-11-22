@@ -11,6 +11,21 @@ public class CameraController : MonoBehaviour
 
     public bool isBlocked = false;
 
+
+    void Awake()
+    {
+        PhotonView pv = transform.parent.GetComponent<PhotonView>();
+        if (pv.IsMine)
+        {
+            Billboard[] bill = GameObject.FindObjectsOfType<Billboard>();
+
+            for (int i = 0; i < bill.Length; i++)
+            {
+                bill[i].cam = GetComponent<Camera>();
+            }
+
+        }
+    }
     private void Start()
     {
         // 포톤뷰 내 것 일때만 오디오리스너 활성화
