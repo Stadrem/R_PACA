@@ -22,6 +22,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public int diceDamage;
 
     public List<GameObject> profiles;
+    public List<GameObject> turnLight;
 
     TurnFSM turnFSM;
 
@@ -100,7 +101,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (isMyTurn)
         {
             print("내 프로필 불 킴");
-            photonView.RPC("ProfileLight", RpcTarget.AllBuffered, playerIndex, isOn);
+            photonView.RPC("ProfileLight", RpcTarget.All, playerIndex, isOn);
         }
     }
 
@@ -115,6 +116,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         {
             photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 0);
             photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, false);
+            turnLight[currentTurnIndex].SetActive(false);
+
             currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
 
             if (currentTurnIndex == 0)
@@ -259,6 +262,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (BattleManagerCopy.Instance.isBattle)
         {
             profiles[playerIndex].GetComponent<ProfileSet>().LightProfile(isOn);
+            turnLight[playerIndex].SetActive(true);
         }
     }
 }

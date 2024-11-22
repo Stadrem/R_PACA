@@ -4,24 +4,24 @@ using Photon.Pun;
 public class Billboard : MonoBehaviourPun
 {
     // 카메라
-    private Camera cam;
+    public Camera cam;
 
     void Start()
     {
         // 카메라가 할당되지 않았다면, 메인 카메라를 자동으로 할당한다.
-        if (cam == null)
-        {
-            cam = Camera.main;
-        }
+        //if (cam == null)
+        //{
+        //    cam = Camera.main;
+        //}
     }
 
 
     void LateUpdate()
     {
-        if (cam == null)
-        {
-            cam = Camera.main; // 카메라가 없으면 다시 할당
-        }
+        //if (cam == null)
+        //{
+        //    cam = Camera.main; // 카메라가 없으면 다시 할당
+        //}
 
         if (cam != null)
         {
