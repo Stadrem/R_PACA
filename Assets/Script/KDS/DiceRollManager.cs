@@ -57,6 +57,8 @@ public class DiceRollManager : MonoBehaviour
         //new 반복 안하려고 미리 선언
         ws = new WaitForSeconds(spinTime);
 
+        ws2 = new WaitForSeconds(spinTime / 2);
+
         NewDiceSetup(diceCount);
     }
 
@@ -96,7 +98,7 @@ public class DiceRollManager : MonoBehaviour
                 diceSpin[i] = diceObjects[i].GetComponent<DiceSpin>();
 
                 //회전 시간 동기화
-                diceSpin[i].GetSettings(spinTime);
+                diceSpin[i].GetSettings(spinTime / 2);
 
                 //생성 위치
                 diceObjects[i].transform.localPosition = new Vector3(createPoint.position.x + i * 1.5f, 0, 0);
@@ -162,6 +164,9 @@ public class DiceRollManager : MonoBehaviour
 
     //new 생성 안하려고 고정시켜놓음
     WaitForSeconds ws;
+
+    //new 생성 안하려고 고정시켜놓음
+    WaitForSeconds ws2;
 
     [Space]
     [Header("주사위 랜덤 연산 후, 결과 값 저장 변수")]
@@ -590,7 +595,7 @@ public class DiceRollManager : MonoBehaviour
     private IEnumerator SetDiceResultsAfterRoll(int diceCount)
     {
         // 주사위가 굴러가는 시간을 기다림
-        yield return ws;
+        yield return ws2;
 
         //결과창 UI 켜기
         canvas.SetActive(true);
