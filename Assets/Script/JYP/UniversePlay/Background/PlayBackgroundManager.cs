@@ -24,7 +24,8 @@ public class PlayBackgroundManager : MonoBehaviourPun
         if (e.PropertyName == nameof(ViewModel.CurrentBackgroundId) && ViewModel.CurrentBackgroundId != previousBackgroundId)
         {
             previousBackgroundId = ViewModel.CurrentBackgroundId;
-            MoveTo(ViewModel.CurrentBackgroundId);
+            if(PhotonNetwork.IsMasterClient)
+                MoveTo(ViewModel.CurrentBackgroundId);
         }
     }
 
@@ -36,7 +37,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     public void StartFirstBackground()
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.First();
-        ViewModel.CurrentBackgroundId = background.ID;
+        photonView.RPC(nameof(RPC_SetCurrentBackgroundId), RpcTarget.All, background.ID);
         // LoadScene(background);
     }
 
@@ -63,9 +64,16 @@ public class PlayBackgroundManager : MonoBehaviourPun
         }
     }
 
-    public void MoveTo(int backgroundId)
+    private void MoveTo(int backgroundId)
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == backgroundId);
         LoadScene(background);
+    }
+    
+    
+    [PunRPC]
+    private void RPC_SetCurrentBackgroundId(int backgroundId)
+    {
+        ViewModel.CurrentBackgroundId = backgroundId;
     }
 }
