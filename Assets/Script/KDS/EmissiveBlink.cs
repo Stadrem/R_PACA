@@ -12,7 +12,9 @@ public class EmissiveBlink : MonoBehaviour
     public Color emissionColor = Color.white;
 
     // Emission 변화에 걸리는 시간
-    float emissionDuration = 0.1f; 
+    public float emissionDuration = 0.1f;
+
+    public int maxEmissionPower = 24;
 
     // Emission 강도
     float emissionIntensity = 0.01f;
@@ -23,7 +25,11 @@ public class EmissiveBlink : MonoBehaviour
     void Start()
     {
         targetRenderer = GetComponent<MeshRenderer>();
-        mat = targetRenderer.material;
+
+        if(mat == null)
+        {
+            mat = targetRenderer.material;
+        }
     }
 
     private void Update()
@@ -36,9 +42,9 @@ public class EmissiveBlink : MonoBehaviour
             if (isIncreasing)
             {
                 emissionIntensity += speed;
-                if (emissionIntensity >= 24f)
+                if (emissionIntensity >= maxEmissionPower)
                 {
-                    emissionIntensity = 24f;
+                    emissionIntensity = maxEmissionPower;
                     // 방향 반전
                     isIncreasing = false; 
                 }
