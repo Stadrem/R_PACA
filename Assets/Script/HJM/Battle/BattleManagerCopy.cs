@@ -130,6 +130,13 @@ public class BattleManagerCopy : MonoBehaviourPunCallbacks
         //{
         //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
+
+        if (enemy == null)
+        {
+            GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
+            enemy = gameObject;
+        }
+
         SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
 

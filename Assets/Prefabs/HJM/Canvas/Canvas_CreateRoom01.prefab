@@ -3433,6 +3433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPop: {fileID: 0}
   canvasExit: {fileID: 8400922702342847832}
+  canvasDestroyed: {fileID: 0}
 --- !u!1 &8620293620321332138
 GameObject:
   m_ObjectHideFlags: 0
