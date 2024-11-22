@@ -253,10 +253,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             enemyAnim.SetTrigger("Die");
             print("몬스터 사망!");
-            EndBattle();
+            EndBattleMonsterDie();
         }
     }
-    private void EndBattle()
+    private void EndBattleMonsterDie()
     {
         // 전투 종료
         isBattle = false;
@@ -275,12 +275,19 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < players.Count; i++)
         {
-            agents[i].enabled = true; 
+            agents[i].enabled = true;
             playerMoves[i].clickMovementEnabled = true;
         }
         Debug.Log("전투 종료. 플레이어 측 승리!");
     }
 
+    // 일단 만들어만 놓음
+    public void EndBattlePlayerDie()
+    {
+
+        Ending.Get().EnableCanvas();
+
+    }
 
     public void SetEnemy(GameObject enemy)
     {
