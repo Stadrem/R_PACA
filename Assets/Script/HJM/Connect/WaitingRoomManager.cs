@@ -77,6 +77,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
     // 플레이어 아바타 생성 메서드
     private void CreatePlayerAvatar()
     {
+
         // 현재 플레이어의 ID에 따라 자리 할당
         int playerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
 
@@ -102,6 +103,9 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
 
         playerAvatar.name = "Player_Avatar_" + PhotonNetwork.NickName;
         print(11111111111111);
+
+        BillBoardInput boardInput = GameObject.FindAnyObjectByType<BillBoardInput>();
+        boardInput.CamInput();
     }
 
 

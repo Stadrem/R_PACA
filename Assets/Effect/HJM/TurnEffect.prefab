@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9210901799466569222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowImage: {fileID: 2340171117354071150}
-  blinkSpeed: 1.2
-  moveAmount: 0.07
+  blinkSpeed: 0.2
+  moveAmount: 0.2
 --- !u!1 &1268761502312735688
 GameObject:
   m_ObjectHideFlags: 0
@@ -9918,15 +9918,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.8143573, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: aa2267ff1dc604f439f55dfa21399a30, type: 2}
+  m_Color: {r: 0, g: 0.14507627, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9f4f63a9add38ed4f867833eb56a26cb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b7ff69bd338bfe4c8f42535b4a8fb1f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10017,17 +10017,17 @@ PrefabInstance:
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 1
+      value: 0.53333336
       objectReference: {fileID: 0}
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.7440084
+      value: 0.8325774
       objectReference: {fileID: 0}
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.5330188
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
