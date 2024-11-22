@@ -34,7 +34,7 @@ public class PlayerAnimationConnect : MonoBehaviour
             }
             else if (currentStateInfo.IsName("Walk"))
             {
-                Debug.Log("재생중");
+                //Debug.Log("재생중");
                 walkEffect.Play();
             }
         }

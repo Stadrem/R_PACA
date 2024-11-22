@@ -99,6 +99,7 @@ MonoBehaviour:
   - WaitStartLight
   - RPC_SetCurrentBackgroundId
   - MonsterAttack
+  - ChangeChannelRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 2748696497196434802}
   - component: {fileID: 6507987701853994282}
   - component: {fileID: 1121620451388601806}
+  - component: {fileID: 525099799623309347}
   m_Layer: 5
   m_Name: Canvas_ChatUser
   m_TagString: Untagged
@@ -209,6 +210,28 @@ MonoBehaviour:
   trContent: {fileID: 5765919392330287306}
   chatItemFactory: {fileID: 780789367334541041, guid: 50eb157a6aa82914398e8fa2e680973d,
     type: 3}
+--- !u!114 &525099799623309347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311996342139836013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1404417665122797301
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +374,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<u>\u3148</u>\uCC44\uD305\uC744 \uC785\uB825\uD558\uC138\uC694.\u200B"
+  m_text: "\uCC44\uD305\uC744 \uC785\uB825\uD558\uC138\uC694.\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 86621367ec418b54fbd39176c5a2d3dc, type: 2}
   m_sharedMaterial: {fileID: 4916857557503908562, guid: 86621367ec418b54fbd39176c5a2d3dc,
@@ -633,6 +656,7 @@ GameObject:
   - component: {fileID: 3532668208594999075}
   - component: {fileID: 3803324962324916396}
   - component: {fileID: 2777967296850549257}
+  - component: {fileID: 2464492006546846639}
   m_Layer: 5
   m_Name: BackgroundImg
   m_TagString: Untagged
@@ -698,6 +722,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2464492006546846639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692123335007426623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4790947790259532412
 GameObject:
   m_ObjectHideFlags: 0
