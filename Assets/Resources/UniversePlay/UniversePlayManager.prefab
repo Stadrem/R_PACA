@@ -2629,8 +2629,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#10FF00><b>\uC2A4\uD398\uC774\uC2A4\uBC14</b></color>\uB97C \uB20C\uB7EC\n\uD310\uC815\uC744
-    \uC704\uD55C <color=#10FF00>\uC8FC\uC0AC\uC704</color>\uB97C \uAD74\uB824\uC8FC\uC138\uC694!"
+  m_text: "<color=#95FF00><b>\uC2A4\uD398\uC774\uC2A4\uBC14</b></color>\uB97C \uB20C\uB7EC\n\uD310\uC815\uC744
+    \uC704\uD55C <color=#95FF00>\uC8FC\uC0AC\uC704</color>\uB97C \uAD74\uB824\uC8FC\uC138\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 86621367ec418b54fbd39176c5a2d3dc, type: 2}
   m_sharedMaterial: {fileID: 4916857557503908562, guid: 86621367ec418b54fbd39176c5a2d3dc,
