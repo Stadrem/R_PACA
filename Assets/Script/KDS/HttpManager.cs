@@ -40,6 +40,8 @@ public class HttpInfoWithType<T, R> where R : class
 
     // 컨텐츠 타입
     public string contentType = "application/json";
+    
+    public string acceptContentType = null;
 
     // 요청이 완료되면 호출될 델리게이트
     public Action<T> onComplete;
