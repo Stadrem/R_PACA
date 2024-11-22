@@ -73,15 +73,11 @@ namespace UI.UniversePlay
                 if (ViewModel.HUDState.HasFlag(EHUDState.Chat) && !isChatPanelVisible)
                 {
                     isChatPanelVisible = true;
-                    inAndOutButton.GetComponentInChildren<TMP_Text>()
-                        .text = ">";
                     AnimateIn();
                 }
                 else if (!ViewModel.HUDState.HasFlag(EHUDState.Chat) && isChatPanelVisible)
                 {
                     isChatPanelVisible = false;
-                    inAndOutButton.GetComponentInChildren<TMP_Text>()
-                        .text = "<";
                     AnimateOut();
                 }
 
