@@ -232,6 +232,17 @@ public class BattleManager : MonoBehaviourPunCallbacks
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
     }
 
+    [PunRPC] // 몬스터가 플레이어를 공격
+    public void MonsterAttack(int damage)
+    {
+        int randomIndex = Random.Range(0, playerAnims.Count);
+
+        enemyAnim.SetTrigger("Hit2");
+        playerAnims[randomIndex].SetTrigger("Damage");
+        profiles[randomIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
+    }
+
+
     [PunRPC]
     public void UpdateEnemyHealth(int damage)
     {

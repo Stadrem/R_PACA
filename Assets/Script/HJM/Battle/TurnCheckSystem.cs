@@ -213,8 +213,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     private IEnumerator MonsterAction()
     {
         Debug.Log("몬스터 행동 시작");
-        BattleManager.Instance.enemyAnim.SetTrigger("Rage");
-
+        //BattleManager.Instance.enemyAnim.SetTrigger("Rage");
+        BattleManager.Instance.MonsterAttack(4); // 임의값
         yield return new WaitForSeconds(2f);
         photonView.RPC("ChangeTurnToPlayer", RpcTarget.All);
     }
