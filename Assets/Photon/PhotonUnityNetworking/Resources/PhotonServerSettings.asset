@@ -98,6 +98,7 @@ MonoBehaviour:
   - IsBattle
   - WaitStartLight
   - RPC_SetCurrentBackgroundId
+  - MonsterAttack
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
