@@ -89,6 +89,11 @@ namespace UniversePlay
                 SetField(ref currentBackgroundId, value);
             }
         }
+        
+        public void SetCurrentBackgroundIdWithoutNotify(int id)
+        {
+            CurrentBackgroundId = id;
+        }
 
         public IEnumerator TalkNpc(int roomNumber, string message, Action<ApiResult<NpcReaction>> callback)
         {

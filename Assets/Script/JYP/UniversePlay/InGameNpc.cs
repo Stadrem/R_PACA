@@ -28,6 +28,7 @@ public class InGameNpc : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        print("OnPhotonInstantiate - " + info.photonView.InstantiationData[0]);
         var id = Convert.ToInt32(info.photonView.InstantiationData[0]);
         PlayUniverseManager.Instance.NpcManager.AddNpc(this);
         var npc = ViewModelManager.Instance.UniversePlayViewModel.CurrentMapNpcList

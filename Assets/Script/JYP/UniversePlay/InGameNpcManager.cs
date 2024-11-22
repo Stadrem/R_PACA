@@ -51,7 +51,6 @@ namespace UniversePlay
         {
             if (!photonView.IsMine) return;
             var go = GameObject.Find("NpcSpawnOffset");
-            Debug.Log($"NpcSpawnOffset : {go}");
             npcSpawnOffset = go?.transform;
             if (currentNpcList.Count > 0)
             {
@@ -63,7 +62,6 @@ namespace UniversePlay
             foreach (var info in npcList)
             {
                 var npc = spawner.PunSpawn(info);
-
                 currentNpcList.Add(npc);
             }
         }
@@ -214,7 +212,9 @@ namespace UniversePlay
         public void AddNpc(InGameNpc inGameNpc)
         {
             Debug.Log($"add npc : {inGameNpc}");
+            if(npcSpawnOffset == null) npcSpawnOffset = GameObject.Find("NpcSpawnOffset").transform;
             inGameNpc.transform.SetParent(npcSpawnOffset);
+            Debug.Log($"npcSpawnOffset : {npcSpawnOffset}");
             currentNpcList.Add(inGameNpc);
         }
     }
