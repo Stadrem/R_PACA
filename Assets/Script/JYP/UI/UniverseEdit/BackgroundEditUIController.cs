@@ -10,15 +10,19 @@ public class BackgroundEditUIController : MonoBehaviour
     public RectTransform backgroundLinkMenuContainer;
     public Button createButton;
     public Button backButton;
+    public Button characterSettingButton;
+    public Button objectiveSettingButton;
     public BackgroundPartLinkManager backgroundPartLinkManager;
-    private UniverseEditViewModel viewModel;
-
+    
+    private UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
     private void OnEnable()
     {
         root = gameObject;
-        viewModel = ViewModelManager.Instance.UniverseEditViewModel;
         backgroundCreateUIController.gameObject.SetActive(false);
-
+        
+        characterSettingButton.onClick.AddListener(
+            () => { UniverseEditUIFlowManager.Instance.ShowCharactersEdit(); }
+        );
 
         backButton.onClick.AddListener(
             () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); }

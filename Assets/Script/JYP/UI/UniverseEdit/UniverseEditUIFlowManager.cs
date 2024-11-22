@@ -62,6 +62,8 @@ public class UniverseEditUIFlowManager : MonoBehaviour
     {
         if (createUniverseController.gameObject.activeSelf)
             createUniverseController.gameObject.SetActive(false);
+        if(backgroundEditUIController.gameObject.activeSelf)
+            backgroundEditUIController.gameObject.SetActive(false);
         
         universeCharactersEditController.gameObject.SetActive(true);
     }
@@ -71,6 +73,9 @@ public class UniverseEditUIFlowManager : MonoBehaviour
         if (createUniverseController.gameObject.activeSelf)
             createUniverseController.gameObject.SetActive(false);
      
+        if (universeCharactersEditController.gameObject.activeSelf)
+            universeCharactersEditController.gameObject.SetActive(false);
+        
         backgroundEditUIController.ShowUI();
     }
 }

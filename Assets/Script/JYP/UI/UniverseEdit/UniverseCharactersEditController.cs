@@ -13,15 +13,24 @@ public class UniverseCharactersEditController : MonoBehaviour
     private CharactersListViewController charactersListController;
     private CharacterCreationController characterCreationController;
     private Button backButton;
-    // private Label createdDate;
 
+    private Button backgroundButton;
+
+    private Button objectiveButton;
+    // private Label createdDate;
+    private ObjectiveSelectionPopupController objectiveSelectionPopupController;
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>()
             .rootVisualElement;
         backButton = root.Q<Button>("Button_Main");
+        backgroundButton = root.Q<Button>("Button_Background");
+        objectiveButton = root.Q<Button>("Button_Objectives");
         // createdDate = root.Q<Label>("label_createdDate");
 
+        var popup = root.Q<TemplateContainer>("ObjectiveSelectionPopup");
+        objectiveSelectionPopupController = new ObjectiveSelectionPopupController();
+        objectiveSelectionPopupController.Init(popup);
         viewModel = ViewModelManager.Instance.UniverseEditViewModel;
 
         charactersListController = new CharactersListViewController();
@@ -39,7 +48,8 @@ public class UniverseCharactersEditController : MonoBehaviour
         // createdDate.text = viewModel.CreatedDate.ToString("dd/MM/yyyy");
 
         backButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); };
-
+        backgroundButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
+        objectiveButton.clicked += () => { objectiveSelectionPopupController.Show(); };
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
