@@ -88,6 +88,16 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         Debug.Log($"생성! {position}");
         // 포톤 인스턴스 생성
         GameObject playerAvatar = PhotonNetwork.Instantiate("Player_Avatar", position, Quaternion.Euler(0, 180, 0));
+
+        // 카메라의 위치에서 오브젝트 위치까지의 방향 계산
+        Vector3 direction = Camera.main.transform.position - playerAvatar.transform.position;
+
+        // Y축만 회전하도록 방향을 제한
+        direction.y = 0;
+
+        // 오브젝트 회전
+        playerAvatar.transform.rotation = Quaternion.LookRotation(direction);
+
         print("대기방에서 플레이어_아바타 생성");
 
         playerAvatar.name = "Player_Avatar_" + PhotonNetwork.NickName;
