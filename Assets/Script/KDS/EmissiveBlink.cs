@@ -12,10 +12,10 @@ public class EmissiveBlink : MonoBehaviour
     public Color emissionColor = Color.white;
 
     // Emission 변화에 걸리는 시간
-    float emissionDuration = 5f; 
+    float emissionDuration = 0.1f; 
 
     // Emission 강도
-    float emissionIntensity = 1f;
+    float emissionIntensity = 0.01f;
 
     // Emission 증가 방향
     bool isIncreasing = true; 
@@ -36,9 +36,9 @@ public class EmissiveBlink : MonoBehaviour
             if (isIncreasing)
             {
                 emissionIntensity += speed;
-                if (emissionIntensity >= 6f)
+                if (emissionIntensity >= 24f)
                 {
-                    emissionIntensity = 6f;
+                    emissionIntensity = 24f;
                     // 방향 반전
                     isIncreasing = false; 
                 }
@@ -46,9 +46,9 @@ public class EmissiveBlink : MonoBehaviour
             else
             {
                 emissionIntensity -= speed;
-                if (emissionIntensity <= 0f)
+                if (emissionIntensity <= 1f)
                 {
-                    emissionIntensity = 0f;
+                    emissionIntensity = 1f;
                     // 방향 반전
                     isIncreasing = true; 
                 }
