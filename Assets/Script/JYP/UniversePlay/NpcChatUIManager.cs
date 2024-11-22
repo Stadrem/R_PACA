@@ -67,7 +67,7 @@ public class NpcChatUIManager : MonoBehaviour
     {
         GameObject chatBubble = Instantiate(ChatBubblePrefab, listContent);
         chatBubble.GetComponent<NpcChatItem>()
-            .SetText(
+            .SetCharacterText(
                 sender,
                 text,
                 isPlayer

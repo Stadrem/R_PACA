@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -92,8 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatText: {fileID: 4645175690745023745}
-  playerColor: {r: 0.007843119, g: 0.09970008, b: 0.6117647, a: 0}
-  npcColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 0}
+  playerColor: {r: 0.101960786, g: 0.74509805, b: 1, a: 1}
+  npcColor: {r: 1, g: 0.45490196, b: 0.11764706, a: 1}
+  gameMasterColor: {r: 0.58431375, g: 1, b: 0, a: 1}
 --- !u!114 &3252699961558115377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,8 +214,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
