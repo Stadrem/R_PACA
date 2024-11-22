@@ -12,7 +12,7 @@ public class NpcChatItem : MonoBehaviour
     public void SetCharacterText(string sender, string text, bool isPlayer)
     {
         string color = isPlayer ? ColorUtility.ToHtmlStringRGB(playerColor) : ColorUtility.ToHtmlStringRGB(npcColor);
-        text = $"<color=#{color}><b>{sender}</b></color>: {text}";
+        text = $"<color=#{color}><b>{sender}</b></color> - {text}";
         chatText.text = text;
     }
 
