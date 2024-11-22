@@ -94,6 +94,7 @@ namespace Data.Remote.Dtos
                 shapeType = (UniverseNpc.ENpcType)dto.outfit,
                 isPlayable = dto.isPlayable,
                 hitPoints = dto.health,
+                description = dto.avatarDetail,
                 strength = dto.strength,
                 dexterity = dto.dex,
                 position = new Vector3(dto.axisX, dto.axisY, dto.axisZ),

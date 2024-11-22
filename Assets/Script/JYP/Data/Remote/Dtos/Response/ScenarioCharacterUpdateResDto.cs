@@ -17,6 +17,7 @@ namespace Data.Remote.Dtos.Response
         /// </summary>
         public int outfit;
 
+        public string avatarDetail;
         /// <summary>
         /// 플레이가능 여부 (true: 플레이 가능, false: 플레이 불가능[NPC])
         /// </summary>
