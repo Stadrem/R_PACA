@@ -13,9 +13,14 @@ public class PlayBackgroundManager : MonoBehaviourPun
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     private int previousBackgroundId = -1;
+    private bool isEventRegistered = false;
     private void Start()
     {
-        ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
+        if(!isEventRegistered)
+        {
+            ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
+            isEventRegistered = true;
+        }
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager Start");
     }
 
@@ -24,6 +29,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
         if (e.PropertyName == nameof(ViewModel.CurrentBackgroundId) && ViewModel.CurrentBackgroundId != previousBackgroundId)
         {
             previousBackgroundId = ViewModel.CurrentBackgroundId;
+            Debug.Log($"currentBackgroundId: {ViewModel.CurrentBackgroundId}");
             if(PhotonNetwork.IsMasterClient)
                 MoveTo(ViewModel.CurrentBackgroundId);
         }
@@ -46,6 +52,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
+        Debug.Log($"LoadScene {background.Type}");
         var sceneName = "";
         switch (background.Type)
         {
@@ -74,6 +81,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     [PunRPC]
     private void RPC_SetCurrentBackgroundId(int backgroundId)
     {
+        print($"RPC_SetCurrentBackgroundId {backgroundId}");
         ViewModel.CurrentBackgroundId = backgroundId;
     }
 }

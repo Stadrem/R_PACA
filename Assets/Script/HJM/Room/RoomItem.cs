@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomItem : MonoBehaviourPunCallbacks
+public class RoomItem : MonoBehaviourPun
 {
     public TMP_Text roomNameText;
     public TMP_Text playerCountText;
@@ -64,16 +64,5 @@ public class RoomItem : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(roomName); // Photon API를 사용하여 방에 참여
     }
 
-    // 방 참여 요청에 대한 콜백 함수
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("방에 성공적으로 참여했습니다: " + roomName);
-        PhotonNetwork.LoadLevel("WaitingScene"); // 대기실 씬으로 전환
-    }
-
-    // 방 참여 실패 시 호출되는 콜백 함수
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        Debug.LogError("방 참여 실패: " + message);
-    }
+  
 }
