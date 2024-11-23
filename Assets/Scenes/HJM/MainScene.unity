@@ -1748,6 +1748,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4562421711015823433, guid: 74bbc3c2e50cb49488c89f84a0937c45,
         type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562421711015823433, guid: 74bbc3c2e50cb49488c89f84a0937c45,
+        type: 3}
       propertyPath: simulationSpeed
       value: 1
       objectReference: {fileID: 0}
