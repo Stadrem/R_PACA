@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public enum ActionTurn
 {
@@ -16,6 +17,7 @@ public class TurnFSM : MonoBehaviourPunCallbacks
     public ActionTurn turnState = ActionTurn.Player;
     public int finishActionCount = 0; // 플레이어들의 행동 완료 누적 카운트
     private int totalPlayers;
+    public TMP_Text turnCount;
 
     private void Awake()
     {
@@ -40,6 +42,7 @@ public class TurnFSM : MonoBehaviourPunCallbacks
         if (turnState != ActionTurn.Player) return;
 
         finishActionCount++;
+        
         if (finishActionCount >= totalPlayers)
         {
             finishActionCountOver(); // 모든 플레이어가 턴을 종료했을 때
@@ -81,6 +84,7 @@ public class TurnFSM : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ChangeTurnToPlayer()
     {
+        
         turnState = ActionTurn.Player;
         Debug.Log("플레이어 턴 시작");
     }
