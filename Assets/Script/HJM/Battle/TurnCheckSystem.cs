@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Profiling;
+using Cinemachine;
 
 public class TurnCheckSystem : MonoBehaviourPunCallbacks
 {
@@ -15,6 +16,10 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public int totalPlayers;
     public bool isMyTurn = false;
 
+    [Header("턴 카메라")]
+    public CinemachineVirtualCamera vCam;
+    public Transform vCamTarget;
+
     [Header("턴 UI")]
     public Button attackBtn;
     public Button defenseBtn;
@@ -24,7 +29,10 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public List<GameObject> profiles;
     public List<GameObject> turnLight;
 
+
+
     TurnFSM turnFSM;
+
 
     void Awake()
     {
@@ -42,7 +50,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         attackBtn.onClick.AddListener(OnClickAttack);
         defenseBtn.onClick.AddListener(OnClickDefense);
 
-        GameObject turnFSMObject = GameObject.Find("---TurnFSM---"); // 나중엔 그냥 인스펙터에서 할당하자~
+        GameObject turnFSMObject = GameObject.Find("---TurnFSM---");
         turnFSM = turnFSMObject.GetComponent<TurnFSM>();
 
 
@@ -72,25 +80,28 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             {
                 Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
                 isMyTurn = currentPlayer == PhotonNetwork.LocalPlayer;
-
+                TXTTurnCount();
                 if (isMyTurn)
                 {
                     Debug.Log("내 턴");
                     EnableBatUI();
                     SetActiveTrueBatUI();
                     photonView.RPC("WaitStartLight", RpcTarget.AllBuffered, currentTurnIndex, true);
+                    photonView.RPC("LookAtTarget", RpcTarget.All, currentTurnIndex);
                 }
                 else
                 {
                     Debug.Log("다른 플레이어의 턴");
                     DisableBatUI();
                     SetActiveFalseBatUI();
+                    photonView.RPC("LookAtTarget", RpcTarget.All, currentTurnIndex);
                 }
             }
             else if (turnFSM.turnState == ActionTurn.Enemy)
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
+                    photonView.RPC("LookAtTarget", RpcTarget.All, -1);
                     MonsterTurnRPCCall();
                 }
             }
@@ -110,6 +121,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     public void EndTurn()
     {
+        
         if (!isMyTurn) return;
 
         photonView.RPC("FinishMyTask", RpcTarget.All);
@@ -119,6 +131,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 0);
             photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, false);
             turnLight[currentTurnIndex].SetActive(false);
+            
 
             currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
 
@@ -131,6 +144,11 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
                 photonView.RPC("BeginTurn", RpcTarget.All, currentTurnIndex);
             }
         }
+    }
+
+    public void TXTTurnCount()
+    {
+        TurnFSM.Instance.turnCount.text = $"전투 {TurnFSM.Instance.finishActionCount + 1}턴";
     }
 
     [PunRPC]
@@ -209,13 +227,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public void MonsterTurnStart()
     {
         Debug.Log("몬스터 턴 시작");
+        photonView.RPC("LookAtTarget", RpcTarget.All, -1);
         StartCoroutine(MonsterAction());
     }
 
     private IEnumerator MonsterAction()
     {
         Debug.Log("몬스터 행동 시작");
-        //BattleManager.Instance.enemyAnim.SetTrigger("Rage");
         BattleManager.Instance.MonsterAttack(4); // 임의값
         yield return new WaitForSeconds(2f);
         photonView.RPC("ChangeTurnToPlayer", RpcTarget.All);
@@ -269,5 +287,20 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             turnLight[playerIndex].SetActive(isOn);
         }
     }
+
+    [PunRPC]
+    public void LookAtTarget(int playerIndex)
+    {
+        vCamTarget = vCam.LookAt;
+        if (playerIndex >= 0 && playerIndex < BattleManager.Instance.players.Count)
+        {
+            vCam.LookAt = BattleManager.Instance.players[playerIndex].transform;
+        }
+        else if (playerIndex == -1)
+        {
+            vCam.LookAt = BattleManager.Instance.enemy.transform;
+        }
+    }
+
 }
 

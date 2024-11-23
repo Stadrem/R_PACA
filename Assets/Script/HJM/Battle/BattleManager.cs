@@ -36,11 +36,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public Animator enemyAnim;
     public Slider enemyHPBar;
 
-    [Header("카메라")]
+    
     public CinemachineVirtualCamera vCam;
-
-
-    private int turnCount = 1;
 
     public bool isBattle = false;
 
@@ -59,7 +56,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        enemyHPBar.maxValue = 10; // 적 체력 설정
+        enemyHPBar.maxValue = 50; // 적 체력 설정
         enemyHPBar.value = enemyHPBar.maxValue;
 
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
@@ -153,7 +150,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         ProfileSet();
         battleUI.SetActive(true);
-        vCam = enemy.GetComponentInChildren<CinemachineVirtualCamera>();
         photonView.RPC("IsBattle", RpcTarget.All);
     }
 
@@ -301,6 +297,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         var anim = enemy.GetComponentInChildren<Animator>();
         this.enemy = enemy;
         enemyAnim = anim;
+        vCam = enemy.GetComponentInChildren<InGameNpc>().ncVcam;
+        TurnCheckSystem.Instance.vCam = vCam;
     }
 
 }
