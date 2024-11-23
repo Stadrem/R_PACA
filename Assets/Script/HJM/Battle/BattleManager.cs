@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
 using TMPro;
+using Cinemachine;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
@@ -35,9 +36,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public Animator enemyAnim;
     public Slider enemyHPBar;
 
+    [Header("카메라")]
+    public CinemachineVirtualCamera vCam;
+
+
     private int turnCount = 1;
 
     public bool isBattle = false;
+
 
     private void Awake()
     {
@@ -61,7 +67,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B)) // 전투 바로 시작하게 만든 키
         {
             StartBattle();
             photonView.RPC("IsBattle", RpcTarget.All);
@@ -147,6 +153,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         ProfileSet();
         battleUI.SetActive(true);
+        vCam = enemy.GetComponentInChildren<CinemachineVirtualCamera>();
         photonView.RPC("IsBattle", RpcTarget.All);
     }
 
