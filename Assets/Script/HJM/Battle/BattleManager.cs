@@ -35,8 +35,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject enemy;
     public Animator enemyAnim;
     public Slider enemyHPBar;
+    public TMP_Text enemyHpTXT;
 
-    
+
+
     public CinemachineVirtualCamera vCam;
 
     public bool isBattle = false;
@@ -251,7 +253,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
 
         enemyHPBar.value -= damage;
-
+        enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
         if (enemyHPBar.value <= 0)
         {
             enemyAnim.SetTrigger("Die");

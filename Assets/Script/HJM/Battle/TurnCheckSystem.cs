@@ -233,6 +233,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     private IEnumerator MonsterAction()
     {
+        yield return new WaitForSeconds(1f);
         Debug.Log("몬스터 행동 시작");
         BattleManager.Instance.MonsterAttack(4); // 임의값
         yield return new WaitForSeconds(2f);
