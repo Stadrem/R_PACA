@@ -162,7 +162,11 @@ public class SoundManager : MonoBehaviour
     {
         if(currentScene.name == "MainScene")
         {
-            PlayBGM(0, 1);
+            PlayBGM(0, 0.5f);
+        }
+        else if (currentScene.name == "AvatarCreate")
+        {
+            PlayBGM(6, 0.5f);
         }
         else if(currentScene.name == "LobbyScene")
         {
