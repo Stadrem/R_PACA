@@ -73,9 +73,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         RefreshAvatar();
 
-        //SceneManager.sceneLoaded += OnSceneLoaded;
-
-
         titleText.text = AchievementManager.Get().GetEquippedAchievement().set.title;
 
 
@@ -85,15 +82,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         }
     }
 
-    /*
-    // 씬이 로드될 때마다 호출되는 함수
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        RefreshAvatar();
-    }
-    */
-
-    //백엔드 없는거 판별되면, 로컬 작동 기초 작업 수행.
     void NotNetwork()
     {
         if(notUseNetworkOn == false && myAvatar.userCode == -1)
@@ -139,14 +127,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
             });
         }
     }
-
-    /*
-    void OnDestroy()
-    {
-        // 오브젝트가 파괴될 때 이벤트 등록 해제 (중복 방지)
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-    */
 
     //0번 게임 오브젝트 : 성별 바디 // 2번: 모자 // 3번: 의류 // 4번: 도구
     public void ChangeAvatar()
@@ -206,22 +186,24 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         ownerCrown.SetActive(true);
     }
-    
+
     private void OnEnable()
     {
-        // 이벤트 구독
-        if (AchievementManager.Get() != null)
+        // AchievementManager가 존재하는 경우에만 이벤트 구독
+        var manager = AchievementManager.Get();
+        if (manager != null)
         {
-            AchievementManager.Get().OnAchievementChanged += HandleAchievementChangedLocal;
+            manager.OnAchievementChanged += HandleAchievementChangedLocal;
         }
     }
 
     private void OnDisable()
     {
-        // 이벤트 구독 해제
-        if (AchievementManager.Get() != null)
+        // AchievementManager가 존재하는 경우에만 이벤트 구독 해제
+        var manager = AchievementManager.Get();
+        if (manager != null)
         {
-            AchievementManager.Get().OnAchievementChanged -= HandleAchievementChangedLocal;
+            manager.OnAchievementChanged -= HandleAchievementChangedLocal;
         }
     }
 
@@ -230,5 +212,4 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         titleText.text = title;
     }
-    
 }
