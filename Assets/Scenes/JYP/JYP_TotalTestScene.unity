@@ -6791,10 +6791,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72f197185e7944a5aec19ef512de418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 40
-  maxMoveDistance: 35
+  moveSpeed: 80
+  maxMoveDistance: 100
   moveLerpSpeed: 25
-  zoomSpeed: 20
+  zoomSpeed: 40
   zoomLerpSpeed: 25
   minZoomOrthographicSize: 4
   maxZoomOrthographicSize: 10
