@@ -10,8 +10,15 @@ public class AchievementManager : MonoBehaviour
     //싱글톤
     public static AchievementManager instance;
 
+    private static bool _isQuitting = false; // 게임 종료 여부 플래그
+
     public static AchievementManager Get()
     {
+        if (_isQuitting)
+        {
+            return null; // 파괴된 상태에서 호출 방지
+        }
+
         if (instance == null)
         {
             // 프리팹 로드
@@ -80,6 +87,8 @@ public class AchievementManager : MonoBehaviour
 
     void OnDestroy()
     {
+        _isQuitting = true; // 게임 종료 상태로 설정
+
         // 오브젝트가 파괴될 때 이벤트 등록 해제 (중복 방지)
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
