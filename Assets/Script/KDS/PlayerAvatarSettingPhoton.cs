@@ -61,19 +61,21 @@ public class PlayerAvatarSettingPhoton : MonoBehaviourPun
 
     private void OnEnable()
     {
-        // 이벤트 구독
-        if (AchievementManager.Get() != null)
+        // AchievementManager가 존재하는 경우에만 이벤트 구독
+        var manager = AchievementManager.Get();
+        if (manager != null)
         {
-            AchievementManager.Get().OnAchievementChanged += HandleAchievementChanged;
+            manager.OnAchievementChanged += HandleAchievementChanged;
         }
     }
 
     private void OnDisable()
     {
-        // 이벤트 구독 해제
-        if (AchievementManager.Get() != null)
+        // AchievementManager가 존재하는 경우에만 이벤트 구독 해제
+        var manager = AchievementManager.Get();
+        if (manager != null)
         {
-            AchievementManager.Get().OnAchievementChanged -= HandleAchievementChanged;
+            manager.OnAchievementChanged -= HandleAchievementChanged;
         }
     }
 

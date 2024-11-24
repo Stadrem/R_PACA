@@ -187,6 +187,7 @@ public class PlayerAvatarSetting : AvatarHTTPManager
         ownerCrown.SetActive(true);
     }
 
+    /*
     private void OnEnable()
     {
         // AchievementManager가 존재하는 경우에만 이벤트 구독
@@ -212,4 +213,5 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         titleText.text = title;
     }
+    */
 }
