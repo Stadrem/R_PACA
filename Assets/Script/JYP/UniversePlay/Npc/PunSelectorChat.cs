@@ -137,7 +137,7 @@ namespace UniversePlay
                     break;
                 case EReactionType.Battle:
                     PlayUniverseManager.Instance.isBattle = true;
-                    Debug.Log($"Battle");
+                    PlayUniverseManager.Instance.FinishConversation();
                     BattleManager.Instance.StartBattle();
                     break;
                 case EReactionType.Dice:
