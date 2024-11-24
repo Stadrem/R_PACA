@@ -8365,7 +8365,8 @@ PrefabInstance:
       value: DungeonDetailPreset
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8855250893206345962, guid: b367811b1958e4a67af3211bfa992d39, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b367811b1958e4a67af3211bfa992d39, type: 3}
