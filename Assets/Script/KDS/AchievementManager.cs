@@ -43,18 +43,17 @@ public class AchievementManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-
-            LoadAchievements();
-
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
+            return;
         }
 
-        // 현재 씬의 이름을 가져옴
+        // 현재 씬 정보 초기화
         currentScene = SceneManager.GetActiveScene();
+        LoadAchievements();
     }
 
     // 씬이 로드될 때마다 호출되는 함수
@@ -63,10 +62,6 @@ public class AchievementManager : MonoBehaviour
         // 현재 씬의 이름을 가져옴
         currentScene = SceneManager.GetActiveScene();
 
-        if(currentScene.name == "Town")
-        {
-            UnlockAchievement(2);
-        }
         switch (currentScene.name)
         {
             case "Town":
@@ -87,6 +82,9 @@ public class AchievementManager : MonoBehaviour
     {
         // 오브젝트가 파괴될 때 이벤트 등록 해제 (중복 방지)
         SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        // 모든 이벤트를 초기화
+        OnAchievementChanged = null;
     }
 
     [Header("유니티에 저장 된 칭호 데이터")]
@@ -110,7 +108,16 @@ public class AchievementManager : MonoBehaviour
         // index 값 기준으로 정렬
         achievements.Sort((a, b) => a.set.index.CompareTo(b.set.index));
 
-        achievementUiManager = GetComponent<AchievementUiManager>();
+        // AchievementUiManager 초기화 확인
+        if (achievementUiManager == null)
+        {
+            achievementUiManager = GetComponent<AchievementUiManager>();
+            if (achievementUiManager == null)
+            {
+                Debug.LogError("AchievementUiManager가 연결되지 않았습니다.");
+                return;
+            }
+        }
 
         achievementUiManager.CreateCards();
     }
