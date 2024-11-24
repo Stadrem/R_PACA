@@ -37,11 +37,11 @@ public class ProfileSet : MonoBehaviour
     public void DamagedPlayer(int damage)
     {
         hpBar.value -= damage;
-        //if (hpBar.value <= 0)
-        //{
-        //    print("플레이어 사망, 엔딩 출력");
-        //    BattleManager.Instance.EndBattlePlayerDie();
-        //}
+        if (hpBar.value <= 0)
+        {
+            print("플레이어 사망, 엔딩 출력");
+            BattleManager.Instance.EndBattlePlayerDie();
+        }
         UpdateHpText();
     }
 
