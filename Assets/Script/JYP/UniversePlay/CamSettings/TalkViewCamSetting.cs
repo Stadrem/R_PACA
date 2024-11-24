@@ -16,7 +16,10 @@ public class TalkViewCamSetting : ICamSettingState
         {
             Vcam.gameObject.SetActive(true);
         }
+        
         Vcam.Priority = 10;
+        Vcam.transform.localPosition = new Vector3(0, 6, -6);
+        
         PlayUniverseManager.Instance.NpcChatUIManager.Show();
         ViewModelManager.Instance.UniversePlayViewModel.AddHUDState(EHUDState.Chat);
     }
