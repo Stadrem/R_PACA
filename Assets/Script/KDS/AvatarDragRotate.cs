@@ -31,7 +31,7 @@ public class AvatarDragRotate : MonoBehaviour
             lastMouseX = currentMouseX;
 
             // 캐릭터의 Y축 기준으로 회전값 조정
-            transform.Rotate(0, deltaX * rotationSpeed, 0);
+            transform.Rotate(0, -deltaX * rotationSpeed, 0);
         }
     }
 }
