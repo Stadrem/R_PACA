@@ -8,6 +8,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Utils;
 using ViewModels;
 
 namespace UniversePlay
@@ -38,6 +39,10 @@ namespace UniversePlay
         private void Start()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            SSEManager.Instance.OnSSEDataReceived += (data) =>
+            {
+                photonView.RPC(nameof(RPC_ApplyGameMasterChatBubble), RpcTarget.All, data);
+            };
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -216,6 +221,12 @@ namespace UniversePlay
             inGameNpc.transform.SetParent(npcSpawnOffset);
             Debug.Log($"npcSpawnOffset : {npcSpawnOffset}");
             currentNpcList.Add(inGameNpc);
+        }
+        
+        [PunRPC]
+        private void RPC_ApplyGameMasterChatBubble(string content)
+        {
+            NpcChatUIManager.AddGameMasterChatBubble(content);
         }
     }
 }

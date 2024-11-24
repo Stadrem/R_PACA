@@ -75,6 +75,15 @@ public class NpcChatUIManager : MonoBehaviour
 
         StartCoroutine(ScrollToBottomNextFrame());
     }
+    
+    public void AddGameMasterChatBubble(string text)
+    {
+        GameObject chatBubble = Instantiate(ChatBubblePrefab, listContent);
+        chatBubble.GetComponent<NpcChatItem>()
+            .SetGameMasterText(text);
+
+        StartCoroutine(ScrollToBottomNextFrame());
+    }
 
     private IEnumerator ScrollToBottomNextFrame()
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -8,8 +9,8 @@ namespace Utils
     {
         private readonly string sseURL = $"http://125.132.216.190:9876/gm";
 
-        public string ReceivedData { get; private set; }
-
+        public Action<string> OnSSEDataReceived;
+        
 
         private static SSEManager instance;
 
@@ -110,6 +111,7 @@ namespace Utils
                     string responseText = downloadHandler.GetData();
                     if (!string.IsNullOrEmpty(responseText))
                     {
+                        OnSSEDataReceived?.Invoke(responseText);
                         Debug.Log($"SSE Data Received: {responseText}");
                         downloadHandler.ClearData();
                     }
