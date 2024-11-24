@@ -29,10 +29,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public List<GameObject> profiles;
     public List<GameObject> turnLight;
 
-
-
     TurnFSM turnFSM;
-
 
     void Awake()
     {

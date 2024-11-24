@@ -103,6 +103,11 @@ MonoBehaviour:
   - LookAtTarget
   - WaitLookAtTarget
   - RPC_ApplyGameMasterChatBubble
+  - ClickMovementEnabled
+  - RPCClickMovementEnabled
+  - RPCMovementEnabled
+  - MovementEnabled
+  - EndBattle
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

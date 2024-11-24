@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
-public class BattleCinemachine : MonoBehaviourPunCallbacks
+public class BattleCinemachine : MonoBehaviour
 {
     public static BattleCinemachine Instance;
 
@@ -30,25 +31,22 @@ public class BattleCinemachine : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        //battleUI = BattleManager.Instance.battleUI;
-        StartAwakeCinema(); // 테스트용으로 스타트에서 시작
+        battleUI = BattleManager.Instance.battleUI;
+        //StartAwakeCinema(); // 테스트용으로 스타트에서 시작
     }
-
     public void StartAwakeCinema()
     {
         // 카메라를 대화뷰에서 시네뷰로 전환해주고
-        //BattleManager.Instance.CineCam(true);
+        BattleManager.Instance.CineCam(true);
 
         // 화면 전환 컴포지션 재생(페이드인아웃)
-        compositionUI.SetActive(true);
-        StartCoroutine(FadeOutAndShowText(1.3f));
+        StartCoroutine(FadeOutAndShowText(2.3f));
 
         // 시네마UI 활성화
         cinemaUI.SetActive(true);
         MonsterDialogue.SetActive(false);
         // 몬스터 애니메이션 출력
-        //BattleManager.Instance.enemyAnim.SetTrigger("Rage"); // 일단 Rage로 테스트
-
+        BattleManager.Instance.enemyAnim.SetTrigger("Cinema01"); // 타이밍 수정해야댐
     }
 
     private IEnumerator FadeOutAndShowText(float duration)
@@ -56,10 +54,11 @@ public class BattleCinemachine : MonoBehaviourPunCallbacks
         yield return StartCoroutine(FadeOutAndIn(duration));
 
         // 대사 출력
-        yield return StartCoroutine(TypeText("안녕 나는 발록이야 지금부터 싸우자"));
+        yield return StartCoroutine(TypeText("“크아아아아아아아아아아”"));
+        
 
         // 대기 후 EndAwakeCinema 실행
-        yield return StartCoroutine(WaitAndEndCinema(5f));
+        yield return StartCoroutine(WaitAndEndCinema(3.5f));
     }
 
 
@@ -80,6 +79,8 @@ public class BattleCinemachine : MonoBehaviourPunCallbacks
 
         // 배틀UI 활성화는 FadeOutAndIn 끝나고 나서
         StartCoroutine(ActivateBattleUIAfterFade());
+        // 대화뷰로 전환
+        BattleManager.Instance.CineCam(false);
     }
 
     private IEnumerator ActivateBattleUIAfterFade()
@@ -89,17 +90,18 @@ public class BattleCinemachine : MonoBehaviourPunCallbacks
 
         // 배틀UI 활성화
         battleUI.SetActive(true);
+        BattleManager.Instance.CallRPCIsBattle();
     }
 
     // 타이핑 효과 함수
     private IEnumerator TypeText(string text)
     {
-        MonsterDialogue.GetComponent<TMP_Text>().text = "";
+        MonsterDialogue.GetComponentInChildren<TMP_Text>().text = "";
         MonsterDialogue.SetActive(true);
 
         foreach (char c in text)
         {
-            MonsterDialogue.GetComponent<TMP_Text>().text += c;
+            MonsterDialogue.GetComponentInChildren<TMP_Text>().text += c;
             yield return new WaitForSeconds(0.1f); // 타이핑 속도
         }
     }
