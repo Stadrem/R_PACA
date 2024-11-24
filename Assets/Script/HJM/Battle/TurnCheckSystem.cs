@@ -120,7 +120,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
     public void EndTurn()
     {
-        
+
         if (!isMyTurn) return;
 
         photonView.RPC("FinishMyTask", RpcTarget.All);
@@ -130,7 +130,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
             photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 0);
             photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, false);
             turnLight[currentTurnIndex].SetActive(false);
-            
+
 
             currentTurnIndex = (currentTurnIndex + 1) % totalPlayers;
 
@@ -168,7 +168,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         DisableBatUI();
 
         DiceRollManager.Get().DiceStandby();
-        diceDamage = DiceRollManager.Get().BattleDiceRoll(3);
+        diceDamage =
+            DiceRollManager.Get().BattleDiceRoll(BattleManager.Instance.playerBatList.battlePlayers[currentTurnIndex].strength);
         Debug.Log("주사위 굴린 결과: " + diceDamage);
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 1);
         StartCoroutine(AttackCallRPC());
@@ -179,7 +180,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         DisableBatUI();
 
         DiceRollManager.Get().DiceStandby();
-        diceDamage = DiceRollManager.Get().BattleDiceRoll(3);
+        diceDamage =
+            DiceRollManager.Get().BattleDiceRoll(BattleManager.Instance.playerBatList.battlePlayers[currentTurnIndex].strength);
         Debug.Log("주사위 굴린 결과: " + diceDamage);
         photonView.RPC("UpdateSelectImage", RpcTarget.All, currentTurnIndex, 2);
         StartCoroutine(DefenseCallRPC());

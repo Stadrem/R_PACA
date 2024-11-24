@@ -140,9 +140,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         ProfileSet();
-        CineCam(true);
-        battleUI.SetActive(true);
-        photonView.RPC("IsBattle", RpcTarget.All);
+
+        //BattleCinemachine.cs에서 처리
+        BattleCinemachine.Instance.StartAwakeCinema();
+        //CineCam(true);
+        //battleUI.SetActive(true);
+        //photonView.RPC("IsBattle", RpcTarget.All);
     }
 
     [PunRPC]
@@ -195,8 +198,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
 
-    // --------------------------------------------------------
-    // 전투 결과 세팅
+    // -------------------------------------------------------- 전투 결과 세팅
+
 
     // 주사위 공격 성공
     [PunRPC]
@@ -204,6 +207,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         yield return new WaitForSeconds(0.37f);
+        SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
@@ -214,6 +218,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack"); // 공격실패하는 바보 애니메이션 넣기
         yield return new WaitForSeconds(0.37f);
+        SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
 
@@ -224,6 +229,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public void DiceDefenseSuccess(int damage)
     {
         enemyAnim.SetTrigger("Hit2");
+        SoundManager.Get().PlaySFX(6); // 적 공격 효과음
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
         // 근데 방어가 좀 이상하긴 함... 공격하면 공격 안당하는데 방어하면 공격당함 방패같은거라도 세워놔야하나
@@ -234,6 +240,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public void DiceDefenseFail(int damage)
     {
         enemyAnim.SetTrigger("Hit2");
+        SoundManager.Get().PlaySFX(6); // 적 공격 효과음
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
     }
@@ -244,6 +251,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         int randomIndex = Random.Range(0, playerAnims.Count);
 
         enemyAnim.SetTrigger("Hit2");
+        SoundManager.Get().PlaySFX(6); // 적 공격 효과음
         playerAnims[randomIndex].SetTrigger("Damage");
         profiles[randomIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
     }
@@ -310,7 +318,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
     }
 
-    void CineCam(bool isCine)
+    public void CineCam(bool isCine)
     {
         if (isCine)
         {
