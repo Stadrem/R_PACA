@@ -31,9 +31,6 @@ public class PlayerAvatarSetting : AvatarHTTPManager
 
     private void Awake()
     {
-        // 현재 씬의 이름을 가져옴
-        //Scene currentScene = SceneManager.GetActiveScene();
-
         //TempFakeServer가 있다면 뒤에 연결 부분 모두 무시하고 로컬로 실행
         if (GameObject.Find("TempFakeServer") || UserCodeMgr.Instance == null)
         {
@@ -186,32 +183,4 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     {
         ownerCrown.SetActive(true);
     }
-
-    /*
-    private void OnEnable()
-    {
-        // AchievementManager가 존재하는 경우에만 이벤트 구독
-        var manager = AchievementManager.Get();
-        if (manager != null)
-        {
-            manager.OnAchievementChanged += HandleAchievementChangedLocal;
-        }
-    }
-
-    private void OnDisable()
-    {
-        // AchievementManager가 존재하는 경우에만 이벤트 구독 해제
-        var manager = AchievementManager.Get();
-        if (manager != null)
-        {
-            manager.OnAchievementChanged -= HandleAchievementChangedLocal;
-        }
-    }
-
-    // 업적 변경 감지 시 호출되는 함수
-    private void HandleAchievementChangedLocal(string title, int index)
-    {
-        titleText.text = title;
-    }
-    */
 }
