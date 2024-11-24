@@ -50,7 +50,7 @@ public class ObjectiveSelectionPopupController: MonoBehaviour
 
     public void Hide()
     {
-        root.AddToClassList(ObjectiveSelectionHided);
+        root?.AddToClassList(ObjectiveSelectionHided);
     }
 
     public void Show()
