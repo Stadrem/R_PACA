@@ -102,6 +102,7 @@ namespace UniversePlay
             var isNpc = sender == NpcManager.currentInteractInGameNpc.NpcName;
             ChatUIManager.AddChatBubble(sender, chatContent, !isNpc);
         }
+        
 
         [PunRPC]
         private void RPC_ToNextTurn()
