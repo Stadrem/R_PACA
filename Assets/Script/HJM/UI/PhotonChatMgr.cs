@@ -112,7 +112,7 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
             // 새로운 채널 구독
             string newChannel = currChannel + "_inGame";
             chatClient.Subscribe(new string[] { newChannel });
-            Debug.Log("새로운" + newChannel + "채널을 구독합니다");
+            Debug.Log("새로운" + newChannel + "채팅 채널을 구독합니다");
 
 
 
@@ -162,7 +162,7 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
     {
         for (int i = 0; i < channels.Length; i++)
         {
-            Debug.Log($"{channels[i]} 채널에 접속");
+            Debug.Log($"{channels[i]} 채팅 채널에 접속");
         }
     }
 
@@ -170,7 +170,7 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
     {
         for (int i = 0; i < channels.Length; i++)
         {
-            Debug.Log($"{channels[i]} 채널에서 나감");
+            Debug.Log($"{channels[i]} 채팅 채널에서 나감");
         }
     }
 

@@ -145,8 +145,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
         BattleCinemachine.Instance.StartAwakeCinema();
         //CineCam(true);
         //battleUI.SetActive(true);
-        //photonView.RPC("IsBattle", RpcTarget.All);
     }
+
+    public void CallRPCIsBattle()
+    {
+        photonView.RPC("IsBattle", RpcTarget.All);
+    }
+
 
     [PunRPC]
     public void IsBattle()
@@ -197,12 +202,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-
     // -------------------------------------------------------- 전투 결과 세팅
 
 
-    // 주사위 공격 성공
-    [PunRPC]
+    [PunRPC] // 주사위 공격 성공
     public IEnumerator DiceAttackSuccess(int damage)
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
@@ -212,8 +215,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
 
-    // 주사위 공격 실패
-    [PunRPC]
+
+    [PunRPC] // 주사위 공격 실패
     public IEnumerator DiceAttackFail(int damage)
     {
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack"); // 공격실패하는 바보 애니메이션 넣기
@@ -224,8 +227,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     }
 
-    // 주사위 방어 성공
-    [PunRPC]
+
+    [PunRPC] // 주사위 방어 성공
     public void DiceDefenseSuccess(int damage)
     {
         enemyAnim.SetTrigger("Hit2");
@@ -235,8 +238,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         // 근데 방어가 좀 이상하긴 함... 공격하면 공격 안당하는데 방어하면 공격당함 방패같은거라도 세워놔야하나
     }
 
-    // 주사위 방어 실패
-    [PunRPC]
+
+    [PunRPC] // 주사위 방어 실패
     public void DiceDefenseFail(int damage)
     {
         enemyAnim.SetTrigger("Hit2");
@@ -270,9 +273,16 @@ public class BattleManager : MonoBehaviourPunCallbacks
             EndBattle();
         }
     }
-    private void EndBattle()
+
+    public void OnClickCallRPCEndBattle()
     {
-        // 전투 종료
+        photonView.RPC("EndBattle", RpcTarget.All);
+    }
+
+
+    [PunRPC]
+    public void EndBattle() // 전투 종료
+    {
         isBattle = false;
 
         battleUI.SetActive(false);
@@ -292,6 +302,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             agents[i].enabled = true;
             playerMoves[i].clickMovementEnabled = true;
         }
+        vCam.gameObject.SetActive(false);
         Debug.Log("전투 종료");
     }
 
@@ -305,10 +316,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(waitTime);
         Ending.Get().EnableCanvas();
-
     }
-
-
 
     public void SetEnemy(GameObject enemy)
     {
@@ -320,11 +328,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
     void EnemyHPStart(int hp)
     {
-        enemyHPBar.maxValue = 50;
+        enemyHPBar.maxValue = hp;
         enemyHPBar.value = enemyHPBar.maxValue;
         enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
     }
 
+    // 카메라 뷰 전환
     public void CineCam(bool isCine)
     {
         if (isCine)
@@ -345,10 +354,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            print("시네마틱 카메라 끄고, 대화(턴) 카메라 켜써요");
+            print("시네마틱 카메라 끄고, 대화(턴) 카메라 켰어요");
             vCineCam.gameObject.SetActive(false);
+            vCam.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = true;
             vCam.gameObject.SetActive(true);
-
         }
     }
 

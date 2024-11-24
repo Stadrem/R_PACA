@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviourPun
     public Animator animator;
 
     [Header("클릭이동 가능한 레이어")]
-    [SerializeField] LayerMask clickableLayers; // 나중에 레이어 제대로 분리해서 땅만 선택 레이어에 넣기
+    [SerializeField] LayerMask clickableLayers;
 
     float lookRotationSpeed = 8.0f;
 
@@ -41,7 +41,6 @@ public class PlayerMove : MonoBehaviourPun
         agent = GetComponent<NavMeshAgent>();
         input = new CustomActions();
         AssignInputs();
-
     }
     private void Start()
     {
@@ -162,4 +161,17 @@ public class PlayerMove : MonoBehaviourPun
         }
 
     }
+
+    // 이동 가능 여부 설정하는 함수
+    public void CallRPCSetMovement(bool value)
+    {
+        photonView.RPC("MovementEnabled", RpcTarget.All, value);
+    }
+
+    [PunRPC]
+    public void MovementEnabled(bool enabled)
+    {
+        clickMovementEnabled = enabled;
+    }
+
 }
