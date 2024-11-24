@@ -58,9 +58,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        enemyHPBar.maxValue = 50; // 적 체력 설정
-        enemyHPBar.value = enemyHPBar.maxValue;
-
+        EnemyHPStart(50); // 적 체력 설정
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
     }
 
@@ -302,5 +300,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
         vCam = enemy.GetComponentInChildren<InGameNpc>().ncVcam;
         TurnCheckSystem.Instance.vCam = vCam;
     }
-
+    void EnemyHPStart(int hp)
+    {
+        enemyHPBar.maxValue = 50;
+        enemyHPBar.value = enemyHPBar.maxValue;
+        enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
+    }
 }
