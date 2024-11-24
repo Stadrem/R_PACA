@@ -18,7 +18,7 @@ public class NpcChatUIManager : MonoBehaviour
     public ScrollRect scrollRect;
     public ToggleGroup selectorToggleGroup;
     public Button finishButton;
-
+    public RectTransform turnTextContainer;
 
     [Header("Chat Options")]
     public RectTransform optionsContainer;
@@ -54,6 +54,7 @@ public class NpcChatUIManager : MonoBehaviour
 
     public void Show()
     {
+        turnTextContainer.gameObject.SetActive(true);
         finishButton.gameObject.SetActive(true);
     }
 
@@ -61,6 +62,7 @@ public class NpcChatUIManager : MonoBehaviour
     {
         finishButton.gameObject.SetActive(false);
         optionsContainer.gameObject.SetActive(false);
+        turnTextContainer.gameObject.SetActive(false);
     }
 
     public void AddChatBubble(string sender, string text, bool isPlayer)
@@ -119,8 +121,7 @@ public class NpcChatUIManager : MonoBehaviour
 
     public void ShowChatOptions(List<KeyValuePair<string, string>> options)
     {
-        if (!optionsContainer.gameObject.activeSelf)
-            optionsContainer.gameObject.SetActive(true);
+        
         optionsContainer.SetParent(listContent);
         foreach (var entry in selectorEntries)
         {
@@ -148,7 +149,8 @@ public class NpcChatUIManager : MonoBehaviour
         {
             selectorEntries[0].toggle.isOn = true;
         }
-
+        if (!optionsContainer.gameObject.activeSelf)
+            optionsContainer.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(optionsContainer);
         Canvas.ForceUpdateCanvases();
     }

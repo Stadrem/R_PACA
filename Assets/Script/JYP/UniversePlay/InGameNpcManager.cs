@@ -129,6 +129,8 @@ namespace UniversePlay
                 selectorChat.AddOption(NpcChatUIManager.ChatInputField.text);
                 NpcChatUIManager.SetChattable(false);
             }
+            
+            NpcChatUIManager.ChatInputField.text = "";
         }
 
         public void FinishPlayerTurn()
