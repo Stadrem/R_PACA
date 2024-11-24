@@ -75,7 +75,6 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         if (BattleManager.Instance.isBattle)
         {
             currentTurnIndex = turnIndex;
-            //photonView.RPC("ProfileLight", RpcTarget.AllBuffered, currentTurnIndex, true);
             if (turnFSM.turnState == ActionTurn.Player)
             {
                 Player currentPlayer = PhotonNetwork.PlayerList[currentTurnIndex];
@@ -235,7 +234,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1f);
         Debug.Log("몬스터 행동 시작");
-        BattleManager.Instance.MonsterAttack(4); // 임의값
+        BattleManager.Instance.MonsterAttack(3); // 데미지 임의값
         yield return new WaitForSeconds(2f);
         photonView.RPC("ChangeTurnToPlayer", RpcTarget.All);
     }

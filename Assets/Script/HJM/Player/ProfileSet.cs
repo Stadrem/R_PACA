@@ -36,8 +36,12 @@ public class ProfileSet : MonoBehaviour
     // 데미지
     public void DamagedPlayer(int damage)
     {
-        float damagePercentage = hpBar.value - damage;
-        hpBar.value = Mathf.Max(damagePercentage, 0);
+        hpBar.value -= damage;
+        //if (hpBar.value <= 0)
+        //{
+        //    print("플레이어 사망, 엔딩 출력");
+        //    BattleManager.Instance.EndBattlePlayerDie();
+        //}
         UpdateHpText();
     }
 
