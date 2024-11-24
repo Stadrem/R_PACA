@@ -7,6 +7,7 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using Cinemachine;
+using Unity.VisualScripting;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
@@ -38,11 +39,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public TMP_Text enemyHpTXT;
 
 
-
+    [Header("카메라")]
     public CinemachineVirtualCamera vCam;
+    public CinemachineVirtualCamera vCineCam;
 
     public bool isBattle = false;
-
 
     private void Awake()
     {
@@ -81,16 +82,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             enemy = gameObject;
         }
     }
-    [PunRPC]
-    public void IsBattle()
-    {
-        isBattle = true;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            TurnCheckSystem.Instance.StartGame();
-        }
-    }
-
     public void StartBattle()
     {
         playerBatList = GetComponent<PlayerBatList>();
@@ -149,9 +140,21 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         ProfileSet();
+        CineCam(true);
         battleUI.SetActive(true);
         photonView.RPC("IsBattle", RpcTarget.All);
     }
+
+    [PunRPC]
+    public void IsBattle()
+    {
+        isBattle = true;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            TurnCheckSystem.Instance.StartGame();
+        }
+    }
+
 
     [PunRPC] // 프로필 UI 생성
     void ProfileSet()
@@ -305,5 +308,45 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyHPBar.maxValue = 50;
         enemyHPBar.value = enemyHPBar.maxValue;
         enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
+    }
+
+    void CineCam(bool isCine)
+    {
+        if (isCine)
+        {
+            print("대화 카메라 끄고, 시네마틱 카메라 켰어요");
+            vCam.gameObject.SetActive(false);
+            Transform target = FindDeepChild(enemy.transform, "Bn_1");
+            if (target != null)
+            {
+                vCineCam.LookAt = target;
+                print("vCineCam.LookAt 설정 완료 " + target.name);
+            }
+            else
+            {
+                print("못찾았다!");
+            }
+            vCineCam.gameObject.SetActive(true);
+        }
+        else
+        {
+            print("시네마틱 카메라 끄고, 대화(턴) 카메라 켜써요");
+            vCineCam.gameObject.SetActive(false);
+            vCam.gameObject.SetActive(true);
+
+        }
+    }
+
+    Transform FindDeepChild(Transform parent, string childName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName)
+                return child;
+            Transform result = FindDeepChild(child, childName);
+            if (result != null)
+                return result;
+        }
+        return null;
     }
 }
