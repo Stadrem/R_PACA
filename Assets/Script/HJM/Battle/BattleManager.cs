@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
 using TMPro;
+using Cinemachine;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
@@ -35,9 +36,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public Animator enemyAnim;
     public Slider enemyHPBar;
 
-    private int turnCount = 1;
+    
+    public CinemachineVirtualCamera vCam;
 
     public bool isBattle = false;
+
 
     private void Awake()
     {
@@ -53,7 +56,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        enemyHPBar.maxValue = 10; // 적 체력 설정
+        enemyHPBar.maxValue = 50; // 적 체력 설정
         enemyHPBar.value = enemyHPBar.maxValue;
 
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
@@ -61,7 +64,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B)) // 전투 바로 시작하게 만든 키
         {
             StartBattle();
             photonView.RPC("IsBattle", RpcTarget.All);
@@ -294,6 +297,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         var anim = enemy.GetComponentInChildren<Animator>();
         this.enemy = enemy;
         enemyAnim = anim;
+        vCam = enemy.GetComponentInChildren<InGameNpc>().ncVcam;
+        TurnCheckSystem.Instance.vCam = vCam;
     }
 
 }

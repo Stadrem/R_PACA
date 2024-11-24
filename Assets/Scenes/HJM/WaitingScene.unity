@@ -1357,19 +1357,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 311349614}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 187450040}
-        m_TargetAssemblyTypeName: Script.JYP.UniversePlay.UniversePlayTest, Assembly-CSharp
-        m_MethodName: OnClickTest
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &311349614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6221,6 +6209,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 525099799623309347, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2464492006546846639, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2594424133680902816, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
@@ -12640,6 +12638,7 @@ GameObject:
   - component: {fileID: 4725516955234320217}
   - component: {fileID: 7378297582111088390}
   - component: {fileID: 8657476816189269795}
+  - component: {fileID: 8657476816189269796}
   m_Layer: 5
   m_Name: Canvas_Waiting
   m_TagString: Untagged
@@ -16741,6 +16740,18 @@ MonoBehaviour:
   healthInput: {fileID: 501416612}
   strengthInput: {fileID: 651022937}
   dexterityInput: {fileID: 1213191738}
+--- !u!114 &8657476816189269796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5419926108782255831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d224331d84a427f4bbcd4dd13f16c079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8668034214889553371
 GameObject:
   m_ObjectHideFlags: 0
