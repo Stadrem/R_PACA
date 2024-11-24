@@ -5,22 +5,24 @@ using UnityEngine.Networking;
 
 namespace Utils
 {
-    public class SSEManager : MonoBehaviour
+    public class GameMasterServerEventManager : MonoBehaviour
     {
-        private readonly string sseURL = $"http://125.132.216.190:9876/gm";
+        private readonly string sseURL = $"{HttpManager.ServerURL}/gm";
 
-        public Action<string> OnSSEDataReceived;
-        
+        public Action<string> OnEventReceived;
 
-        private static SSEManager instance;
 
-        public static SSEManager Instance
+        private static GameMasterServerEventManager instance;
+        private int currentRoomId;
+        private Coroutine currentEventCoroutine;
+
+        public static GameMasterServerEventManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new GameObject("SSEManager").AddComponent<SSEManager>();
+                    instance = new GameObject("GM_ServerEvent_Manager").AddComponent<GameMasterServerEventManager>();
                 }
 
                 return instance;
@@ -40,45 +42,31 @@ namespace Utils
             }
         }
 
-
-        private IEnumerator DisconnectToSSE()
+        public void Disconnect()
         {
-            var url = $"{sseURL}/disconnect?roomId={roomId}";
+            StartCoroutine(CoDisconnect());
+        }
+        
+        private IEnumerator CoDisconnect()
+        {
+            var url = $"{sseURL}/disconnect?roomId={currentRoomId}";
             using (UnityWebRequest request = UnityWebRequest.Get(url))
             {
                 request.SetRequestHeader("Accept", "text/event-stream");
 
                 // SSE 요청 전송
-                request.SendWebRequest();
-
-                // 연결 유지
-                while (!request.isDone)
-                {
-                    if (request.result == UnityWebRequest.Result.ConnectionError
-                        || request.result == UnityWebRequest.Result.ProtocolError)
-                    {
-                        Debug.LogError($"SSE Error: {request.error}");
-                        yield break;
-                    }
-
-                    // 응답 스트림에서 데이터 읽기
-                    while (request.downloadHandler.isDone == false)
-                    {
-                        string responseText = request.downloadHandler.text;
-                        if (!string.IsNullOrEmpty(responseText))
-                        {
-                            Debug.Log($"SSE Data Received: {responseText}");
-                        }
-
-                        yield return null; // 잠시 대기 후 반복
-                    }
-                }
+                yield return request.SendWebRequest();
             }
         }
 
-        private int roomId;
 
-        public IEnumerator ConnectToSSE(int roomId)
+        public void Connect(int roomId)
+        {
+            currentRoomId = roomId;
+            currentEventCoroutine = StartCoroutine(CoConnect(roomId));
+        }
+
+        private IEnumerator CoConnect(int roomId)
         {
             Debug.Log($"Connect to SSE: {roomId}");
             var url = $"{sseURL}/connect?roomId={roomId}";
@@ -111,7 +99,7 @@ namespace Utils
                     string responseText = downloadHandler.GetData();
                     if (!string.IsNullOrEmpty(responseText))
                     {
-                        OnSSEDataReceived?.Invoke(responseText);
+                        OnEventReceived?.Invoke(responseText);
                         Debug.Log($"SSE Data Received: {responseText}");
                         downloadHandler.ClearData();
                     }

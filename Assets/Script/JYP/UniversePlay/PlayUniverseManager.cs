@@ -106,36 +106,38 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     private void Update()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             StartCoroutine(GameMasterApi.Test(roomNumber, (res) => { }));
         }
-        #endif
+#endif
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                StartCoroutine(
-                    PlayRoomApi.FinishRoom(
-                        roomNumber,
-                        (res) =>
-                        {
-                            StartCoroutine(GameMasterApi.UnsubscribeGameMasterSSE(roomNumber,
-                                (res) =>
-                                {
-                                    PhotonNetwork.LeaveRoom();
-                                    PhotonNetwork.LoadLevel("LobbyScene");
-                                    Dispose(); 
-                                }));
-           
-                        }
-                    )
-                );
+                DisconnectToServer();
             }
         }
 
         UserInteraction();
+    }
+
+    private void DisconnectToServer()
+    {
+        StartCoroutine(
+            PlayRoomApi.FinishRoom(
+                roomNumber,
+                (res) =>
+                {
+                    PhotonNetwork.LeaveRoom();
+                    PhotonNetwork.LoadLevel("LobbyScene");
+                    Dispose();
+                }
+            )
+        );
+
+        GameMasterServerEventManager.Instance.Disconnect();
     }
 
 
@@ -203,7 +205,6 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
             .Select((t) => t.UserCode)
             .ToList();
         StartCoroutine(
-            
             ViewModel.StartRoom(
                 roomNumber,
                 PhotonNetwork.CurrentRoom.Name,
@@ -217,11 +218,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                 }
             )
         );
-        StartCoroutine(
-            SSEManager.Instance.ConnectToSSE(
-                roomNumber
-            )
-        );
+        GameMasterServerEventManager.Instance.Connect(roomNumber);
     }
 
     public static void Create()
