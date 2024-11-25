@@ -133,7 +133,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         //{
         //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
-
+        PlayUniverseManager.Instance.NpcManager.isBlocked = true;
         SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
 
@@ -320,6 +320,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             playerMoves[i].clickMovementEnabled = true;
         }
         vCam.gameObject.SetActive(false);
+        PlayUniverseManager.Instance.NpcManager.isBlocked = false;
         Debug.Log("전투 종료");
     }
 
