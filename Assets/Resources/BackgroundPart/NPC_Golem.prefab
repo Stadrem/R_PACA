@@ -64,8 +64,8 @@ MonoBehaviour:
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0.5
   m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
+  m_ScreenX: 0.4
+  m_ScreenY: 1
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
@@ -540,7 +540,7 @@ Transform:
   m_GameObject: {fileID: 6731238634033377788}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5434559, y: -0, z: -0, w: 0.8394377}
-  m_LocalPosition: {x: 0, y: 16.2, z: -7.6}
+  m_LocalPosition: {x: -2.3199997, y: 2.163, z: 3.5909996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

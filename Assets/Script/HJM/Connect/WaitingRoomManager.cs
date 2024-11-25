@@ -104,8 +104,8 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
         playerAvatar.name = "Player_Avatar_" + PhotonNetwork.NickName;
         print(11111111111111);
 
-        BillBoardInput boardInput = GameObject.FindAnyObjectByType<BillBoardInput>();
-        boardInput.CamInput();
+        //BillBoardInput boardInput = GameObject.FindAnyObjectByType<BillBoardInput>();
+        //boardInput.CamInput();
     }
 
 
