@@ -6,11 +6,12 @@ namespace Data.Remote.Api
 {
     public static class GameMasterApi
     {
+        private static readonly string testURL = $"http://125.132.216.190:9876";
         public static IEnumerator UnsubscribeGameMasterSse(int roomId, Action<ApiResult> onComplete)
         {
             var request = new HttpInfoWithType<string, string>()
             {
-                url = $"{HttpManager.ServerURL}/gm/disconnect",
+                url = $"{testURL}/gm/disconnect",
                 parameters = new Dictionary<string, string>()
                 {
                     { "roomId", roomId.ToString() }
@@ -27,7 +28,7 @@ namespace Data.Remote.Api
         {
             var request = new HttpInfoWithType<string, string>()
             {
-                url = $"{HttpManager.ServerURL}/gm/test",
+                url = $"{testURL}/gm/test",
                 parameters = new Dictionary<string, string>()
                 {
                     { "roomId", roomId.ToString() }

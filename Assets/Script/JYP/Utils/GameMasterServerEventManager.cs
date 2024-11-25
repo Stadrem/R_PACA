@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,7 +9,8 @@ namespace Utils
 {
     public class GameMasterServerEventManager : MonoBehaviour
     {
-        private readonly string sseURL = $"{HttpManager.ServerURL}/gm";
+        // private readonly string sseURL = $"{HttpManager.ServerURL}/gm";
+        private readonly string sseURL = $"http://125.132.216.190:9876/gm";
 
         public Action<string> OnEventReceived;
 
@@ -46,7 +49,7 @@ namespace Utils
         {
             StartCoroutine(CoDisconnect());
         }
-        
+
         private IEnumerator CoDisconnect()
         {
             var url = $"{sseURL}/disconnect?roomId={currentRoomId}";
@@ -99,8 +102,9 @@ namespace Utils
                     string responseText = downloadHandler.GetData();
                     if (!string.IsNullOrEmpty(responseText))
                     {
-                        OnEventReceived?.Invoke(responseText);
                         Debug.Log($"SSE Data Received: {responseText}");
+                        var parsedData = ParseData(responseText);
+                        OnEventReceived?.Invoke(parsedData);
                         downloadHandler.ClearData();
                     }
 
@@ -108,6 +112,20 @@ namespace Utils
                     yield return null; // 잠시 대기 후 반복
                 }
             }
+        }
+
+        public class GameMasterEventDto
+        {
+            public string message;
+        }
+
+        private string ParseData(string data)
+        {
+            //remove data:
+            var idx = data.IndexOf("{", StringComparison.Ordinal);
+            data = data.Substring(idx, data.Length - idx);
+            var collection = JsonConvert.DeserializeObject<GameMasterEventDto>(data);
+            return collection.message;
         }
     }
 }
