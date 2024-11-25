@@ -14,7 +14,7 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
     [SerializeField]
     [TextArea(3, 10)]
     private string[] infoTexts;
-    
+
     [SerializeField]
     private UniverseCharactersEditController universeCharactersEditController;
 
@@ -73,15 +73,16 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
 
         switch (state)
         {
-            
             case EState.CharacterSetting:
                 infoPanelController.SetText(infoTexts[0], hideNextButton: true);
+                directorImage.anchoredPosition = new Vector3(-288, 387, 0);
                 break;
             case EState.CharacterList:
                 infoPanelController.SetText(infoTexts[1]);
                 break;
             case EState.End:
                 infoPanelController.SetText(infoTexts[2], hideNextButton: true);
+                directorImage.anchoredPosition = new Vector3(-772, 93, 0);
                 break;
         }
     }
