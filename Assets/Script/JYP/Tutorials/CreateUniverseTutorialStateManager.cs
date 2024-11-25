@@ -6,9 +6,9 @@ using UnityEngine;
 public sealed class CreateUniverseTutorialStateManager : MonoBehaviour
 {
     [SerializeField]
-    private ICreateUniverseTutorialState[] tutorialStates;
+    private CreateUniverseTutorialState[] tutorialStates;
     
-    private ICreateUniverseTutorialState currentState;
+    private CreateUniverseTutorialState currentState;
 
     private int currentTutorialStateIndex = 0;
 
@@ -26,7 +26,7 @@ public sealed class CreateUniverseTutorialStateManager : MonoBehaviour
         }
     }
 
-    private void TransitState(ICreateUniverseTutorialState state)
+    private void TransitState(CreateUniverseTutorialState state)
     {
         currentState?.OnEndState();
         currentState = state;

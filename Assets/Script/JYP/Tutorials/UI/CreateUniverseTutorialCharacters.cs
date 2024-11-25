@@ -1,14 +1,14 @@
 ﻿using Tutorials;
 using UnityEngine;
 
-public class CreateUniverseTutorialCharacters : MonoBehaviour, ICreateUniverseTutorialState
+public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
 {
-    public void OnStartState()
+    public override void OnStartState()
     {
         
     }
 
-    public void OnEndState()
+    public override void OnEndState()
     {
         
     }
