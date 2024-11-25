@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InfoPanelController : MonoBehaviour
 {
@@ -11,10 +13,24 @@ public class InfoPanelController : MonoBehaviour
     RectTransform infoPanel;
     
     [SerializeField]
+    Button nextButton;
+    
+    [SerializeField]
     float animateTime = 0.5f;
     
     public Vector2 Size => infoPanel.sizeDelta;
     public Vector2 Position => infoPanel.anchoredPosition;
+    
+    public void SetOnNextButtonClicked(Action action)
+    {
+        nextButton.onClick.AddListener(() => action());
+    }
+    
+    public void RemoveAllOnNextButtonClicked()
+    {
+        nextButton.onClick.RemoveAllListeners();
+    }
+    
     public void SetText(string text)
     {
         infoText.text = text;

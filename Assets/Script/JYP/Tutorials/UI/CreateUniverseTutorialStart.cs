@@ -29,8 +29,6 @@ namespace Tutorials.UI
         [SerializeField]
         private RectTransform characterSettingPanel;
 
-        [SerializeField]
-        private RectTransform buttonNext;
 
 
         [SerializeField]
@@ -57,7 +55,7 @@ namespace Tutorials.UI
             titlePanel.gameObject.SetActive(false);
             genrePanel.gameObject.SetActive(false);
             contentPanel.gameObject.SetActive(false);
-            buttonNext.gameObject.SetActive(false);
+            infoPanelController.SetOnNextButtonClicked(ShowNext);
         }
 
         public override void OnStartState()
@@ -68,6 +66,7 @@ namespace Tutorials.UI
 
         public override void OnEndState()
         {
+            infoPanelController.RemoveAllOnNextButtonClicked();
             gameObject.SetActive(false);
         }
 

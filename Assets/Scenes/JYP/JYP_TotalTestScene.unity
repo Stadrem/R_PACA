@@ -3318,6 +3318,7 @@ GameObject:
   - component: {fileID: 606894430}
   - component: {fileID: 606894432}
   - component: {fileID: 606894431}
+  - component: {fileID: 606894433}
   m_Layer: 0
   m_Name: Panel_Info
   m_TagString: Untagged
@@ -3384,6 +3385,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606894429}
   m_CullTransparentMesh: 1
+--- !u!114 &606894433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606894429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71a70032d424c62908d3fcab8779a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoText: {fileID: 1741312021}
+  infoPanel: {fileID: 606894430}
+  animateTime: 0.5
 --- !u!1 &620656803
 GameObject:
   m_ObjectHideFlags: 0
@@ -5676,12 +5692,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1838264814}
-  welcomePanel: {fileID: 1952002073}
+  welcomePanel: {fileID: 1952002074}
   infoPanelController: {fileID: 0}
   titlePanel: {fileID: 0}
   genrePanel: {fileID: 0}
   contentPanel: {fileID: 0}
-  buttonNext: {fileID: 0}
+  characterSettingPanel: {fileID: 0}
+  buttonNext: {fileID: 137573895}
   infoTexts: []
 --- !u!114 &1226426956
 MonoBehaviour:
