@@ -34,6 +34,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     [Header("적 NPC")]
     public GameObject enemy;
+    public int enemyHP = 10;
+    public int enemyDamage = 3;
     public Animator enemyAnim;
     public Slider enemyHPBar;
     public TMP_Text enemyHpTXT;
@@ -59,7 +61,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        EnemyHPStart(50); // 적 체력 설정
+        EnemyHPStart(enemyHP); // 적 체력 설정
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
     }
 
