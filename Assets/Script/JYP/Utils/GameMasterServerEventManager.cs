@@ -9,8 +9,7 @@ namespace Utils
 {
     public class GameMasterServerEventManager : MonoBehaviour
     {
-        // private readonly string sseURL = $"{HttpManager.ServerURL}/gm";
-        private readonly string sseURL = $"http://125.132.216.190:9876/gm";
+        private readonly string sseURL = $"{HttpManager.ServerURL}/gm";
 
         public Action<string> OnEventReceived;
 
