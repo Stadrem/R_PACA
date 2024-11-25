@@ -46,6 +46,7 @@ namespace Utils
 
         public void Disconnect()
         {
+            StopAllCoroutines();
             StartCoroutine(CoDisconnect());
         }
 
@@ -98,15 +99,22 @@ namespace Utils
 
                     new WaitUntil(() => downloadHandler.isDone);
 
-                    string responseText = downloadHandler.GetData();
-                    if (!string.IsNullOrEmpty(responseText))
+                    try
                     {
-                        Debug.Log($"SSE Data Received: {responseText}");
-                        var parsedData = ParseData(responseText);
-                        OnEventReceived?.Invoke(parsedData);
-                        downloadHandler.ClearData();
+                        string responseText = downloadHandler.GetData();
+                        if (!string.IsNullOrEmpty(responseText))
+                        {
+                            Debug.Log($"SSE Data Received: {responseText}");
+                            var parsedData = ParseData(responseText);
+                            OnEventReceived?.Invoke(parsedData);
+                            downloadHandler.ClearData();
+                        }
                     }
-
+                    catch (Exception e)
+                    {
+                        downloadHandler.ClearData();
+                        Debug.LogError($"SSE Error: {e.Message}");
+                    }
 
                     yield return null; // 잠시 대기 후 반복
                 }
