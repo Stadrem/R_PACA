@@ -280,14 +280,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateEnemyHealth(int damage)
     {
-
         enemyHPBar.value -= damage;
         enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
         if (enemyHPBar.value <= 0)
         {
             enemyAnim.SetTrigger("Die");
             print("몬스터 사망!. 플레이어 측 승리!");
-            EndBattle();
+            //EndBattle();
+            photonView.RPC("EndBattle", RpcTarget.All);
         }
     }
 
@@ -323,7 +323,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         Debug.Log("전투 종료");
     }
 
-    // 일단 만들어만 놓음
+    
     public void EndBattlePlayerDie()
     {
         StartCoroutine(WaitEnding(2.0f)); // 잠깐 기다렸다가 엔딩씬 호출
