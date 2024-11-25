@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
 
             for (int i = 0; i < bill.Length; i++)
             {
-                bill[i].cam = GetComponent<Camera>();
+                bill[i].cam = transform.gameObject;
             }
 
         }

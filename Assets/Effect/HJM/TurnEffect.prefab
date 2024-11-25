@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7c476d6be75b74782f6c354c384e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!114 &7364355226800423014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10011,23 +10012,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
       value: 0.53333336
       objectReference: {fileID: 0}
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.53333336
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.8325774
+      value: 0.68104047
       objectReference: {fileID: 0}
     - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
+      value: 0.53333336
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
