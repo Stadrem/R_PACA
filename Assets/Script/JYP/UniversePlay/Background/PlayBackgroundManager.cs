@@ -74,10 +74,14 @@ public class PlayBackgroundManager : MonoBehaviourPun
     private void MoveTo(int backgroundId)
     {
         var background = ViewModel.UniverseData.backgroundPartDataList.Find((t) => t.ID == backgroundId);
+        
         LoadScene(background);
     }
     
-    
+    public void SetCurrentBackgroundId(int backgroundId)
+    {
+        photonView.RPC(nameof(RPC_SetCurrentBackgroundId), RpcTarget.All, backgroundId);
+    }
     [PunRPC]
     private void RPC_SetCurrentBackgroundId(int backgroundId)
     {
