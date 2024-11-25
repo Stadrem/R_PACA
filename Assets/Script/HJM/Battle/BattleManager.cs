@@ -31,6 +31,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public TMP_Text currentTurnTXT;
     public RectTransform profileParent;
 
+    [Header("전투위치")]
+    public GameObject turnEffectPrefab;
+    public float offset = 1.0f;
 
     [Header("적 NPC")]
     public GameObject enemy;
@@ -64,6 +67,18 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         EnemyHPStart(enemyHP); // 적 체력 설정
         profileParent = GameObject.Find("Panel_Profiles").GetComponent<RectTransform>();
+
+        turnEffectPrefab = Resources.Load<GameObject>("TurnEffect"); // 이펙트 리소스(리소스폴더안에)
+        print("TurnEffect 리소스 가져왔어요");
+
+        if (enemy != null)
+        {
+            
+        }
+        else
+        {
+            print("몬스터 못찾음");
+        }
     }
 
     void Update()
@@ -81,8 +96,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (enemy == null)
         {
-            GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
+            GameObject gameObject = GameObject.Find("NPC_Golem(Clone)"); // 나중에는 다른 방법으로 할당
             enemy = gameObject;
+            SetEnemy(enemy);
+            GenerateBattlePositions();
         }
     }
     public void StartBattle()
@@ -134,9 +151,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
         PlayUniverseManager.Instance.NpcManager.isBlocked = true;
-        SetEnemy(enemy);
+        //SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
-
         for (int i = 0; i < players.Count; i++)
         {
             photonView.RPC("MoveToBattlePos", RpcTarget.All, i);
@@ -144,7 +160,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         ProfileSet();
 
-        //BattleCinemachine.cs에서 처리
         BattleCinemachine.Instance.StartAwakeCinema();
         //CineCam(true);
         //battleUI.SetActive(true);
@@ -189,21 +204,87 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC] // 나중에 NPC기준으로 생성하게 할까.. 일단은 미리 배치 
+    // 마스터클라이언트만 전투위치 랜덤으로 뽑아서 전송
+    void GenerateBattlePositions()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        print("적 위치 잡음");
+        Vector3 enemyPos = enemy.transform.position;
+        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        battlePos.Clear(); // 기존 리스트 초기화
+
+        for (int i = 0; i < playerCount; i++)
+        {
+            Vector3 pos;
+            bool isOverlapping;
+
+            do
+            {
+                isOverlapping = false;
+
+                // 랜덤한 위치를 계산
+                float randomX = Random.Range(2.0f, 3.0f);
+                float randomZ = Random.Range(3.0f, 4.0f);
+                pos = enemyPos + new Vector3(randomX, 0, randomZ);
+
+                // 기존 배틀 포지션들과 충돌하는지 확인
+                foreach (Transform existingTransform in battlePos)
+                {
+                    if (Vector3.Distance(pos, existingTransform.position) < offset)
+                    {
+                        isOverlapping = true;
+                        break;
+                    }
+                }
+            } while (isOverlapping);
+
+            // 다른 유저들에게 뽑은 인덱스 위치 전송
+            photonView.RPC("AddBattlePosRPC", RpcTarget.AllBuffered, i, pos);
+
+            //print($"BattlePos_{i} 위치 설정 및 동기화 완료");
+        }
+    }
+
+
+    [PunRPC] // 받은 인덱스랑 위치로 전투위치랑 이펙트 생성하고 리스트에 추가
+    void AddBattlePosRPC(int index, Vector3 position)
+    {
+        // BattlePos 생성
+        Transform posTransform = Instantiate(Resources.Load<Transform>("BattlePos")) as Transform;
+        posTransform.name = $"BattlePos_{index}";
+        posTransform.position = position;
+        // 배틀 포지션 리스트에 추가
+        battlePos.Add(posTransform);
+
+        // 이펙트 생성하고 리스트에 추가
+        GameObject turnEffect = Instantiate(turnEffectPrefab, posTransform.position, Quaternion.identity);
+        turnEffect.name = $"turnEffect_{index}";
+        turnEffect.SetActive(false);
+        TurnCheckSystem.Instance.turnLight.Add(turnEffect);
+
+        //print($"BattlePos_{index} 생성 및 리스트 추가 완료");
+    }
+
+    [PunRPC] // 받은 전투위치로 플레이어 이동하고, 클릭이동 잠금
     void MoveToBattlePos(int playerIndex)
     {
         if (playerIndex < players.Count && playerIndex < battlePos.Count)
         {
-            if (playerIndex >= 0 && playerIndex < players.Count && playerIndex < battlePos.Count)
-            {
-                agents[playerIndex].enabled = false;
-                playerMoves[playerIndex].clickMovementEnabled = false;
-                players[playerIndex].transform.position = battlePos[playerIndex].position;
-                players[playerIndex].transform.rotation = battlePos[playerIndex].rotation;
-            }
+            agents[playerIndex].enabled = false;
+            playerMoves[playerIndex].clickMovementEnabled = false;
 
+            players[playerIndex].transform.position = battlePos[playerIndex].position;
+            players[playerIndex].transform.rotation = battlePos[playerIndex].rotation;
+
+            //print($"Player_{playerIndex} 이동 완료");
         }
     }
+
+
+
+
 
     // -------------------------------------------------------- 전투 결과 세팅
 
@@ -275,8 +356,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         playerAnims[targetPlayerIndex].SetTrigger("Damage");
         profiles[targetPlayerIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
     }
-
-
     [PunRPC]
     public void UpdateEnemyHealth(int damage)
     {
@@ -284,18 +363,17 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyHpTXT.text = $"{enemyHPBar.value} / {enemyHPBar.maxValue}";
         if (enemyHPBar.value <= 0)
         {
-            enemyAnim.SetTrigger("Die");
-            print("몬스터 사망!. 플레이어 측 승리!");
-            //EndBattle();
-            photonView.RPC("EndBattle", RpcTarget.All);
+            MonsterDie();
         }
     }
 
-    public void OnClickCallRPCEndBattle()
+    public void MonsterDie()
     {
+        enemyAnim.SetTrigger("Die");
+        print("몬스터 사망!. 플레이어 측 승리!");
+        //EndBattle();
         photonView.RPC("EndBattle", RpcTarget.All);
     }
-
 
     [PunRPC]
     public void EndBattle() // 전투 종료
@@ -322,9 +400,10 @@ public class BattleManager : MonoBehaviourPunCallbacks
         vCam.gameObject.SetActive(false);
         PlayUniverseManager.Instance.NpcManager.isBlocked = false;
         Debug.Log("전투 종료");
+        Ending.Get().EnableCanvas(true);
     }
 
-    
+
     public void EndBattlePlayerDie()
     {
         StartCoroutine(WaitEnding(2.0f)); // 잠깐 기다렸다가 엔딩씬 호출
@@ -333,7 +412,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     private IEnumerator WaitEnding(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Ending.Get().EnableCanvas();
+        Ending.Get().EnableCanvas(false); // 발록 전투 패배 엔딩크레딧 함수
     }
 
     public void SetEnemy(GameObject enemy)
