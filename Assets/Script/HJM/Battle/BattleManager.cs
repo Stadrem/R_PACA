@@ -37,11 +37,13 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public GameObject nextTurnUI;
     public TMP_Text currentTurnTXT;
     public RectTransform profileParent;
+    public GameObject popBatStart;
+    public GameObject popBatEnd;
 
     [Header("전투위치")]
     public GameObject turnEffectPrefab;
 
-    public float offset = 1.0f;
+    public float offset = 2.0f;
 
     [Header("적 NPC")]
     public GameObject enemy;
@@ -56,11 +58,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     [Header("카메라")]
     public CinemachineVirtualCamera vCam;
-
     public CinemachineVirtualCamera vCineCam;
+    public Vector3 cineOffset;
 
     public bool isBattle = false;
-
+    public bool isWin = false;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -109,6 +111,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
             enemy = gameObject;
             SetEnemy(enemy);
             GenerateBattlePositions();
+        }
+
+        if (vCineCam != null)
+        {
+            CineCamaraPosSet();
         }
     }
 
@@ -169,7 +176,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         ProfileSet();
-
+        
         BattleCinemachine.Instance.StartAwakeCinema();
         //CineCam(true);
         //battleUI.SetActive(true);
@@ -213,7 +220,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
             }
         }
     }
-
     // 마스터클라이언트만 전투위치 랜덤으로 뽑아서 전송
     void GenerateBattlePositions()
     {
@@ -221,20 +227,21 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         print("적 위치 잡음");
         Vector3 enemyPos = enemy.transform.position;
+        Vector3 enemyForward = enemy.transform.forward;
         int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        battlePos.Clear(); // 기존 리스트 초기화
+        battlePos.Clear();
 
         for (int i = 0; i < playerCount; i++)
         {
             Vector3 pos;
+            Quaternion rotation;
             bool isOverlapping;
 
             do
             {
                 isOverlapping = false;
 
-                // 랜덤한 위치를 계산
                 float randomX = Random.Range(2.0f, 3.0f);
                 float randomZ = Random.Range(3.0f, 4.0f);
                 pos = enemyPos + new Vector3(randomX, 0, randomZ);
@@ -250,21 +257,28 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 }
             } while (isOverlapping);
 
-            // 다른 유저들에게 뽑은 인덱스 위치 전송
-            photonView.RPC("AddBattlePosRPC", RpcTarget.AllBuffered, i, pos);
+            // 플레이어가 몬스터를 바라보도록
+            Vector3 directionToEnemy = (enemyPos - pos).normalized;
+            rotation = Quaternion.LookRotation(directionToEnemy);
 
-            //print($"BattlePos_{i} 위치 설정 및 동기화 완료");
+            // 다른 유저들에게 뽑은 인덱스 위치와 회전값 전송
+            photonView.RPC("AddBattlePosRPC", RpcTarget.AllBuffered, i, pos, rotation);
+
+            //print($"BattlePos_{i} 위치 및 회전 설정 및 동기화 완료");
         }
     }
 
 
-    [PunRPC] // 받은 인덱스랑 위치로 전투위치랑 이펙트 생성하고 리스트에 추가
-    void AddBattlePosRPC(int index, Vector3 position)
+    [PunRPC]
+    // 받은 인덱스, 위치, 회전값으로 전투위치와 이펙트를 생성하고 리스트에 추가
+    void AddBattlePosRPC(int index, Vector3 position, Quaternion rotation)
     {
         // BattlePos 생성
         Transform posTransform = Instantiate(Resources.Load<Transform>("BattlePos")) as Transform;
         posTransform.name = $"BattlePos_{index}";
         posTransform.position = position;
+        posTransform.rotation = rotation;
+
         // 배틀 포지션 리스트에 추가
         battlePos.Add(posTransform);
 
@@ -276,6 +290,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         //print($"BattlePos_{index} 생성 및 리스트 추가 완료");
     }
+
 
     [PunRPC] // 받은 전투위치로 플레이어 이동하고, 클릭이동 잠금
     void MoveToBattlePos(int playerIndex)
@@ -291,6 +306,14 @@ public class BattleManager : MonoBehaviourPunCallbacks
             //print($"Player_{playerIndex} 이동 완료");
         }
     }
+
+
+    public void CineCamaraPosSet()
+    {
+        vCineCam.transform.position = enemy.transform.position + cineOffset;
+    }
+
+
 
 
     // -------------------------------------------------------- 전투 결과 세팅
@@ -377,13 +400,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void MonsterDie()
-    {
-        enemyAnim.SetTrigger("Die");
-        print("몬스터 사망!. 플레이어 측 승리!");
-        //EndBattle();
-        photonView.RPC("EndBattle", RpcTarget.All);
-    }
+
 
     [PunRPC]
     public void EndBattle() // 전투 종료
@@ -427,19 +444,36 @@ public class BattleManager : MonoBehaviourPunCallbacks
             )
         );
         Debug.Log("전투 종료");
-        Ending.Get().EnableCanvas(true);
+        print("엔딩 크레딧 올라가기 전");
+        StartCoroutine(WaitEnding(4.0f, isWin));
+    }
+    public void PlayerDie()
+    {
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex + 1].SetTrigger("Damage"); // 죽는 애니로 변경
+        vCam.LookAt = players[TurnCheckSystem.Instance.currentTurnIndex + 1].transform;
+        vCam.gameObject.SetActive(true);
+        print("플레이어 사망!. 몬스터 승리!");
+        isWin = false;
+        photonView.RPC("EndBattle", RpcTarget.All);
     }
 
-
-    public void EndBattlePlayerDie()
+    public void MonsterDie()
     {
-        StartCoroutine(WaitEnding(2.0f)); // 잠깐 기다렸다가 엔딩씬 호출
+        enemyAnim.SetTrigger("Die"); // 좀 더 요란하고 길게 죽는 애니로 변경
+        vCineCam.gameObject.SetActive(true);
+        print("몬스터 사망!. 플레이어 측 승리!");
+        isWin = true;
+        popBatEnd.SetActive(true);
+        photonView.RPC("EndBattle", RpcTarget.All);
     }
 
-    private IEnumerator WaitEnding(float waitTime)
+    private IEnumerator WaitEnding(float waitTime, bool win)
     {
+        print("엔딩 크레딧 대기중");
         yield return new WaitForSeconds(waitTime);
-        Ending.Get().EnableCanvas(false); // 발록 전투 패배 엔딩크레딧 함수
+        Ending.Get().EnableCanvas(win);
+        print("엔딩 크레딧 올라감");
+
     }
 
     public void SetEnemy(GameObject enemy)

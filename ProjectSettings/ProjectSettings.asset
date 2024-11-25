@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: "\uC774\uC138\uACC4\uBAA8\uD5D8\uAC00"
   productName: R_PACA
-  defaultCursor: {fileID: 2800000, guid: ff5fc749a362e6e40a2dd2d0482fd155, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 70b31929c4b0465408e92bc39ea219ea, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1

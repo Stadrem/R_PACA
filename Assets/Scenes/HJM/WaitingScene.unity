@@ -1922,11 +1922,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_StatSetting
       objectReference: {fileID: 0}
-    - target: {fileID: 6127243254253696580, guid: 3b4fecdda79c7de41abd27452c10a703,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7429926311350414198, guid: 3b4fecdda79c7de41abd27452c10a703,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6779,7 +6774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7c476d6be75b74782f6c354c384e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &184983580064181740
 GameObject:
   m_ObjectHideFlags: 0
