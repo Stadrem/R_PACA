@@ -12,15 +12,15 @@ GameObject:
   - component: {fileID: 3957132554617197276}
   - component: {fileID: 6139926912381289568}
   - component: {fileID: 2137449142331596464}
-  - component: {fileID: 2721216858204649466}
   - component: {fileID: 7364355226800423014}
+  - component: {fileID: 240899985891569392}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9210901799466569222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -104,19 +104,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2721216858204649466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442842282803588977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f7c476d6be75b74782f6c354c384e48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!114 &7364355226800423014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +119,18 @@ MonoBehaviour:
   arrowImage: {fileID: 2340171117354071150}
   blinkSpeed: 0.2
   moveAmount: 0.2
+--- !u!114 &240899985891569392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442842282803588977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f99659d7e6adb664aa4662d492f5729d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1268761502312735688
 GameObject:
   m_ObjectHideFlags: 0
@@ -10034,6 +10033,46 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218283478833942548, guid: 23fd001da5dfc8e49b271c5720eca917,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

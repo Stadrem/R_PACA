@@ -33,6 +33,8 @@ public class Ending : MonoBehaviourPunCallbacks
         return instance;
     }
 
+    EndingUiManger eum;
+
     private void Awake()
     {
         if (instance == null)
@@ -43,10 +45,26 @@ public class Ending : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+
+        eum = GetComponent<EndingUiManger>();
     }
 
     public void EnableCanvas()
     {
         gameObject.SetActive(true);
+    }
+
+    public void EnableCanvas(bool win)
+    {
+        gameObject.SetActive(true);
+
+        if (win)
+        {
+            eum.text_goalB.text = "달성!";
+        }
+        else
+        {
+            eum.text_goalB.text = "실패!";
+        }
     }
 }
