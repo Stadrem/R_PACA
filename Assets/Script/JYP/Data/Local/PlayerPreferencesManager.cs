@@ -8,7 +8,7 @@ namespace Data.Local
 
         public static bool IsCreateUniverseTutorialNeed
         {
-            get => PlayerPrefs.GetInt(CreateUniverseTutorialKey, 0) == 1;
+            get => PlayerPrefs.GetInt(CreateUniverseTutorialKey, 1) == 1;
             set => PlayerPrefs.SetInt(CreateUniverseTutorialKey, value ? 1 : 0);
         }
     }

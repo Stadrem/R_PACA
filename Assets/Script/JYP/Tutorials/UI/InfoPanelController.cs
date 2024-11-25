@@ -8,64 +8,61 @@ public class InfoPanelController : MonoBehaviour
 {
     [SerializeField]
     TMP_Text infoText;
-    
+
     [SerializeField]
     RectTransform infoPanel;
-    
+
     [SerializeField]
     Button nextButton;
-    
+
     [SerializeField]
     float animateTime = 0.5f;
-    
-    public Vector2 Size => infoPanel.sizeDelta;
-    public Vector2 Position => infoPanel.anchoredPosition;
-    
+
+    [SerializeField]
+    Vector2 startPos;
+
+    [SerializeField]
+    private Vector2 middlePos;
+
+    [SerializeField]
+    Vector2 endPos;
+
     public void SetOnNextButtonClicked(Action action)
     {
         nextButton.onClick.AddListener(() => action());
     }
-    
+
     public void RemoveAllOnNextButtonClicked()
     {
         nextButton.onClick.RemoveAllListeners();
     }
-    
-    public void SetText(string text)
+
+    public void SetText(string text, bool hideNextButton = false)
     {
+        Debug.Log($"text: {text}");
+        nextButton.gameObject.SetActive(!hideNextButton);
+        StartCoroutine(MoveCoroutine(text));
+    }
+
+    private IEnumerator MoveCoroutine(string text)
+    {
+        yield return MoveToCoroutine(endPos.x, endPos.y);
+        infoPanel.anchoredPosition = startPos;
         infoText.text = text;
+        yield return MoveToCoroutine(middlePos.x, middlePos.y);
     }
-    
-    
-    public void MoveTo(Vector2 pos)
-    {
-        MoveTo(pos.x, pos.y);
-    }
-    
-    public void MoveTo(float x, float y)
-    {
-        StopAllCoroutines();
-        StartCoroutine(MoveToCoroutine(x, y));
-    }
-    
+
     private IEnumerator MoveToCoroutine(float x, float y)
     {
-        int time = 0;
-        Vector2 startPos = infoPanel.anchoredPosition;
-        Vector2 endPos = new Vector2(x, y);
+        float time = 0;
+        Vector2 srcPos = infoPanel.anchoredPosition;
+        Vector2 destPos = new Vector2(x, y);
         while (time < animateTime)
         {
-            infoPanel.anchoredPosition = EaseInOutExponential(time / animateTime, ref startPos, ref endPos);
+            time += Time.deltaTime;
+            infoPanel.anchoredPosition = Vector2.Lerp(srcPos, destPos, time / animateTime);
             yield return null;
         }
-        infoPanel.anchoredPosition = endPos;
+        infoPanel.anchoredPosition = destPos;
     }
-    
-    private Vector2 EaseInOutExponential(float k, ref Vector2 start, ref Vector2 end)
-    {
-        k = Mathf.Clamp01(k);
-        k = k > 0.5f ? 1 - k : k;
-        return new Vector2((end.x - start.x) * k * k + start.x, (end.y - start.y) * k * k + start.y);   
-    }
-    
 }
