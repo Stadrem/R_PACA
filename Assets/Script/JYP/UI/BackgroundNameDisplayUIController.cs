@@ -37,6 +37,21 @@ public class BackgroundNameDisplayUIController : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// 화면 상단에 텍스트를 표시합니다. 일정 시간 후 사라집니다.
+    /// </summary>
+    /// <param name="text">상단에 표시할 텍스트</param>
+    /// <param name="inAndOutDuration">UI가 나오고 들어가는 Animation이 각각 실행되는 시간</param>
+    /// <param name="newDisplayDuration">UI가 가만히 유지되어 표시되는 시간</param>
+    public void ShowHeaderText(string text, float inAndOutDuration = 0.5f, float newDisplayDuration = 3f)
+    {
+        this.displayDuration = newDisplayDuration;
+        this.openCloseAnimSec = inAndOutDuration;
+        StartCoroutine(CoShowBackgroundName(text));
+    }
+    
+    
+
     public void ShowBackgroundName(string backgroundName)
     {
         StartCoroutine(CoShowBackgroundName(backgroundName));
