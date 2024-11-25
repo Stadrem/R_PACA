@@ -34,7 +34,7 @@ namespace UniversePlay
         public ISelectorChat selectorChat => PlayUniverseManager.Instance.SelectorChat;
 
         private readonly NpcSpawner spawner = new NpcSpawner();
-
+        public bool isBlocked = false;
 
         private void Start()
         {
@@ -78,6 +78,7 @@ namespace UniversePlay
         /// <param name="npcId"></param>
         public void InteractNpc(int npcId)
         {
+            if (isBlocked) return;
             var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
             currentInteractInGameNpc = npcInfo;
             turnSystem.InitTurn();
