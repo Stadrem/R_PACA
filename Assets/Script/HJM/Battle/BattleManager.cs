@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     public Animator enemyAnim;
     public Slider enemyHPBar;
     public TMP_Text enemyHpTXT;
+    public int targetPlayerIndex; // 공격 대상 플레이어
 
 
     [Header("카메라")]
@@ -250,15 +251,29 @@ public class BattleManager : MonoBehaviourPunCallbacks
         profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
     }
 
-    [PunRPC] // 몬스터가 플레이어를 공격
+    [PunRPC]
+    public void SetTargetPlayer()
+    {
+        if (PhotonNetwork.IsMasterClient) // 마스터 클라이언트가 타겟대상플레이어 추첨
+        {
+            targetPlayerIndex = Random.Range(0, playerAnims.Count);
+            photonView.RPC("SyncTargetPlayer", RpcTarget.All, targetPlayerIndex);
+        }
+    }
+    [PunRPC]
+    public void SyncTargetPlayer(int index)
+    {
+        targetPlayerIndex = index;
+    }
+
+    [PunRPC]
     public void MonsterAttack(int damage)
     {
-        int randomIndex = Random.Range(0, playerAnims.Count);
-
         enemyAnim.SetTrigger("Hit2");
         SoundManager.Get().PlaySFX(6); // 적 공격 효과음
-        playerAnims[randomIndex].SetTrigger("Damage");
-        profiles[randomIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
+
+        playerAnims[targetPlayerIndex].SetTrigger("Damage");
+        profiles[targetPlayerIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
     }
 
 

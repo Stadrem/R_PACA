@@ -233,6 +233,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1f);
         Debug.Log("몬스터 행동 시작");
+        photonView.RPC("SetTargetPlayer", RpcTarget.MasterClient);
+        yield return new WaitForSeconds(0.1f); // 대상 추첨 시간 대기
         BattleManager.Instance.MonsterAttack(BattleManager.Instance.enemyDamage); // 데미지 임의값
         yield return new WaitForSeconds(2f);
         photonView.RPC("ChangeTurnToPlayer", RpcTarget.All);
