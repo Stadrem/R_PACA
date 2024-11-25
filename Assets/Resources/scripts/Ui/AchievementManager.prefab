@@ -1276,7 +1276,6 @@ MonoBehaviour:
   titlePrefab: {fileID: 1501728581988410705, guid: 9a7954c2632be824ea12f47919fba33b,
     type: 3}
   contents: {fileID: 2812763370244483658}
-  cards: []
   achievementCards: []
   selectAchievement:
     title: 
