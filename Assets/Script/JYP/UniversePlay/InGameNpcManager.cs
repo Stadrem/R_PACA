@@ -41,7 +41,11 @@ namespace UniversePlay
             SceneManager.sceneLoaded += OnSceneLoaded;
             GameMasterServerEventManager.Instance.OnEventReceived += (data) =>
             {
-                photonView.RPC(nameof(RPC_ApplyGameMasterChatBubble), RpcTarget.All, data);
+                foreach (var d in data)
+                {
+                    if(d == null) continue;
+                    photonView.RPC(nameof(RPC_ApplyGameMasterChatBubble), RpcTarget.All, d);
+                }
             };
         }
 
