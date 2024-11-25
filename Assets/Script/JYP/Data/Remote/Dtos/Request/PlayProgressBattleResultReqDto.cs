@@ -16,7 +16,7 @@ namespace Data.Remote.Dtos.Request
         public int roomNumber;
 
         [JsonProperty("isBattleWon")]
-        public int isBattleWon;
+        public bool isBattleWon;
 
         [JsonProperty("userSatusList")]
         public List<UserStatusDto> userStatusList;
@@ -61,7 +61,7 @@ namespace Data.Remote.Dtos.Request
                 var userStatus = new PlayProgressBattleResultReqDto.UserStatusDto()
                 {
                     userCode = player.UserCode,
-                    hitPoint = player.Stats.GetStat(EStatType.Hp),
+                    hitPoint = player.CurrentHp,
                     status = new List<string>()
                 };
                 userStatusList.Add(userStatus);
@@ -69,8 +69,8 @@ namespace Data.Remote.Dtos.Request
 
             var npcStatus = new PlayProgressBattleResultReqDto.NpcDto()
             {
-                npcId = battleResult.Npc.Id,
-                hitPoint = battleResult.Npc.Stats.GetStat(EStatType.Hp),
+                npcId = battleResult.Npc.NpcId,
+                hitPoint = battleResult.Npc.CurrentHp,
                 status = new List<string>()
             };
 

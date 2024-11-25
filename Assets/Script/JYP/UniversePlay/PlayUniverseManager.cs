@@ -177,16 +177,23 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     }
 
 
-    public void FinishConversation()
+    public void FinishConversation(bool endAiTalk = true)
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        StartCoroutine(
-            PlayProgressApi.FinishNpcTalk(
-                roomNumber,
-                (res) => { photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All); }
-            )
-        );
+        if (endAiTalk)
+        {
+            StartCoroutine(
+                PlayProgressApi.FinishNpcTalk(
+                    roomNumber,
+                    (res) => { photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All); }
+                )
+            );
+        }
+        else
+        {
+            photonView.RPC(nameof(RPC_FinishConversation), RpcTarget.All);
+        }
     }
 
     [PunRPC]

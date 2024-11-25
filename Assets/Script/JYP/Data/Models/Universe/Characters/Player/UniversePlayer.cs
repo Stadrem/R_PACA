@@ -7,6 +7,8 @@
         public string Nickname { get; private set; }
         public CharacterStats Stats { get; set; }
 
+        public int currentHp;
+
         public UniversePlayer(string playerId,string nickname, int userCode, CharacterStats stats)
         {
             UserCode = userCode;

@@ -24,6 +24,7 @@ namespace Data.Models.Universe.Characters
         public ENpcType NpcShapeType { get; private set; }
         public int AttachedBackgroundId { get; private set; }
 
+        public int currentHp;
         public UniverseNpc(int id, string name, string description, CharacterStats stats, float yRotation,
             Vector3 position, ENpcType npcShapeType, int attachedBackgroundId
         )

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
@@ -7,16 +8,21 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using Cinemachine;
+using Data.Models.Universe.Characters;
 using Unity.VisualScripting;
+using UniversePlay;
+using ViewModels;
+using Random = UnityEngine.Random;
 
 public class BattleManager : MonoBehaviourPunCallbacks
 {
     public static BattleManager Instance { get; private set; }
 
     [Header("플레이어 리스트")]
-    public List<GameObject> players = new List<GameObject>();  // 플레이어 목록
-    public List<UserStats> playerStats = new List<UserStats>();  // 플레이어 스탯 정보 목록
-    public List<Transform> battlePos;                          // 전투 시 이동 위치
+    public List<GameObject> players = new List<GameObject>(); // 플레이어 목록
+
+    public List<UserStats> playerStats = new List<UserStats>(); // 플레이어 스탯 정보 목록
+    public List<Transform> battlePos; // 전투 시 이동 위치
     public List<NavMeshAgent> agents = new List<NavMeshAgent>();
     public List<PlayerMove> playerMoves = new List<PlayerMove>();
     public List<Animator> playerAnims = new List<Animator>();
@@ -26,6 +32,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     [Header("UI 표시")]
     public GameObject battleUI;
+
     public GameObject profileUI;
     public GameObject nextTurnUI;
     public TMP_Text currentTurnTXT;
@@ -33,10 +40,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     [Header("전투위치")]
     public GameObject turnEffectPrefab;
+
     public float offset = 1.0f;
 
     [Header("적 NPC")]
     public GameObject enemy;
+
     public int enemyHP = 10;
     public int enemyDamage = 3;
     public Animator enemyAnim;
@@ -47,6 +56,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     [Header("카메라")]
     public CinemachineVirtualCamera vCam;
+
     public CinemachineVirtualCamera vCineCam;
 
     public bool isBattle = false;
@@ -73,7 +83,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
         if (enemy != null)
         {
-            
         }
         else
         {
@@ -102,6 +111,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             GenerateBattlePositions();
         }
     }
+
     public void StartBattle()
     {
         playerBatList = GetComponent<PlayerBatList>();
@@ -283,9 +293,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
     }
 
 
-
-
-
     // -------------------------------------------------------- 전투 결과 세팅
 
 
@@ -308,7 +315,6 @@ public class BattleManager : MonoBehaviourPunCallbacks
         SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
-
     }
 
 
@@ -318,7 +324,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyAnim.SetTrigger("Hit2");
         SoundManager.Get().PlaySFX(6); // 적 공격 효과음
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
-        profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage / 2); // 데미지 절반
+        profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>()
+            .DamagedPlayer(damage / 2); // 데미지 절반
         // 근데 방어가 좀 이상하긴 함... 공격하면 공격 안당하는데 방어하면 공격당함 방패같은거라도 세워놔야하나
     }
 
@@ -329,7 +336,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyAnim.SetTrigger("Hit2");
         SoundManager.Get().PlaySFX(6); // 적 공격 효과음
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Damage");
-        profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>().DamagedPlayer(damage); // 플레이어 체력 감소
+        profiles[TurnCheckSystem.Instance.currentTurnIndex].GetComponent<ProfileSet>()
+            .DamagedPlayer(damage); // 플레이어 체력 감소
     }
 
     [PunRPC]
@@ -341,6 +349,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             photonView.RPC("SyncTargetPlayer", RpcTarget.All, targetPlayerIndex);
         }
     }
+
     [PunRPC]
     public void SyncTargetPlayer(int index)
     {
@@ -356,6 +365,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         playerAnims[targetPlayerIndex].SetTrigger("Damage");
         profiles[targetPlayerIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
     }
+
     [PunRPC]
     public void UpdateEnemyHealth(int damage)
     {
@@ -386,6 +396,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             Destroy(profile);
         }
+
         profiles.Clear();
         foreach (var turnLight in TurnCheckSystem.Instance.turnLight)
         {
@@ -397,8 +408,24 @@ public class BattleManager : MonoBehaviourPunCallbacks
             agents[i].enabled = true;
             playerMoves[i].clickMovementEnabled = true;
         }
+
         vCam.gameObject.SetActive(false);
-        PlayUniverseManager.Instance.NpcManager.isBlocked = false;
+        // PlayUniverseManager.Instance.NpcManager.isBlocked = false;
+
+        var dict = new Dictionary<int, int>();
+        foreach (var player in ViewModelManager.Instance.UniversePlayViewModel.UniversePlayers)
+        {
+            dict.Add(player.UserCode, 5); // 임시로 5로 설정
+        }
+        StartCoroutine(
+            ViewModelManager.Instance.UniversePlayViewModel.FinishBattle(
+                PlayUniverseManager.Instance.roomNumber,
+                enemyHPBar.value <= 0,
+                dict,
+                0,
+                (res) => { Debug.Log($"전투 결과 전송 완료 : {res.IsSuccess}"); }
+            )
+        );
         Debug.Log("전투 종료");
         Ending.Get().EnableCanvas(true);
     }
@@ -423,6 +450,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         vCam = enemy.GetComponentInChildren<InGameNpc>().ncVcam;
         TurnCheckSystem.Instance.vCam = vCam;
     }
+
     void EnemyHPStart(int hp)
     {
         enemyHPBar.maxValue = hp;
@@ -447,6 +475,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             {
                 print("못찾았다!");
             }
+
             vCineCam.gameObject.SetActive(true);
         }
         else
@@ -468,6 +497,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             if (result != null)
                 return result;
         }
+
         return null;
     }
 }

@@ -97,6 +97,8 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
+        
+        
 
         public static IEnumerator SendBattleResult(BattleResult battleResult, Action<ApiResult> onComplete)
         {
