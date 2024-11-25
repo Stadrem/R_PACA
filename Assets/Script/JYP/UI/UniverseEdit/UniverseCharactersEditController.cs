@@ -15,7 +15,8 @@ public class UniverseCharactersEditController : MonoBehaviour
     private Button backButton;
     
     private Button backgroundButton;
-
+    public Action OnBackgroundButtonClicked;
+    
     private Button objectiveButton;
     // private Label createdDate;
     private void OnEnable()
@@ -45,7 +46,11 @@ public class UniverseCharactersEditController : MonoBehaviour
 
         objectiveButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); };
         backButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCreateUniverse(); };
-        backgroundButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
+        backgroundButton.clicked += () =>
+        {
+            OnBackgroundButtonClicked?.Invoke();
+            UniverseEditUIFlowManager.Instance.ShowBackgroundEdit();
+        };
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 

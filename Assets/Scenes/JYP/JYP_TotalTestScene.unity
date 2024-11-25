@@ -2336,7 +2336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &386274912
 Transform:
   m_ObjectHideFlags: 0
@@ -2941,8 +2941,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC548\uB155\uD558\uC138\uC694 \uBAA8\uD5D8\uAC00\uB2D8! \n\uC138\uACC4\uAD00
-    \uC0DD\uC131\uC5D0 \uC624\uC2E0\uAC78 \uD658\uC601\uD569\uB2C8\uB2E4."
+  m_text: "\uC548\uB155\uD558\uC138\uC694 \uBAA8\uD5D8\uAC00\uB2D8! \n[\uC138\uACC4\uAD00
+    \uC0DD\uC131] \uC5D0 \uC624\uC2E0\uAC78 \uD658\uC601\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 86621367ec418b54fbd39176c5a2d3dc, type: 2}
   m_sharedMaterial: {fileID: 4916857557503908562, guid: 86621367ec418b54fbd39176c5a2d3dc,
@@ -3458,9 +3458,17 @@ MonoBehaviour:
   manager: {fileID: 1838264814}
   infoPanelController: {fileID: 606894433}
   infoTexts:
-  - c1
-  - c2
-  - c3
+  - "\uC774\uC57C\uAE30\uC5D0 \uC0DD\uBA85\uB825\uC744 \uB354\uD560 \uCC28\uB840\uC785\uB2C8\uB2E4!
+    \uBA3C\uC800 \uB4F1\uC7A5\uC778\uBB3C\uC744 \uB9CC\uB4E4\uC5B4\uBCFC\uAE4C\uC694?
+    \uC774\uB984, \uC131\uACA9, \uC5ED\uD560 \uB4F1\uC744 \uC124\uC815\uD574\uBCF4\uC138\uC694."
+  - "\uC644\uC131\uB41C \uB4F1\uC7A5\uC778\uBB3C\uC744 \uD655\uC778\uD574\uBCF4\uC138\uC694!\n\uD544\uC694\uD55C
+    \uACBD\uC6B0 \uC0AD\uC81C\uD558\uAC70\uB098 \uC0C8\uB85C\uC6B4 \uCE90\uB9AD\uD130\uB97C
+    \uCD94\uAC00\uD560 \uC218\uB3C4 \uC788\uC5B4\uC694."
+  - "\uBA4B\uC9C4 \uB4F1\uC7A5\uC778\uBB3C\uC774 \uC644\uC131\uB418\uC5C8\uB124\uC694!
+    \n\uC774\uC81C \uADF8\uB4E4\uC774 \uD65C\uC57D\uD560 \uBB34\uB300, \uBC30\uACBD\uC744
+    \uC124\uC815\uD558\uB7EC \uAC00\uBCFC\uAE4C\uC694?\n(<b>\uBC30\uACBD \uC124\uC815</b>
+    \uBC84\uD2BC \uD074\uB9AD)"
+  universeCharactersEditController: {fileID: 1359064078}
 --- !u!114 &616774041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3475,7 +3483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6103,7 +6111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1838264814}
-  directorImage: {fileID: 0}
+  directorImage: {fileID: 2080105033}
   welcomePanel: {fileID: 1952002074}
   infoPanelController: {fileID: 606894433}
   infoTexts:
@@ -6126,6 +6134,7 @@ MonoBehaviour:
     \uC0DD\uBA85\uB825\uC744 \uBD88\uC5B4\uB123\uC744 \uCC28\uB840\uC785\uB2C8\uB2E4.
     \uB4F1\uC7A5\uC778\uBB3C\uC744 \uC124\uC815\uD558\uB7EC \uAC00\uBCFC\uAE4C\uC694?\n(\uCE90\uB9AD\uD130
     \uC124\uC815 \uBC84\uD2BC \uD074\uB9AD)"
+  createUniverseController: {fileID: 1454367134}
 --- !u!114 &1226426956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6140,7 +6149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7365,7 +7374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1454367132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9429,7 +9438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2080105033
 RectTransform:
   m_ObjectHideFlags: 0

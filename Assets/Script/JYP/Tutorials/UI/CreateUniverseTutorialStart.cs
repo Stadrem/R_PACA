@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.ComponentModel;
-using Data.Local;
-using TMPro;
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
 using ViewModels;
 
@@ -16,7 +11,7 @@ namespace Tutorials.UI
 
         [SerializeField]
         private RectTransform directorImage;
-        
+
         [SerializeField]
         private RectTransform welcomePanel;
 
@@ -26,7 +21,10 @@ namespace Tutorials.UI
         [SerializeField]
         [TextArea]
         private string[] infoTexts;
-        
+
+        [SerializeField]
+        private CreateUniverseController createUniverseController;
+
         private UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
 
         private enum EState
@@ -42,10 +40,6 @@ namespace Tutorials.UI
 
         private EState state = EState.None;
 
-        private void Start()
-        {
-            
-        }
 
         public override void OnStartState()
         {
@@ -53,23 +47,21 @@ namespace Tutorials.UI
             gameObject.SetActive(true);
             infoPanelController.SetOnNextButtonClicked(ShowNext);
             state = EState.None;
+            createUniverseController.OnCharacterSettingButtonClicked += OnCharacterSettingButtonClicked;
             ShowNext();
+        }
+
+        private void OnCharacterSettingButtonClicked()
+        {
+            manager.Next();
         }
 
         public override void OnEndState()
         {
             Debug.Log("End");
             infoPanelController.RemoveAllOnNextButtonClicked();
+            createUniverseController.OnCharacterSettingButtonClicked -= OnCharacterSettingButtonClicked;
             gameObject.SetActive(false);
-        }
-        
-        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            if (propertyChangedEventArgs.PropertyName == nameof(ViewModel.))
-            {
-                if (ViewModel.Characters.Count > 0 && state == EState.CharacterList)
-                    ShowNext();
-            }
         }
 
         private void ShowNext()
@@ -98,7 +90,7 @@ namespace Tutorials.UI
                 case EState.Title:
                     Debug.Log("Title");
                     directorImage.gameObject.SetActive(true);
-                    directorImage.anchoredPosition = new Vector3(-423, 293,0);
+                    directorImage.anchoredPosition = new Vector3(-423, 293, 0);
                     infoPanelController.SetText(infoTexts[1]);
                     break;
                 case EState.Genre:
@@ -147,8 +139,5 @@ namespace Tutorials.UI
             yield return new WaitForSeconds(sec);
             ShowNext();
         }
-        
-        
-        
     }
 }

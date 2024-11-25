@@ -18,7 +18,15 @@ public sealed class CreateUniverseTutorialStateManager : MonoBehaviour
 
     public void Next()
     {
-        var next = tutorialStates[currentTutorialStateIndex + 1];
+        if (currentTutorialStateIndex == tutorialStates.Length - 1)
+        {
+            PlayerPreferencesManager.IsCreateUniverseTutorialNeed = false;
+            Destroy(gameObject);
+            return;
+        }
+
+        currentTutorialStateIndex += 1;
+        var next = tutorialStates[currentTutorialStateIndex];
         TransitState(next);
     }
 

@@ -12,8 +12,14 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
     private InfoPanelController infoPanelController;
 
     [SerializeField]
+    [TextArea(3, 10)]
     private string[] infoTexts;
+    
+    [SerializeField]
+    private UniverseCharactersEditController universeCharactersEditController;
 
+    [SerializeField]
+    private RectTransform directorImage;
 
     private enum EState
     {
@@ -32,6 +38,7 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
         gameObject.SetActive(true);
         infoPanelController.SetOnNextButtonClicked(ShowNext);
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+        universeCharactersEditController.OnBackgroundButtonClicked += ShowNext;
         state = EState.None;
         ShowNext();
     }
@@ -40,6 +47,7 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
     {
         infoPanelController.RemoveAllOnNextButtonClicked();
         ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+        universeCharactersEditController.OnBackgroundButtonClicked -= ShowNext;
         gameObject.SetActive(false);
     }
 
@@ -47,7 +55,7 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
     {
         if (propertyChangedEventArgs.PropertyName == nameof(ViewModel.Characters))
         {
-            if (ViewModel.Characters.Count > 0 && state == EState.CharacterList)
+            if (ViewModel.Characters.Count > 0 && state == EState.CharacterSetting)
                 ShowNext();
         }
     }
@@ -60,17 +68,17 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
             return;
         }
 
-        state = (EState)((int)state + 1);
+        Debug.Log($"ShowNext_Chracter - {state} -> {state + 1}");
+        state++;
 
         switch (state)
         {
+            
             case EState.CharacterSetting:
                 infoPanelController.SetText(infoTexts[0], hideNextButton: true);
-                state = EState.CharacterList;
                 break;
             case EState.CharacterList:
                 infoPanelController.SetText(infoTexts[1]);
-                state = EState.End;
                 break;
             case EState.End:
                 infoPanelController.SetText(infoTexts[2], hideNextButton: true);
