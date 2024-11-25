@@ -21,7 +21,9 @@ public class CreateUniverseTutorialBackground : CreateUniverseTutorialState
 
     [SerializeField]
     private InfoPanelController infoPanelController;
-
+    
+    [SerializeField]
+    private RectTransform directorPanel;
 
     [SerializeField]
     [TextArea(3, 10)]
@@ -46,7 +48,9 @@ public class CreateUniverseTutorialBackground : CreateUniverseTutorialState
     public override void OnStartState()
     {
         gameObject.SetActive(true);
+        directorPanel.gameObject.SetActive(false);
         infoPanelController.SetOnNextButtonClicked(ShowNext);
+        ShowNext();
     }
 
     public override void OnEndState()

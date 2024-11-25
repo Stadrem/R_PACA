@@ -38,6 +38,7 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
         gameObject.SetActive(true);
         infoPanelController.SetOnNextButtonClicked(ShowNext);
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+        
         universeCharactersEditController.OnBackgroundButtonClicked += ShowNext;
         state = EState.None;
         ShowNext();
@@ -79,6 +80,7 @@ public class CreateUniverseTutorialCharacters : CreateUniverseTutorialState
                 break;
             case EState.CharacterList:
                 infoPanelController.SetText(infoTexts[1]);
+                directorImage.anchoredPosition = new Vector3(350, 387, 0);
                 break;
             case EState.End:
                 infoPanelController.SetText(infoTexts[2], hideNextButton: true);

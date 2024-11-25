@@ -19,6 +19,7 @@ public class UniverseCharactersEditController : MonoBehaviour
     
     private Button objectiveButton;
     // private Label createdDate;
+    
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>()
