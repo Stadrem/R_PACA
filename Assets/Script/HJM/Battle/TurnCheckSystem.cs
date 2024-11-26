@@ -167,7 +167,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         DisableBatUI();
 
         DiceRollManager.Get().DiceStandby();
-        ViewModelManager.Instance.UniversePlayViewModel.AddHUDState(EHUDState.Dice);
+        ViewModelManager.Instance.UniversePlayViewModel.AddHUDState(EHUDState.Battle);
         diceDamage =
             DiceRollManager.Get().BattleDiceRoll(BattleManager.Instance.playerBatList.battlePlayers[currentTurnIndex].strength);
         Debug.Log("주사위 굴린 결과: " + diceDamage);
@@ -199,7 +199,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         {
             photonView.RPC("DiceAttackFail", RpcTarget.All, diceDamage);
         }
-        ViewModelManager.Instance.UniversePlayViewModel.RemoveHUDState(EHUDState.Dice);
+        ViewModelManager.Instance.UniversePlayViewModel.RemoveHUDState(EHUDState.Battle);
 
         yield return new WaitForSeconds(3f);
         EndTurn();

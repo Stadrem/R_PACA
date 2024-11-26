@@ -344,6 +344,37 @@ MonoBehaviour:
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8712114775129575390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2376807025249504139}
+  m_Layer: 0
+  m_Name: vCamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2376807025249504139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712114775129575390}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.06337898, y: 1.2375914, z: -0.05517996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8118551246393993903}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7105650902117784148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -520,8 +551,14 @@ PrefabInstance:
     - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: m_fontSize
-      value: 38
+      value: 34.75
       objectReference: {fileID: 0}
+    - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 80eeb44d7658c524aacdd68e360cb3a4,
+        type: 2}
     - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       propertyPath: m_fontSizeMax
@@ -539,6 +576,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7421293381879644798, guid: 80eeb44d7658c524aacdd68e360cb3a4,
+        type: 2}
+    - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
       objectReference: {fileID: 0}
@@ -551,6 +594,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1412146142291017960, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
@@ -757,6 +805,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7682184837623353440}
+    - targetCorrespondingSourceObject: {fileID: 1412146142291017960, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2376807025249504139}
     - targetCorrespondingSourceObject: {fileID: 4117738259484743770, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}
       insertIndex: -1
