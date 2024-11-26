@@ -241,9 +241,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Quaternion rotation;
             bool isOverlapping;
 
-            do
-            {
-                isOverlapping = false;
+
 
                 float randomX = Random.Range(2.0f, 3.0f);
                 float randomZ = Random.Range(3.0f, 4.0f);
@@ -254,11 +252,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (Vector3.Distance(pos, existingTransform.position) < offset)
                     {
-                        isOverlapping = true;
                         break;
                     }
                 }
-            } while (isOverlapping);
 
             // 플레이어가 몬스터를 바라보도록
             Vector3 directionToEnemy = (enemyPos - pos).normalized;
