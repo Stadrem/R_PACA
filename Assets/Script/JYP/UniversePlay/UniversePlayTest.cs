@@ -28,7 +28,7 @@ namespace Script.JYP.UniversePlay
         {
             if (Max30.Get().notInput)
             {
-                Alert.Get().Set("능력치를 입력하세요.");
+                Alert.Get().Set("능력치를 변경하세요.");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace Script.JYP.UniversePlay
                 return;
             }
 
-            Alert.Get().Set("시작중입니다...", 6.0f);
+            Alert.Get().Set("시작중입니다...", 8.0f);
             PlayUniverseManager.Instance.StartPlay();
         }
 
