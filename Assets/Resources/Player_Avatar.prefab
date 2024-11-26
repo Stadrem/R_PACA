@@ -906,6 +906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 8328311676557504932}
+  nicknameMat1: {fileID: 2100000, guid: a54046981bfecff43a14925677377230, type: 2}
 --- !u!114 &8583232404600190879
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -93,12 +93,17 @@ namespace UniversePlay
             {
                 var currentBackgroundName = ViewModel.UniverseData.backgroundPartDataList
                     .First(t => t.ID == ViewModel.CurrentBackgroundId).Name;
+                
                 StartCoroutine(
                     PlayProgressApi.StartNpcTalk(
                         PlayUniverseManager.Instance.roomNumber,
                         currentBackgroundName,
                         currentInteractInGameNpc.NpcName,
-                        (npcFirstChat) => { photonView.RPC(nameof(Pun_AddChat), RpcTarget.All, npcInfo.NpcName, npcFirstChat.value); }
+                        (npcFirstChat) =>
+                        {
+                            photonView.RPC(nameof(Pun_OnStartChat), RpcTarget.All);
+                            photonView.RPC(nameof(Pun_AddChat), RpcTarget.All, npcInfo.NpcName, npcFirstChat.value);
+                        }
                     )
                 );
             }
@@ -106,6 +111,13 @@ namespace UniversePlay
             StartCoroutine(TurnBasedConversation());
         }
 
+
+        [PunRPC]
+        private void Pun_OnStartChat()
+        {
+            NpcChatUIManager.SetChattable(true);
+        }
+        
         [PunRPC]
         private void Pun_AddChat(string npcName, string content)
         {
