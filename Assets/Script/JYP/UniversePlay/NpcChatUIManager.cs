@@ -26,7 +26,6 @@ public class NpcChatUIManager : MonoBehaviour
     public GameObject selectorEntryPrefab;
     public List<NpcChatSelectorEntryController> selectorEntries;
 
-
     private void Start()
     {
         finishButton.onClick.AddListener(
