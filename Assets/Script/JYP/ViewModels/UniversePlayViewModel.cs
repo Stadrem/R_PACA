@@ -52,6 +52,12 @@ namespace UniversePlay
         }
 
         private string introMessage;
+        
+        public string IntroMessage
+        {
+            get => introMessage;
+            set => SetField(ref introMessage, value);
+        }
 
         public void AddHUDState(EHUDState state)
         {
@@ -140,7 +146,7 @@ namespace UniversePlay
                     {
                         callback(ApiResult.Success());
                         Debug.Log("Room Started");
-                        introMessage = result.value;
+                        IntroMessage = result.value;
                         Debug.Log($"intro: {introMessage}");
                     }
                     else
