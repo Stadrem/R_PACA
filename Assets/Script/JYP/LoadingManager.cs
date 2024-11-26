@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,9 @@ public class LoadingManager : MonoBehaviourPun
 
     [SerializeField]
     private Canvas loadingCanvas;
+
+    [SerializeField]
+    private TMP_Text loadingText;
 
     private bool isLoading = false;
 
@@ -38,12 +42,12 @@ public class LoadingManager : MonoBehaviourPun
 
     public void FinishLoading()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             photonView.RPC(nameof(RPC_FinishLoading), RpcTarget.All);
         }
     }
-    
+
     [PunRPC]
     private void RPC_FinishLoading()
     {
@@ -53,17 +57,18 @@ public class LoadingManager : MonoBehaviourPun
         }
 
         isLoading = false;
-        loadingCanvas.enabled = false;
+        StopAllCoroutines();
+        loadingCanvas.gameObject.SetActive(false);
     }
 
     public void StartLoading()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             photonView.RPC(nameof(RPC_StartLoading), RpcTarget.All);
         }
     }
-    
+
     [PunRPC]
     private void RPC_StartLoading()
     {
@@ -73,7 +78,23 @@ public class LoadingManager : MonoBehaviourPun
         }
 
         isLoading = true;
-        loadingCanvas.enabled = true;
+        loadingCanvas.gameObject.SetActive(true);
+        StartCoroutine(CoLoading());
+    }
+
+    private IEnumerator CoLoading()
+    {
+        while (isLoading)
+        {
+            loadingText.text = "로딩 중";
+            yield return new WaitForSeconds(0.3f);
+            loadingText.text = "로딩 중.";
+            yield return new WaitForSeconds(0.3f);
+            loadingText.text = "로딩 중..";
+            yield return new WaitForSeconds(0.3f);
+            loadingText.text = "로딩 중...";
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -86,6 +107,7 @@ public class LoadingManager : MonoBehaviourPun
 
     private void OnDestroy()
     {
+        StopAllCoroutines();
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 

@@ -360,6 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingCanvas: {fileID: 8847365960034216821}
+  loadingText: {fileID: 5771595706810970766}
 --- !u!114 &1998669269944789836
 MonoBehaviour:
   m_ObjectHideFlags: 0
