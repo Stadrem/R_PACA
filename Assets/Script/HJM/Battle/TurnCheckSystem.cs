@@ -195,9 +195,13 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         {
             photonView.RPC("DiceAttackSuccess", RpcTarget.All, diceDamage);
         }
-        else
+        else if (diceDamage > 0)
         {
             photonView.RPC("DiceAttackFail", RpcTarget.All, diceDamage);
+        }
+        else if (diceDamage == 0)
+        {
+            photonView.RPC("DiceAttackNo", RpcTarget.All, diceDamage);
         }
         ViewModelManager.Instance.UniversePlayViewModel.RemoveHUDState(EHUDState.Battle);
 
