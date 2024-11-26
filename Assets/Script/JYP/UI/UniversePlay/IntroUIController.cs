@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UniversePlay;
@@ -7,11 +8,11 @@ using ViewModels;
 
 namespace UI.UniversePlay
 {
-    public class IntroUIController : MonoBehaviour
+    public class IntroUIController : MonoBehaviourPun
     {
         [SerializeField]
         private TMP_Text introText;
-
+        
         private RectTransform rectTransform;
 
         private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -22,17 +23,22 @@ namespace UI.UniversePlay
         private void Start()
         {
             
-            
             Debug.Log("IntroUIController Start");
             rectTransform = GetComponent<RectTransform>();
             if(ViewModel.IntroMessage != null)
             {
-                SetIntroText(ViewModel.IntroMessage);
+                photonView.RPC(nameof(Pun_SetIntroText), RpcTarget.All, ViewModel.IntroMessage);
             }
             else
             {
               SetIntroText("환영합니다!");  
             }
+        }
+        
+        [PunRPC]
+        private void Pun_SetIntroText(string text)
+        {
+            SetIntroText(text);
         }
 
         public void SetIntroText(string text)
