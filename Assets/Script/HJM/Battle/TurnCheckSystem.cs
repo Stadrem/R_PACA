@@ -19,8 +19,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     public bool isMyTurn = false;
 
     [Header("턴 카메라")]
-    public CinemachineVirtualCamera vCam;
-    public Transform vCamTarget;
+    public CinemachineVirtualCamera vBattleCam;
+    public Transform vBattleCamTarget;
 
     [Header("턴 UI")]
     public Button attackBtn;
@@ -301,14 +301,14 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void LookAtTarget(int playerIndex)
     {
-        vCamTarget = vCam.LookAt;
+        vBattleCamTarget = vBattleCam.LookAt;
         if (playerIndex >= 0 && playerIndex < BattleManager.Instance.players.Count)
         {
-            vCam.LookAt = BattleManager.Instance.players[playerIndex].transform;
+            vBattleCam.LookAt = BattleManager.Instance.players[playerIndex].transform;
         }
         else if (playerIndex == -1)
         {
-            vCam.LookAt = BattleManager.Instance.enemy.transform;
+            vBattleCam.LookAt = BattleManager.Instance.enemyCamTarget;
         }
     }
 

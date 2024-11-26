@@ -82,7 +82,7 @@ public class BattleCinemachine : MonoBehaviour
         // 배틀UI 활성화는 FadeOutAndIn 끝나고 나서
         StartCoroutine(ActivateBattleUIAfterFade());
         // 대화뷰로 전환, 전투 개시 팝업
-        BattleManager.Instance.CineCam(false);
+        BattleManager.Instance.BattleCam(BattleManager.Instance.players[TurnCheckSystem.Instance.currentTurnIndex].gameObject.transform);
         StartCoroutine(ShowStartPopUp());
         
     }
