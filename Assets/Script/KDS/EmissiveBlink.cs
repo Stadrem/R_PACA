@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EmissiveBlink : MonoBehaviour
@@ -10,7 +12,8 @@ public class EmissiveBlink : MonoBehaviour
 
     // 기본 Emission 색상
     public Color emissionColor = Color.white;
-
+    private Color initialColor;
+    
     // Emission 변화에 걸리는 시간
     public float emissionDuration = 0.1f;
 
@@ -25,7 +28,8 @@ public class EmissiveBlink : MonoBehaviour
     void Start()
     {
         targetRenderer = GetComponent<MeshRenderer>();
-
+        initialColor = emissionColor;
+        
         if(mat == null)
         {
             mat = targetRenderer.material;
@@ -63,5 +67,18 @@ public class EmissiveBlink : MonoBehaviour
             // Emission 강도와 색상 적용
             mat.SetColor("_EmissionColor", emissionColor * emissionIntensity);
         }
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroy");
+        // 소멸 시 초기 색상으로 복구
+        mat?.SetColor("_EmissionColor", Color.white);
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("OnApplicationQuit");
+        mat?.SetColor("_EmissionColor",  Color.white);
     }
 }
