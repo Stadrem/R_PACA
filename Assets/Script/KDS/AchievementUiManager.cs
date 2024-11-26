@@ -122,7 +122,7 @@ public class AchievementUiManager : MonoBehaviour
         Text_GetTitleName.text = "~ " + titlename + " ~";
 
         //칭호 설명 가져오기
-        Text_GetTitleDesc.text =  desc + "<color=white> 달성!</color>";
+        Text_GetTitleDesc.text =  desc + " 달성!";
 
         //UI 활성화
         Canvas_GetTitle.SetActive(true);
