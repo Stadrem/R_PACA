@@ -1,5 +1,7 @@
 ﻿using Data.Models.Universe.Characters;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UniversePlay;
@@ -12,6 +14,10 @@ public class UserStatsManager : MonoBehaviour
     public TMP_InputField healthInput;
     public TMP_InputField strengthInput;
     public TMP_InputField dexterityInput;
+
+    public int baseHelath = 20;
+    public int baseStrength = 1;
+    public int baseDex = 1;
 
     int MaxStatTotal = 30;
 
@@ -28,10 +34,27 @@ public class UserStatsManager : MonoBehaviour
         strengthInput.onEndEdit.AddListener(OnStrengthInputEnd);
         dexterityInput.onEndEdit.AddListener(OnDexterityInputEnd);
 
+        StartCoroutine(DelayCall());
+
+        healthInput.text = baseHelath.ToString();
+        strengthInput.text = baseStrength.ToString();
+        dexterityInput.text = baseDex.ToString();
+
+        UserStats.userHealth = baseHelath;
+        UserStats.userStrength = baseStrength;
+        UserStats.userDexterity = baseDex;
+    }
+
+    public IEnumerator DelayCall()
+    {
+        yield return new WaitForSeconds(2);
+
+        Debug.Log("능력치 기본값");
+
         StartCoroutine(
     ViewModel.UpdateStatByUserCode(
         UserCodeMgr.Instance.UserCode,
-        new CharacterStats(Convert.ToInt32(healthInput.text), Convert.ToInt32(strengthInput.text), Convert.ToInt32(dexterityInput.text))
+        new CharacterStats(baseHelath, baseStrength, baseDex)
     )
 );
     }
@@ -52,11 +75,13 @@ public class UserStatsManager : MonoBehaviour
             }
             Max30.Get().maxOver = false;
             UserStats.userHealth = health;
+
             StartCoroutine(
                 ViewModel.UpdateStatByUserCode(
                     UserCodeMgr.Instance.UserCode,
                     new CharacterStats(health, UserStats.userStrength, UserStats.userDexterity)
                 )
+
             );
         }
         else

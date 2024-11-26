@@ -38,7 +38,7 @@ namespace Script.JYP.UniversePlay
                 return;
             }
 
-            Alert.Get().Set("시작중입니다...", 3.0f);
+            Alert.Get().Set("시작중입니다...", 6.0f);
             PlayUniverseManager.Instance.StartPlay();
         }
 
