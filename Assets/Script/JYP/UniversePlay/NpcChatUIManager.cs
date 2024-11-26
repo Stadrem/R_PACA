@@ -28,12 +28,24 @@ public class NpcChatUIManager : MonoBehaviour
 
     private void Start()
     {
+        ChatInputField.interactable = false;
         finishButton.onClick.AddListener(
             () =>
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PlayUniverseManager.Instance.FinishConversation();
+                }
+            }
+        );
+        ChatInputField.onEndEdit.AddListener(
+            (text) =>
+            {
+                if (text.IsNullOrEmpty()) return;
+                // 엔터 키를 눌러서 끝냈는지 확인
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                {
+                    
                 }
             }
         );
@@ -96,6 +108,11 @@ public class NpcChatUIManager : MonoBehaviour
     public void SetChattable(bool chattable)
     {
         ChatInputField.interactable = chattable;
+    }
+
+    public bool GetChattable()
+    {
+        return ChatInputField.interactable;
     }
 
 

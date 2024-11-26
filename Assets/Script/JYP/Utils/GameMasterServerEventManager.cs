@@ -33,6 +33,16 @@ namespace Utils
             }
         }
 
+        public void DeleteInstance()
+        {
+            if (instance != null)
+            {
+                StopAllCoroutines();
+                Destroy(instance.gameObject);
+                instance = null;
+            }
+        }
+        
         private void Awake()
         {
             if (instance == null)

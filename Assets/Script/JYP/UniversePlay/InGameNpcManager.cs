@@ -40,6 +40,18 @@ namespace UniversePlay
         public Action OnFinishInteractNpc;
         private void Start()
         {
+            
+            NpcChatUIManager.ChatInputField.onEndEdit.AddListener(
+                (text) =>
+                {
+                    if (string.IsNullOrEmpty(text)) return;
+                    // 엔터 키를 눌러서 끝냈는지 확인
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    {
+                        OnSubmitChatClicked();
+                    }
+                }
+            );
             SceneManager.sceneLoaded += OnSceneLoaded;
             GameMasterServerEventManager.Instance.OnEventReceived += (data) =>
             {
@@ -126,11 +138,13 @@ namespace UniversePlay
 
         public void OnSubmitChatClicked()
         {
+            if(NpcChatUIManager.GetChattable() == false) return;
             if (PhotonNetwork.IsMasterClient)
             {
                 if (ViewModel.NpcChatSelectedIndex == -1)
                 {
                     // todo : show error message "선택지를 선택해주세요"
+                    
                     return;
                 }
 

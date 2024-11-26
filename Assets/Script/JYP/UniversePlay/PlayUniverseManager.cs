@@ -125,19 +125,22 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     private void DisconnectToServer()
     {
+        GameMasterServerEventManager.Instance.Disconnect();
+
         StartCoroutine(
             PlayRoomApi.FinishRoom(
                 roomNumber,
                 (res) =>
                 {
                     PhotonNetwork.LeaveRoom();
-                    PhotonNetwork.LoadLevel("LobbyScene");
+                    SceneManager.LoadScene("LobbyScene");
                     Dispose();
+                    GameMasterServerEventManager.Instance.DeleteInstance();
                 }
             )
         );
 
-        GameMasterServerEventManager.Instance.Disconnect();
+        
     }
 
 
@@ -275,10 +278,15 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
         Destroy(gameObject);
     }
 
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
     {
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnSceneLoaded");
-        if (arg0.name == "WaitingScene")
+        if(scene.name == "LobbyScene")
+        {
+            return;
+        }
+        else
+        if (scene.name == "WaitingScene")
         {
             OnWaitingSceneLoaded();
         }

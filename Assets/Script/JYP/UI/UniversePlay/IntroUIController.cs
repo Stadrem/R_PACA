@@ -23,6 +23,8 @@ namespace UI.UniversePlay
 
         private void Start()
         {
+            
+            
             Debug.Log("IntroUIController Start");
             rectTransform = GetComponent<RectTransform>();
             if(ViewModel.IntroMessage != null)
@@ -68,15 +70,30 @@ namespace UI.UniversePlay
             StartCoroutine(AnimateIntroText(text));
         }
 
+
         private IEnumerator AnimateIntroText(string text)
         {
             introText.text = "";
+            string currentString = "";
+            float availableWidth = rectTransform.rect.width;
             for (int i = 0; i < text.Length; i++)
             {
-                introText.text += text[i];
+                currentString += text[i];
+                introText.text = currentString;
+                // Check if the text overflows
+                if (introText.preferredWidth > availableWidth)
+                {
+                    // Trim the text from the front until it fits
+                    string truncatedText = currentString.Substring(i);
+                    while (introText.preferredWidth > availableWidth && truncatedText.Length > 0)
+                    {
+                        truncatedText = truncatedText.Substring(1); // Remove the first character
+                        introText.text = "..." + truncatedText; // Add ellipsis at the front
+                    }
+                }
                 yield return new WaitForSeconds(0.06f);
             }
-
+        
             yield return new WaitForSeconds(3f);
             yield return AnimateOut();
         }
