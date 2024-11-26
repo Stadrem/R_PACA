@@ -259,7 +259,7 @@ public class DiceRollManager : MonoBehaviour
         {
             success = true;
 
-            titleText.text = "<size=75><color=red>성공</color></size>";
+            titleText.text = "결과";
 
             //업적 달성 전용
             failSum++;
@@ -274,7 +274,7 @@ public class DiceRollManager : MonoBehaviour
         {
             success = false;
 
-            titleText.text = "<size=75><color=blue>실패</color></size>";
+            titleText.text = "결과";
 
             //업적 달성 전용
             failSum--;
