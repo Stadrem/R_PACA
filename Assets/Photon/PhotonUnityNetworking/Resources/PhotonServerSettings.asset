@@ -114,6 +114,8 @@ MonoBehaviour:
   - MonsterHitEffect
   - MonsterDamageEffect
   - PlayerDamageEffect
+  - Pun_AddChat
+  - Pun_OnStartChat
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
