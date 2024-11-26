@@ -35,7 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JYP/JYP_TotalTestScene.unity
     guid: 7bfaaf261f0630a4ea1f1d105eddcda0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HJM/Dungeon_copy.unity
     guid: 4f2547360fdb44042a4fae6b01908171
   m_configObjects: {}

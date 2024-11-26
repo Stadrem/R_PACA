@@ -111,6 +111,9 @@ MonoBehaviour:
   - SetTargetPlayer
   - SyncTargetPlayer
   - AddBattlePosRPC
+  - MonsterHitEffect
+  - MonsterDamageEffect
+  - PlayerDamageEffect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

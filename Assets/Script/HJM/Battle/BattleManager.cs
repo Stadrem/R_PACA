@@ -179,7 +179,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         }
 
         ProfileSet();
-        
+
         BattleCinemachine.Instance.StartAwakeCinema();
         //CineCam(true);
         //battleUI.SetActive(true);
@@ -241,9 +241,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
             Quaternion rotation;
             bool isOverlapping;
 
-            do
-            {
-                isOverlapping = false;
+
 
                 float randomX = Random.Range(2.0f, 3.0f);
                 float randomZ = Random.Range(3.0f, 4.0f);
@@ -254,11 +252,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
                 {
                     if (Vector3.Distance(pos, existingTransform.position) < offset)
                     {
-                        isOverlapping = true;
                         break;
                     }
                 }
-            } while (isOverlapping);
 
             // 플레이어가 몬스터를 바라보도록
             Vector3 directionToEnemy = (enemyPos - pos).normalized;
@@ -328,6 +324,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         yield return new WaitForSeconds(0.37f);
         SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
+        photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
@@ -339,8 +336,36 @@ public class BattleManager : MonoBehaviourPunCallbacks
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack"); // 공격실패하는 바보 애니메이션 넣기
         yield return new WaitForSeconds(0.37f);
         SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
+        photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
+    }
+
+    [PunRPC] // 몬스터피격 이펙트 생성
+    public void MonsterDamageEffect()
+    {
+        string prefabName = "EnemyDamageEffect";
+        Vector3 spawnPosition = enemy.transform.position + new Vector3(0f, 1.0f, 0.2f);
+        GameObject damageEffect = PhotonNetwork.Instantiate(prefabName, spawnPosition, Quaternion.identity);
+        StartCoroutine(DestroyEffect(damageEffect, 2f));
+    }
+
+    [PunRPC] // 플레이어피격 이펙트 생성
+    public void PlayerDamageEffect()
+    {
+        string prefabName = "PlayerDamageEffect";
+        Vector3 spawnPosition = players[targetPlayerIndex].transform.position;
+        GameObject damageEffect = PhotonNetwork.Instantiate(prefabName, spawnPosition, Quaternion.identity);
+        StartCoroutine(DestroyEffect(damageEffect, 2f));
+    }
+
+
+
+
+    private IEnumerator DestroyEffect(GameObject effect, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        PhotonNetwork.Destroy(effect);
     }
 
 
@@ -387,7 +412,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         enemyAnim.SetTrigger("Hit2");
         SoundManager.Get().PlaySFX(6); // 적 공격 효과음
-
+        PlayerDamageEffect(); // 플레이어피격 이펙트
         playerAnims[targetPlayerIndex].SetTrigger("Damage");
         profiles[targetPlayerIndex].GetComponent<ProfileSet>().DamagedPlayer(damage);
     }
