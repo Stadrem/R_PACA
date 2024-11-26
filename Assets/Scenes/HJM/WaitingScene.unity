@@ -1917,10 +1917,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3336180559653388492, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216174416510172366, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -300
+      objectReference: {fileID: 0}
     - target: {fileID: 6127243254253696580, guid: 3b4fecdda79c7de41abd27452c10a703,
         type: 3}
       propertyPath: m_Name
       value: Canvas_StatSetting
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332191600512347716, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -250
       objectReference: {fileID: 0}
     - target: {fileID: 7429926311350414198, guid: 3b4fecdda79c7de41abd27452c10a703,
         type: 3}
@@ -2021,6 +2036,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104432406835480437, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
