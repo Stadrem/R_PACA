@@ -15,6 +15,8 @@ public class CreateUniverseController : MonoBehaviour
     private Button objectiveSettingButton;
     private Button backButton;
 
+    public Action OnCharacterSettingButtonClicked = null;
+
     private Button saveButton;
 
     // private TextField tagsInput;
@@ -76,7 +78,11 @@ public class CreateUniverseController : MonoBehaviour
             }
         );
 
-        charactersSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowCharactersEdit(); };
+        charactersSettingButton.clicked += () =>
+        {
+            UniverseEditUIFlowManager.Instance.ShowCharactersEdit();
+            OnCharacterSettingButtonClicked?.Invoke();
+        };
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
         objectiveSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); };
         backButton.clicked += () =>

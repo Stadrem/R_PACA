@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Profiling;
 using Cinemachine;
+using ViewModels;
+using Data.Models.Universe;
 
 public class TurnCheckSystem : MonoBehaviourPunCallbacks
 {
@@ -165,6 +167,7 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         DisableBatUI();
 
         DiceRollManager.Get().DiceStandby();
+        ViewModelManager.Instance.UniversePlayViewModel.AddHUDState(EHUDState.Dice);
         diceDamage =
             DiceRollManager.Get().BattleDiceRoll(BattleManager.Instance.playerBatList.battlePlayers[currentTurnIndex].strength);
         Debug.Log("주사위 굴린 결과: " + diceDamage);
@@ -196,6 +199,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         {
             photonView.RPC("DiceAttackFail", RpcTarget.All, diceDamage);
         }
+        ViewModelManager.Instance.UniversePlayViewModel.RemoveHUDState(EHUDState.Dice);
+
         yield return new WaitForSeconds(3f);
         EndTurn();
     }
@@ -233,7 +238,9 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1f);
         Debug.Log("몬스터 행동 시작");
-        BattleManager.Instance.MonsterAttack(3); // 데미지 임의값
+        photonView.RPC("SetTargetPlayer", RpcTarget.MasterClient);
+        yield return new WaitForSeconds(0.1f); // 대상 추첨 시간 대기
+        BattleManager.Instance.MonsterAttack(BattleManager.Instance.enemyDamage); // 데미지 임의값
         yield return new WaitForSeconds(2f);
         photonView.RPC("ChangeTurnToPlayer", RpcTarget.All);
     }

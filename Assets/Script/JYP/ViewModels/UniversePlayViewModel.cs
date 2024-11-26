@@ -22,7 +22,7 @@ namespace UniversePlay
         private UniverseData universeData;
         private int currentBackgroundId = -1;
         private EHUDState hudState = 0;
-
+        
         #endregion
 
         #region INotifyPropertyChanged
@@ -156,11 +156,11 @@ namespace UniversePlay
                 Debug.Log("마지막 배경입니다.");
                 return;
             }
-
-            CurrentBackgroundId = UniverseData.backgroundPartDataList[nextIdx].ID;
-
+            
+            PlayUniverseManager.Instance.BackgroundManager.SetCurrentBackgroundId(UniverseData.backgroundPartDataList[nextIdx].ID);
+            
             Debug.LogWarning($"next id - {CurrentBackgroundId}");
-            OnPropertyChanged();
+            
         }
     }
 }

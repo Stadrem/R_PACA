@@ -204,7 +204,6 @@ GameObject:
   - component: {fileID: 65602761}
   - component: {fileID: 65602760}
   - component: {fileID: 65602759}
-  - component: {fileID: 65602763}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -330,18 +329,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 49.345, z: 0}
---- !u!114 &65602763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65602758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9afec11102cb3084e93e21c4da373598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &75675977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1930,15 +1917,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3336180559653388492, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216174416510172366, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -300
+      objectReference: {fileID: 0}
     - target: {fileID: 6127243254253696580, guid: 3b4fecdda79c7de41abd27452c10a703,
         type: 3}
       propertyPath: m_Name
       value: Canvas_StatSetting
       objectReference: {fileID: 0}
-    - target: {fileID: 6127243254253696580, guid: 3b4fecdda79c7de41abd27452c10a703,
+    - target: {fileID: 6332191600512347716, guid: 3b4fecdda79c7de41abd27452c10a703,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: offset.x
+      value: -250
       objectReference: {fileID: 0}
     - target: {fileID: 7429926311350414198, guid: 3b4fecdda79c7de41abd27452c10a703,
         type: 3}
@@ -2039,6 +2036,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104432406835480437, guid: 3b4fecdda79c7de41abd27452c10a703,
+        type: 3}
+      propertyPath: offset.x
+      value: -250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6792,7 +6794,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7c476d6be75b74782f6c354c384e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &184983580064181740
 GameObject:
   m_ObjectHideFlags: 0

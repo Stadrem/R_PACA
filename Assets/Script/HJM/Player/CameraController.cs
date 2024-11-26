@@ -14,17 +14,17 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
-        PhotonView pv = transform.parent.GetComponent<PhotonView>();
-        if (pv.IsMine)
-        {
-            Billboard[] bill = GameObject.FindObjectsOfType<Billboard>();
+        //PhotonView pv = transform.parent.GetComponent<PhotonView>();
+        //if (pv.IsMine)
+        //{
+        //    Billboard[] bill = GameObject.FindObjectsOfType<Billboard>();
 
-            for (int i = 0; i < bill.Length; i++)
-            {
-                bill[i].cam = GetComponent<Camera>();
-            }
+        //    for (int i = 0; i < bill.Length; i++)
+        //    {
+        //        bill[i].cam = transform.gameObject;
+        //    }
 
-        }
+        //}
     }
     private void Start()
     {

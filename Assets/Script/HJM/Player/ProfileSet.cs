@@ -40,7 +40,7 @@ public class ProfileSet : MonoBehaviour
         if (hpBar.value <= 0)
         {
             print("플레이어 사망, 엔딩 출력");
-            BattleManager.Instance.EndBattlePlayerDie();
+            BattleManager.Instance.PlayerDie();
         }
         UpdateHpText();
     }

@@ -2382,6 +2382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcSpawnOffset: {fileID: 0}
   currentInteractInGameNpc: {fileID: 0}
+  isBlocked: 0
 --- !u!114 &8093603927009587201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3189,12 +3190,24 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 4379285378125008420}
   m_HorizontalScrollbarVisibility: 2
-  m_VerticalScrollbarVisibility: 2
+  m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4379285378125008420}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Scrollbar, UnityEngine.UI
+        m_MethodName: set_size
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.03764706
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7145177578163945283
 GameObject:
   m_ObjectHideFlags: 0
@@ -4608,7 +4621,7 @@ PrefabInstance:
     - target: {fileID: 2274673152755273642, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2594424133680902816, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
@@ -4725,7 +4738,7 @@ PrefabInstance:
     - target: {fileID: 5765919392330287306, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5765919392330287306, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
@@ -4735,12 +4748,12 @@ PrefabInstance:
     - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}

@@ -16,10 +16,10 @@ namespace Data.Models.Universe.Characters
             return stats[statName];
         }
 
-
         public CharacterStats(int hitPoints, int strength, int dexterity)
         {
             stats.Add(EStatType.Hp.ToString(), hitPoints);
+            stats.Add(EStatType.CurHp.ToString(), hitPoints);
             stats.Add(EStatType.Str.ToString(), strength);
             stats.Add(EStatType.Dex.ToString(), dexterity);
         }
@@ -28,6 +28,7 @@ namespace Data.Models.Universe.Characters
     public enum EStatType
     {
         Hp,
+        CurHp,
         Str,
         Dex
     }

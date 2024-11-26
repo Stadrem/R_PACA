@@ -52,7 +52,7 @@ public class BattleCinemachine : MonoBehaviour
     private IEnumerator FadeOutAndShowText(float duration)
     {
         yield return StartCoroutine(FadeOutAndIn(duration));
-
+        
         // 대사 출력
         yield return StartCoroutine(TypeText("“크아아아아아아아아아아”"));
         
@@ -65,6 +65,7 @@ public class BattleCinemachine : MonoBehaviour
     // 시네마틱 종료하기 전까지 기다리기
     private IEnumerator WaitAndEndCinema(float waitTime)
     {
+        
         yield return new WaitForSeconds(waitTime);
         EndAwakeCinema();
     }
@@ -79,9 +80,17 @@ public class BattleCinemachine : MonoBehaviour
 
         // 배틀UI 활성화는 FadeOutAndIn 끝나고 나서
         StartCoroutine(ActivateBattleUIAfterFade());
-        // 대화뷰로 전환
+        // 대화뷰로 전환, 전투 개시 팝업
         BattleManager.Instance.CineCam(false);
+        StartCoroutine(ShowStartPopUp());
+        
     }
+    private IEnumerator ShowStartPopUp()
+    {
+        yield return new WaitForSeconds(1.4f);
+        BattleManager.Instance.popBatStart.SetActive(true);
+    }
+
 
     private IEnumerator ActivateBattleUIAfterFade()
     {

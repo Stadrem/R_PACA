@@ -14,6 +14,18 @@ public class UniverseEditUIFlowManager : MonoBehaviour
     [SerializeField] private BackgroundEditUIController backgroundEditUIController;
 
     [SerializeField] private ObjectiveSelectionPopupController objectiveSelectionPopupController;
+    
+    public enum EEditUIState : byte
+    {
+        Main = 0b0,
+        CharacterEdit = 0b01,
+        BackgroundEdit = 0b10,
+        ObjectiveSelection = 0b100,
+    }
+    
+    private EEditUIState currentState = EEditUIState.Main;
+    public EEditUIState CurrentState => currentState;
+    
     private static UniverseEditUIFlowManager instance;
 
     public static UniverseEditUIFlowManager Instance
@@ -44,8 +56,6 @@ public class UniverseEditUIFlowManager : MonoBehaviour
 
     private void Start()
     {
-        
-        
         ShowCreateUniverse();
     }
 
@@ -57,6 +67,8 @@ public class UniverseEditUIFlowManager : MonoBehaviour
             backgroundEditUIController.gameObject.SetActive(false);
         objectiveSelectionPopupController.Hide(); 
         createUniverseController.gameObject.SetActive(true);
+        
+        // currentState = 0b100
     }
 
     public void ShowCharactersEdit()
