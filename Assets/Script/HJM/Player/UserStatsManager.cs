@@ -1,4 +1,5 @@
 ﻿using Data.Models.Universe.Characters;
+using System;
 using TMPro;
 using UnityEngine;
 using UniversePlay;
@@ -26,6 +27,13 @@ public class UserStatsManager : MonoBehaviour
         healthInput.onEndEdit.AddListener(OnHealthInputEnd);
         strengthInput.onEndEdit.AddListener(OnStrengthInputEnd);
         dexterityInput.onEndEdit.AddListener(OnDexterityInputEnd);
+
+        StartCoroutine(
+    ViewModel.UpdateStatByUserCode(
+        UserCodeMgr.Instance.UserCode,
+        new CharacterStats(Convert.ToInt32(healthInput.text), Convert.ToInt32(strengthInput.text), Convert.ToInt32(dexterityInput.text))
+    )
+);
     }
 
     // Health 입력이 끝났을 때 호출되는 함수

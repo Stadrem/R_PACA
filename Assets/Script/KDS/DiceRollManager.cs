@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models.Universe.Dice;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -349,6 +350,8 @@ public class DiceRollManager : MonoBehaviour
         }
         else
         {
+            diceResult = 0;
+
             success = false;
 
             //공격 완전 실패

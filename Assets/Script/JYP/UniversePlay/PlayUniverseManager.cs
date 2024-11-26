@@ -208,6 +208,8 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     public void StartPlay()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+
+        Alert.Get().Set("맵 입장중...", 2.0f);
         roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
         var codeList = ViewModel.UniversePlayers
             .Select((t) => t.UserCode)
@@ -222,6 +224,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                     if (res.IsSuccess)
                     {
                         BackgroundManager.StartFirstBackground();
+                        Alert.Get().Set("맵 입장중!", 2.0f);
                     }
                 }
             )
