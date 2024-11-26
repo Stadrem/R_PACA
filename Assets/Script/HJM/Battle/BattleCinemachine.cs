@@ -46,26 +46,27 @@ public class BattleCinemachine : MonoBehaviour
         cinemaUI.SetActive(true);
         MonsterDialogue.SetActive(false);
         // 몬스터 애니메이션 출력
-        BattleManager.Instance.enemyAnim.SetTrigger("Cinema01"); // 타이밍 수정해야댐
+        BattleManager.Instance.enemyAnim.SetTrigger("Cinema01");
+        SoundManager.Get().PlaySFX(14); // 몬스터 울기
     }
 
     private IEnumerator FadeOutAndShowText(float duration)
     {
         yield return StartCoroutine(FadeOutAndIn(duration));
         
+        SoundManager.Get().PlaySFX(16); // 몬스터 울기
         // 대사 출력
         yield return StartCoroutine(TypeText("“나의 불꽃이 너희를 태우리라!”"));
         
 
         // 대기 후 EndAwakeCinema 실행
-        yield return StartCoroutine(WaitAndEndCinema(2.8f));
+        yield return StartCoroutine(WaitAndEndCinema(1.2f));
     }
 
 
     // 시네마틱 종료하기 전까지 기다리기
     private IEnumerator WaitAndEndCinema(float waitTime)
     {
-        
         yield return new WaitForSeconds(waitTime);
         EndAwakeCinema();
     }
