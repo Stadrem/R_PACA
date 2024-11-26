@@ -947,6 +947,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -75
+      objectReference: {fileID: 0}
     - target: {fileID: 5504844956487331564, guid: 6767611597138ef46aee719aacfa2440,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1051,6 +1076,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_BatStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704645490952817667, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
