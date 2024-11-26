@@ -30,10 +30,16 @@ namespace UI.UniversePlay
         private RectTransform dicePanel;
 
         [SerializeField]
+        private TMP_Text guideText;
+        
+        [SerializeField]
         private float bottomHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
 
         public bool isDicePanelVisible = false;
         private float dicePanelHeight;
+        
+        private const string DiceGuideText = "<color=#95FF00>스페이스바</b></color>를 눌러\n판정을 위한 <color=#95FF00>주사위</color>를 굴려주세요!";
+        private const string BattleDiceGuideText = "<color=#95FF00>전투 판정</b></color>을 위한\n <color=#95FF00>주사위</color>가 굴러가고 있습니다!";
         
         UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
@@ -72,11 +78,13 @@ namespace UI.UniversePlay
             {
                 if (ViewModel.HUDState.HasFlag(EHUDState.Chat) && !isChatPanelVisible)
                 {
+                    guideText.text = DiceGuideText;
                     isChatPanelVisible = true;
                     AnimateIn();
                 }
                 else if (!ViewModel.HUDState.HasFlag(EHUDState.Chat) && isChatPanelVisible)
                 {
+                    guideText.text = "";
                     isChatPanelVisible = false;
                     AnimateOut();
                 }
@@ -91,6 +99,19 @@ namespace UI.UniversePlay
                     isDicePanelVisible = false;
 
                     AnimateDiceOut();
+                }
+                
+                if (ViewModel.HUDState.HasFlag(EHUDState.Battle) && !isChatPanelVisible)
+                {
+                    guideText.text = BattleDiceGuideText;
+                    isChatPanelVisible = true;
+                    AnimateIn();
+                }
+                else if (!ViewModel.HUDState.HasFlag(EHUDState.Battle) && isChatPanelVisible)
+                {
+                    guideText.text = "";
+                    isChatPanelVisible = false;
+                    AnimateOut();
                 }
             }
         }

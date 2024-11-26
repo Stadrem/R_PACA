@@ -639,7 +639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2064074794191445833
 RectTransform:
   m_ObjectHideFlags: 0
@@ -778,7 +778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3359852352536012483
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4316,7 +4316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7783776794280998504
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4356,6 +4356,7 @@ MonoBehaviour:
   chatPanel: {fileID: 3972828710168963345}
   rightHUDAnimateTime: 0.5
   dicePanel: {fileID: 2260983728208892857}
+  guideText: {fileID: 6906617718545753723}
   bottomHUDAnimateTime: 0.5
   isDicePanelVisible: 0
 --- !u!1 &9179210086321940634
@@ -4738,12 +4739,12 @@ PrefabInstance:
     - target: {fileID: 5765919392330287306, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5765919392330287306, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.000024264678
       objectReference: {fileID: 0}
     - target: {fileID: 5797795259022290781, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
@@ -4759,6 +4760,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695233436512687723, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
+        type: 3}
+      propertyPath: m_Size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7325653379211626212, guid: f764351c94cd0cf4eac0c62b0a1c93d3,
         type: 3}
