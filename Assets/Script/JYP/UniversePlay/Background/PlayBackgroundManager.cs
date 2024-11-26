@@ -51,7 +51,7 @@ public class PlayBackgroundManager : MonoBehaviourPun
     private void LoadScene(BackgroundPartInfo background)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
+        LoadingManager.Instance.StartLoading();
         Debug.Log($"LoadScene {background.Type}");
         var sceneName = "";
         switch (background.Type)
