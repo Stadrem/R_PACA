@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
@@ -35,7 +36,8 @@ namespace UniversePlay
 
         private readonly NpcSpawner spawner = new NpcSpawner();
         public bool isBlocked = false;
-
+        public Action OnStartInteractNpc;
+        public Action OnFinishInteractNpc;
         private void Start()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -83,6 +85,7 @@ namespace UniversePlay
         public void InteractNpc(int npcId)
         {
             if (isBlocked) return;
+            OnStartInteractNpc?.Invoke();
             var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
             currentInteractInGameNpc = npcInfo;
             turnSystem.InitTurn();
@@ -200,24 +203,12 @@ namespace UniversePlay
         }
 
 
-        public void ShowNpcHpBar()
-        {
-            Debug.Log($"currentInterACTnPC : {currentInteractInGameNpc.name}");
-            if (currentInteractInGameNpc.root != null)
-                currentInteractInGameNpc.root.SetActive(true);
-        }
-
-        public void HideNpcHpBar()
-        {
-            if (currentInteractInGameNpc.root != null)
-                currentInteractInGameNpc.root.SetActive(false);
-        }
-
         public void FinishConversation()
         {
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
+            OnFinishInteractNpc?.Invoke();
         }
 
 

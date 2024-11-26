@@ -49,6 +49,12 @@ public class PlayerMove : MonoBehaviourPun
 
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
+        
+        if(photonView.IsMine && PlayUniverseManager.Instance != null)
+        {
+            PlayUniverseManager.Instance.NpcManager.OnStartInteractNpc += () => { clickMovementEnabled = false;};
+            PlayUniverseManager.Instance.NpcManager.OnFinishInteractNpc += () => { clickMovementEnabled = true;};
+        }
     }
 
     void AssignInputs()
