@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2294297325269425437}
   - component: {fileID: 5131112498605642050}
   - component: {fileID: 2148252575534808583}
-  - component: {fileID: 663292911875118022}
+  - component: {fileID: 9064767171141212396}
   m_Layer: 0
   m_Name: ---BattleManager---
   m_TagString: Untagged
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlePlayers: []
---- !u!114 &663292911875118022
+--- !u!114 &9064767171141212396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -285,7 +285,7 @@ PrefabInstance:
     - target: {fileID: 1574434945160521619, guid: b755129696773a34588b71e93071e917,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2042126048960411036, guid: b755129696773a34588b71e93071e917,
         type: 3}
@@ -300,12 +300,12 @@ PrefabInstance:
     - target: {fileID: 9210841522834045747, guid: b755129696773a34588b71e93071e917,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9210841522834045747, guid: b755129696773a34588b71e93071e917,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -392,6 +392,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7127938172546852128}
     m_Modifications:
+    - target: {fileID: 3331292961404126517, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 125
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 155.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5150912775280427191, guid: 6767611597138ef46aee719aacfa2440,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -75
+      objectReference: {fileID: 0}
     - target: {fileID: 5504844956487331564, guid: 6767611597138ef46aee719aacfa2440,
         type: 3}
       propertyPath: m_Pivot.x
@@ -626,6 +641,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5561694807872593482, guid: b06fd49e46c7c6a4ab3dac2b1dfd3673,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5561694807872593482, guid: b06fd49e46c7c6a4ab3dac2b1dfd3673,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -70
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
