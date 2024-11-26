@@ -279,13 +279,22 @@ MonoBehaviour:
   nextTurnUI: {fileID: 8410176871734445461}
   currentTurnTXT: {fileID: 5529280804554119591}
   profileParent: {fileID: 0}
+  popBatStart: {fileID: 0}
+  popBatEnd: {fileID: 0}
+  turnEffectPrefab: {fileID: 0}
+  offset: 2
   enemy: {fileID: 0}
+  enemyHP: 10
+  enemyDamage: 3
   enemyAnim: {fileID: 0}
   enemyHPBar: {fileID: 3935520088519225133}
   enemyHpTXT: {fileID: 7942828985242222722}
+  targetPlayerIndex: 0
   vCam: {fileID: 0}
   vCineCam: {fileID: 0}
+  cineOffset: {x: 0, y: 0, z: 0}
   isBattle: 0
+  isWin: 0
 --- !u!114 &5131112498605642050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,6 +2016,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_Battle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574434945160521619, guid: b755129696773a34588b71e93071e917,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278470717515884690, guid: b755129696773a34588b71e93071e917,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278470717515884690, guid: b755129696773a34588b71e93071e917,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

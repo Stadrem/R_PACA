@@ -123,6 +123,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         playerBatList = GetComponent<PlayerBatList>();
         photonView.RPC("OnBattleStart", RpcTarget.All);
+        
+        
     }
 
     private void InitializePlayers()
@@ -168,6 +170,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         //GameObject gameObject = GameObject.Find("NPC_Golem(Clone)");
         //}
         PlayUniverseManager.Instance.NpcManager.isBlocked = true;
+        PlayUniverseManager.Instance.NpcManager.currentInteractInGameNpc.IsInteractable = false;
         //SetEnemy(enemy);
         playerBatList = GetComponent<PlayerBatList>();
         for (int i = 0; i < players.Count; i++)
