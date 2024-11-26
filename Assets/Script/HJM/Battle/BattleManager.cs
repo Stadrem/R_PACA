@@ -324,6 +324,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         yield return new WaitForSeconds(0.37f);
         SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
+        SoundManager.Get().PlaySFX(11); // 몬스터 데미지 효과음
         photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
@@ -333,11 +334,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC] // 주사위 공격 실패
     public IEnumerator DiceAttackFail(int damage)
     {
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("AttackFail"); // 공격실패하는 바보 애니메이션 넣기
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("AttackFail"); // 덜 강해보이는 공격 애니메이션...
         yield return new WaitForSeconds(0.37f);
-        //SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
+        SoundManager.Get().PlaySFX(10); // 몬스터 공격실패 울음소리
         //photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
-        enemyAnim.SetTrigger("Rage");
+        enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
 
@@ -487,7 +488,9 @@ public class BattleManager : MonoBehaviourPunCallbacks
 
     public void MonsterDie()
     {
-        enemyAnim.SetTrigger("Die"); // 좀 더 요란하고 길게 죽는 애니로 변경
+        enemyAnim.SetTrigger("Die");
+        SoundManager.Get().PlaySFX(12); // 몬스터 죽는 효과음 2개
+        SoundManager.Get().PlaySFX(13);
         vCineCam.gameObject.SetActive(true);
         print("몬스터 사망!. 플레이어 측 승리!");
         isWin = true;
