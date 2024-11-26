@@ -58,7 +58,7 @@ public class BattleCinemachine : MonoBehaviour
         
 
         // 대기 후 EndAwakeCinema 실행
-        yield return StartCoroutine(WaitAndEndCinema(3.5f));
+        yield return StartCoroutine(WaitAndEndCinema(2.8f));
     }
 
 
