@@ -120,6 +120,7 @@ MonoBehaviour:
   - DiceAttackNo
   - RPC_FinishLoading
   - RPC_StartLoading
+  - Pun_SetIntroText
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
