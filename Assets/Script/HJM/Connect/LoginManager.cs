@@ -105,8 +105,14 @@ public class LoginManager : MonoBehaviour
             {
                 Debug.LogError("로그인 실패: " + request.error);
                 Debug.LogError("응답 본문: " + request.downloadHandler.text);
+                Alert.Get().Set("아이디 혹은 비밀번호가 틀렸습니다.");
             }
         }
+    }
+
+    public void CoGetUserInfo()
+    {
+        StartCoroutine(GetUserInfo(UserCodeMgr.Instance.UserCode));
     }
 
     private IEnumerator GetUserInfo(int userCode)
