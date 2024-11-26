@@ -2363,7 +2363,7 @@ GameObject:
   - component: {fileID: 229696206782861016}
   - component: {fileID: 1679314124423005616}
   m_Layer: 0
-  m_Name: UniversePlayManager
+  m_Name: UniversePlayManager 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
