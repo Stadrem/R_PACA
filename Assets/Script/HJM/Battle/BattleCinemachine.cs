@@ -54,7 +54,7 @@ public class BattleCinemachine : MonoBehaviour
         yield return StartCoroutine(FadeOutAndIn(duration));
         
         // 대사 출력
-        yield return StartCoroutine(TypeText("“크아아아아아아아아아아”"));
+        yield return StartCoroutine(TypeText("“나의 불꽃이 너희를 태우리라!”"));
         
 
         // 대기 후 EndAwakeCinema 실행
