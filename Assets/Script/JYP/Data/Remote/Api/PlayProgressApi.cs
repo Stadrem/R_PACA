@@ -68,7 +68,7 @@ namespace Data.Remote.Api
             };
 
 
-            var request = new HttpInfoWithType<NpcChatResponseDto, CheckDiceReqDto>() // TODO: response check
+            var request = new HttpInfoWithType<NpcChatResponseDto, CheckDiceReqDto>()
             {
                 url = $"{BaseUrl}/dice",
                 body = reqDto,

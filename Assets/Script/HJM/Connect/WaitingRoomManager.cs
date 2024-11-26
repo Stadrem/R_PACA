@@ -28,6 +28,7 @@ public class WaitingRoomManager : MonoBehaviourPunCallbacks
             {
                 // get game manager
                 PlayUniverseManager.Create();
+                LoadingManager.Create();
             }
 
             CreatePlayerAvatar();

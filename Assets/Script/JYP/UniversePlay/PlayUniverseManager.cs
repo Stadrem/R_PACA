@@ -125,19 +125,22 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     private void DisconnectToServer()
     {
+        GameMasterServerEventManager.Instance.Disconnect();
+
         StartCoroutine(
             PlayRoomApi.FinishRoom(
                 roomNumber,
                 (res) =>
                 {
                     PhotonNetwork.LeaveRoom();
-                    PhotonNetwork.LoadLevel("LobbyScene");
+                    SceneManager.LoadScene("LobbyScene");
                     Dispose();
+                    GameMasterServerEventManager.Instance.DeleteInstance();
                 }
             )
         );
 
-        GameMasterServerEventManager.Instance.Disconnect();
+        
     }
 
 
@@ -209,7 +212,8 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        Alert.Get().Set("맵 입장중...", 2.0f);
+        // Alert.Get().Set("맵 입장중...", 2.0f);
+        LoadingManager.Instance.StartLoading();
         roomNumber = PhotonNetwork.CurrentRoom.Name.GetHashCode();
         var codeList = ViewModel.UniversePlayers
             .Select((t) => t.UserCode)
@@ -224,6 +228,10 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
                     if (res.IsSuccess)
                     {
                         BackgroundManager.StartFirstBackground();
+                    }
+                    else
+                    {
+                        LoadingManager.Instance.FinishLoading();
                     }
                 }
             )
@@ -275,10 +283,15 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
         Destroy(gameObject);
     }
 
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
     {
         Debug.Log($"{SceneManager.GetActiveScene().name} / PlayBackgroundManager OnSceneLoaded");
-        if (arg0.name == "WaitingScene")
+        if(scene.name == "LobbyScene")
+        {
+            return;
+        }
+        else
+        if (scene.name == "WaitingScene")
         {
             OnWaitingSceneLoaded();
         }
