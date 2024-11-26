@@ -417,10 +417,10 @@ public class DiceRollManager : MonoBehaviour
             }
             else
             {
-                diceNumberText = $"-{plusDice}";
+                diceNumberText = plusDice.ToString();
             }
             plusText.text = "주사위: " + dicePick + "<size=40><color=red>" + diceNumberText + "</color></size>";
-
+            
             //보정 값 반환!
             return plusDice;
         }
