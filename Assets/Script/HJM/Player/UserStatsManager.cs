@@ -12,6 +12,8 @@ public class UserStatsManager : MonoBehaviour
     public TMP_InputField strengthInput;
     public TMP_InputField dexterityInput;
 
+    int MaxStatTotal = 30;
+
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
     void Start()
@@ -31,6 +33,16 @@ public class UserStatsManager : MonoBehaviour
     {
         if (int.TryParse(input, out int health))
         {
+            Max30.Get().notInput = false;
+            int newTotal = health + UserStats.userStrength + UserStats.userDexterity;
+            if (newTotal > MaxStatTotal)
+            {
+                Alert.Get().Set($"총합이 {MaxStatTotal}을 초과할 수 없습니다.");
+                healthInput.text = UserStats.userHealth.ToString(); // 이전 값 복원
+                Max30.Get().maxOver = true;
+                return;
+            }
+            Max30.Get().maxOver = false;
             UserStats.userHealth = health;
             StartCoroutine(
                 ViewModel.UpdateStatByUserCode(
@@ -50,6 +62,16 @@ public class UserStatsManager : MonoBehaviour
     {
         if (int.TryParse(input, out int strength))
         {
+            Max30.Get().notInput = false;
+            int newTotal = UserStats.userHealth + strength + UserStats.userDexterity;
+            if (newTotal > MaxStatTotal)
+            {
+                Alert.Get().Set($"총합이 {MaxStatTotal}을 초과할 수 없습니다.");
+                strengthInput.text = UserStats.userStrength.ToString(); // 이전 값 복원
+                Max30.Get().maxOver = true;
+                return;
+            }
+            Max30.Get().maxOver = false;
             UserStats.userStrength = strength;
             StartCoroutine(
                 ViewModel.UpdateStatByUserCode(
@@ -69,6 +91,16 @@ public class UserStatsManager : MonoBehaviour
     {
         if (int.TryParse(input, out int dexterity))
         {
+            Max30.Get().notInput = false;
+            int newTotal = UserStats.userHealth + UserStats.userStrength + dexterity;
+            if (newTotal > MaxStatTotal)
+            {
+                Alert.Get().Set($"총합이 {MaxStatTotal}을 초과할 수 없습니다.");
+                dexterityInput.text = UserStats.userDexterity.ToString(); // 이전 값 복원
+                Max30.Get().maxOver = true;
+                return;
+            }
+            Max30.Get().maxOver = false;
             UserStats.userDexterity = dexterity;
             StartCoroutine(
                 ViewModel.UpdateStatByUserCode(
