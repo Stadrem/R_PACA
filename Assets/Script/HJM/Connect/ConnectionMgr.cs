@@ -28,7 +28,6 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
 
     public void JoinLobby()
     {
-        Alert.Get().Set("환영합니다.");
         // 닉네임 설정
         if(UserCodeMgr.Instance != null)
         {
@@ -38,7 +37,6 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = "모험가";
         }
-
         // 기본 Lobby 입장
         PhotonNetwork.JoinLobby();
     }
@@ -46,11 +44,11 @@ public class ConnectionMgr : MonoBehaviourPunCallbacks
     // 로비 입장이 성공하면 호출되는 함수
     public override void OnJoinedLobby()
     {
+        Alert.Get().Set("RPACA에 오신걸 환영합니다.");
+
         base.OnJoinedLobby();
         Debug.Log("로비서버 입장 완료했습니다.");
         PhotonNetwork.LoadLevel("LobbyScene");
         //JoinOrCreatLobbyRoom();
-
     }
-
 }
