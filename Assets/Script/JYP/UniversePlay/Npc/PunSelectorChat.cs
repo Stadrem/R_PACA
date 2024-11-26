@@ -185,6 +185,7 @@ namespace UniversePlay
                 PlayProgressApi.CheckDice(
                     PlayUniverseManager.Instance.roomNumber,
                     new DiceResult(
+                        UserCodeMgr.Instance.UserCode,
                         firstDiceNumber: d1,
                         secondDiceNumber: d2
                     ),

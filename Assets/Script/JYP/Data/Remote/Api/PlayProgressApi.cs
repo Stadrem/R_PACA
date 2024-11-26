@@ -62,9 +62,10 @@ namespace Data.Remote.Api
         {
             var reqDto = new CheckDiceReqDto()
             {
-                roomNum = roomNumber,
-                diceFst = diceResult.FirstDiceNumber,
-                diceSnd = diceResult.SecondDiceNumber,
+                roomNumber = roomNumber,
+                diceResult1 = diceResult.FirstDiceNumber,
+                diceResult2 = diceResult.SecondDiceNumber,
+                userCode = diceResult.UserCode,
             };
 
 
@@ -97,8 +98,7 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
-        
-        
+
 
         public static IEnumerator SendBattleResult(BattleResult battleResult, Action<ApiResult> onComplete)
         {
