@@ -156,7 +156,7 @@ public class EndingUiManger : MonoBehaviourPunCallbacks
                     {
                         PhotonNetwork.LeaveRoom();
                         PhotonNetwork.LoadLevel("LobbyScene");
-                        Destroy(gameObject);
+                        Destroy(gameObject, 0.5f);
                     }
                 )
             );
