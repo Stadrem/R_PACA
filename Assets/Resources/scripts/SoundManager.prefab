@@ -185,11 +185,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1a88c2637d675be4683e56eedeb57d33, type: 3}
   - {fileID: 8300000, guid: 8af108750e2ce3142928c945ec74d999, type: 3}
   - {fileID: 8300000, guid: 7c6c9e04305201141aff5a5029a8943b, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 92d4334b15131f94cb7d8d36648346a0, type: 3}
+  - {fileID: 8300000, guid: c69accc228ff52449a3811159aada2d1, type: 3}
+  - {fileID: 8300000, guid: 2b603dff6e69b2b47b97ec52356aae06, type: 3}
+  - {fileID: 8300000, guid: e2671e853f482c54bb2c5709fb60918e, type: 3}
+  - {fileID: 8300000, guid: 4ff2cd7e27d300840967aabc540e9213, type: 3}
+  - {fileID: 8300000, guid: aa2f192199e7f634aa879d94fd6e6270, type: 3}
+  - {fileID: 8300000, guid: 39d048fe5ac0fe24489d885125296aa0, type: 3}
   bgmClips:
   - {fileID: 8300000, guid: a72be6dbb33ae1d48b44895f4943bee6, type: 3}
   - {fileID: 8300000, guid: 498e30a3f67c1f84f87ddc00a18ed0ad, type: 3}
