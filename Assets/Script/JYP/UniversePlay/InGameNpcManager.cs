@@ -98,7 +98,7 @@ namespace UniversePlay
                         PlayUniverseManager.Instance.roomNumber,
                         currentBackgroundName,
                         currentInteractInGameNpc.NpcName,
-                        (_) => { }
+                        (npcFirstChat) => { photonView.RPC(nameof(Pun_AddChat), RpcTarget.All, npcInfo.NpcName, npcFirstChat.value); }
                     )
                 );
             }
@@ -106,6 +106,11 @@ namespace UniversePlay
             StartCoroutine(TurnBasedConversation());
         }
 
+        [PunRPC]
+        private void Pun_AddChat(string npcName, string content)
+        {
+            NpcChatUIManager.AddChatBubble(npcName, content, false);
+        }
 
         public void OnSubmitChatClicked()
         {

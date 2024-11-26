@@ -101,8 +101,7 @@ namespace UI.UniversePlay
 
                     AnimateDiceOut();
                 }
-                
-                if (ViewModel.HUDState.HasFlag(EHUDState.Battle) && !isDicePanelVisible)
+                else if (ViewModel.HUDState.HasFlag(EHUDState.Battle) && !isDicePanelVisible)
                 {
                     guideText.text = BattleDiceGuideText;
                     isDicePanelVisible = true;
