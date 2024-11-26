@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,21 +18,48 @@ namespace UI.UniversePlay
 
         private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
 
-
         private bool isIntroShowing = false;
+        private Action registeredAction;
 
         private void Start()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            Debug.Log("IntroUIController Start");
             rectTransform = GetComponent<RectTransform>();
+            if(ViewModel.IntroMessage != null)
+            {
+                SetIntroText(ViewModel.IntroMessage);
+            }
+            else
+            {
+                ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
+            }
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
+        private void OnDestroy()
         {
-            if (scene.name != "WaitingScene" && !string.IsNullOrEmpty(ViewModel.IntroMessage) && !isIntroShowing)
+            // ViewModel.PropertyChanged -= ViewModelOnPropertyChanged;
+        }
+
+        private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ViewModel.IntroMessage)
+                && !string.IsNullOrEmpty(ViewModel.IntroMessage)
+                && !isIntroShowing)
             {
                 isIntroShowing = true;
-                SetIntroText(ViewModel.IntroMessage);
+                if (SceneManager.GetActiveScene()
+                        .name
+                    == "WaitingScene")
+                {
+                    Debug.Log($"Show intro text: {ViewModel.IntroMessage}");
+                    SetIntroText(ViewModel.IntroMessage);
+                }
+
+                else if (registeredAction == null)
+                {
+                    Debug.Log($"Register action to show intro text: {ViewModel.IntroMessage}");
+                    registeredAction = () => SetIntroText(ViewModel.IntroMessage);
+                }
             }
         }
 
@@ -66,6 +94,7 @@ namespace UI.UniversePlay
                 yield return null;
                 ;
             }
+
             Destroy(gameObject, 0.1f);
         }
     }

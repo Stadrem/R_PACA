@@ -22,7 +22,7 @@ namespace UI.UniversePlay
         [SerializeField]
         private float rightHUDAnimateTime = 0.5f; // 애니메이션 지속 시간
 
-        private bool isChatPanelVisible = true; // 현재 패널 상태 (보이는지 여부)
+        public bool isChatPanelVisible = true; // 현재 패널 상태 (보이는지 여부)
         private float chatPanelWidth;
         
         [Header("아랫쪽 HUD")]
@@ -74,6 +74,7 @@ namespace UI.UniversePlay
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            Debug.Log($"ViewModel Property Changed Called");
             if (e.PropertyName == nameof(ViewModel.HUDState))
             {
                 if (ViewModel.HUDState.HasFlag(EHUDState.Chat) && !isChatPanelVisible)
@@ -101,17 +102,17 @@ namespace UI.UniversePlay
                     AnimateDiceOut();
                 }
                 
-                if (ViewModel.HUDState.HasFlag(EHUDState.Battle) && !isChatPanelVisible)
+                if (ViewModel.HUDState.HasFlag(EHUDState.Battle) && !isDicePanelVisible)
                 {
                     guideText.text = BattleDiceGuideText;
-                    isChatPanelVisible = true;
-                    AnimateIn();
+                    isDicePanelVisible = true;
+                    AnimateDiceIn();
                 }
-                else if (!ViewModel.HUDState.HasFlag(EHUDState.Battle) && isChatPanelVisible)
+                else if (!ViewModel.HUDState.HasFlag(EHUDState.Battle) && isDicePanelVisible)
                 {
                     guideText.text = "";
-                    isChatPanelVisible = false;
-                    AnimateOut();
+                    isDicePanelVisible = false;
+                    AnimateDiceOut();
                 }
             }
         }
