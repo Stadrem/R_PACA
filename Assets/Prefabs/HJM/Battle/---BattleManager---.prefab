@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2294297325269425437}
   - component: {fileID: 5131112498605642050}
   - component: {fileID: 2148252575534808583}
-  - component: {fileID: 9064767171141212396}
+  - component: {fileID: 7918706297716155990}
   m_Layer: 0
   m_Name: ---BattleManager---
   m_TagString: Untagged
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlePlayers: []
---- !u!114 &9064767171141212396
+--- !u!114 &7918706297716155990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

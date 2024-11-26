@@ -43,7 +43,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [Header("전투위치")]
     public GameObject turnEffectPrefab;
 
-    public float offset = 2.0f;
+    public float offset = 3.0f;
 
     [Header("적 NPC")]
     public GameObject enemy;
@@ -123,8 +123,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     {
         playerBatList = GetComponent<PlayerBatList>();
         photonView.RPC("OnBattleStart", RpcTarget.All);
-        
-        
+
+
     }
 
     private void InitializePlayers()
@@ -239,22 +239,19 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             Vector3 pos;
             Quaternion rotation;
-            bool isOverlapping;
 
+            float randomX = Random.Range(2.0f, 8.0f);
+            float randomZ = Random.Range(3.0f, 5.0f);
+            pos = enemyPos + new Vector3(randomX, 0, randomZ);
 
-
-                float randomX = Random.Range(2.0f, 3.0f);
-                float randomZ = Random.Range(3.0f, 4.0f);
-                pos = enemyPos + new Vector3(randomX, 0, randomZ);
-
-                // 기존 배틀 포지션들과 충돌하는지 확인
-                foreach (Transform existingTransform in battlePos)
+            // 기존 배틀 포지션들과 충돌하는지 확인
+            foreach (Transform existingTransform in battlePos)
+            {
+                if (Vector3.Distance(pos, existingTransform.position) < offset)
                 {
-                    if (Vector3.Distance(pos, existingTransform.position) < offset)
-                    {
-                        break;
-                    }
+                    break;
                 }
+            }
 
             // 플레이어가 몬스터를 바라보도록
             Vector3 directionToEnemy = (enemyPos - pos).normalized;
@@ -324,23 +321,35 @@ public class BattleManager : MonoBehaviourPunCallbacks
         playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack");
         yield return new WaitForSeconds(0.37f);
         SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
-        SoundManager.Get().PlaySFX(11); // 몬스터 데미지 효과음
+        SoundManager.Get().PlaySFX(17); // 몬스터 데미지 효과음
         photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
 
 
-    [PunRPC] // 주사위 공격 실패
+    [PunRPC] // 주사위 공격 실패(약화된 공격)
     public IEnumerator DiceAttackFail(int damage)
     {
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("AttackFail"); // 덜 강해보이는 공격 애니메이션...
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack"); // 덜 강해보이는 공격 애니메이션...
         yield return new WaitForSeconds(0.37f);
-        SoundManager.Get().PlaySFX(10); // 몬스터 공격실패 울음소리
-        //photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
+        SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
+        SoundManager.Get().PlaySFX(11); // 몬스터 데미지 효과음 다른거
+        photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
         enemyAnim.SetTrigger("Damage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
+
+    [PunRPC] // 주사위 공격 완전 실패(데미지 0)
+    public IEnumerator DiceAttackNo(int damage)
+    {
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("AttackFail"); // 공격 안하는 애니메이션
+        yield return new WaitForSeconds(0.27f);
+        SoundManager.Get().PlaySFX(10); // 몬스터 공격실패 울음소리
+        enemyAnim.SetTrigger("Rage");
+        UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
+    }
+
 
     [PunRPC] // 몬스터피격 이펙트 생성
     public void MonsterDamageEffect()
