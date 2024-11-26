@@ -109,6 +109,11 @@ public class LoginManager : MonoBehaviour
         }
     }
 
+    public void CoGetUserInfo()
+    {
+        StartCoroutine(GetUserInfo(UserCodeMgr.Instance.UserCode));
+    }
+
     private IEnumerator GetUserInfo(int userCode)
     {
         string url = "http://125.132.216.190:8765/user/detail?userCode=" + userCode;

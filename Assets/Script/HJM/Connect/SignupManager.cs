@@ -15,8 +15,11 @@ public class SignupManager : AvatarHTTPManager
     // 회원가입 성공 안내 UI
     public GameObject signupSuccessUI;
 
+    LoginManager login;
+
     private void Start()
     {
+        login = GetComponent<LoginManager>();
     }
 
     // 회원가입 버튼 클릭 시 호출되는 함수
@@ -99,6 +102,8 @@ public class SignupManager : AvatarHTTPManager
                 StartPostAvatarInfo(response.userCode);
 
                 UserCodeMgr.Instance.UserCode = response.userCode;
+
+                login.CoGetUserInfo();
 
                 // 1초 대기 후 AvatarCreate 씬으로 이동
                 yield return new WaitForSeconds(1f);
