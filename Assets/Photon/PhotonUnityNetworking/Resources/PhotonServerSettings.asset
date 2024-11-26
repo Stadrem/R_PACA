@@ -118,6 +118,8 @@ MonoBehaviour:
   - Pun_OnStartChat
   - DiceAttackFailAll
   - DiceAttackNo
+  - RPC_FinishLoading
+  - RPC_StartLoading
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
