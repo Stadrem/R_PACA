@@ -16,7 +16,7 @@ namespace Data.Remote.Api
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/progress";
 
         public static IEnumerator StartNpcTalk(int roomNumber, string backgroundName, string npcName,
-            Action<ApiResult> onComplete)
+            Action<ApiResult<string>> onComplete)
         {
             var reqDto = new StartTalkReqDto()
             {
@@ -25,12 +25,12 @@ namespace Data.Remote.Api
                 npcName = npcName,
             };
 
-            var request = new HttpInfoWithType<string, StartTalkReqDto>()
+            var request = new HttpInfoWithType<StartTalkResDto, StartTalkReqDto>()
             {
                 url = $"{BaseUrl}/start",
                 body = reqDto,
-                onComplete = (result) => { onComplete(ApiResult.Success()); },
-                onError = (error) => onComplete(ApiResult.Fail(error)),
+                onComplete = (result) => { onComplete(ApiResult<string>.Success(result.npcFirstChat)); },
+                onError = (error) => onComplete(ApiResult<string>.Fail(error)),
             };
 
             yield return HttpManager.GetInstance().Post(request);

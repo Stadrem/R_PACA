@@ -7,5 +7,6 @@ namespace Data.Models.Universe
     {
         Chat = 0b1,
         Dice = 0b10,
+        Battle = 0b100,
     }
 }

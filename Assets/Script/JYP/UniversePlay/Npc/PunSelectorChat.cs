@@ -158,10 +158,17 @@ namespace UniversePlay
             {
                 stat = ViewModel.CurrentPlayer.Stats.GetStat(EStatType.Str);
             }
+            else if(reaction.BonusMessage == "dex")
+            {
+                stat = ViewModel.CurrentPlayer.Stats.GetStat(EStatType.Dex);
+            }
             else
             {
                 stat = 0;
             }
+            
+            Debug.Log($"Roll Dice with {stat}");
+            
 
             DiceRollManager.Get().onDiceRollFinished = () =>
             {
