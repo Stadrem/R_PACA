@@ -406,7 +406,20 @@ public class DiceRollManager : MonoBehaviour
                 plusDice = 2;
             }
 
-            plusText.text = "주사위: " + dicePick + "<size=40><color=red>+" + plusDice + "</color></size>";
+            string diceNumberText;
+            if (plusDice > 0)
+            {
+                diceNumberText = $"+{plusDice}";
+            }
+            else if (plusDice == 0)
+            {
+                diceNumberText = "0";
+            }
+            else
+            {
+                diceNumberText = $"-{plusDice}";
+            }
+            plusText.text = "주사위: " + dicePick + "<size=40><color=red>" + diceNumberText + "</color></size>";
 
             //보정 값 반환!
             return plusDice;
