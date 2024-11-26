@@ -319,10 +319,10 @@ Material:
     - Vector1_DD3E7449: 0.01
     - Vector1_FDD381BC: 0.4492924
     - _1st2nd_Shades_Feather: 0.0001
-    - _1st_ShadeColor_Feather: 0.046
-    - _1st_ShadeColor_Step: 0.487
+    - _1st_ShadeColor_Feather: 0.2
+    - _1st_ShadeColor_Step: 0.6
     - _2nd_ShadeColor_Feather: 0.0001
-    - _2nd_ShadeColor_Step: 0
+    - _2nd_ShadeColor_Step: 0.1
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ARSampler_AlphaOn: 0
@@ -352,8 +352,8 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.487
-    - _BaseShade_Feather: 0.046
+    - _BaseColor_Step: 0.6
+    - _BaseShade_Feather: 0.2
     - _Base_Speed: 0
     - _Blend: 0
     - _BlendMode: 0
@@ -517,7 +517,7 @@ Material:
     - _SecondShadeOverridden: 0
     - _SecondShadeVisible: 1
     - _Set_SystemShadowsToBase: 1
-    - _ShadeColor_Step: 0
+    - _ShadeColor_Step: 0.1
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -580,7 +580,7 @@ Material:
     - _Unlit_Intensity: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Use_1stAs2nd: 0
+    - _Use_1stAs2nd: 1
     - _Use_BaseAs1st: 1
     - _WorkflowMode: 1
     - _ZOverDrawMode: 0
@@ -602,7 +602,7 @@ Material:
     - Color_87E01BB0: {r: 1, g: 1, b: 1, a: 0}
     - Color_E8A37F1E: {r: 1, g: 1, b: 1, a: 0}
     - _1st_ShadeColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
-    - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _2nd_ShadeColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}

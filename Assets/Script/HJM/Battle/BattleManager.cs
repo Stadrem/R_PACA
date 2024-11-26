@@ -333,11 +333,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [PunRPC] // 주사위 공격 실패
     public IEnumerator DiceAttackFail(int damage)
     {
-        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("Attack"); // 공격실패하는 바보 애니메이션 넣기
+        playerAnims[TurnCheckSystem.Instance.currentTurnIndex].SetTrigger("AttackFail"); // 공격실패하는 바보 애니메이션 넣기
         yield return new WaitForSeconds(0.37f);
-        SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
-        photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
-        enemyAnim.SetTrigger("Damage");
+        //SoundManager.Get().PlaySFX(5); // 플레이어 공격효과음
+        //photonView.RPC("MonsterDamageEffect", RpcTarget.All); // 공격 이펙트(몬스터에 타격이펙트)
+        enemyAnim.SetTrigger("Rage");
         UpdateEnemyHealth(damage); // 몬스터 체력 업데이트
     }
 
