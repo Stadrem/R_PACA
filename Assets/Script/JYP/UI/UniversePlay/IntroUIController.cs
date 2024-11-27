@@ -23,11 +23,10 @@ namespace UI.UniversePlay
         private void Start()
         {
             
-            Debug.Log("IntroUIController Start");
             rectTransform = GetComponent<RectTransform>();
             if(ViewModel.IntroMessage != null)
             {
-                photonView.RPC(nameof(Pun_SetIntroText), RpcTarget.All, ViewModel.IntroMessage);
+                PlayUniverseManager.Instance.SetIntro(ViewModel.IntroMessage);
             }
             else
             {
@@ -35,12 +34,8 @@ namespace UI.UniversePlay
             }
         }
         
-        [PunRPC]
-        private void Pun_SetIntroText(string text)
-        {
-            SetIntroText(text);
-        }
 
+        
         public void SetIntroText(string text)
         {
             StartCoroutine(AnimateIntroText(text));
