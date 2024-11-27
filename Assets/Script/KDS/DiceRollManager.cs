@@ -324,7 +324,7 @@ public class DiceRollManager : MonoBehaviour
             success = false;
 
             //50% 피해
-            titleText.text = "<color=blue>공격력 " + diceResult + "..</color>";
+            titleText.text = "<color=green>공격력 " + diceResult + "..</color>";
         }
         else if (sumDice >= middleAttackAbove && sumDice <= middleAttackBelow)
         {
@@ -355,7 +355,7 @@ public class DiceRollManager : MonoBehaviour
             success = false;
 
             //공격 완전 실패
-            titleText.text = "<size=55><color=blue>" + "공격 실패..." + "!</color></size>";
+            titleText.text = "<size=55><color=white>" + "공격 실패..." + "!</color></size>";
 
             //손이 미끄러진 업적
             AchievementManager.Get().UnlockAchievement(6);
