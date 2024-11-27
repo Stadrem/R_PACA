@@ -59,6 +59,8 @@ public class BattleManager : MonoBehaviourPunCallbacks
     [Header("카메라")]
     public CinemachineVirtualCamera vCam;
     public CinemachineVirtualCamera vCineCam;
+    public CinemachineVirtualCamera vBattleCam;
+    public Transform enemyCamTarget;
     public Vector3 cineOffset;
 
     public bool isBattle = false;
@@ -500,6 +502,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         enemyAnim.SetTrigger("Die");
         SoundManager.Get().PlaySFX(12); // 몬스터 죽는 효과음 2개
         SoundManager.Get().PlaySFX(13);
+        vBattleCam.gameObject.SetActive(false);
         vCineCam.gameObject.SetActive(true);
         print("몬스터 사망!. 플레이어 측 승리!");
         isWin = true;
@@ -522,7 +525,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         this.enemy = enemy;
         enemyAnim = anim;
         vCam = enemy.GetComponentInChildren<InGameNpc>().ncVcam;
-        TurnCheckSystem.Instance.vCam = vCam;
+        TurnCheckSystem.Instance.vBattleCam = vBattleCam;
     }
 
     void EnemyHPStart(int hp)
@@ -539,11 +542,11 @@ public class BattleManager : MonoBehaviourPunCallbacks
         {
             print("대화 카메라 끄고, 시네마틱 카메라 켰어요");
             vCam.gameObject.SetActive(false);
-            Transform target = FindDeepChild(enemy.transform, "Bn_1");
-            if (target != null)
+            enemyCamTarget = FindDeepChild(enemy.transform, "Bn_1");
+            if (enemyCamTarget != null)
             {
-                vCineCam.LookAt = target;
-                print("vCineCam.LookAt 설정 완료 " + target.name);
+                vCineCam.LookAt = enemyCamTarget;
+                print("vCineCam.LookAt 설정 완료 " + enemyCamTarget.name);
             }
             else
             {
@@ -559,6 +562,12 @@ public class BattleManager : MonoBehaviourPunCallbacks
             vCam.gameObject.GetComponent<CinemachineVirtualCamera>().enabled = true;
             vCam.gameObject.SetActive(true);
         }
+    }
+
+    public void BattleCam(Transform target)
+    {
+        vBattleCam.gameObject.SetActive(true);
+        vBattleCam.LookAt = target;
     }
 
     Transform FindDeepChild(Transform parent, string childName)

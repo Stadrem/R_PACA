@@ -112,7 +112,7 @@ namespace UniversePlay
         /// </summary>
         /// <param name="universeId">불러올 데이터의 키값, scenarioId</param>
         /// <returns></returns>
-        public IEnumerator LoadUniverseData(int universeId) //todo 아직 더미 데이터
+        public IEnumerator LoadUniverseData(int universeId) 
         {
             yield return ScenarioApi.GetScenario(
                 universeId,

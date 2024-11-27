@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Text;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -23,11 +24,10 @@ namespace UI.UniversePlay
         private void Start()
         {
             
-            Debug.Log("IntroUIController Start");
             rectTransform = GetComponent<RectTransform>();
             if(ViewModel.IntroMessage != null)
             {
-                photonView.RPC(nameof(Pun_SetIntroText), RpcTarget.All, ViewModel.IntroMessage);
+                PlayUniverseManager.Instance.SetIntro(ViewModel.IntroMessage);
             }
             else
             {
@@ -35,12 +35,8 @@ namespace UI.UniversePlay
             }
         }
         
-        [PunRPC]
-        private void Pun_SetIntroText(string text)
-        {
-            SetIntroText(text);
-        }
 
+        
         public void SetIntroText(string text)
         {
             StartCoroutine(AnimateIntroText(text));
@@ -52,6 +48,18 @@ namespace UI.UniversePlay
             for (int i = 0; i < text.Length; i++)
             {
                 introText.text += text[i];
+                print("real h: "+introText.rectTransform.rect.height);
+                print("pref h: " +introText.preferredHeight);
+                if(introText.preferredHeight > rectTransform.rect.height && introText.text.Length > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(introText.text);
+                    while (introText.preferredHeight > rectTransform.rect.height && introText.text.Length > 0)
+                    {
+                        print("remove text");
+                        sb.Remove(0, 1);
+                    }
+                    introText.text = sb.ToString();
+                }
                 yield return new WaitForSeconds(0.06f);
             }
         

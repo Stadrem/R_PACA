@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
@@ -86,13 +86,13 @@ public class LoadingManager : MonoBehaviourPun
     {
         while (isLoading)
         {
-            loadingText.text = "로딩 중";
+            loadingText.text = "새로운 모험을 불러오는 중";
             yield return new WaitForSeconds(0.3f);
-            loadingText.text = "로딩 중.";
+            loadingText.text = "새로운 모험을 불러오는 중.";
             yield return new WaitForSeconds(0.3f);
-            loadingText.text = "로딩 중..";
+            loadingText.text = "새로운 모험을 불러오는 중..";
             yield return new WaitForSeconds(0.3f);
-            loadingText.text = "로딩 중...";
+            loadingText.text = "새로운 모험을 불러오는 중...";
             yield return new WaitForSeconds(0.3f);
         }
     }

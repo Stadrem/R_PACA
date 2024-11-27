@@ -121,6 +121,7 @@ MonoBehaviour:
   - RPC_FinishLoading
   - RPC_StartLoading
   - Pun_SetIntroText
+  - Pun_SetIntro
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

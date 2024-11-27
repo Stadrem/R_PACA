@@ -28,17 +28,15 @@ namespace Script.JYP.UniversePlay
         {
             if (Max30.Get().notInput)
             {
-                Alert.Get().Set("능력치를 변경하세요.");
+                Alert.Get().Set("스탯을 변경하세요.");
                 return;
             }
 
             if (Max30.Get().maxOver)
             {
-                Alert.Get().Set("능력치가 초과되었습니다.");
+                Alert.Get().Set("스탯 최대값이 초과되었습니다.");
                 return;
             }
-
-            Alert.Get().Set("시작중입니다...", 8.0f);
             PlayUniverseManager.Instance.StartPlay();
         }
 

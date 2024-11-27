@@ -13,13 +13,13 @@ public class AvatarDragRotate : MonoBehaviour
     private void Update()
     {
         // 마우스 클릭 시작 시점
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EscUiManager.Get().escObject.activeSelf)
         {
             // 마우스 X 위치 저장
             lastMouseX = Input.mousePosition.x; 
         }
         // 마우스 드래그 중
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0) && !EscUiManager.Get().escObject.activeSelf)
         {
             // 현재 마우스 X 위치
             float currentMouseX = Input.mousePosition.x;

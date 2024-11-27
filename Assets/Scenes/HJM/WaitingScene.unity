@@ -2409,7 +2409,7 @@ PrefabInstance:
     - target: {fileID: 8276980377187414044, guid: 83c1913b108283e44bc1583b71199f89,
         type: 3}
       propertyPath: m_Intensity
-      value: 1.1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8276980377187414044, guid: 83c1913b108283e44bc1583b71199f89,
         type: 3}
@@ -16998,6 +16998,9 @@ MonoBehaviour:
   healthInput: {fileID: 501416612}
   strengthInput: {fileID: 651022937}
   dexterityInput: {fileID: 1213191738}
+  baseHelath: 20
+  baseStrength: 1
+  baseDex: 1
 --- !u!114 &8657476816189269796
 MonoBehaviour:
   m_ObjectHideFlags: 0

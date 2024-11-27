@@ -14,6 +14,7 @@ public class AchievementManager : MonoBehaviour
 
     public static AchievementManager Get()
     {
+        Debug.Log("칭호 팝업!");
         if (_isQuitting)
         {
             return null; // 파괴된 상태에서 호출 방지
