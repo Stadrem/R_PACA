@@ -38,6 +38,8 @@ namespace UniversePlay
         public bool isBlocked = false;
         public Action OnStartInteractNpc;
         public Action OnFinishInteractNpc;
+        private static readonly int IsTrigger = Animator.StringToHash("isTrigger");
+
         private void Start()
         {
             
@@ -100,6 +102,7 @@ namespace UniversePlay
             OnStartInteractNpc?.Invoke();
             var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
             currentInteractInGameNpc = npcInfo;
+            currentInteractInGameNpc.GetComponentInChildren<Animator>().SetBool(IsTrigger, true);
             turnSystem.InitTurn();
             if (PhotonNetwork.IsMasterClient)
             {
@@ -239,9 +242,9 @@ namespace UniversePlay
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
+            currentInteractInGameNpc.GetComponentInChildren<Animator>().SetBool(IsTrigger, false);
             OnFinishInteractNpc?.Invoke();
         }
-
 
         public void AddNpc(InGameNpc inGameNpc)
         {
