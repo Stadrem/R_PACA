@@ -54,6 +54,10 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
 
 
     }
+    private void Update()
+    {
+        defenseBtn.interactable = false;
+    }
 
     // 새로운 플레이어가 들어왔을 때 totalPlayers 갱신 함수 덮어쓰기
     public override void OnPlayerEnteredRoom(Player newPlayer)
