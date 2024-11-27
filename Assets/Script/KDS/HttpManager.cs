@@ -201,7 +201,7 @@ public class HttpManager : MonoBehaviour
             info.url = url.ToString();
         }
 
-
+        Debug.Log($"GET: {info.url}");
         using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
         {
             if (info.acceptContentType != null)

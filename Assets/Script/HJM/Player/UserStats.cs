@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using Data.Models.Universe.Characters;
+using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
+using UniversePlay;
 using ViewModels;
 
 public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
@@ -15,6 +18,7 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
     public int userStrength; // 힘
     public int userDexterity; // 손재주
 
+
     private void Awake()
     {
         Instance = this;
@@ -25,11 +29,31 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         // 자신을 battlePlayers 리스트에 등록하기 위해 RPC 호출
         if (PhotonNetwork.IsConnected)
         {
-            RegisterPlayerStats();
-            
-                this.gameObject.name = "Player_Avatar" + photonView.Owner.NickName;
-            
+            StartCoroutine(CoGetStat());
+
+            gameObject.name = "Player_Avatar_" + photonView.Owner.NickName;
         }
+    }
+
+    private IEnumerator CoGetStat()
+    {
+        
+        if (!PhotonNetwork.IsConnected && photonView.IsMine) yield break;
+        yield return new WaitUntil(() => PlayUniverseManager.Instance != null && PlayUniverseManager.Instance.universeId != 0);
+        yield return ScenarioUserSettingsApi.GetUserSetting(
+            UserCodeMgr.Instance.UserCode,
+            PlayUniverseManager.Instance.universeId,
+            (res) =>
+            {
+                if (res.IsSuccess)
+                {
+                    var userSetting = res.value;
+                    Initialize(userSetting.health, userSetting.strength, userSetting.dex);
+                }
+            }
+        );
+        
+        RegisterPlayerStats();
     }
 
     public void Initialize(int health, int strength, int dexterity)
@@ -66,9 +90,10 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        return;
         print("OnPhotonInstantiate");
-        if(photonView.InstantiationData == null) return;
-                print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
+        if (photonView.InstantiationData == null) return;
+        print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
 
         print($"22222-{userNickname}-{userHealth}-{userStrength} + {photonView.ViewID}");
         Initialize(
@@ -82,10 +107,8 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         ViewModelManager.Instance.UniversePlayViewModel.UpdateStatByUserCodeWithoutRemote(
             userCode,
             new CharacterStats(userHealth, userStrength, userDexterity)
-
         );
-        
-        print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
 
+        print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
     }
 }

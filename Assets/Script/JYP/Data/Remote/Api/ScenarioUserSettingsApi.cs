@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Data.Models.Universe.Characters.Player;
 using Data.Remote.Dtos.Request;
 using Data.Remote.Dtos.Response;
@@ -10,7 +11,8 @@ namespace Data.Remote.Api
     {
         private static readonly string BaseUrl = $"{HttpManager.ServerURL}/scenario/user";
 
-        public static IEnumerator UploadUserSettings(UniversePlayerSettings playerSettings, Action<ApiResult> onCompleted)
+        public static IEnumerator UploadUserSettings(UniversePlayerSettings playerSettings,
+            Action<ApiResult> onCompleted)
         {
             var reqDto = playerSettings.ToSecenarioUserUploadDto();
 
@@ -22,30 +24,28 @@ namespace Data.Remote.Api
                 onError = (error) => onCompleted(ApiResult.Fail(error)),
             };
 
-            yield return HttpManager.GetInstance().Post(request);
+            yield return HttpManager.GetInstance()
+                .Post(request);
         }
 
-        public static IEnumerator GetUserSettings(int userCode, int universeId,
-            Action<ApiResult<UniversePlayerSettings>> onCompleted)
+        public static IEnumerator GetUserSetting(int userCode,
+            int universeId,
+            Action<ApiResult<UserSettingResDto>> onComplete)
         {
-            var reqDto = new ScenarioUserGetReqDto()
-            {
-                userCode = userCode,
-                scenarioCode = universeId,
-            };
-
-            var request = new HttpInfoWithType<ScenarioUserResponseDto, ScenarioUserGetReqDto>()
+            var request = new HttpInfoWithType<UserSettingResDto, ScenarioUserGetReqDto>()
             {
                 url = $"{BaseUrl}/get",
-                body = reqDto,
-                onComplete = (result) =>
+                parameters = new Dictionary<string, string>()
                 {
-                    onCompleted(ApiResult<UniversePlayerSettings>.Success(result.ToUniverseUserSettings()));
+                    { "userCode", userCode.ToString() },
+                    { "scenarioCode", universeId.ToString() },
                 },
-                onError = (error) => onCompleted(ApiResult<UniversePlayerSettings>.Fail(error)),
+                onComplete = (result) => onComplete(ApiResult<UserSettingResDto>.Success(result)),
+                onError = (error) => onComplete(ApiResult<UserSettingResDto>.Fail(error)),
             };
 
-            yield return HttpManager.GetInstance().Post(request);
+            yield return HttpManager.GetInstance()
+                .Get(request);
         }
     }
 }
