@@ -32,3 +32,6 @@ Button {
     border-bottom-color: rgba(0, 0, 0, 0);
     background-color: rgba(0, 0, 0, 0);
 }
+
+TextField#input_description Label {
+}

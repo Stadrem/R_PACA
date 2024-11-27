@@ -35,6 +35,6 @@ IntegerField {
     background-color: rgba(0, 0, 0, 0);
 }
 
-TextInput TextElement#input_name {
+TextInput TextField#input_name {
     -unity-text-align: middle-left;
 }
