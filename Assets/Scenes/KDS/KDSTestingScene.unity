@@ -766,6 +766,80 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: d3ed5aa6959c7214783d5e3672276d46, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1001 &1330445399
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8210356996410567656, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.15451711
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.6266987
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991415, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753619234690991416, guid: 6e60bc6ba77714157b9624d473c12127,
+        type: 3}
+      propertyPath: m_Name
+      value: NPC_Golem
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 8753619234851899942, guid: 6e60bc6ba77714157b9624d473c12127, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6e60bc6ba77714157b9624d473c12127, type: 3}
 --- !u!1001 &1550949470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1404,3 +1478,4 @@ SceneRoots:
   - {fileID: 9003095189806187825}
   - {fileID: 89511526}
   - {fileID: 1550949470}
+  - {fileID: 1330445399}
