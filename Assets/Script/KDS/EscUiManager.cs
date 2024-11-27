@@ -46,10 +46,14 @@ public class EscUiManager : MonoBehaviour
         {   
             Destroy(gameObject);
         }
+
+        escObject = gameObject;
     }
 
     public Slider bgmSlider;
     public Slider sfxSlider;
+
+    public GameObject escObject;
 
     private void Start()
     {

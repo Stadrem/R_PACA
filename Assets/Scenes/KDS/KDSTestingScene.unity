@@ -774,6 +774,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 304645743453247074, guid: 6afdbb60097ce8c459cd934107f2b9c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 688519705834109922, guid: 6afdbb60097ce8c459cd934107f2b9c0,
         type: 3}
       propertyPath: inRenderTextureActive
@@ -798,6 +803,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DiceRollManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2828993714638107575, guid: 6afdbb60097ce8c459cd934107f2b9c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6363542845763442243, guid: 6afdbb60097ce8c459cd934107f2b9c0,
         type: 3}
@@ -906,6 +916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 517572027249331905, guid: 222325a833e2fd847b4a0400bdc66b19,
+        type: 3}
+      propertyPath: dice
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 916638398074987028, guid: 222325a833e2fd847b4a0400bdc66b19,
         type: 3}
