@@ -77,6 +77,10 @@ namespace Utils
 
         public void Connect(int roomId)
         {
+            if(currentEventCoroutine != null)
+            {
+                StopCoroutine(currentEventCoroutine);
+            }
             currentRoomId = roomId;
             currentEventCoroutine = StartCoroutine(CoConnect(roomId));
         }
