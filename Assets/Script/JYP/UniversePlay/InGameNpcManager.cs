@@ -38,11 +38,11 @@ namespace UniversePlay
         public bool isBlocked = false;
         public Action OnStartInteractNpc;
         public Action OnFinishInteractNpc;
-        private static readonly int IsTrigger = Animator.StringToHash("isTrigger");
+        private static readonly int TriggerTalking = Animator.StringToHash("triggerTalking");
+        private static readonly int TriggerIdle = Animator.StringToHash("IsIdle");
 
         private void Start()
         {
-            
             NpcChatUIManager.ChatInputField.onEndEdit.AddListener(
                 (text) =>
                 {
@@ -91,7 +91,6 @@ namespace UniversePlay
             }
         }
 
-
         /// <summary>
         /// PUN으로 요청되야함
         /// </summary>
@@ -102,7 +101,6 @@ namespace UniversePlay
             OnStartInteractNpc?.Invoke();
             var npcInfo = currentNpcList.First(t => t.NpcId == npcId);
             currentInteractInGameNpc = npcInfo;
-            currentInteractInGameNpc.GetComponentInChildren<Animator>().SetBool(IsTrigger, true);
             turnSystem.InitTurn();
             if (PhotonNetwork.IsMasterClient)
             {
@@ -131,6 +129,7 @@ namespace UniversePlay
         private void Pun_OnStartChat()
         {
             NpcChatUIManager.SetChattable(true);
+            TalkingAnim(true);
         }
         
         [PunRPC]
@@ -208,10 +207,21 @@ namespace UniversePlay
             yield return new WaitUntil(() => selectorChat.OptionCount >= ViewModel.UniversePlayers.Count - 1);
         }
 
+        private Coroutine finishCoroutine;
+        
         public void NextTurn()
         {
+            TalkingAnim(true);
+            if(finishCoroutine != null) StopCoroutine(finishCoroutine);
+            finishCoroutine = StartCoroutine(FinishAnimAfter(3f));
             selectorChat.ClearOptions();
             StartCoroutine(TurnBasedConversation());
+        }
+
+        private IEnumerator FinishAnimAfter(float sec)
+        {
+            yield return new WaitForSeconds(sec);
+            TalkingAnim(false);
         }
 
         IEnumerator TurnBasedConversation()
@@ -229,6 +239,18 @@ namespace UniversePlay
             }
         }
 
+        public void TalkingAnim(bool isTalking)
+        {
+            if (isTalking)
+            {
+                currentInteractInGameNpc.GetComponentInChildren<Animator>().SetTrigger(TriggerTalking);
+            }
+            else
+            {
+                currentInteractInGameNpc.GetComponentInChildren<Animator>().SetTrigger(TriggerIdle);
+            }
+        }
+
         private void StartTurn()
         {
             var turn = turnSystem.GetNextTurn();
@@ -242,7 +264,7 @@ namespace UniversePlay
             StopAllCoroutines();
             NpcChatUIManager.Hide();
             NpcChatUIManager.SetChattable(false);
-            currentInteractInGameNpc.GetComponentInChildren<Animator>().SetBool(IsTrigger, false);
+            TalkingAnim(false);
             OnFinishInteractNpc?.Invoke();
         }
 

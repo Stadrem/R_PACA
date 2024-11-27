@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UniversePlay;
@@ -25,6 +26,7 @@ public class UserStatsManager : MonoBehaviour
 
     void Start()
     {
+        ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
         UserStats = FindObjectOfType<UserStats>();
 
         if (UserStats == null) return;
@@ -45,18 +47,31 @@ public class UserStatsManager : MonoBehaviour
         UserStats.userDexterity = baseDex;
     }
 
+    private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if(e.PropertyName == nameof(ViewModel.UniverseData))
+        {
+            
+            if(ViewModel.UniverseData != null)
+            {
+                
+                StartCoroutine(
+                    ViewModel.UpdateStatByUserCode(
+                        UserCodeMgr.Instance.UserCode,
+                        new CharacterStats(baseHelath, baseStrength, baseDex)
+                    )
+                ); 
+            }
+        }
+    }
+
     public IEnumerator DelayCall()
     {
         yield return new WaitForSeconds(2);
 
         Debug.Log("능력치 기본값");
 
-        StartCoroutine(
-    ViewModel.UpdateStatByUserCode(
-        UserCodeMgr.Instance.UserCode,
-        new CharacterStats(baseHelath, baseStrength, baseDex)
-    )
-);
+
     }
 
     // Health 입력이 끝났을 때 호출되는 함수
