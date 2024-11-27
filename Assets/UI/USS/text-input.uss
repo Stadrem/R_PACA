@@ -6,6 +6,8 @@ TextInput {
     border-bottom-color: rgba(0, 0, 0, 0);
     text-overflow: clip;
     -unity-text-align: upper-left;
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
 }
 
 TextInput TextElement {
@@ -13,6 +15,7 @@ TextInput TextElement {
     text-overflow: clip;
     white-space: normal;
     width: 100%;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
 }
 
 IntegerField IntegerInput {
@@ -33,6 +36,7 @@ IntegerField IntegerInput {
 
 IntegerField {
     background-color: rgba(0, 0, 0, 0);
+    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
 }
 
 TextInput TextField#input_name {
