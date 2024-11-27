@@ -2319,6 +2319,7 @@ MonoBehaviour:
   characterSettingButton: {fileID: 1867729646}
   objectiveSettingButton: {fileID: 1756239879}
   backgroundPartLinkManager: {fileID: 712830963}
+  backgroundImages: []
 --- !u!1 &386274911
 GameObject:
   m_ObjectHideFlags: 0

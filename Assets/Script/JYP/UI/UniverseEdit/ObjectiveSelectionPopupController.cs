@@ -21,7 +21,7 @@ public class ObjectiveSelectionPopupController: MonoBehaviour
         "마왕 처치"
     };
 
-
+private Action onConfirm;
 
     private void OnEnable()
     {
@@ -36,7 +36,11 @@ public class ObjectiveSelectionPopupController: MonoBehaviour
 
         selectionCollectSword.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.CollectSword));
         selectionDemonKing.RegisterCallback<ClickEvent>(e => OnSelectionChanged(EObjectiveType.DefeatDemonKing));
-        confirm.clicked += Hide; 
+        confirm.clicked += () =>
+        {
+            onConfirm();
+            Hide();
+        }; 
     }
 
     
@@ -53,9 +57,10 @@ public class ObjectiveSelectionPopupController: MonoBehaviour
         root?.AddToClassList(ObjectiveSelectionHided);
     }
 
-    public void Show()
+    public void Show(Action onConfirm)
     {
-        root.RemoveFromClassList(ObjectiveSelectionHided);
+        this.onConfirm = onConfirm;
+        root?.RemoveFromClassList(ObjectiveSelectionHided);
     }
 
     public void OnSelectionChanged(EObjectiveType type)

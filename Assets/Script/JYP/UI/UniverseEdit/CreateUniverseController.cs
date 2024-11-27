@@ -13,6 +13,7 @@ public class CreateUniverseController : MonoBehaviour
     private TextField descriptionInput;
     private Button backgroundSettingButton;
     private Button objectiveSettingButton;
+    private Button objectiveSettingButtonClicked;
     private Button backButton;
 
     public Action OnCharacterSettingButtonClicked = null;
@@ -40,6 +41,7 @@ public class CreateUniverseController : MonoBehaviour
         charactersSettingButton = root.Q<Button>("button_characters");
         backgroundSettingButton = root.Q<Button>("button_backgrounds");
         objectiveSettingButton = root.Q<Button>("button_objective");
+        objectiveSettingButtonClicked = root.Q<Button>("button_objective-clicked");
         backButton = root.Q<Button>("Button_close");
         saveButton = root.Q<Button>("Button_save");
         // tagsInput = root.Q<TextField>("input_tags");
@@ -84,7 +86,18 @@ public class CreateUniverseController : MonoBehaviour
             OnCharacterSettingButtonClicked?.Invoke();
         };
         backgroundSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowBackgroundEdit(); };
-        objectiveSettingButton.clicked += () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); };
+        objectiveSettingButton.clicked += () =>
+        {
+            UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(
+                () =>
+                {
+                    objectiveSettingButton.style.display = DisplayStyle.Flex;
+                    objectiveSettingButtonClicked.style.display = DisplayStyle.None;
+                });
+            //disable button
+            objectiveSettingButton.style.display = DisplayStyle.None;
+            objectiveSettingButtonClicked.style.display = DisplayStyle.Flex;
+        };
         backButton.clicked += () =>
         {
             ViewModelManager.Instance.Reset();
