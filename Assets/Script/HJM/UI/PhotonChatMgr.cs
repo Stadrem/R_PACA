@@ -5,6 +5,7 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PhotonChatMgr : MonoBehaviour, IChatClientListener
 {
@@ -13,6 +14,10 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
     string currChannel = "";
     public RectTransform trContent;
     public GameObject chatItemFactory;
+
+    public ScrollRect scrollRect;  // ScrollRect 컴포넌트
+
+    public Scrollbar scrollBar;
 
 
     private bool hasChangedChannel = false;
@@ -75,10 +80,22 @@ public class PhotonChatMgr : MonoBehaviour, IChatClientListener
         if (splitChat[0] == "/w")
         {
             chatClient.SendPrivateMessage(splitChat[1], splitChat[2]);
+
+            Canvas.ForceUpdateCanvases();
+
+            scrollRect.verticalNormalizedPosition = 0f; // 맨 아래로 이동
+
+            scrollBar.value = 0;
         }
         else
         {
             chatClient.PublishMessage(currChannel, s);
+
+            Canvas.ForceUpdateCanvases();
+
+            scrollRect.verticalNormalizedPosition = 0f; // 맨 아래로 이동
+
+            scrollBar.value = 0;
         }
         inputChat.text = "";
     }

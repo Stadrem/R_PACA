@@ -601,15 +601,15 @@ Material:
     - Color_76BAA23A: {r: 1, g: 1, b: 1, a: 0}
     - Color_87E01BB0: {r: 1, g: 1, b: 1, a: 0}
     - Color_E8A37F1E: {r: 1, g: 1, b: 1, a: 0}
-    - _1st_ShadeColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    - _1st_ShadeColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
     - _2nd_ShadeColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
