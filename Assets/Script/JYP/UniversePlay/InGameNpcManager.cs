@@ -38,7 +38,7 @@ namespace UniversePlay
         public bool isBlocked = false;
         public Action OnStartInteractNpc;
         public Action OnFinishInteractNpc;
-        private static readonly int TriggerTalking = Animator.StringToHash("triggerTalking");
+        private static readonly int TriggerTalking = Animator.StringToHash("tirggerTalking");
         private static readonly int TriggerIdle = Animator.StringToHash("IsIdle");
 
         private void Start()
@@ -243,7 +243,8 @@ namespace UniversePlay
         {
             if (isTalking)
             {
-                currentInteractInGameNpc.GetComponentInChildren<Animator>().SetTrigger(TriggerTalking);
+                var fa = currentInteractInGameNpc.GetComponentInChildren<Animator>();
+                fa.SetTrigger(TriggerTalking);
             }
             else
             {
