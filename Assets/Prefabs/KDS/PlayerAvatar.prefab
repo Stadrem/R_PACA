@@ -619,7 +619,7 @@ MonoBehaviour:
     userAvatarHand: 0
   tempFakeServer: {fileID: 0}
   notUseNetworkOn: 0
-  ownerCrown: {fileID: 3071754912188069504}
+  ownerCrown: {fileID: 0}
   avatarLoading: {fileID: 2407130648858335179}
   title: {fileID: 3664395400577506502}
   titleText: {fileID: 5588297112594867310}
