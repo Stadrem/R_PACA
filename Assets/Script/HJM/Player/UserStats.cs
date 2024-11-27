@@ -4,7 +4,6 @@ using Data.Models.Universe.Characters;
 using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
-using UniversePlay;
 using ViewModels;
 
 public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
@@ -49,6 +48,10 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
                 {
                     var userSetting = res.value;
                     Initialize(userSetting.health, userSetting.strength, userSetting.dex);
+                    ViewModelManager.Instance.UniversePlayViewModel.UpdateStatByUserCodeWithoutRemote(
+                        UserCodeMgr.Instance.UserCode,
+                        new CharacterStats(userHealth, userStrength, userDexterity)
+                    );
                 }
             }
         );
