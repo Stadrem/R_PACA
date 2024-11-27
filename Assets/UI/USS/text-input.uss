@@ -5,10 +5,11 @@ TextInput {
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     text-overflow: clip;
+    -unity-text-align: upper-left;
 }
 
 TextInput TextElement {
-    -unity-text-align: upper-left;
+    -unity-text-align: middle-left;
     text-overflow: clip;
     white-space: normal;
     width: 100%;
@@ -21,9 +22,19 @@ IntegerField IntegerInput {
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     background-image: none;
-    -unity-text-align: upper-center;
+    -unity-text-align: middle-center;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 24px;
+    color: rgb(95, 95, 95);
 }
 
 IntegerField {
     background-color: rgba(0, 0, 0, 0);
+}
+
+TextInput TextElement#input_name {
+    -unity-text-align: middle-left;
 }
