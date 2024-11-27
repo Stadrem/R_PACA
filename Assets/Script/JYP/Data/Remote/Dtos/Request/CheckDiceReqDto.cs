@@ -16,5 +16,8 @@ namespace Data.Remote.Dtos.Request
 
         [JsonProperty("userCode")]
         public int userCode;
+
+        [JsonProperty("bonus")]
+        public string requestStat;
     }
 }

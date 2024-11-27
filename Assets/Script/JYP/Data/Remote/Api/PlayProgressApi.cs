@@ -57,7 +57,7 @@ namespace Data.Remote.Api
             yield return HttpManager.GetInstance().Post(request);
         }
 
-        public static IEnumerator CheckDice(int roomNumber, DiceResult diceResult,
+        public static IEnumerator CheckDice(int roomNumber, string requestStat, DiceResult diceResult,
             Action<ApiResult<NpcReaction>> onComplete)
         {
             var reqDto = new CheckDiceReqDto()
@@ -66,6 +66,7 @@ namespace Data.Remote.Api
                 diceResult1 = diceResult.FirstDiceNumber,
                 diceResult2 = diceResult.SecondDiceNumber,
                 userCode = diceResult.UserCode,
+                requestStat = requestStat,
             };
 
 
