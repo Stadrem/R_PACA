@@ -2319,7 +2319,9 @@ MonoBehaviour:
   characterSettingButton: {fileID: 1867729646}
   objectiveSettingButton: {fileID: 1756239879}
   backgroundPartLinkManager: {fileID: 712830963}
-  backgroundImages: []
+  backgroundImages:
+  - {fileID: 21300000, guid: 2cd756e27721f7a45a3437ced2b7d5a9, type: 3}
+  - {fileID: 21300000, guid: 08893b6ab63962748835c62042b16898, type: 3}
 --- !u!1 &386274911
 GameObject:
   m_ObjectHideFlags: 0
@@ -7800,7 +7802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1573187431
 Transform:
   m_ObjectHideFlags: 0
@@ -8226,7 +8228,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2cd756e27721f7a45a3437ced2b7d5a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3b24c545b3a3e4949b8d34800489779f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

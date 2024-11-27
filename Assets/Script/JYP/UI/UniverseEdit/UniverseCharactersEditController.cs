@@ -26,7 +26,7 @@ public class UniverseCharactersEditController : MonoBehaviour
         var root = GetComponent<UIDocument>()
             .rootVisualElement;
         backButton = root.Q<Button>("Button_Main");
-        backgroundButton = root.Q<Button>("Button_Background");
+        backgroundButton = root.Q<Button>("button_backgrounds");
         objectiveButton = root.Q<Button>("Button_Objectives");
         objectiveSettingButtonClicked = root.Q<Button>("button_objective-clicked");
 
