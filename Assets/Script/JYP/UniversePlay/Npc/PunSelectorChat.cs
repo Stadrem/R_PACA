@@ -184,7 +184,9 @@ namespace UniversePlay
             StartCoroutine(
                 PlayProgressApi.CheckDice(
                     PlayUniverseManager.Instance.roomNumber,
+                    reaction.BonusMessage,
                     new DiceResult(
+                        UserCodeMgr.Instance.UserCode,
                         firstDiceNumber: d1,
                         secondDiceNumber: d2
                     ),

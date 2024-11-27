@@ -57,14 +57,16 @@ namespace Data.Remote.Api
             yield return HttpManager.GetInstance().Post(request);
         }
 
-        public static IEnumerator CheckDice(int roomNumber, DiceResult diceResult,
+        public static IEnumerator CheckDice(int roomNumber, string requestStat, DiceResult diceResult,
             Action<ApiResult<NpcReaction>> onComplete)
         {
             var reqDto = new CheckDiceReqDto()
             {
-                roomNum = roomNumber,
-                diceFst = diceResult.FirstDiceNumber,
-                diceSnd = diceResult.SecondDiceNumber,
+                roomNumber = roomNumber,
+                diceResult1 = diceResult.FirstDiceNumber,
+                diceResult2 = diceResult.SecondDiceNumber,
+                userCode = diceResult.UserCode,
+                requestStat = requestStat,
             };
 
 
@@ -97,8 +99,7 @@ namespace Data.Remote.Api
 
             yield return HttpManager.GetInstance().Post(request);
         }
-        
-        
+
 
         public static IEnumerator SendBattleResult(BattleResult battleResult, Action<ApiResult> onComplete)
         {
