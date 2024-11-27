@@ -36,6 +36,7 @@ namespace UniversePlay
         public void UpdateStatByUserCodeWithoutRemote(int userCode, CharacterStats stats)
         {
             var player = universePlayers.Find(p => p.UserCode == userCode);
+            if(player == null) return;
             player.Stats = stats;
             OnPropertyChanged(nameof(UniversePlayers));
         }
