@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using Data.Remote.Api;
 using Photon.Pun;
+using UI.UniversePlay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -55,7 +56,10 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     [SerializeField]
     private Canvas canvas;
-
+    
+    [SerializeField]
+    private IntroUIController introUIController;
+    
     public bool IsHudVisible
     {
         get => hudUI.activeSelf;
@@ -65,7 +69,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
             hudUI.SetActive(value);
         }
     }
-
+    
     public ISelectorChat SelectorChat => selectorChat;
 
     private UniversePlayViewModel ViewModel => ViewModelManager.Instance.UniversePlayViewModel;
@@ -319,5 +323,18 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     {
         if (IsHudVisible)
             IsHudVisible = false;
+    }
+
+    public void SetIntro(string introMessage)
+    {
+        photonView.RPC(nameof(Pun_SetIntro), RpcTarget.All, introMessage);
+    }
+    
+
+    [PunRPC]
+    private void Pun_SetIntro(string introMessage)
+    {
+        introUIController.SetIntroText(introMessage);
+        introUIController = null;
     }
 }

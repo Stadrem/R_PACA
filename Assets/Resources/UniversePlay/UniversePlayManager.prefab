@@ -2407,6 +2407,7 @@ MonoBehaviour:
   backgroundNameUI: {fileID: 2057581958139900809, guid: 4a8bccddded0f43228cbe7ff14db41ec,
     type: 3}
   canvas: {fileID: 1571574651377728402}
+  introUIController: {fileID: 2236908972310293139}
   roomNumber: 0
   isBattle: 0
 --- !u!114 &6439204471733787449
