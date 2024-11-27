@@ -396,7 +396,7 @@ PrefabInstance:
     - target: {fileID: 3071754912188069504, guid: 5e258fec91d27484294348b0594c80b7,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3095879687839553364, guid: 5e258fec91d27484294348b0594c80b7,
         type: 3}
@@ -584,6 +584,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
+        type: 3}
+      propertyPath: m_horizontalMapping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1199658922946665443, guid: 2c867f7b3cea5d94e9520299e3a25948,
         type: 3}

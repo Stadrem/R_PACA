@@ -413,13 +413,13 @@ public class DiceRollManager : MonoBehaviour
             }
             else if (plusDice == 0)
             {
-                diceNumberText = "0";
+                diceNumberText = "+0";
             }
             else
             {
                 diceNumberText = plusDice.ToString();
             }
-            plusText.text = "주사위: " + dicePick + "<size=40><color=red>" + diceNumberText + "</color></size>";
+            plusText.text = "주사위: " + dicePick + "<size=30><color=red>" + " " + diceNumberText + "</color></size>";
             
             //보정 값 반환!
             return plusDice;
