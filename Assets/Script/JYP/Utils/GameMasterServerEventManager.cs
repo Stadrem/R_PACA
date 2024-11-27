@@ -131,6 +131,7 @@ namespace Utils
 
                     yield return null; // 잠시 대기 후 반복
                 }
+                Debug.Log("연결 끝!!!!!!");
             }
         }
 
