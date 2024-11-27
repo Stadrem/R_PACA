@@ -304,7 +304,8 @@ public class TurnCheckSystem : MonoBehaviourPunCallbacks
         vBattleCamTarget = vBattleCam.LookAt;
         if (playerIndex >= 0 && playerIndex < BattleManager.Instance.players.Count)
         {
-            vBattleCam.LookAt = BattleManager.Instance.players[playerIndex].transform;
+            Transform target = BattleManager.Instance.FindDeepChild(BattleManager.Instance.players[playerIndex].transform, "hand.R");
+            vBattleCam.LookAt = target;
         }
         else if (playerIndex == -1)
         {

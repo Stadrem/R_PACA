@@ -570,7 +570,7 @@ public class BattleManager : MonoBehaviourPunCallbacks
         vBattleCam.LookAt = target;
     }
 
-    Transform FindDeepChild(Transform parent, string childName)
+    public Transform FindDeepChild(Transform parent, string childName)
     {
         foreach (Transform child in parent)
         {
