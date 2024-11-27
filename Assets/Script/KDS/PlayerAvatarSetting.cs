@@ -181,6 +181,13 @@ public class PlayerAvatarSetting : AvatarHTTPManager
     //방장 아이콘
     public void ShowOwnerCrown()
     {
-        ownerCrown.SetActive(true);
+        if (ownerCrown)
+        {
+            ownerCrown.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("왕관 없음");
+        }
     }
 }
