@@ -26,6 +26,9 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         if (PhotonNetwork.IsConnected)
         {
             RegisterPlayerStats();
+            
+                this.gameObject.name = "Player_Avatar" + photonView.Owner.NickName;
+            
         }
     }
 
@@ -43,7 +46,7 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         if (PhotonNetwork.IsConnected && photonView.IsMine)
         {
             // PlayerBatList의 PhotonView를 찾고 자신을 리스트에 등록
-            Debug.Log($"RUN");
+            Debug.Log($"RUN : {userHealth} + {userStrength} + {userDexterity} + {photonView.ViewID}");
             PlayerBatList playerBatList = FindObjectOfType<PlayerBatList>();
             if (playerBatList != null)
             {
@@ -63,8 +66,11 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        print("OnPhotonInstantiate");
         if(photonView.InstantiationData == null) return;
-        
+                print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
+
+        print($"22222-{userNickname}-{userHealth}-{userStrength} + {photonView.ViewID}");
         Initialize(
             Convert.ToInt32(photonView.InstantiationData[0]),
             Convert.ToInt32(photonView.InstantiationData[1]),
@@ -76,6 +82,10 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         ViewModelManager.Instance.UniversePlayViewModel.UpdateStatByUserCodeWithoutRemote(
             userCode,
             new CharacterStats(userHealth, userStrength, userDexterity)
+
         );
+        
+        print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
+
     }
 }

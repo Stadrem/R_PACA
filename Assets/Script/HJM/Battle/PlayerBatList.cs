@@ -44,6 +44,7 @@ public class PlayerBatList : MonoBehaviourPunCallbacks
     public void RegisterPlayer(string nickname, int health, int strength, int dexterity, int viewID)
     {
         PlayerBatInfo newPlayer = new PlayerBatInfo(nickname, health, strength, dexterity, viewID);
+                print(nickname + health + strength + dexterity + viewID);
         battlePlayers.Add(newPlayer);
 
         // 정렬: ViewID 기준으로 정렬
@@ -53,6 +54,8 @@ public class PlayerBatList : MonoBehaviourPunCallbacks
         foreach (var player in battlePlayers)
         {
             Debug.Log($"Nickname: {player.nickname}, ViewID: {player.viewID}");
+            print(nickname + health + strength + dexterity + viewID);
+
         }
     }
 }
