@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/badge/unity-%23000000.svg?&style=for-the-badge&logo=unity&logoColor=white" /> <img src="https://img.shields.io/badge/blender-%23F5792A.svg?&style=for-the-badge&logo=blender&logoColor=white"/> <img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white"/>
+<img src="https://img.shields.io/badge/unity-%23000000.svg?&style=for-the-badge&logo=unity&logoColor=white" /> <img src="https://img.shields.io/badge/blender-%23F5792A.svg?&style=for-the-badge&logo=blender&logoColor=white"/> <img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white"/> <img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/ChatGPT_4o-0066FF?style=for-the-badge&logo=chatbot&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black"/>
 
 [![Video Label](http://img.youtube.com/vi/WVRnNTGtYiE/0.jpg)](https://youtu.be/WVRnNTGtYiE)
 
@@ -28,9 +28,9 @@ TA: 성예린<br><br>
 <h2>역할</h2>
 김동수: 유니티 개발, 캐릭터 모델링, 주사위 시스템, 아바타 생성 시스템, 칭호 시스템, ui 와이어프레임<br><br>
 박진영: 유니티 개발, 게임 플레이 시스템, 세계관 크리에이터 툴, 백엔드 및 AI API 연동<br><br>
-허지미: 유니티 개발, 플레이어, 턴제 전투 시스템, 포톤 연동<br><br>
-전진석: 백엔드, 유저 관리, 클라이언트 - AI 연동, 세계관 데이터 관리, SSE<br><br>
-조해수: AI, 텍스트 생성 AI, 대화 모듈, 해석 모듈, 요약 기능<br><br>
-성예린: TA, 레벨 디자인, 배경 모델링, UI 디자인, PPT 제작<br><br>
+허지미: 유니티 개발, 플레이어 캐릭터 조작, 턴제 전투 시스템, 포톤 연동<br><br>
+전진석: 백엔드, 계정 관리, 클라이언트 - AI 연동, 세계관 데이터 관리SSE<br><br>
+조해수: AI, 텍스트 생성 AI, 대화 모듈, 해석 모듈, 요약 기능, GM 기능<br><br>
+성예린: TA, 레벨 디자인, 배경 모델링, 터레인, 라이팅, UI 디자인, PPT 제작<br><br>
 
 ---
