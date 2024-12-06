@@ -28,6 +28,7 @@ public class UserStatsManager : MonoBehaviour
     {
         ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
         UserStats = FindObjectOfType<UserStats>();
+        Debug.Log(UserStats.userNickname + "의 유저스탯입니다");
 
         if (UserStats == null) return;
 

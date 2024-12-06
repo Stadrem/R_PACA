@@ -2408,6 +2408,7 @@ MonoBehaviour:
     type: 3}
   canvas: {fileID: 1571574651377728402}
   introUIController: {fileID: 2236908972310293139}
+  universeId: 0
   roomNumber: 0
   isBattle: 0
 --- !u!114 &6439204471733787449

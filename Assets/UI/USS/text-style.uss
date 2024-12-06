@@ -1,22 +1,32 @@
 .unity-text-element {
-    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Regular.otf?fileID=12800000&guid=93c0fd2dba59ba841a8215f5464af9b1&type=3#Pretendard-Regular");
 }
 
 .h1 {
-    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+    -unity-font-definition: initial;
     font-size: 48px;
     -unity-font-style: normal;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
 }
 
 .bold {
-    -unity-font-definition: resource('Fonts/Pretendard-Bold SDF');
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Bold.otf?fileID=12800000&guid=67f1c05d280aac4469fc9b95be42952c&type=3#Pretendard-Bold");
 }
 
 .medium {
     font-size: 36px;
-    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
 }
 
 .small {
     font-size: 24px;
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
+}
+
+.objectiveclicked {
+    background-image: url("project://database/Assets/Img/UI/WorldCreate_BGcreate/BT_targetsetting.png?fileID=2800000&guid=2cd756e27721f7a45a3437ced2b7d5a9&type=3#BT_targetsetting");
 }

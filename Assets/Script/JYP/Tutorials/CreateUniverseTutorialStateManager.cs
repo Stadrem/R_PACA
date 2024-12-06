@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Data.Local;
 using Tutorials;
 using UnityEngine;
@@ -62,5 +63,10 @@ public sealed class CreateUniverseTutorialStateManager : MonoBehaviour
         currentState?.OnEndState();
         currentState = state;
         currentState.OnStartState();
+    }
+
+    private void OnDestroy()
+    {
+        currentState?.OnEndState();
     }
 }

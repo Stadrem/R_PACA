@@ -76,6 +76,7 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
 
     public static PlayUniverseManager Instance => instance;
 
+    public int universeId;
     public int roomNumber;
     public bool isBattle = false;
 
@@ -105,7 +106,18 @@ public class PlayUniverseManager : MonoBehaviourPun, IDisposable
     {
         if (e.PropertyName == nameof(ViewModel.UniverseData))
         {
+            if(ViewModel.UniverseData != null && photonView.IsMine)
+            {
+                universeId = ViewModel.UniverseData.id;
+                photonView.RPC(nameof(Pun_SetUniverseId), RpcTarget.AllBuffered, universeId);
+            }
         }
+    }
+    
+    [PunRPC]
+    private void Pun_SetUniverseId(int nextUniverseId)
+    {
+        universeId = nextUniverseId;
     }
 
     private void Update()

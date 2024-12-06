@@ -24,7 +24,7 @@ namespace UniversePlay
                            ?.transform.position
                        ?? Vector3.zero;
 
-
+            print($"{ViewModel.CurrentPlayer.Nickname} -- {ViewModel.CurrentPlayer.Stats.GetStat(EStatType.Hp)}");
             SpawnPlayer(ViewModel.CurrentPlayer);
             currentPlayerCameraController = Camera.main?.GetComponent<CameraController>();
         }
@@ -43,6 +43,8 @@ namespace UniversePlay
                     player.Stats.GetStat(EStatType.Dex)
                 }
             );
+
+            
         }
 
         public void BlockPlayerCamera()

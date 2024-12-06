@@ -5,16 +5,21 @@ using UniverseEdit;
 
 public class UniverseEditUIFlowManager : MonoBehaviour
 {
-    [SerializeField] private CreateUniverseController createUniverseController;
+    [SerializeField]
+    private CreateUniverseController createUniverseController;
 
-    [SerializeField] private UniverseCharactersEditController universeCharactersEditController;
+    [SerializeField]
+    private UniverseCharactersEditController universeCharactersEditController;
 
-    [SerializeField] private BackgroundPartLinkManager backgroundPartLinkManager;
-    
-    [SerializeField] private BackgroundEditUIController backgroundEditUIController;
+    [SerializeField]
+    private BackgroundPartLinkManager backgroundPartLinkManager;
 
-    [SerializeField] private ObjectiveSelectionPopupController objectiveSelectionPopupController;
-    
+    [SerializeField]
+    private BackgroundEditUIController backgroundEditUIController;
+
+    [SerializeField]
+    private ObjectiveSelectionPopupController objectiveSelectionPopupController;
+
     public enum EEditUIState : byte
     {
         Main = 0b0,
@@ -22,10 +27,10 @@ public class UniverseEditUIFlowManager : MonoBehaviour
         BackgroundEdit = 0b10,
         ObjectiveSelection = 0b100,
     }
-    
+
     private EEditUIState currentState = EEditUIState.Main;
     public EEditUIState CurrentState => currentState;
-    
+
     private static UniverseEditUIFlowManager instance;
 
     public static UniverseEditUIFlowManager Instance
@@ -63,11 +68,11 @@ public class UniverseEditUIFlowManager : MonoBehaviour
     {
         if (universeCharactersEditController.gameObject.activeSelf)
             universeCharactersEditController.gameObject.SetActive(false);
-        if(backgroundEditUIController.gameObject.activeSelf)
+        if (backgroundEditUIController.gameObject.activeSelf)
             backgroundEditUIController.gameObject.SetActive(false);
-        objectiveSelectionPopupController.Hide(); 
+        objectiveSelectionPopupController.Hide();
         createUniverseController.gameObject.SetActive(true);
-        
+
         // currentState = 0b100
     }
 
@@ -75,25 +80,27 @@ public class UniverseEditUIFlowManager : MonoBehaviour
     {
         if (createUniverseController.gameObject.activeSelf)
             createUniverseController.gameObject.SetActive(false);
-        if(backgroundEditUIController.gameObject.activeSelf)
+        if (backgroundEditUIController.gameObject.activeSelf)
             backgroundEditUIController.gameObject.SetActive(false);
-        objectiveSelectionPopupController.Hide(); 
+        objectiveSelectionPopupController.Hide();
         universeCharactersEditController.gameObject.SetActive(true);
     }
-    
+
     public void ShowBackgroundEdit()
     {
         if (createUniverseController.gameObject.activeSelf)
             createUniverseController.gameObject.SetActive(false);
-     
+
         if (universeCharactersEditController.gameObject.activeSelf)
             universeCharactersEditController.gameObject.SetActive(false);
         objectiveSelectionPopupController.Hide();
         backgroundEditUIController.ShowUI();
     }
 
-    public void ShowObjectiveSelection()
+    public void ShowObjectiveSelection(Action onConfirm)
     {
-        objectiveSelectionPopupController.Show();
+        objectiveSelectionPopupController.Show(
+            onConfirm
+        );
     }
 }

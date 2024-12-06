@@ -13,7 +13,8 @@ public class BackgroundEditUIController : MonoBehaviour
     public Button characterSettingButton;
     public Button objectiveSettingButton;
     public BackgroundPartLinkManager backgroundPartLinkManager;
-    
+
+    public Sprite[] backgroundImages;
     private UniverseEditViewModel ViewModel => ViewModelManager.Instance.UniverseEditViewModel;
     private void OnEnable()
     {
@@ -32,7 +33,14 @@ public class BackgroundEditUIController : MonoBehaviour
         );
         
         objectiveSettingButton.onClick.AddListener(
-            () => { UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(); }
+            () => { 
+                UniverseEditUIFlowManager.Instance.ShowObjectiveSelection(
+                () =>
+                {
+                    objectiveSettingButton.image.sprite = backgroundImages[1];
+                }); 
+                objectiveSettingButton.image.sprite = backgroundImages[0];
+            }
         );
     }
 

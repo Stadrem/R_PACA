@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using Data.Models.Universe.Characters;
+using Data.Remote.Api;
 using Photon.Pun;
 using UnityEngine;
 using ViewModels;
@@ -15,6 +17,7 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
     public int userStrength; // 힘
     public int userDexterity; // 손재주
 
+
     private void Awake()
     {
         Instance = this;
@@ -25,8 +28,35 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         // 자신을 battlePlayers 리스트에 등록하기 위해 RPC 호출
         if (PhotonNetwork.IsConnected)
         {
-            RegisterPlayerStats();
+            StartCoroutine(CoGetStat());
+
+            gameObject.name = "Player_Avatar_" + photonView.Owner.NickName;
         }
+    }
+
+    private IEnumerator CoGetStat()
+    {
+        
+        if (!PhotonNetwork.IsConnected && photonView.IsMine) yield break;
+        yield return new WaitUntil(() => PlayUniverseManager.Instance != null && PlayUniverseManager.Instance.universeId != 0);
+        yield return ScenarioUserSettingsApi.GetUserSetting(
+            UserCodeMgr.Instance.UserCode,
+            PlayUniverseManager.Instance.universeId,
+            (res) =>
+            {
+                if (res.IsSuccess)
+                {
+                    var userSetting = res.value;
+                    Initialize(userSetting.health, userSetting.strength, userSetting.dex);
+                    ViewModelManager.Instance.UniversePlayViewModel.UpdateStatByUserCodeWithoutRemote(
+                        UserCodeMgr.Instance.UserCode,
+                        new CharacterStats(userHealth, userStrength, userDexterity)
+                    );
+                }
+            }
+        );
+        
+        RegisterPlayerStats();
     }
 
     public void Initialize(int health, int strength, int dexterity)
@@ -43,7 +73,7 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
         if (PhotonNetwork.IsConnected && photonView.IsMine)
         {
             // PlayerBatList의 PhotonView를 찾고 자신을 리스트에 등록
-            Debug.Log($"RUN");
+            Debug.Log($"RUN : {userHealth} + {userStrength} + {userDexterity} + {photonView.ViewID}");
             PlayerBatList playerBatList = FindObjectOfType<PlayerBatList>();
             if (playerBatList != null)
             {
@@ -63,8 +93,12 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        if(photonView.InstantiationData == null) return;
-        
+        return;
+        print("OnPhotonInstantiate");
+        if (photonView.InstantiationData == null) return;
+        print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
+
+        print($"22222-{userNickname}-{userHealth}-{userStrength} + {photonView.ViewID}");
         Initialize(
             Convert.ToInt32(photonView.InstantiationData[0]),
             Convert.ToInt32(photonView.InstantiationData[1]),
@@ -77,5 +111,7 @@ public class UserStats : MonoBehaviourPun, IPunInstantiateMagicCallback
             userCode,
             new CharacterStats(userHealth, userStrength, userDexterity)
         );
+
+        print(userNickname + userHealth + userStrength + userDexterity + photonView.ViewID);
     }
 }

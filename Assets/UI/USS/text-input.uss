@@ -5,13 +5,17 @@ TextInput {
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     text-overflow: clip;
+    -unity-text-align: upper-left;
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
 }
 
 TextInput TextElement {
-    -unity-text-align: upper-left;
+    -unity-text-align: middle-left;
     text-overflow: clip;
     white-space: normal;
     width: 100%;
+    -unity-font: url("project://database/Assets/Font/Pretendard-Light.ttf?fileID=12800000&guid=055783c4feeaf1549a53efeee0c3d3a1&type=3#Pretendard-Light");
 }
 
 IntegerField IntegerInput {
@@ -21,9 +25,20 @@ IntegerField IntegerInput {
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     background-image: none;
-    -unity-text-align: upper-center;
+    -unity-text-align: middle-center;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 24px;
+    color: rgb(95, 95, 95);
 }
 
 IntegerField {
     background-color: rgba(0, 0, 0, 0);
+    -unity-font-definition: resource('Fonts/Pretendard-Regular SDF');
+}
+
+TextInput TextField#input_name {
+    -unity-text-align: middle-left;
 }

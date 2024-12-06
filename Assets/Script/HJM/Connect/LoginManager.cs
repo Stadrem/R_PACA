@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class LoginManager : MonoBehaviour
 
     private ConnectionMgr connection;
 
+    private void Awake()
+    {
+        Screen.SetResolution(1920, 1080, true);
+    }
     private void Start()
     {
         // ConnectionMgr 컴포넌트를 찾습니다.

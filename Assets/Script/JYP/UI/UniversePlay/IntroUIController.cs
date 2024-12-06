@@ -48,14 +48,14 @@ namespace UI.UniversePlay
             for (int i = 0; i < text.Length; i++)
             {
                 introText.text += text[i];
-                print("real h: "+introText.rectTransform.rect.height);
-                print("pref h: " +introText.preferredHeight);
+                // print("real h: "+introText.rectTransform.rect.height);
+                // print("pref h: " +introText.preferredHeight);
                 if(introText.preferredHeight > rectTransform.rect.height && introText.text.Length > 0) {
                     StringBuilder sb = new StringBuilder();
                     sb.Append(introText.text);
                     while (introText.preferredHeight > rectTransform.rect.height && introText.text.Length > 0)
                     {
-                        print("remove text");
+                        // print("remove text");
                         sb.Remove(0, 1);
                     }
                     introText.text = sb.ToString();

@@ -48,6 +48,11 @@ public class HttpInfoWithType<T, R> where R : class
 
     // 요청 후 에러뜨면 호출될 델리게이트
     public Action<Exception> onError;
+
+    public override string ToString()
+    {
+        return $"url: {url}\n body: {body}\n  contentType:{contentType}\n acceptContentType:{acceptContentType}";
+    }
 }
 
 public class HttpManager : MonoBehaviour
@@ -55,6 +60,7 @@ public class HttpManager : MonoBehaviour
     public const string ServerURL = "http://125.132.216.190:8765";
     string loginUrl = $"{ServerURL}/api/auth/login";
     string joinUrl = $"{ServerURL}/api/auth/signup";
+
 
     //싱글톤 생성
     static HttpManager instance;
@@ -191,6 +197,7 @@ public class HttpManager : MonoBehaviour
 
     public IEnumerator Get<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
+
         if (info.parameters != null)
         {
             var url = new UriBuilder(info.url)
@@ -200,7 +207,7 @@ public class HttpManager : MonoBehaviour
 
             info.url = url.ToString();
         }
-
+        Debug.Log($"[GET]: {info}");
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
         {
@@ -235,6 +242,7 @@ public class HttpManager : MonoBehaviour
     public IEnumerator Put<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
         var body = JsonConvert.SerializeObject(info.body);
+        Debug.Log($"[PUT]: {info}");
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "PUT"))
         {
@@ -267,6 +275,7 @@ public class HttpManager : MonoBehaviour
     public IEnumerator Delete<TRes, TR>(HttpInfoWithType<TRes, TR> info) where TR : class
     {
         var body = JsonConvert.SerializeObject(info.body);
+        Debug.Log($"[DELETE]: {info}");
 
         using (var webRequest = new UnityWebRequest(info.url, "DELETE"))
         {
@@ -301,10 +310,10 @@ public class HttpManager : MonoBehaviour
     {
         var body = JsonConvert.SerializeObject(info.body);
 
+        Debug.Log($"[POST]: {info}");
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
-            print("request body: " + body);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(body);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -316,14 +325,14 @@ public class HttpManager : MonoBehaviour
             {
                 if (info.onComplete != null)
                 {
-                    Debug.Log($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+                    Debug.Log($"\t[RES]{info.url}\n result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
                     var res = ParseResponse<TRes>(webRequest.downloadHandler);
                     info.onComplete(res);
                 }
             }
             else
             {
-                Debug.LogError($"result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
+                Debug.LogError($"\t[RES]{info.url}\n result: {webRequest.result} / response body: {webRequest.downloadHandler.text}");
 
                 if (info.onError != null)
                 {
